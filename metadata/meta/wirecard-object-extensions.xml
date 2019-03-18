@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <type-extension type-id="SitePreferences">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="wireCardTestMode">
+                <display-name xml:lang="x-default">Use the Test-Service</display-name>
+                <description xml:lang="x-default">The Payment Service is testable by using the Test-Service with Test Merchant Account ID</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="wireCardDebugMode">
+                <display-name xml:lang="x-default">Debug mode</display-name>
+                <description xml:lang="x-default">Write request xml to debug log (works only with sandboxes / development)</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="wireCardShopName">
+                <display-name xml:lang="x-default">WireCard Shop Name</display-name>
+                <type>string</type>
+                <localizable-flag>true</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>Web Shop</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="wireCardIdealMerchantAccountID">
+                <display-name xml:lang="x-default">WireCard Merchant-Account-ID (iDeal)</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>4aeccf39-0d47-47f6-a399-c05c1f2fc819</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="wireCardSofortMerchantAccountID">
+                <display-name xml:lang="x-default">WireCard Merchant-Account-ID (sofortbanking)</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>6c0e7efd-ee58-40f7-9bbd-5e7337a052cd</default-value>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="WIRECARD">
+                <display-name xml:lang="x-default">WireCard Settings</display-name>
+                <attribute attribute-id="wireCardTestMode"/>
+                <attribute attribute-id="wireCardDebugMode"/>
+                <attribute attribute-id="wireCardShopName"/>
+                <attribute attribute-id="wireCardIdealMerchantAccountID"/>
+                <attribute attribute-id="wireCardSofortMerchantAccountID"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+
+</metadata>

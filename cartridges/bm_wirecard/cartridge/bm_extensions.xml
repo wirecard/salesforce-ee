@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<extensions xmlns="http://www.demandware.com/xml/bmmodules/2007-12-11" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.demandware.com/xml/bmmodules/2007-12-11 bmext.xsd">
+    <menuitem id="wcd" position="77489" site="true">
+        <name xml:lang="x-default">WCD</name>
+        <short_description xml:lang="x-default">
+            wcd cartridge extension
+        </short_description>
+        <icon>icons/star_yellow_add.gif</icon>
+    </menuitem>
+    <menuaction id="wcd_admin01" menupath="wcd" position="10" site="true">
+        <name xml:lang="x-default">Transactions</name>
+        <short_description xml:lang="x-default">wcd transactions overview</short_description>
+        <description xml:lang="x-default">
+            Overview of wcd payment transaction with processing options: cancel, refund, capture
+        </description>
+        <exec pipeline="WCD" node="Transactions"/>
+        <sub-pipelines>
+            <pipeline name="WCD-Transactions" />
+            <pipeline name="WCD-TransactionDetail" />
+            <pipeline name="WCD-ExecuteOperation" />
+        </sub-pipelines>
+        <parameters>
+            <parameter name="menuname" value="Transactions"/>
+            <parameter name="mainmenuname" value="WCD"/>
+        </parameters>
+        <icon>icons/star_yellow_new.gif</icon>
+    </menuaction>
+</extensions>

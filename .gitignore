@@ -1,0 +1,13 @@
+.DS_Store
+
+dw.json
+metadata.zip
+node_modules/
+npm-debug.log
+
+# exclude eclipse settings
+cartridges/**/.settings/*
+
+# exclude generated static assets
+cartridges/**/cartridge/static/default/css/*
+cartridges/**/cartridge/static/default/js/*

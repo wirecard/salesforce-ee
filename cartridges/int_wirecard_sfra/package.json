@@ -1,0 +1,4 @@
+{
+  "hooks": "./cartridge/scripts/wirecard/hooks.json",
+  "coreCartridge": "app_storefront_base"
+}

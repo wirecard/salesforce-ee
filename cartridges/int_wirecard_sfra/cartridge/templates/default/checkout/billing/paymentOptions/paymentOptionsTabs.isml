@@ -1,0 +1,11 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<isscript>
+    var paymentHelper = require('int_wirecard_core/cartridge/scripts/wirecard/helper/PaymentHelper');
+</isscript>
+<isloop items="${pdict.order.billing.payment.applicablePaymentMethods}" var="paymentOption">
+    <isif condition="${paymentOption.ID === 'CREDIT_CARD'}">
+        <isinclude template="checkout/billing/paymentOptions/creditCardTab" />
+    </isif>
+
+    <isinclude template="checkout/billing/paymentOptions/wirecardPaymentOptions" />
+</isloop>

@@ -1,0 +1,7 @@
+cartridges/**/cartridge/static/
+coverage/
+bin/
+documentation/
+metadata/
+node_modules/
+tmp/

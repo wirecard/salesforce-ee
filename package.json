@@ -1,0 +1,60 @@
+{
+  "name": "int_wirecard_sfra",
+  "version": "0.0.1",
+  "description": "Wirecard payment integration for sfcc (sfra)",
+  "main": "index.js",
+  "scripts": {
+    "cover": "sgmf-scripts --cover",
+    "test": "sgmf-scripts --test test/unit/**/*.js",
+    "test:integration": "node bin/Makefile integration -- ",
+    "lint": "npm run lint:css && npm run lint:js",
+    "lint:css": "sgmf-scripts --lint css",
+    "lint:js": "sgmf-scripts --lint js",
+    "upload": "sgmf-scripts --upload ",
+    "uploadCartridge": "sgmf-scripts --uploadCartridge int_wirecard_sfra",
+    "compile:js": "sgmf-scripts --compile js",
+    "compile:scss": "sgmf-scripts --compile css",
+    "watch": "sgmf-scripts --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:wirecard/salesforce-ee.git"
+  },
+  "author": "Sebastian Ninse <s.ninse@dotsource.de>",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-subset": "^1.5.0",
+    "css-loader": "^0.28.11",
+    "eslint": "^3.2.2",
+    "eslint-config-airbnb-base": "^5.0.1",
+    "eslint-plugin-import": "^1.12.0",
+    "eslint-plugin-sitegenesis": "~1.0.0",
+    "istanbul": "^0.4.4",
+    "mocha": "^5.2.0",
+    "node-sass": "^4.9.0",
+    "postcss-loader": "^2.1.5",
+    "proxyquire": "1.7.4",
+    "request-promise": "^4.2.2",
+    "sass-loader": "^7.0.3",
+    "sgmf-scripts": "^2.1.1",
+    "shelljs": "^0.8.2",
+    "sinon": "^1.17.4",
+    "style-loader": "^0.21.0",
+    "stylelint": "^8.2.0",
+    "stylelint-config-standard": "^17.0.0",
+    "stylelint-scss": "^2.1.0",
+    "url": "^0.11.0"
+  },
+  "dependencies": {
+    "cleave.js": "^1.0.2",
+    "jquery": "^3.1.1"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "ie >= 10"
+  ],
+  "paths": {
+    "base": "../storefront-reference-architecture/cartridges/app_storefront_base/"
+  }
+}
