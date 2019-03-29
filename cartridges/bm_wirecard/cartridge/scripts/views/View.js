@@ -59,8 +59,6 @@ var View = Class.extend({
         templateName = templateName || this.template;
         // provide reference to View itself
         this.View = this;
-        // provide Meta
-        this.Meta = require('~/cartridge/scripts/meta');
         // backward compatibility
         this.CurrentForms = session.forms;
         this.CurrentHttpParameterMap = request.httpParameterMap;
