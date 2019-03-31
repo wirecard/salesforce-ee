@@ -1,4 +1,5 @@
 {
+  "root": true,
   "rules": {
     "accessor-pairs": "off",
     "array-callback-return": "error",
@@ -315,7 +316,7 @@
     ],
     "key-spacing": ["warn", {
       "align": {
-        "beforeColon": true,
+        "beforeColon": false,
         "afterColon": true,
         "on": "colon"
       }
@@ -354,7 +355,7 @@
     "lines-around-directive": [
       "error",
       {
-        "before": "always",
+        "before": "never",
         "after": "always"
       }
     ],
@@ -644,19 +645,18 @@
     "prefer-numeric-literals": "off",
     "no-use-before-define": 1
   },
-  "overrides": [ 	{
+  "overrides": [{
     "files": [
-      "cartridges/*/cartridge/scripts/**/*.ds",
-      "cartridges/*/cartridge/scripts/**/*.js",
-      "cartridges/*/cartridge/controllers/**/*.js",
-      "cartridges/*/cartridge/controllers/**/*.ds",
-      "cartridges/modules/**/*.js",
-      "cartridges/modules/**/*.ds"
+      "cartridge/scripts/**/*.ds",
+      "cartridge/scripts/**/*.js",
+      "cartridge/controllers/**/*.js",
+      "cartridge/controllers/**/*.ds"
     ],
     "parserOptions": {
       "ecmaVersion": 5
     },
     "env": {
+      "amd": true,
       "es6": true,
       "commonjs": true
     },
@@ -673,7 +673,7 @@
       "PIPELET_ERROR": true
     }
   }, {
-    "files": [ "cartridges/*/cartridge/static/**/*.js" ],
+    "files": [ "cartridge/static/**/*.js" ],
     "env": {
       "browser": true,
       "jquery": true
@@ -681,5 +681,5 @@
     "globals": {
       "app": true
     }
-  } ]
+  }]
 }

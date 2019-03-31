@@ -1,3 +1,4 @@
+/* eslint-disable */
 'use strict';
 
 var baseCheckout = require('base/checkout/checkout');

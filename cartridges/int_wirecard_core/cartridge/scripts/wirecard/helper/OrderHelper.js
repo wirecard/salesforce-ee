@@ -3,8 +3,8 @@
 /**
  * Retrieve wirecard payment instrument data from dw.order.Order
  *
- * @param {dw.order.Order}
- * @returns {Object}
+ * @param {dw.order.Order} order - an instance of dw.order.Order
+ * @returns {Object} - containing payment gateway paymentMethodID & paymentInstrument if used for given order
  */
 function getWirecardOrderPayment(order) {
     var result = { paymentMethodID: '' };
@@ -18,6 +18,6 @@ function getWirecardOrderPayment(order) {
         }
     }
     return result;
-};
+}
 
 exports.getWirecardOrderPayment = getWirecardOrderPayment;

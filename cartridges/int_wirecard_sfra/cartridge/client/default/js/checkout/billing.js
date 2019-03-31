@@ -27,7 +27,7 @@ function updatePaymentInformation(order) {
                 + '</span></div>';
         } else if (/^WCD/.test(paymentMethodData.paymentMethod)) {
             // fallback for all methods without specific payment information
-            if (paymentMethodData.hasOwnProperty('methodImg')) {
+            if (Object.prototype.hasOwnProperty.call(paymentMethodData, 'methodImg')) {
                 htmlToAppend += $('<img/>', {
                     src: paymentMethodData.methodImg,
                     class: 'wc-logo'
@@ -51,6 +51,6 @@ base.paymentTabs = function () {
         // hide other payment methods form
         $('.credit-card-selection-new').find('.tab-pane').removeClass('active');
     });
-}
+};
 
 module.exports = base;

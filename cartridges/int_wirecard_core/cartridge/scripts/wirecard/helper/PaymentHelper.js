@@ -5,10 +5,10 @@
  */
 var methodsWithForms = {
     WCD_GIROPAY: {
-        'bic': 'text'
+        bic: 'text'
     },
     WCD_IDEAL: {
-        'bic': 'select'
+        bic: 'select'
     }
 };
 
@@ -17,23 +17,22 @@ module.exports = {
      * Check if given payment method has form elements
      *
      * @param {string} methodName - payment method id
-     * @returns {boolean}
+     * @returns {boolean} - true if form exists for methodName
      */
-    hasPaymentForm: function(methodName) {
+    hasPaymentForm: function (methodName) {
         return Object.prototype.hasOwnProperty.call(methodsWithForms, methodName);
     },
 
     /**
      * Retrieve form values for given payment method
-     *
      * @param {dw.wb.Form} form - checkout billing form
      * @param {string} methodID - payment method id
-     * @returns {boolean}
+     * @returns {mixed} - key / value pairs for methodID's form
      */
-    getFormData: function(form, methodID) {
+    getFormData: function (form, methodID) {
         var result = {};
         if (form[methodID]) {
-            Object.keys(methodsWithForms[methodID]).forEach(function(k) {
+            Object.keys(methodsWithForms[methodID]).forEach(function (k) {
                 // FIXME special handling for dropdowns
                 result[k] = form[methodID][k].value;
             });
@@ -43,10 +42,9 @@ module.exports = {
 
     /**
      * Retrieve image for given payment method
-     *
      * @param {string} methodID - payment method id
-     * @param {boolean} asURLObject
-     * @returns {boolean}
+     * @param {boolean} asURLObject - if true return image as dw.web.URL
+     * @returns {mixed} - payment method logo
      */
     getPaymentImage: function (methodID, asURLObject) {
         var PaymentMgr = require('dw/order/PaymentMgr');

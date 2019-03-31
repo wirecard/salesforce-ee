@@ -1,10 +1,8 @@
+/* eslint-disable */
 'use strict';
 
 /* API Includes */
-var Resource = require('dw/web/Resource');
-var Site = require('dw/system/Site').getCurrent();
 var Transaction = require('dw/system/Transaction');
-var wcLogger = require('dw/system/Logger').getLogger('wirecard');
 
 var collections = require('*/cartridge/scripts/util/collections');
 /**
@@ -49,15 +47,12 @@ function Handle(basket, paymentInformation) {
  * @return {Object} returns an error object
  */
 function Authorize(orderNumber, paymentInstrument, paymentProcessor) {
-    var methodName = paymentInstrument.paymentMethod;
-    var result;
     var success;
 
-    if (true === success) {
+    if (success === true) {
         return { authorized: true };
-    } else {
-        return { error: true };
     }
+    return { error: true };
 }
 
 /*

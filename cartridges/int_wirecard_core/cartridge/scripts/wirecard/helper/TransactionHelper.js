@@ -1,4 +1,6 @@
+/* eslint-disable */
 'use strict';
+
 /* API includes */
 var wcLogger = require('dw/system/Logger').getLogger('wirecard');
 
@@ -20,12 +22,11 @@ var TransactionHelper = {
     /**
      * Retrieve wirecard transaction data from dw.order.Order
      *
-     * @param {dw.order.Order}
-     * @returns {Object}
+     * @param {dw.order.Order} order - current order
+     * @returns {Object} - transaction data
      */
-    getWirecardTransactionDataFromOrder: function(order) {
+    getWirecardTransactionDataFromOrder: function (order) {
         var transactionData = {};
-        var orderHelper = require('*/cartridge/scripts/wirecard/helper/OrderHelper');
 
         // TODO remove dummy data
         var Money = require('dw/value/Money');

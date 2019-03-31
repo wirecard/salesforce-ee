@@ -1,6 +1,6 @@
 'use strict';
 
-var packageJson         = require('int_wirecard_controllers/package.json');
+var packageJson = require('int_wirecard_controllers/package.json');
 var controllerCartridge = packageJson.controllerCartridge;
 
 /* API Includes */
@@ -13,7 +13,7 @@ var app = require(controllerCartridge + '/cartridge/scripts/app');
  * Creates PaymentInstrument and returns 'success'.
  */
 function Handle(args) {
-    var cart            = Cart.get(args.Basket);
+    var cart = Cart.get(args.Basket);
     var paymentMethodId = args.PaymentMethodID;
 
     require('dw/system/Transaction').wrap(function () {
@@ -21,7 +21,7 @@ function Handle(args) {
         cart.createPaymentInstrument(paymentMethodId, cart.getNonGiftCertificateAmount());
     });
 
-    return {success: true};
+    return { success: true };
 }
 
 /**
@@ -36,12 +36,13 @@ function Authorize(args) {
     var paymentData = orderHelper.getWirecardOrderPayment(order);
     var paymentInstrument = paymentData.paymentInstrument;
 
+    var resultObj;
     try {
         // handles all wirecard payments except credit card (seamless integration)
         var redirectPayment = require('*/cartridge/scripts/wirecard/RedirectPayment');
         var responseData = redirectPayment.callService(paymentData.paymentMethodID, order, paymentInstrument, formData);
 
-        var resultObj = responseData.getObject();
+        resultObj = responseData.getObject();
 
         if (!resultObj) {
             if (responseData.error != 'undefined') {
@@ -53,16 +54,16 @@ function Authorize(args) {
     } catch (err) {
         wcLogger.error('Exception while processing the API-Call: ' + err.fileName + ': ' + err.message + '\n' + err.stack);
 
-        return {error: true, errorMessage: err};
+        return { error: true, errorMessage: err };
     }
 
     if (resultObj.error) {
-        return {error: true, errorMessage: resultObj.msg};
+        return { error: true, errorMessage: resultObj.msg };
     }
 
     // TODO here the transaction data would have to be saved with the order
 
-    return {redirect: true, url: resultObj.redirectUrl};
+    return { redirect: true, url: resultObj.redirectUrl };
 }
 
 exports.Handle = Handle;

@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 'use strict';
 
 var collections = require('*/cartridge/scripts/util/collections');
@@ -48,8 +47,8 @@ function Payment(currentBasket, currentCustomer, countryCode) {
     base.call(this, currentBasket, currentCustomer, countryCode);
 
     var paymentInstruments = currentBasket.paymentInstruments;
-    this.selectedPaymentInstruments = paymentInstruments ?
-        getSelectedPaymentInstruments(paymentInstruments) : null;
+    this.selectedPaymentInstruments = paymentInstruments
+        ? getSelectedPaymentInstruments(paymentInstruments) : null;
 }
 
 Payment.prototype = Object.create(base.prototype);

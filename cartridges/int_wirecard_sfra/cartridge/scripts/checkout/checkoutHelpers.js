@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 'use strict';
 
 var base = module.superModule;
@@ -15,11 +14,10 @@ function validateCreditCard(form) {
     var result = {};
     var currentBasket = BasketMgr.getCurrentBasket();
 
-    // dotsource custom code: form.paymentMethod.value needs to be checked prior to validating the credit form
+    // form.paymentMethod.value needs to be checked prior to validating the credit form
     if (!form.paymentMethod.value) {
         if (currentBasket.totalGrossPrice.value > 0) {
-            result[form.paymentMethod.htmlName] =
-                Resource.msg('error.no.selected.payment.method', 'creditCard', null);
+            result[form.paymentMethod.htmlName] = Resource.msg('error.no.selected.payment.method', 'creditCard', null);
         }
 
         return result;

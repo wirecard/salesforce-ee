@@ -1,4 +1,16 @@
+# exclude js bundles
 cartridges/**/cartridge/static/
+
+# exclude sfcc standard scripts
+cartridges/**/cartridge/scripts/app.js
+cartridges/**/cartridge/scripts/guard.js
+cartridges/**/cartridge/scripts/object.js
+cartridges/**/cartridge/scripts/util/Browsing.js
+cartridges/**/cartridge/scripts/util/Class.js
+cartridges/**/cartridge/scripts/util/Response.js
+cartridges/**/cartridge/scripts/view.js
+cartridges/**/cartridge/scripts/views/View.js
+
 coverage/
 bin/
 documentation/
