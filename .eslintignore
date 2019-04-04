@@ -11,6 +11,9 @@ cartridges/**/cartridge/scripts/util/Response.js
 cartridges/**/cartridge/scripts/view.js
 cartridges/**/cartridge/scripts/views/View.js
 
+# exclude json files as long as codacy use wrong linter
+**/*.json
+
 coverage/
 bin/
 documentation/
