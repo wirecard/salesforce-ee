@@ -1,0 +1,18 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<style>
+    .payment-method-options .form-row       { margin-bottom: 0; width: 90%; }
+    .payment-method-options .form-row input { margin-bottom: 0; }
+</style>
+
+<!--- WCD_GIROPAY --->
+<div id="PaymentMethod_WCD_GIROPAY" class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='WCD_GIROPAY'}">payment-method-expanded</isif>" data-method="WCD_GIROPAY">
+    <isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.WCD_GIROPAY.bic}" type="input" />
+</div>
+
+<!--- WCD_IDEAL --->
+<div id="PaymentMethod_WCD_IDEAL" class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='WCD_IDEAL'}">payment-method-expanded</isif>" data-method="WCD_IDEAL">
+    <isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.WCD_IDEAL.bic}" type="select" />
+</div>
+
+<!--- WCD_SOFORT --->
+<div id="PaymentMethod_WCD_SOFORT" class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='WCD_SOFORT'}">payment-method-expanded</isif>" data-method="WCD_SOFORT"></div>

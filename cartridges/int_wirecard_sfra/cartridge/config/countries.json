@@ -1,0 +1,16 @@
+[{
+  "id": "en_US",
+  "currencyCode": "USD"
+}, {
+  "id": "en_GB",
+  "currencyCode": "GBP"
+}, {
+  "id": "fr_FR",
+  "currencyCode": "EUR"
+}, {
+  "id": "it_IT",
+  "currencyCode": "EUR"
+}, {
+  "id": "de_DE",
+  "currencyCode": "EUR"
+}]

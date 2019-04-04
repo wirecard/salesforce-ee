@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19">
+    <field formid="stateCode" label="label.input.state" type="string" mandatory="true" binding="stateCode" missing-error="error.message.required" value-error="address.field.invalid">
+		<options>
+
+			<option optionid="" label="resource.select" value=""/>
+
+			<!-- German bundeslander -->
+			<option optionid="BW"	label="state.de.BW" value="BW" />
+			<option optionid="BY"	label="state.de.BY" value="BY" />
+			<option optionid="BE"	label="state.de.BE" value="BE" />
+			<option optionid="BB"	label="state.de.BB" value="BB" />
+			<option optionid="HB"	label="state.de.HB" value="HB" />
+			<option optionid="HH"	label="state.de.HH" value="HH" />
+			<option optionid="HE"	label="state.de.HE" value="HE" />
+			<option optionid="MV"	label="state.de.MV" value="MV" />
+			<option optionid="NI"	label="state.de.NI" value="NI" />
+			<option optionid="NW"	label="state.de.NW" value="NW" />
+			<option optionid="RP"	label="state.de.RP" value="RP" />
+			<option optionid="SL"	label="state.de.SL" value="SL" />
+			<option optionid="SN"	label="state.de.SN" value="SN" />
+			<option optionid="ST"	label="state.de.ST" value="ST" />
+			<option optionid="SH"	label="state.de.SH" value="SH" />
+			<option optionid="TH"	label="state.de.TH" value="TH" />
+
+		</options>
+	</field>
+
+</form>

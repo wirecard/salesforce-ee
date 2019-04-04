@@ -1,0 +1,34 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<style>
+    .payment-method-options .label-inline label img {
+        vertical-align: middle;
+        max-height: 50px;
+        max-width: 60px;
+        margin: 0 8px 0 0;
+    }
+</style>
+<div class="payment-method-options form-indent">
+    <isscript>
+        var paymentHelper = require('int_wirecard_core/cartridge/scripts/wirecard/helper/PaymentHelper');
+    </isscript>
+    <isloop items="${pdict.CurrentForms.billing.paymentMethods.selectedPaymentMethodID.options}" var="paymentMethodType">
+
+        <iscomment>Ignore GIFT_CERTIFICATE method, GCs are handled separately before other payment methods.</iscomment>
+        <isif condition="${paymentMethodType.value.equals(dw.order.PaymentInstrument.METHOD_GIFT_CERTIFICATE)}"><iscontinue/></isif>
+
+        <div class="form-row label-inline">
+            <isset name="radioID" value="${paymentMethodType.value}" scope="page"/>
+            <label for="is-${radioID}">
+                <isscript>
+                    var methodImg = paymentHelper.getPaymentImage(paymentMethodType.value);
+                </isscript>
+                <input id="is-${radioID}" type="radio" class="input-radio" name="${pdict.CurrentForms.billing.paymentMethods.selectedPaymentMethodID.htmlName}" value="${paymentMethodType.htmlValue}" <isif condition="${paymentMethodType.value == pdict.CurrentForms.billing.paymentMethods.selectedPaymentMethodID.htmlValue}">checked="checked"</isif> />
+                <isif condition="${ methodImg }">
+                    <img src="${ methodImg }"/>
+                </isif>
+                <isprint value="${Resource.msg(paymentMethodType.label,'forms',null)}"/>
+            </label>
+        </div>
+
+    </isloop>
+</div>

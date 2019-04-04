@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<payment-settings xmlns="http://www.demandware.com/xml/impex/paymentsettings/2009-09-15">
+    <payment-method method-id="WCD_SOFORT">
+        <name xml:lang="x-default">Wirecard Sofort</name>
+        <enabled-flag>true</enabled-flag>
+        <processor-id>WIRECARD</processor-id>
+    </payment-method>
+
+    <payment-method method-id="WCD_IDEAL">
+        <name xml:lang="x-default">Wirecard iDEAL</name>
+        <enabled-flag>true</enabled-flag>
+        <processor-id>WIRECARD</processor-id>
+    </payment-method>
+
+</payment-settings>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<payment-settings xmlns="http://www.demandware.com/xml/impex/paymentsettings/2009-09-15">
+    <payment-method method-id="WCD_SOFORT">
+        <name xml:lang="x-default">Wirecard Sofort</name>
+        <image>images/payment/wirecard/sofort.svg</image>
+        <enabled-flag>true</enabled-flag>
+        <processor-id>WIRECARD</processor-id>
+        <currencies>
+            <currency>EUR</currency>
+            <currency>CHF</currency>
+            <currency>CZK</currency>
+            <currency>HUF</currency>
+            <currency>PLN</currency>
+            <currency>GBP</currency>
+        </currencies>
+    </payment-method>
+
+    <payment-method method-id="WCD_IDEAL">
+        <name xml:lang="x-default">Wirecard iDEAL</name>
+        <image>images/payment/wirecard/IDEAL_Logo.png</image>
+        <enabled-flag>true</enabled-flag>
+        <processor-id>WIRECARD</processor-id>
+        <currencies>
+            <currency>EUR</currency>
+        </currencies>
+    </payment-method>
+
+    <payment-method method-id="WCD_GIROPAY">
+        <name xml:lang="x-default">Wirecard giropay</name>
+        <enabled-flag>true</enabled-flag>
+        <processor-id>WIRECARD</processor-id>
+    </payment-method>
+
+</payment-settings>

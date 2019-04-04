@@ -1,0 +1,4 @@
+{
+    "hooks": "./cartridge/scripts/hooks.json",
+    "controllerCartridge": "app_storefront_controllers"
+}

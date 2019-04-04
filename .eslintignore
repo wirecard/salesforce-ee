@@ -1,0 +1,22 @@
+# exclude js bundles
+cartridges/**/cartridge/static/
+
+# exclude sfcc standard scripts
+cartridges/**/cartridge/scripts/app.js
+cartridges/**/cartridge/scripts/guard.js
+cartridges/**/cartridge/scripts/object.js
+cartridges/**/cartridge/scripts/util/Browsing.js
+cartridges/**/cartridge/scripts/util/Class.js
+cartridges/**/cartridge/scripts/util/Response.js
+cartridges/**/cartridge/scripts/view.js
+cartridges/**/cartridge/scripts/views/View.js
+
+# exclude json files as long as codacy use wrong linter
+**/*.json
+
+coverage/
+bin/
+documentation/
+metadata/
+node_modules/
+tmp/
