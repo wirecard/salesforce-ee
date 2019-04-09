@@ -1,8 +1,12 @@
 {
   "hooks": [
     {
-      "name": "app.payment.processor.WIRECARD",
-      "script": "./wirecard/processor/WIRECARD"
+      "name": "app.payment.processor.PAYMENTGATEWAY",
+      "script": "./paymentgateway/processor/PAYMENTGATEWAY"
+    },
+    {
+      "name": "int.wirecard.handlenotify",
+      "script": "./paymentgateway/handleNotify"
     }
   ]
 }

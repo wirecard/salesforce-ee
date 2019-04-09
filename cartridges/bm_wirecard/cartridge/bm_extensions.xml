@@ -1,27 +1,45 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <extensions xmlns="http://www.demandware.com/xml/bmmodules/2007-12-11" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.demandware.com/xml/bmmodules/2007-12-11 bmext.xsd">
-    <menuitem id="wcd" position="77489" site="true">
-        <name xml:lang="x-default">WCD</name>
+    <menuitem id="PaymentGateway" position="77489" site="true">
+        <name xml:lang="x-default">PaymentGateway</name>
         <short_description xml:lang="x-default">
-            wcd cartridge extension
+            PaymentGateway cartridge extension
         </short_description>
         <icon>icons/star_yellow_add.gif</icon>
     </menuitem>
-    <menuaction id="wcd_admin01" menupath="wcd" position="10" site="true">
+    <menuaction id="paymentgateway_admin01" menupath="PaymentGateway" position="10" site="true">
         <name xml:lang="x-default">Transactions</name>
-        <short_description xml:lang="x-default">wcd transactions overview</short_description>
+        <short_description xml:lang="x-default">Payment gateway transactions overview</short_description>
         <description xml:lang="x-default">
-            Overview of wcd payment transaction with processing options: cancel, refund, capture
+            Overview of payment transactions with processing options: cancel, refund, capture
         </description>
-        <exec pipeline="WCD" node="Transactions"/>
+        <exec pipeline="PaymentGateway" node="Transactions"/>
         <sub-pipelines>
-            <pipeline name="WCD-Transactions" />
-            <pipeline name="WCD-TransactionDetail" />
-            <pipeline name="WCD-ExecuteOperation" />
+            <pipeline name="PaymentGateway-Transactions" />
+            <pipeline name="PaymentGateway-TransactionDetail" />
+            <pipeline name="PaymentGateway-ExecuteOperation" />
+            <pipeline name="PaymentGateway-GetTransactionXML" />
         </sub-pipelines>
         <parameters>
             <parameter name="menuname" value="Transactions"/>
-            <parameter name="mainmenuname" value="WCD"/>
+            <parameter name="mainmenuname" value="PaymentGateway"/>
+        </parameters>
+        <icon>icons/star_yellow_new.gif</icon>
+    </menuaction>
+    <menuaction id="paymentgateway_admin02" menupath="PaymentGateway" position="20" site="true">
+        <name xml:lang="x-default">Test Http User /Password</name>
+        <short_description xml:lang="x-default">test http credentials</short_description>
+        <description xml:lang="x-default">
+            Test http user / password for all payment methods
+        </description>
+        <exec pipeline="PaymentGateway" node="HttpAccessOverview"/>
+        <sub-pipelines>
+            <pipeline name="PaymentGateway-HttpAccessOverview" />
+            <pipeline name="PaymentGateway-HttpAccessTest" />
+        </sub-pipelines>
+        <parameters>
+            <parameter name="menuname" value="Test http user/password"/>
+            <parameter name="mainmenuname" value="PaymentGateway"/>
         </parameters>
         <icon>icons/star_yellow_new.gif</icon>
     </menuaction>

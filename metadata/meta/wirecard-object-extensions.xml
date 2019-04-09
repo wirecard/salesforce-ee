@@ -2,56 +2,291 @@
 <metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
     <type-extension type-id="SitePreferences">
         <custom-attribute-definitions>
-            <attribute-definition attribute-id="wireCardTestMode">
-                <display-name xml:lang="x-default">Use the Test-Service</display-name>
-                <description xml:lang="x-default">The Payment Service is testable by using the Test-Service with Test Merchant Account ID</description>
-                <type>boolean</type>
-                <mandatory-flag>false</mandatory-flag>
-                <default-value>true</default-value>
-            </attribute-definition>
-            <attribute-definition attribute-id="wireCardDebugMode">
+            <attribute-definition attribute-id="paymentGatewayDebugMode">
                 <display-name xml:lang="x-default">Debug mode</display-name>
                 <description xml:lang="x-default">Write request xml to debug log (works only with sandboxes / development)</description>
                 <type>boolean</type>
                 <mandatory-flag>false</mandatory-flag>
                 <default-value>true</default-value>
             </attribute-definition>
-            <attribute-definition attribute-id="wireCardShopName">
-                <display-name xml:lang="x-default">WireCard Shop Name</display-name>
+            <attribute-definition attribute-id="paymentGatewayShopName">
+                <display-name xml:lang="x-default">Shop Name</display-name>
+                <description xml:lang="x-default">Max length: 9 characters. All characters exceeding this limit will be ignored!</description>
                 <type>string</type>
-                <localizable-flag>true</localizable-flag>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
                 <default-value>Web Shop</default-value>
             </attribute-definition>
-            <attribute-definition attribute-id="wireCardIdealMerchantAccountID">
-                <display-name xml:lang="x-default">WireCard Merchant-Account-ID (iDeal)</display-name>
+            <attribute-definition attribute-id="paymentGatewayAddDescriptorToRequest">
+                <display-name xml:lang="x-default">Send descriptor</display-name>
+                <description xml:lang="x-default">If "Yes" the parameter descriptor is included in request data sent to wpg.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayUrlSalt">
+                <display-name xml:lang="x-default">Url salt</display-name>
+                <description xml:lang="x-default">Salt for calculating url fingerprint sha512 hash</description>
+                <type>string</type>
+                <mandatory-flag>true</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>5</min-length>
+                <default-value>-oc.nMIXT+JnR9Ka</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayIdealMerchantAccountID">
+                <display-name xml:lang="x-default">iDEAL: Merchant-Account-ID</display-name>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
                 <default-value>4aeccf39-0d47-47f6-a399-c05c1f2fc819</default-value>
             </attribute-definition>
-            <attribute-definition attribute-id="wireCardSofortMerchantAccountID">
-                <display-name xml:lang="x-default">WireCard Merchant-Account-ID (sofortbanking)</display-name>
+            <attribute-definition attribute-id="paymentGatewaySofortMerchantAccountID">
+                <display-name xml:lang="x-default">sofort: Merchant-Account-ID</display-name>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
                 <default-value>6c0e7efd-ee58-40f7-9bbd-5e7337a052cd</default-value>
             </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayPaypalMerchantAccountID">
+                <display-name xml:lang="x-default">PayPal: Merchant-Account-ID</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>8695f3e4-76e8-414b-96cd-a1e5dafcf20c</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayPaypalHttpUser">
+                <display-name xml:lang="x-default">PayPal: Http user</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>16390-testing</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayPaypalHttpPassword">
+                <display-name xml:lang="x-default">PayPal: Http password</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>3!3013=D3fD8X7</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayPaypalInitialTransactionType">
+                <display-name xml:lang="x-default">PayPal: Transaction type for place order</display-name>
+                <description xml:lang="x-default">Transaction type of request which is triggered when placing an order in the store frontend</description>
+                <type>enum-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <value-definitions>
+                    <value-definition>
+                        <display xml:lang="x-default">authorization</display>
+                        <value>authorization</value>
+                    </value-definition>
+                    <value-definition default="true">
+                        <display xml:lang="x-default">debit</display>
+                        <value>debit</value>
+                    </value-definition>
+                </value-definitions>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewaySendAdditionalData">
+                <display-name xml:lang="x-default">Send additional request data</display-name>
+                <description xml:lang="x-default">If "yes" additional data (fps) is added to request</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewaySendBasketData">
+                <display-name xml:lang="x-default">Send basket request data</display-name>
+                <description xml:lang="x-default">If "yes" basket information is added to request</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
         </custom-attribute-definitions>
         <group-definitions>
-            <attribute-group group-id="WIRECARD">
-                <display-name xml:lang="x-default">WireCard Settings</display-name>
-                <attribute attribute-id="wireCardTestMode"/>
-                <attribute attribute-id="wireCardDebugMode"/>
-                <attribute attribute-id="wireCardShopName"/>
-                <attribute attribute-id="wireCardIdealMerchantAccountID"/>
-                <attribute attribute-id="wireCardSofortMerchantAccountID"/>
+            <attribute-group group-id="PAYMENTGATEWAY">
+                <display-name xml:lang="x-default">Payment gateway Settings</display-name>
+                <attribute attribute-id="paymentGatewayDebugMode"/>
+                <attribute attribute-id="paymentGatewayShopName"/>
+                <attribute attribute-id="paymentGatewayAddDescriptorToRequest"/>
+                <attribute attribute-id="paymentGatewayUrlSalt"/>
+                <attribute attribute-id="paymentGatewayIdealMerchantAccountID"/>
+                <attribute attribute-id="paymentGatewaySofortMerchantAccountID"/>
+                <attribute attribute-id="paymentGatewayPaypalMerchantAccountID"/>
+                <attribute attribute-id="paymentGatewayPaypalHttpUser"/>
+                <attribute attribute-id="paymentGatewayPaypalHttpPassword"/>
+                <attribute attribute-id="paymentGatewaySendAdditionalData"/>
+                <attribute attribute-id="paymentGatewaySendBasketData"/>
+                <attribute attribute-id="paymentGatewayPaypalInitialTransactionType"/>
             </attribute-group>
         </group-definitions>
     </type-extension>
 
+    <type-extension type-id="Order">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="paymentGatewayTransactions">
+                <display-name xml:lang="x-default">Transaction History</display-name>
+                <type>set-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayCapturedAmount">
+                <display-name xml:lang="x-default">Amount captured</display-name>
+                <description xml:lang="x-default">Payment-Gateway: amount that has been captured</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayRefundedAmount">
+                <display-name xml:lang="x-default">Amount refunded</display-name>
+                <description xml:lang="x-default">Payment-Gateway: amount that has been refunded</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="PaymentGateway">
+                <display-name xml:lang="x-default">Payment Gateway</display-name>
+                <attribute attribute-id="paymentGatewayTransactions"/>
+                <attribute attribute-id="paymentGatewayCapturedAmount"/>
+                <attribute attribute-id="paymentGatewayRefundedAmount"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+
+    <custom-type type-id="PaymentGatewayNotification">
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="transactionId">
+            <type>string</type>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="transactionData">
+                <type>text</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>true</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="orderNo">
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>true</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="transactionType">
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>true</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="parentTransactionId">
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>true</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="requestedAmount">
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>true</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="transactionState">
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>true</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="merchantAccountId">
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>true</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="responseText">
+                <type>text</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>true</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="processingAttempts">
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="main">
+                <display-name xml:lang="x-default">Payment Gateway Notification</display-name>
+                <attribute attribute-id="orderNo"/>
+                <attribute attribute-id="transactionType"/>
+                <attribute attribute-id="requestedAmount"/>
+                <attribute attribute-id="merchantAccountId"/>
+                <attribute attribute-id="parentTransactionId"/>
+                <attribute attribute-id="transactionState"/>
+                <attribute attribute-id="responseText"/>
+                <attribute attribute-id="transactionData"/>
+                <attribute attribute-id="processingAttempts"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+    <custom-type type-id="PaymentGatewayProcessedNotification">
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="transactionId">
+            <type>string</type>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="transactionData">
+                <type>text</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>true</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="orderNo">
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>true</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="transactionType">
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>true</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="systemErrorMessage">
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="main">
+                <display-name xml:lang="x-default">Payment Gateway Notification</display-name>
+                <attribute attribute-id="orderNo"/>
+                <attribute attribute-id="transactionType"/>
+                <attribute attribute-id="systemErrorMessage"/>
+                <attribute attribute-id="transactionData"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
 </metadata>

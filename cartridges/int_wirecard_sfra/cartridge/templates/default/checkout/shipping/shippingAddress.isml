@@ -1,0 +1,148 @@
+<isset name="addressFields" value="${pdict.forms.shippingForm.shippingAddress.addressFields}" scope="page"/>
+<isif condition="${shippingModel.shippingAddress}">
+    <isset name="shippingAddress" value="${shippingModel.shippingAddress}" scope="page" />
+    <iselse/>
+    <isset name="shippingAddress" value="${{}}" scope="page" />
+</isif>
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group required">
+            <label class="form-control-label" for="shippingFirstName"  >
+                ${Resource.msg('field.shipping.address.first.name','address',null)}
+            </label>
+            <input autofocus type="text" class="form-control shippingFirstName" id="shippingFirstName"
+                   value="${ shippingAddress.firstName || '' }" name="${ addressFields.firstName.htmlName }" required
+                   autocomplete="given-name">
+            <div class="invalid-feedback"><isprint value="${addressFields.firstName.error}"/></div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group required">
+            <label class="form-control-label" for="shippingLastName">
+                ${Resource.msg('field.shipping.address.last.name','address',null)}
+            </label>
+            <input type="text" class="form-control shippingLastName" id="shippingLastName"
+                   value="${ shippingAddress.lastName || '' }" name="${ addressFields.lastName.htmlName }" required
+                   autocomplete="family-name">
+            <div class="invalid-feedback"><isprint value="${addressFields.lastName.error}"/></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="form-group required">
+            <label class="form-control-label" for="shippingAddressOne">
+                ${Resource.msg('field.shipping.address.one','address',null)}
+            </label>
+            <input type="text" class="form-control shippingAddressOne" id="shippingAddressOne"
+                   value="${ shippingAddress.address1 || '' }" name="${ addressFields.address1.htmlName }" required
+                   autocomplete="shipping address-line1">
+            <div class="invalid-feedback"><isprint value="${addressFields.address1.error}"/></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="form-group">
+            <label class="form-control-label" for="shippingAddressTwo">
+                ${Resource.msg('field.shipping.address.two','address',null)}
+            </label>
+            <input type="text" class="form-control shippingAddressTwo" id="shippingAddressTwo"
+                   value="${ shippingAddress.address2 || '' }" name="${ addressFields.address2.htmlName }"
+                   autocomplete="shipping address-line2">
+            <div class="invalid-feedback"><isprint value="${addressFields.address2.error}"/></div>
+        </div>
+    </div>
+</div>
+
+<!--- make drop down--->
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group required">
+            <label class="form-control-label" for="shippingZipCode">
+                ${Resource.msg('field.shipping.address.zip.code','address',null)}
+            </label>
+            <input type="text" class="form-control shippingZipCode" id="shippingZipCode"
+                   value="${ shippingAddress.postalCode || '' }" name="${ addressFields.postalCode.htmlName }" required
+                   autocomplete="shipping postal-code">
+            <div class="invalid-feedback"><isprint value="${addressFields.postalCode.error}"/></div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group required">
+            <label class="form-control-label" for="shippingAddressCity">
+                ${Resource.msg('field.shipping.address.city','address',null)}
+            </label>
+            <input type="text" class="form-control shippingAddressCity" id="shippingAddressCity"
+                   value="${ shippingAddress.city || '' }" name="${ addressFields.city.htmlName }" required
+                   autocomplete="shipping address-level2">
+            <div class="invalid-feedback"><isprint value="${addressFields.city.error}"/></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group required">
+            <label class="form-control-label" for="shippingState">
+                ${Resource.msg('field.shipping.address.state','address',null)}
+            </label>
+            <select class="form-control shippingState custom-select" id="shippingState"
+                    name="${ addressFields.states.stateCode.htmlName }" required
+                    autocomplete="shipping address-level1">
+                <isloop items=${addressFields.states.stateCode.options} var="state">
+                    <option id="${state.id}" value="${state.htmlValue}" ${state.id === shippingAddress.stateCode ? 'selected' : ''}>${state.label || ' '}</option>
+                </isloop>
+            </select>
+            <div class="invalid-feedback"><isprint value="${addressFields.states.stateCode.error}"/></div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group required">
+            <label class="form-control-label" for="shippingCountry">
+                ${Resource.msg('field.shipping.address.country','address',null)}
+            </label>
+            <select class="form-control shippingCountry custom-select" id="shippingCountry"
+                    name="${ addressFields.country.htmlName }" required
+                    autocomplete="shipping country">
+                <option label=" "></option>
+                <isloop items=${addressFields.country.options} var="country">
+                    <option id="${country.id}" value="${country.htmlValue}" ${shippingAddress.countryCode && country.id === shippingAddress.countryCode.value ? 'selected' : ''}>${country.label}</option>
+                </isloop>
+            </select>
+            <div class="invalid-feedback"><isprint value="${addressFields.country.error}"/></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="form-group required">
+            <label class="form-control-label" for="shippingPhoneNumber">
+                ${Resource.msg('field.shipping.address.phone','address',null)}
+            </label>
+            <input type="tel" class="form-control shippingPhoneNumber" id="shippingPhoneNumber"
+                   value="${ shippingAddress.phone || '' }" name="${ addressFields.phone.htmlName }" required
+                   autocomplete="tel">
+            <div class="invalid-feedback"><isprint value="${addressFields.phone.error}"/></div>
+        </div>
+    </div>
+    <isif condition="${ !pdict.customer.registeredUser }" >
+        <div class="col-sm-12">
+            <div class="form-group
+                ${addressFields.email.mandatory === true ? 'required' : ''}
+                ${addressFields.email.htmlName}">
+                <label class="form-control-label" for="shippingEmail">
+                    ${Resource.msg('field.shipping.address.email','address',null)}
+                </label>
+                <input type="email" class="form-control shippingEmail" id="shippingEmail"
+                       value="${ pdict.order.orderEmail || '' }" name="${ addressFields.email.htmlName }" required
+                       autocomplete="shipping address-email">
+                <div class="invalid-feedback"><isprint value="${addressFields.email.error}" ></div>
+            </div>
+        </div>
+    </isif>
+</div>

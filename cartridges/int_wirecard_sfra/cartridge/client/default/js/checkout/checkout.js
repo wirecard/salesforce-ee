@@ -265,6 +265,9 @@ var formHelpers = require('base/checkout/formErrors');
                                     // go to appropriate stage and display error message
                                     defer.reject(data);
                                 }
+                            } else if (data.pgRedirectURL) {
+                                window.location.href = data.pgRedirectURL;
+                                defer.resolve(data);
                             } else {
                                 var continueUrl = data.continueUrl;
                                 var urlParams = {

@@ -1,0 +1,75 @@
+/**
+ * Base Recommendation Service Call Back
+ */
+var Class = require('~/cartridge/scripts/object-handling/libInheritance').Class;
+var Site = require('dw/system/Site');
+
+/**
+ * Base infrastructure class for service framework. If a service implementation needs to override
+ * a method, the overridden method can always be called using this._super();
+ *
+ * @class
+ * @augments Class
+ * Base class of all web services.
+ */
+var BaseService = Class.extend({
+/** @lends BaseService.prototype */
+
+    /**
+     *    @constructs AbstractHTTPService
+     *    Initialises the Base service and important properties for the HTTP Service
+     */
+    init : function( serviceName : String ) {
+        this.SERVICE_NAME = serviceName;
+        this.initializedService = null;
+    },
+
+    /**
+     * Gets the configured actual service that can be called.
+     */
+    getService : function() : Object {
+        if (!this.initializedService) {
+            var serviceName = this.SERVICE_NAME;
+
+            //using closures to preserve the current object reference
+            //only this way proper inheritance can be supported
+            for ( var attribute in this ) {
+                var type = typeof(this[attribute]);
+                if ( type == 'function' ) {
+                    this[attribute] = (function (fn, obj) {return function () {return fn.apply(obj, arguments);};})(this[attribute], this);
+                }
+            }
+            var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
+            //test site-specific service
+            var siteID = Site.current.ID;
+
+            var serviceNameCandidates : Array = [
+                //testing siteID as prefix to the service name
+                [siteID, serviceName ].join('-'),
+                //testing siteID as suffix to the service name
+                [serviceName, siteID ].join('-'),
+                // fallback to provided service name
+                serviceName
+            ]
+
+            //looping through candidates
+            for each (var candidateName in serviceNameCandidates) {
+                try {
+                    var service = LocalServiceRegistry.createService(candidateName, this);
+                    if (service != null) {
+                        this.initializedService = service;
+                    }
+                } catch(e) {
+                    //there is no site-specific service configured
+                }
+            }
+            if (!this.initializedService) {
+                throw new Error('No service configuration available for service: ' + serviceName);
+            }
+        }
+        return this.initializedService;
+    }
+});
+
+//Exports the function that can be extended by other service implementations
+module.exports = BaseService;

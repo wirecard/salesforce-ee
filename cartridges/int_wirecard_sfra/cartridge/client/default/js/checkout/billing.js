@@ -25,15 +25,15 @@ function updatePaymentInformation(order) {
                 + paymentMethodData.expirationMonth
                 + '/' + paymentMethodData.expirationYear
                 + '</span></div>';
-        } else if (/^WCD/.test(paymentMethodData.paymentMethod)) {
+        } else if (/^PG/.test(paymentMethodData.paymentMethod)) {
             // fallback for all methods without specific payment information
             if (Object.prototype.hasOwnProperty.call(paymentMethodData, 'methodImg')) {
                 htmlToAppend += $('<img/>', {
                     src: paymentMethodData.methodImg,
-                    class: 'wc-logo'
+                    class: 'pg-logo'
                 }).prop('outerHTML');
             }
-            htmlToAppend += $('<span/>', { html: paymentMethodData.paymentMethod }).text();
+            htmlToAppend += $('<span/>', { html: paymentMethodData.name }).text();
         }
     }
 

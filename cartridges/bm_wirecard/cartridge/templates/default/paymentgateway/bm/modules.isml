@@ -1,0 +1,12 @@
+<iscontent type="text/html" charset="UTF-8" compact="true">
+
+<!---
+    ISMODULE definitions used in this cartridge
+--->
+
+<!--- custom paging bar --->
+<ismodule template="paymentgateway/bm/pagingbar"
+    name="transactionpagingbar"
+    attribute="pageurl"
+    attribute="pagingmodel"
+>

@@ -1,7 +1,7 @@
 <isscript>
     var activePaymentInstruments = pdict.order.billing.payment.selectedPaymentInstruments || [];
     var paymentMethods = activePaymentInstruments.filter(function(method) {
-    return method.paymentMethod !== 'GIFT_CERTIFICATE';
+        return method.paymentMethod !== 'GIFT_CERTIFICATE';
     });
     // TODO get default method from site preferences?
     var activePaymentMethod = paymentMethods && paymentMethods.length ? paymentMethods[0].paymentMethod : 'CREDIT_CARD';
@@ -19,3 +19,12 @@
         <isinclude template="checkout/billing/paymentOptions/paymentOptionsContent" />
     </div>
 </div>
+
+<iscomment> --- PaymentGateway FPS --- </iscomment>
+<isif condition="${ require('dw/system/Site').getCurrent().getCustomPreferenceValue('paymentGatewaySendAdditionalData') }" >
+<script type="text/javascript" src="https://h.wirecard.com/fp/tags.js?org_id=6xxznhva&session_id=${ session.sessionID }"></script>
+<noscript>
+    <iframe style="width: 100px; height: 100px; border: 0; position: absolute; top: -5000px;"
+            src="https://h.wirecard.com/tags?org_id=6xxznhva&session_id=${ session.sessionID }"></iframe>
+</noscript>
+</isif>
