@@ -47,7 +47,7 @@ function Handle(basket, paymentInformation) {
  * @param {dw.order.PaymentProcessor} paymentProcessor -  The payment processor of the current payment method
  * @return {Object} returns an error object
  */
-function Authorize(orderNumber, paymentInstrument, paymentProcessor) {
+function Authorize(orderNumber, paymentInstrument, paymentProcessor) { // eslint-disable-line
     var OrderMgr = require('dw/order/OrderMgr');
     var order = OrderMgr.getOrder(orderNumber);
     var methodName = paymentInstrument.paymentMethod;

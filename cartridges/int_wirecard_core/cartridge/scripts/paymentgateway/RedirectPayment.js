@@ -16,7 +16,7 @@
      * @param {Object} formData - billing form data for used payment method
      * @returns {Object}
      */
-    function callService(methodName, order, paymentInstrument, formData) {
+    function callService(methodName, order, paymentInstrument, formData) { // eslint-disable-line
         var result = { error: true };
 
         var transactionHelper = require('*/cartridge/scripts/paymentgateway/helper/TransactionHelper');
