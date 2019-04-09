@@ -33,7 +33,7 @@ function getCouponData(transaction) {
                 while (proratedProductsIterator.hasNext()) {
                     var prLineItem = proratedProductsIterator.next();
                     var ppItem = proratedPrices.get(prLineItem);
-                    if (ppItem.value != 0) {
+                    if (ppItem.value !== 0) {
                         var taxValue = new Money(
                             ppItem.value - ppItem.value * 100 / (prLineItem.taxRate * 100 + 100),
                             ppItem.currencyCode

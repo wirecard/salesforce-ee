@@ -180,7 +180,7 @@ Transaction.prototype.getPayload = function () {
             result[k] = redirectUrls[k];
         });
     } else {
-        if (self['requested-amount'] != null && Number(self['requested-amount']) != 0) { // eslint-disable-line
+        if (Number(self['requested-amount']) !== 0) { // eslint-disable-line
             // either transaction amount is only part of..
             result['requested-amount'] = {
                 value: Number(self['requested-amount']).toFixed(2),

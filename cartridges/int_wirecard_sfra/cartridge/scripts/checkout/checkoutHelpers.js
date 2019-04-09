@@ -40,7 +40,7 @@ function validateCreditCard(form) {
 function handlePayments(order, orderNumber) {
     var result = {};
 
-    if (order.totalNetPrice !== 0.00) {
+    if (order.totalNetPrice !== 0) {
         var paymentInstruments = order.paymentInstruments;
 
         if (paymentInstruments.length === 0) {
