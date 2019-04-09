@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalVariableEntities>
+   <description>IMPORTANT! DO NOT CHANGE THE VARIABLE NAMES. OTHERWISE CI PROCESS DOES NOT WORK ANYMORE.</description>
+   <name>default</name>
+   <tag></tag>
+   <defaultProfile>true</defaultProfile>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>'your-sandbox.com'</initValue>
+      <name>SiteURL</name>
+   </GlobalVariableEntity>
+</GlobalVariableEntities>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>CheckoutGuest</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>322a4432-bc93-4d92-bf1b-2c46ec00339b</testCaseGuid>
+   <variable>
+      <defaultValue>findTestData('customers').getValue(3, 1)</defaultValue>
+      <description></description>
+      <id>5a33b896-f2b0-402c-968a-9e52edf5952d</id>
+      <masked>false</masked>
+      <name>address1</name>
+   </variable>
+</TestCaseEntity>
