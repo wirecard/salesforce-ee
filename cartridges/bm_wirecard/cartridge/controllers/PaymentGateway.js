@@ -21,15 +21,26 @@ exports.Transactions = guard.ensure(['get', 'https'], function () {
     var parameterMap = request.httpParameterMap;
     var pageSize = parameterMap.sz.intValue || 30;
     var start = parameterMap.start.intValue || 0;
+    var orderID = parameterMap.OrderID.value;
 
     var OrderMgr = require('dw/order/OrderMgr');
     var Order = require('dw/order/Order');
     // fetch all orders with payment gateway payment method
-    var orderResult = OrderMgr.queryOrders(
-        'custom.paymentGatewayTransactions != NULL AND status != {0}',
-        'orderNo desc',
-        Order.ORDER_STATUS_FAILED
-    );
+    var orderResult;
+    if (orderID) {
+        orderResult = OrderMgr.queryOrders(
+            'custom.paymentGatewayTransactions != NULL AND status != {0} AND UUID = {1}',
+            'orderNo desc',
+            Order.ORDER_STATUS_FAILED,
+            orderID
+        );
+    } else {
+        orderResult = OrderMgr.queryOrders(
+            'custom.paymentGatewayTransactions != NULL AND status != {0}',
+            'orderNo desc',
+            Order.ORDER_STATUS_FAILED
+        );
+    }
 
     var PagingModel = require('dw/web/PagingModel');
     var orderPagingModel = new PagingModel(orderResult, orderResult.count);

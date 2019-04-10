@@ -43,4 +43,11 @@
         </parameters>
         <icon>icons/star_yellow_new.gif</icon>
     </menuaction>
+    <dialogaction id="paymentGateway_Extension_1" xp_ref="xp_orders_payment" position="100" extern="true">
+        <name xml:lang="x-default">Payment Gateway Transactions</name>
+        <exec pipeline="PaymentGateway" node="Transactions"/>
+        <menuactions>
+            <menuaction-ref action-id="orders_manage"/>
+        </menuactions>
+    </dialogaction>
 </extensions>
