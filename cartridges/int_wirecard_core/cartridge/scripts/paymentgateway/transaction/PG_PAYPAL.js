@@ -3,6 +3,12 @@
 var Transaction = require('./Transaction');
 var Type = require('./Type').All;
 
+var preferenceMapping = {
+    addDescriptorToRequest: 'paymentGatewayPayPalAddDescriptorToRequest',
+    sendAdditionalData: 'paymentGatewayPayPalSendAdditionalData',
+    sendBasketData: 'paymentGatewayPayPalSendBasketData'
+};
+
 /**
  * Get transaction type for capture
  * @returns {string} - transaction type
@@ -81,8 +87,8 @@ function PayPal(order, args) {
     // default params
     var params = {
         paymentMethodID: 'paypal',
-        'transaction-type': this.getSitePreference('paymentGatewayPaypalInitialTransactionType').value,
-        'merchant-account-id': this.getSitePreference('paymentGatewayPaypalMerchantAccountID')
+        'transaction-type': this.getSitePreference('paymentGatewayPayPalInitialTransactionType').value,
+        'merchant-account-id': this.getSitePreference('paymentGatewayPayPalMerchantAccountID')
     };
     if (typeof args === 'object') {
         Object.keys(args).forEach(function (k) {
@@ -90,6 +96,7 @@ function PayPal(order, args) {
         });
     }
     var transaction = new Transaction(order, params);
+    transaction.preferenceMapping = preferenceMapping;
 
     // add methods to retrieve possible succeeding operations
     transaction.getCancelTransactionType = getCancelTransactionType;

@@ -18,7 +18,7 @@
                 <min-length>0</min-length>
                 <default-value>Web Shop</default-value>
             </attribute-definition>
-            <attribute-definition attribute-id="paymentGatewayAddDescriptorToRequest">
+            <attribute-definition attribute-id="paymentGatewayPayPalAddDescriptorToRequest">
                 <display-name xml:lang="x-default">Send descriptor</display-name>
                 <description xml:lang="x-default">If "Yes" the parameter descriptor is included in request data sent to wpg.</description>
                 <type>boolean</type>
@@ -50,32 +50,32 @@
                 <min-length>0</min-length>
                 <default-value>6c0e7efd-ee58-40f7-9bbd-5e7337a052cd</default-value>
             </attribute-definition>
-            <attribute-definition attribute-id="paymentGatewayPaypalMerchantAccountID">
-                <display-name xml:lang="x-default">PayPal: Merchant-Account-ID</display-name>
+            <attribute-definition attribute-id="paymentGatewayPayPalMerchantAccountID">
+                <display-name xml:lang="x-default">Merchant-Account-ID</display-name>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
                 <default-value>8695f3e4-76e8-414b-96cd-a1e5dafcf20c</default-value>
             </attribute-definition>
-            <attribute-definition attribute-id="paymentGatewayPaypalHttpUser">
-                <display-name xml:lang="x-default">PayPal: Http user</display-name>
+            <attribute-definition attribute-id="paymentGatewayPayPalHttpUser">
+                <display-name xml:lang="x-default">Http user</display-name>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
                 <default-value>16390-testing</default-value>
             </attribute-definition>
-            <attribute-definition attribute-id="paymentGatewayPaypalHttpPassword">
-                <display-name xml:lang="x-default">PayPal: Http password</display-name>
+            <attribute-definition attribute-id="paymentGatewayPayPalHttpPassword">
+                <display-name xml:lang="x-default">Http password</display-name>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
                 <default-value>3!3013=D3fD8X7</default-value>
             </attribute-definition>
-            <attribute-definition attribute-id="paymentGatewayPaypalInitialTransactionType">
-                <display-name xml:lang="x-default">PayPal: Transaction type for place order</display-name>
+            <attribute-definition attribute-id="paymentGatewayPayPalInitialTransactionType">
+                <display-name xml:lang="x-default">Transaction type for place order</display-name>
                 <description xml:lang="x-default">Transaction type of request which is triggered when placing an order in the store frontend</description>
                 <type>enum-of-string</type>
                 <mandatory-flag>false</mandatory-flag>
@@ -91,14 +91,14 @@
                     </value-definition>
                 </value-definitions>
             </attribute-definition>
-            <attribute-definition attribute-id="paymentGatewaySendAdditionalData">
+            <attribute-definition attribute-id="paymentGatewayPayPalSendAdditionalData">
                 <display-name xml:lang="x-default">Send additional request data</display-name>
                 <description xml:lang="x-default">If "yes" additional data (fps) is added to request</description>
                 <type>boolean</type>
                 <mandatory-flag>false</mandatory-flag>
                 <default-value>true</default-value>
             </attribute-definition>
-            <attribute-definition attribute-id="paymentGatewaySendBasketData">
+            <attribute-definition attribute-id="paymentGatewayPayPalSendBasketData">
                 <display-name xml:lang="x-default">Send basket request data</display-name>
                 <description xml:lang="x-default">If "yes" basket information is added to request</description>
                 <type>boolean</type>
@@ -108,19 +108,22 @@
         </custom-attribute-definitions>
         <group-definitions>
             <attribute-group group-id="PAYMENTGATEWAY">
-                <display-name xml:lang="x-default">Payment gateway Settings</display-name>
+                <display-name xml:lang="x-default">Payment gateway settings</display-name>
                 <attribute attribute-id="paymentGatewayDebugMode"/>
                 <attribute attribute-id="paymentGatewayShopName"/>
-                <attribute attribute-id="paymentGatewayAddDescriptorToRequest"/>
                 <attribute attribute-id="paymentGatewayUrlSalt"/>
                 <attribute attribute-id="paymentGatewayIdealMerchantAccountID"/>
                 <attribute attribute-id="paymentGatewaySofortMerchantAccountID"/>
-                <attribute attribute-id="paymentGatewayPaypalMerchantAccountID"/>
-                <attribute attribute-id="paymentGatewayPaypalHttpUser"/>
-                <attribute attribute-id="paymentGatewayPaypalHttpPassword"/>
-                <attribute attribute-id="paymentGatewaySendAdditionalData"/>
-                <attribute attribute-id="paymentGatewaySendBasketData"/>
-                <attribute attribute-id="paymentGatewayPaypalInitialTransactionType"/>
+            </attribute-group>
+            <attribute-group group-id="PAYMENTGATEWAY_PAYPAL">
+                <display-name xml:lang="x-default">Payment gateway settings for PayPal</display-name>
+                <attribute attribute-id="paymentGatewayPayPalMerchantAccountID"/>
+                <attribute attribute-id="paymentGatewayPayPalHttpUser"/>
+                <attribute attribute-id="paymentGatewayPayPalHttpPassword"/>
+                <attribute attribute-id="paymentGatewayPayPalAddDescriptorToRequest"/>
+                <attribute attribute-id="paymentGatewayPayPalSendAdditionalData"/>
+                <attribute attribute-id="paymentGatewayPayPalSendBasketData"/>
+                <attribute attribute-id="paymentGatewayPayPalInitialTransactionType"/>
             </attribute-group>
         </group-definitions>
     </type-extension>

@@ -106,17 +106,16 @@ exports.Notify = guard.ensure(['post', 'https'], function () {
         var notifyData = transactionHelper.parseTransactionResponse(notifyMessage, null);
         require('*/cartridge/scripts/paymentgateway/transaction/Logger').log(JSON.parse(notifyMessage), 'notify');
 
-        // check fingerprint
-        var fp;
+        var fingerprint;
         var orderHelper = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper');
         if (Object.prototype.hasOwnProperty.call(notifyData, 'customFields')
             && Object.prototype.hasOwnProperty.call(notifyData.customFields, 'fp')
         ) {
-            fp = notifyData.customFields.fp;
+            fingerprint = notifyData.customFields.fp;
         }
 
         // TODO verify signature (xmlsig)
-        if (fp === orderHelper.getOrderFingerprint(order)) {
+        if (fingerprint === orderHelper.getOrderFingerprint(order)) {
             var CustomObjectMgr = require('dw/object/CustomObjectMgr');
             Transaction.begin();
             // save notification as custom object

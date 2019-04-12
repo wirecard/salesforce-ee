@@ -1,6 +1,5 @@
 'use strict';
 
-var AbstractEntity = require('./Abstract');
 var BillingAddress = require('./Order/BillingAddress');
 var Coupons = require('./Order/Coupons');
 var GiftCertificateLineItems = require('./Order/GiftCertificateLineItems');
@@ -51,7 +50,7 @@ function Order(transaction) {
     };
     result['order-number'] = order.orderNo;
 
-    if (this.getSitePreference('paymentGatewaySendBasketData')) {
+    if (transaction.getSitePreference('sendBasketData')) {
         var shipping = new Shipping(transaction);
         var productLineItems = new ProductLineItems(transaction);
         var coupons = new Coupons(transaction);
@@ -68,19 +67,14 @@ function Order(transaction) {
         result['order-items'] = { 'order-item': orderItems };
     }
 
-    if (this.getSitePreference('paymentGatewaySendAdditionalData')) {
+    if (transaction.getSitePreference('sendAdditionalData')) {
         result['account-holder'] = new BillingAddress(transaction);
         result.shipping = new ShippingAddress(transaction);
-    } else {
-        // account-holder is mandatory
-        result['account-holder'] = new BillingAddress(transaction, true);
     }
 
     return result;
 }
 
 Order.getFixedContainerTotalAmount = getFixedContainerTotalAmount;
-
-Order.prototype = Object.create(AbstractEntity.prototype);
 
 module.exports = Order;

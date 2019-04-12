@@ -11,7 +11,13 @@ var Type = require('./Type');
  * @returns {string}
  */
 function getSitePreference(key) {
-    var result = Site.getCustomPreferenceValue(key);
+    var methodKey = key;
+    if (Object.prototype.hasOwnProperty.call(this, 'preferenceMapping')
+        && Object.keys(this.preferenceMapping).indexOf(key) > -1
+    ) {
+        methodKey = this.preferenceMapping[key];
+    }
+    var result = Site.getCustomPreferenceValue(methodKey);
     if (!result) {
         result = '';
     }
@@ -124,6 +130,61 @@ Transaction.prototype.hasReducedPayload = function () {
 };
 
 /**
+ * Retrieve order data: order items, shipping & billing address
+ * @returns {Object}
+ */
+Transaction.prototype.getOrderData = function () {
+    var self = this;
+    var result = {};
+
+    // for backend operations we can omit order parameters
+    var OrderEntity = require('./entity/Order');
+    if (!self.hasReducedPayload()) {
+        // locale, entry-mode
+        var customerLocale = self.order.customerLocaleID;
+        if (/^\w{2}_\w{2}$/.test(customerLocale)) {
+            result.locale = customerLocale.substr(0, 2);
+        }
+        result['entry-mode'] = 'ecommerce';
+        var descriptor = new (require('./entity/Descriptor'))(self);
+        Object.keys(descriptor).forEach(function (k) {
+            result[k] = descriptor[k];
+        });
+
+        if (this.getSitePreference('sendAdditionalData')) {
+            result['ip-address'] = self.order.remoteHost;
+            result.device = { fingerprint: session.sessionID };
+        }
+
+        var orderData = new (OrderEntity)(self);
+        Object.keys(orderData).forEach(function (k) {
+            result[k] = orderData[k];
+        });
+        // redirect urls
+        var redirectUrls = new (require('./entity/RedirectUrls'))(self.order);
+        Object.keys(redirectUrls).forEach(function (k) {
+            result[k] = redirectUrls[k];
+        });
+    } else {
+        if (Number(self['requested-amount']) !== 0) { // eslint-disable-line
+            // either transaction amount is only part of..
+            result['requested-amount'] = {
+                value: Number(self['requested-amount']).toFixed(2),
+                currency: self.order.currencyCode
+            };
+        } else {
+            // ..or complete order amount
+            var totalOrderAmount = OrderEntity.getFixedContainerTotalAmount(self.order);
+            result['requested-amount'] = {
+                value: totalOrderAmount.value,
+                currency: totalOrderAmount.currencyCode
+            };
+        }
+    }
+    return result;
+};
+
+/**
  * Retrieve request body json
  * @returns {Object}
  * @throws {Error} - if no transaction-type / merchant-account-id set
@@ -149,52 +210,12 @@ Transaction.prototype.getPayload = function () {
             value: String(self['merchant-account-id'])
         };
     }
-    // for backend operations we can omit order parameters
-    var OrderEntity = require('./entity/Order');
-    if (!self.hasReducedPayload()) {
-        // locale, entry-mode
-        var customerLocale = self.order.customerLocaleID;
-        if (/^\w{2}_\w{2}$/.test(customerLocale)) {
-            result.locale = customerLocale.substr(0, 2);
-        }
-        result['entry-mode'] = 'ecommerce';
-        var descriptor = new (require('./entity/Descriptor'))(self);
-        Object.keys(descriptor).forEach(function (k) {
-            result[k] = descriptor[k];
-        });
 
-        // FIXME send fps data for all transactions?
-        if (this.getSitePreference('paymentGatewaySendAdditionalData')) {
-            result['ip-address'] = self.order.remoteHost;
-            result.device = { fingerprint: session.sessionID };
-        }
-
-        var orderData = new (OrderEntity)(self);
-        Object.keys(orderData).forEach(function (k) {
-            result[k] = orderData[k];
-        });
-        // redirect urls
-        // TODO append only for certain transaction types
-        var redirectUrls = new (require('./entity/RedirectUrls'))(self.order);
-        Object.keys(redirectUrls).forEach(function (k) {
-            result[k] = redirectUrls[k];
-        });
-    } else {
-        if (Number(self['requested-amount']) !== 0) { // eslint-disable-line
-            // either transaction amount is only part of..
-            result['requested-amount'] = {
-                value: Number(self['requested-amount']).toFixed(2),
-                currency: self.order.currencyCode
-            };
-        } else {
-            // ..or complete order amount
-            var totalOrderAmount = OrderEntity.getFixedContainerTotalAmount(self.order);
-            result['requested-amount'] = {
-                value: totalOrderAmount.value,
-                currency: totalOrderAmount.currencyCode
-            };
-        }
-    }
+    // add order data
+    var orderData = self.getOrderData();
+    Object.keys(orderData).forEach(function (k) {
+        result[k] = orderData[k];
+    });
     // custom-fields
     if (Object.prototype.hasOwnProperty.call(self, 'customFields')) {
         result['custom-fields'] = { 'custom-field': self.customFields };

@@ -17,9 +17,9 @@ function getSitePreference(key) {
 
 var PreferencesMapping = {
     PG_PAYPAL: {
-        userName         : 'paymentGatewayPaypalHttpUser',
-        password         : 'paymentGatewayPaypalHttpPassword',
-        merchantAccountID: 'paymentGatewayPaypalMerchantAccountID'
+        userName         : 'paymentGatewayPayPalHttpUser',
+        password         : 'paymentGatewayPayPalHttpPassword',
+        merchantAccountID: 'paymentGatewayPayPalMerchantAccountID'
     }
 };
 

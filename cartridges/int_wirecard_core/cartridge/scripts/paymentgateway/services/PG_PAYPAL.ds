@@ -14,7 +14,7 @@ var PayPalService = AbstractPaymentGatewayService.extend({
      * @returns {String}
      */
     getHttpUsername: function() {
-        return this.getSitePreference('paymentGatewayPaypalHttpUser');
+        return this.getSitePreference('paymentGatewayPayPalHttpUser');
     },
 
     /**
@@ -22,7 +22,7 @@ var PayPalService = AbstractPaymentGatewayService.extend({
      * @returns {String}
      */
     getHttpPassword: function() {
-        return this.getSitePreference('paymentGatewayPaypalHttpPassword');
+        return this.getSitePreference('paymentGatewayPayPalHttpPassword');
     }
 });
 

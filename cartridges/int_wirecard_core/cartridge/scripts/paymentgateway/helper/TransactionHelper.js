@@ -62,12 +62,12 @@ var TransactionHelper = {
         var canCancel = true;
 
         while (allTransactionsIterator.hasNext()) {
-            var t = allTransactionsIterator.next();
-            if (t.transactionId == transactionId) {
-                transactionData = t;
-            } else if (t.parentTransactionId == transactionId
-                && Type.Cancel.indexOf(t.transactionType) > -1
-                && t.transactionState === 'success'
+            var tmpTransaction = allTransactionsIterator.next();
+            if (tmpTransaction.transactionId == transactionId) {
+                transactionData = tmpTransaction;
+            } else if (tmpTransaction.parentTransactionId == transactionId
+                && Type.Cancel.indexOf(tmpTransaction.transactionType) > -1
+                && tmpTransaction.transactionState === 'success'
             ) {
                 canCancel = false;
             }
@@ -159,7 +159,6 @@ var TransactionHelper = {
             && Object.prototype.hasOwnProperty.call(dataObject.payment.statuses, 'status')
             && dataObject.payment.statuses.status.length > 0
         ) {
-            // FIXME ok to grab only first status?
             result = dataObject.payment.statuses.status[0];
         }
         return result;

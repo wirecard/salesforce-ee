@@ -165,8 +165,8 @@ exports.HttpAccessOverview = guard.ensure(['get', 'https'], function () {
     var httpCredentials = [
         {
             methodID: 'PayPal',
-            user    : getSitePreference('paymentGatewayPaypalHttpUser'),
-            password: getSitePreference('paymentGatewayPaypalHttpPassword')
+            user    : getSitePreference('paymentGatewayPayPalHttpUser'),
+            password: getSitePreference('paymentGatewayPayPalHttpPassword')
         }
     ];
     app.getView({
