@@ -9,8 +9,12 @@
          <key>XPATH</key>
          <value>//button[@name='search-button']</value>
       </entry>
+      <entry>
+         <key>BASIC</key>
+         <value>//button[@type = 'submit' and @name = 'search-button']</value>
+      </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>
@@ -39,13 +43,6 @@
       <name>class</name>
       <type>Main</type>
       <value>fa fa-search</value>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>xpath</name>
-      <type>Main</type>
-      <value>id(&quot;ext-gen47&quot;)/body[1]/div[@class=&quot;page&quot;]/header[1]/nav[1]/div[@class=&quot;header container&quot;]/div[@class=&quot;row&quot;]/div[@class=&quot;col-12&quot;]/div[@class=&quot;navbar-header&quot;]/div[@class=&quot;pull-right&quot;]/div[@class=&quot;search hidden-xs-down&quot;]/div[@class=&quot;site-search&quot;]/form[1]/button[@class=&quot;fa fa-search&quot;]</value>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>

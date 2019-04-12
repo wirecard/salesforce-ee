@@ -13,7 +13,19 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
-println("CehckoutGuest")
+WebUI.setText(findTestObject('sfra/homepage/Searchbox'), productId)
 
-println(findTestData("customers").getAllData())
-println(address1)
+WebUI.click(findTestObject('sfra/homepage/Search'))
+
+WebUI.verifyElementPresent(findTestObject('sfra/product page/Link to Product'), 0)
+
+WebUI.click(findTestObject('sfra/product page/Link to Product'))
+
+WebUI.selectOptionByValue(findTestObject('sfra/product page/Quantity'), quantity, false)
+
+WebUI.click(findTestObject('sfra/product page/Swatch/JJ887XX'))
+
+WebUI.click(findTestObject('sfra/product page/Add to cart'))
+
+WebUI.delay(3)
+

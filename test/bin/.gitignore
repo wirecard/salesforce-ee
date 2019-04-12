@@ -1,0 +1,16 @@
+# Created by .ignore support plugin (hsz.mobi)
+.DS_Store
+
+# configurations
+.classpath
+
+# TempTestcase
+bin/lib/TempTestCase*.class
+Libs/TempTest*.groovy
+
+# Reports
+Reports/*
+
+Profiles/*.glbl
+!Profiles/ci_console.glbl
+/lib/

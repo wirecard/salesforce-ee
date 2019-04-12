@@ -13,3 +13,23 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
+WebUI.setText(findTestObject('sfra/checkout/shipping/Shipping firstName'), firstName)
+
+WebUI.setText(findTestObject('sfra/checkout/shipping/Shipping lastName'), lastName)
+
+WebUI.setText(findTestObject('sfra/checkout/shipping/Shipping address1 (street)'), address1)
+
+WebUI.setText(findTestObject('sfra/checkout/shipping/Shipping zipCode'), zipCode)
+
+WebUI.setText(findTestObject('sfra/checkout/shipping/Shipping city'), city)
+
+WebUI.selectOptionByValue(findTestObject('sfra/checkout/shipping/Shipping state'), state, false)
+
+WebUI.delay(1)
+
+WebUI.selectOptionByValue(findTestObject('sfra/checkout/shipping/Shipping country'), country, false)
+
+WebUI.setText(findTestObject('sfra/checkout/shipping/Shipping phone'), phone)
+
+WebUI.setText(findTestObject('sfra/checkout/shipping/Shipping email'), email)
+

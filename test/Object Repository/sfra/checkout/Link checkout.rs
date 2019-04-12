@@ -11,11 +11,7 @@
       </entry>
       <entry>
          <key>BASIC</key>
-         <value>//a[contains(@href, 'Checkout-Login') and (text() = '
-        Checkout
-    ' or . = '
-        Checkout
-    ')]</value>
+         <value>//div[contains(@class, 'checkout-continue')]/div/a[contains(@class,&quot;checkout-btn&quot;)]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -23,53 +19,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>tag</name>
-      <type>Main</type>
-      <value>a</value>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>contains</matchCondition>
-      <name>href</name>
-      <type>Main</type>
-      <value>Checkout-Login</value>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>class</name>
-      <type>Main</type>
-      <value>btn btn-primary btn-block checkout-btn </value>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>role</name>
-      <type>Main</type>
-      <value>button</value>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>aria-pressed</name>
-      <type>Main</type>
-      <value>true</value>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>text</name>
-      <type>Main</type>
-      <value>
-        Checkout
-    </value>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>id(&quot;ext-gen47&quot;)/body[1]/div[@class=&quot;page&quot;]/div[@class=&quot;container cart cart-page&quot;]/div[@class=&quot;row&quot;]/div[@class=&quot;col-sm-5 col-md-4 totals&quot;]/div[@class=&quot;row&quot;]/div[@class=&quot;col-12 checkout-continue&quot;]/div[1]/a[@class=&quot;btn btn-primary btn-block checkout-btn&quot;]</value>
+      <value>//div[contains(@class, 'checkout-continue')]/div/a[contains(@class,&quot;checkout-btn&quot;)]</value>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
