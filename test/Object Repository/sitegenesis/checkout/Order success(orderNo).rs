@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>Login username</name>
+   <name>Order success(orderNo)</name>
    <tag></tag>
-   <elementGuidId>c3ce9e2f-23a5-439f-a1bb-1e5082e943ae</elementGuidId>
+   <elementGuidId>62742352-c856-4716-946b-62fd5ed4ecc6</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id = 'login-form-email']</value>
+         <value>//div[@class='order-information']/h1[@class='order-number']/span[@class='value']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,8 +15,8 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>id</name>
+      <name>xpath</name>
       <type>Main</type>
-      <value>login-form-email</value>
+      <value>//div[@class='order-information']/h1[@class='order-number']/span[@class='value']</value>
    </webElementProperties>
 </WebElementEntity>

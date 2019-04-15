@@ -13,11 +13,23 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
-WebUI.setText(findTestObject('sfra/checkout/login/username'), email)
+WebUI.setText(findTestObject('sitegenesis/checkout/shipping/Shipping firstname'), firstName)
 
-WebUI.setText(findTestObject('sfra/checkout/login/password'), password)
+WebUI.setText(findTestObject('sitegenesis/checkout/shipping/Shipping lastname'), lastName)
 
-WebUI.click(findTestObject('sfra/checkout/login/button'))
+WebUI.setText(findTestObject('sitegenesis/checkout/shipping/Shipping address1'), address1)
 
-WebUI.click(findTestObject('sfra/checkout/Link Proceed to payment'))
+WebUI.setText(findTestObject('sitegenesis/checkout/shipping/Shipping city'), city)
+
+WebUI.setText(findTestObject('sitegenesis/checkout/shipping/Shipping zipCode'), zipCode)
+
+WebUI.selectOptionByValue(findTestObject('sitegenesis/checkout/shipping/Shipping country'), country, false)
+
+WebUI.selectOptionByValue(findTestObject('sitegenesis/checkout/shipping/Shipping state'), state, false)
+
+WebUI.setText(findTestObject('sitegenesis/checkout/shipping/Shipping phone'), phone)
+
+if (useShippingAsBilling == 'true') {
+    WebUI.check(findTestObject('sitegenesis/checkout/shipping/Shipping use-as-billing'), FailureHandling.STOP_ON_FAILURE)
+}
 

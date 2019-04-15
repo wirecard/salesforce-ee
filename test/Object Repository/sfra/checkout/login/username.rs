@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>Login button</name>
+   <name>username</name>
    <tag></tag>
-   <elementGuidId>6015fa5b-fb5e-440e-9446-fdfcd1238e9d</elementGuidId>
+   <elementGuidId>c3ce9e2f-23a5-439f-a1bb-1e5082e943ae</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//form[@name='login-form']/button[@type='submit']</value>
+         <value>//*[@id = 'login-form-email']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,8 +15,8 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>id</name>
       <type>Main</type>
-      <value>//form[@name='login-form']/button[@type='submit']</value>
+      <value>login-form-email</value>
    </webElementProperties>
 </WebElementEntity>

@@ -13,11 +13,15 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
-WebUI.setText(findTestObject('sfra/checkout/login/username'), email)
+WebUI.setText(findTestObject('sitegenesis/checkout/login/username'), email)
 
-WebUI.setText(findTestObject('sfra/checkout/login/password'), password)
+WebUI.setText(findTestObject('sitegenesis/checkout/login/password'), password)
 
-WebUI.click(findTestObject('sfra/checkout/login/button'))
+WebUI.click(findTestObject('sitegenesis/checkout/login/button'))
 
-WebUI.click(findTestObject('sfra/checkout/Link Proceed to payment'))
+WebUI.waitForElementPresent(findTestObject('sitegenesis/checkout/shipping/Shipping firstname'), 3)
+
+if (useShippingAsBilling == 'true') {
+    WebUI.check(findTestObject('sitegenesis/checkout/shipping/Shipping use-as-billing'), FailureHandling.STOP_ON_FAILURE)
+}
 

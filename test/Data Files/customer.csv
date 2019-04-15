@@ -1,2 +1,2 @@
-firstName,lastName,address1,zipCode,city,state,country,emailAddress,phone,password
-Ingo,Super,Leutragraben 1,07743,Jena,TH,DE,4po_1dzi5aoxts38@byom.de,02154878877,Dotsource1!
+firstName,lastName,address1,zipCode,city,state,country,emailAddress,phone,password,useShippingAsBilling
+Ingo,Super,Leutragraben 1,07743,Jena,TH,DE,4po_1dzi5aoxts38@byom.de,02154878877,Dotsource1!,true

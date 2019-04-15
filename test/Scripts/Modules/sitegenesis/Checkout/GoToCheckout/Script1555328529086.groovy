@@ -13,11 +13,11 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
-WebUI.setText(findTestObject('sfra/checkout/login/username'), email)
+WebUI.waitForElementClickable(findTestObject('sitegenesis/checkout/Minicart link'), 3)
 
-WebUI.setText(findTestObject('sfra/checkout/login/password'), password)
+WebUI.click(findTestObject('sitegenesis/checkout/Minicart link'))
 
-WebUI.click(findTestObject('sfra/checkout/login/button'))
+WebUI.waitForElementClickable(findTestObject('sitegenesis/checkout/Link checkout'), 3)
 
-WebUI.click(findTestObject('sfra/checkout/Link Proceed to payment'))
+WebUI.click(findTestObject('sitegenesis/checkout/Link checkout'))
 

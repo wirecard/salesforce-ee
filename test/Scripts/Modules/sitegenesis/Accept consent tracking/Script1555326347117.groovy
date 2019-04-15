@@ -12,12 +12,19 @@ import com.kms.katalon.core.testobject.TestObject as TestObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
+import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
+import org.openqa.selenium.WebDriver as WebDriver
+import org.openqa.selenium.By as By
 
-WebUI.setText(findTestObject('sfra/checkout/login/username'), email)
+WebDriver driver = DriverFactory.getWebDriver()
 
-WebUI.setText(findTestObject('sfra/checkout/login/password'), password)
+consentButton = driver.findElements(By.className('affirm')).size()
 
-WebUI.click(findTestObject('sfra/checkout/login/button'))
+if (consentButton > 0) {
+	WebUI.click(findTestObject('sfra/homepage/button_Yes'))
+}
 
-WebUI.click(findTestObject('sfra/checkout/Link Proceed to payment'))
+WebUI.verifyElementPresent(findTestObject('sitegenesis/homepage/Searchbox'), 0)
+
+WebUI.verifyElementPresent(findTestObject('sitegenesis/homepage/Search'), 0)
 

@@ -32,7 +32,7 @@ if (login == 'false') {
         FailureHandling.STOP_ON_FAILURE)
 }
 
-WebUI.callTestCase(findTestCase('Modules/sfra/PaymentSelect'), [('paymentMethodId') : paymentMethodId], FailureHandling.STOP_ON_FAILURE)
+WebUI.callTestCase(findTestCase('Modules/sfra/Checkout/PaymentSelect'), [('paymentMethodId') : paymentMethodId], FailureHandling.STOP_ON_FAILURE)
 
-WebUI.callTestCase(findTestCase('Modules/sfra/PlaceOrder'), [('paymentMethodId') : paymentMethodId], FailureHandling.STOP_ON_FAILURE)
+WebUI.callTestCase(findTestCase('Modules/sfra/Checkout/PlaceOrder'), [('paymentMethodId') : paymentMethodId], FailureHandling.STOP_ON_FAILURE)
 

@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>PayPal</name>
+   <name>Quantity</name>
    <tag></tag>
-   <elementGuidId>fc0c2c08-4344-4010-ac80-3d17c41cb4c8</elementGuidId>
+   <elementGuidId>a03b2e9a-a4b0-42b4-8f13-ac7d36e766ce</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[contains(@class, 'PG_PAYPAL-tab')]</value>
+         <value>//div[@class='product-add-to-cart']/div[@class='inventory']//input[@id='Quantity']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>
-      <matchCondition>contains</matchCondition>
-      <name>class</name>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
       <type>Main</type>
-      <value>PG_PAYPAL-tab</value>
+      <value>//div[@class='product-add-to-cart']/div[@class='inventory']//input[@id='Quantity']</value>
    </webElementProperties>
 </WebElementEntity>

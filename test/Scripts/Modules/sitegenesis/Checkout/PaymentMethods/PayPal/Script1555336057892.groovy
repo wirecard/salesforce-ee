@@ -13,11 +13,5 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
-WebUI.setText(findTestObject('sfra/checkout/login/username'), email)
-
-WebUI.setText(findTestObject('sfra/checkout/login/password'), password)
-
-WebUI.click(findTestObject('sfra/checkout/login/button'))
-
-WebUI.click(findTestObject('sfra/checkout/Link Proceed to payment'))
+WebUI.check(findTestObject('sitegenesis/checkout/select payment/PayPal'))
 

@@ -13,11 +13,20 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
-WebUI.setText(findTestObject('sfra/checkout/login/username'), email)
+WebUI.waitForElementClickable(findTestObject('sitegenesis/checkout/billing/Button place order'), 5)
 
-WebUI.setText(findTestObject('sfra/checkout/login/password'), password)
+WebUI.click(findTestObject('sitegenesis/checkout/billing/Button place order'))
 
-WebUI.click(findTestObject('sfra/checkout/login/button'))
+switch (paymentMethodId) {
+    case 'PG_PAYPAL':
+        WebUI.callTestCase(findTestCase('Modules/Payment methods/PayPal'), [:], FailureHandling.STOP_ON_FAILURE)
 
-WebUI.click(findTestObject('sfra/checkout/Link Proceed to payment'))
+        break
+    default:
+        break
+}
+
+WebUI.waitForElementPresent(findTestObject('sitegenesis/checkout/Order success(orderNo)'), 20)
+
+WebUI.verifyElementPresent(findTestObject('sitegenesis/checkout/Order success(orderNo)'), 0)
 

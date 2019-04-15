@@ -3,20 +3,20 @@
    <description></description>
    <name>PayPal</name>
    <tag></tag>
-   <elementGuidId>fc0c2c08-4344-4010-ac80-3d17c41cb4c8</elementGuidId>
+   <elementGuidId>f1e0d1bd-4d1f-420d-bda0-8216da4591af</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[contains(@class, 'PG_PAYPAL-tab')]</value>
+         <value>//div[contains(@class,'payment-method-options')]//input[@value='PG_PAYPAL']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>
-      <matchCondition>contains</matchCondition>
-      <name>class</name>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
       <type>Main</type>
-      <value>PG_PAYPAL-tab</value>
+      <value>//div[contains(@class,'payment-method-options')]//input[@value='PG_PAYPAL']</value>
    </webElementProperties>
 </WebElementEntity>

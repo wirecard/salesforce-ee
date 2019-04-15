@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>PayPal</name>
+   <name>Shipping lastname</name>
    <tag></tag>
-   <elementGuidId>fc0c2c08-4344-4010-ac80-3d17c41cb4c8</elementGuidId>
+   <elementGuidId>774753e5-8bc9-4c56-ab74-2f80625c10b3</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[contains(@class, 'PG_PAYPAL-tab')]</value>
+         <value>//input[contains(@name,'shippingAddress_addressFields_lastName')]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>
-      <matchCondition>contains</matchCondition>
-      <name>class</name>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
       <type>Main</type>
-      <value>PG_PAYPAL-tab</value>
+      <value>//input[contains(@name,'shippingAddress_addressFields_lastName')]</value>
    </webElementProperties>
 </WebElementEntity>

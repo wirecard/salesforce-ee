@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>PayPal</name>
+   <name>email</name>
    <tag></tag>
-   <elementGuidId>fc0c2c08-4344-4010-ac80-3d17c41cb4c8</elementGuidId>
+   <elementGuidId>810c7d64-5571-48fb-8ad5-b538c81f78ba</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[contains(@class, 'PG_PAYPAL-tab')]</value>
+         <value>//input[contains(@name,'_billing_billingAddress_email_emailAddress')]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>
-      <matchCondition>contains</matchCondition>
-      <name>class</name>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
       <type>Main</type>
-      <value>PG_PAYPAL-tab</value>
+      <value>//input[contains(@name,'_billing_billingAddress_email_emailAddress')]</value>
    </webElementProperties>
 </WebElementEntity>

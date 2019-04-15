@@ -24,7 +24,7 @@ if (consentButton > 0) {
     WebUI.click(findTestObject('sfra/homepage/button_Yes'))
 }
 
-WebUI.verifyElementPresent(findTestObject('sfra/homepage/Searchbox'), 0)
+WebUI.verifyElementPresent(findTestObject('sfra/homepage/Searchbox'), 1)
 
-WebUI.verifyElementPresent(findTestObject('sfra/homepage/Search'), 0)
+WebUI.verifyElementPresent(findTestObject('sfra/homepage/Search'), 1)
 
