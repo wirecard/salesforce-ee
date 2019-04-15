@@ -17,5 +17,3 @@ println('PayPal')
 
 WebUI.click(findTestObject('sfra/checkout/select payment/PayPal'))
 
-WebUI.click(findTestObject('sfra/checkout/Link proceed to order overview'))
-
