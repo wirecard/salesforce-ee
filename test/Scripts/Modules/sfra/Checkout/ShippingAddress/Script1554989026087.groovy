@@ -33,3 +33,5 @@ WebUI.setText(findTestObject('sfra/checkout/shipping/Shipping phone'), phone)
 
 WebUI.setText(findTestObject('sfra/checkout/shipping/Shipping email'), email)
 
+WebUI.click(findTestObject('sfra/checkout/Link Proceed to payment'))
+

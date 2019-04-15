@@ -13,7 +13,11 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
-WebUI.click(findTestObject(null))
+WebUI.setText(findTestObject('sfra/checkout/Login username'), email)
 
-WebUI.setText(findTestObject(null), '')
+WebUI.setText(findTestObject('sfra/checkout/Login password'), password)
+
+WebUI.click(findTestObject('sfra/checkout/Login button'))
+
+WebUI.click(findTestObject('sfra/checkout/Link Proceed to payment'))
 

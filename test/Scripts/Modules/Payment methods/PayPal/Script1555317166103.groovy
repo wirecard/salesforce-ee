@@ -13,7 +13,15 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
-WebUI.openBrowser('https://dotsource01-alliance-prtnr-eu02-dw.demandware.net/s/RefArchGlobal/home?lang=de_DE')
+WebUI.waitForElementPresent(findTestObject('Payment methods/PayPal/Username'), 20)
 
-WebUI.callTestCase(findTestCase('Modules/sfra/Accept consent tracking'), [:], FailureHandling.STOP_ON_FAILURE)
+WebUI.setText(findTestObject('Payment methods/PayPal/Username'), username)
+
+WebUI.setText(findTestObject('Payment methods/PayPal/Password'), password)
+
+WebUI.click(findTestObject('Payment methods/PayPal/Login'))
+
+WebUI.waitForElementClickable(findTestObject('Payment methods/PayPal/Pay button'), 5)
+
+WebUI.click(findTestObject('Payment methods/PayPal/Pay button'))
 

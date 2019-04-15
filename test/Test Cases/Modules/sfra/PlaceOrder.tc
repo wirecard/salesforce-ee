@@ -5,4 +5,11 @@
    <tag></tag>
    <comment></comment>
    <testCaseGuid>48814289-fc9a-4a58-b9ae-32d2da3cc1aa</testCaseGuid>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>ef4c6209-61f1-43d4-8e46-a62c7e8e6b6f</id>
+      <masked>false</masked>
+      <name>paymentMethodId</name>
+   </variable>
 </TestCaseEntity>

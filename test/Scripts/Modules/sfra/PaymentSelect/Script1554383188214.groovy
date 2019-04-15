@@ -14,15 +14,17 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
 switch (paymentMethodId) {
-	case "PG_PAYPAL":
-		WebUI.callTestCase(findTestCase('Modules/sfra/PaymentMethods/PayPal'), [:], FailureHandling.STOP_ON_FAILURE)
-		break
-	case "PG_CREDIT":
-		WebUI.callTestCase(findTestCase('Modules/sfra/PaymentMethods/CreditCard'), [:], FailureHandling.STOP_ON_FAILURE)
-		break
+    case 'PG_PAYPAL':
+        WebUI.callTestCase(findTestCase('Modules/sfra/PaymentMethods/PayPal'), [:], FailureHandling.STOP_ON_FAILURE)
+
+        break
+    case 'PG_CREDIT':
+        WebUI.callTestCase(findTestCase('Modules/sfra/PaymentMethods/CreditCard'), [:], FailureHandling.STOP_ON_FAILURE)
+
+        break
     default:
         break
 }
 
-
+WebUI.delay(2)
 

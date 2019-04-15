@@ -32,9 +32,7 @@ if (login == 'false') {
         FailureHandling.STOP_ON_FAILURE)
 }
 
-WebUI.click(findTestObject('sfra/checkout/Link Proceed to payment'))
-
 WebUI.callTestCase(findTestCase('Modules/sfra/PaymentSelect'), [('paymentMethodId') : paymentMethodId], FailureHandling.STOP_ON_FAILURE)
 
-WebUI.callTestCase(findTestCase('Modules/sfra/PlaceOrder'), [:], FailureHandling.STOP_ON_FAILURE)
+WebUI.callTestCase(findTestCase('Modules/sfra/PlaceOrder'), [('paymentMethodId') : paymentMethodId], FailureHandling.STOP_ON_FAILURE)
 

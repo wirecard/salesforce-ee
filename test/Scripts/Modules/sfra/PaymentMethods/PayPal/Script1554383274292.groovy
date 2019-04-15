@@ -13,4 +13,9 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
-println("PayPal")
+println('PayPal')
+
+WebUI.click(findTestObject('sfra/checkout/select payment/PayPal'))
+
+WebUI.click(findTestObject('sfra/checkout/Link proceed to order overview'))
+
