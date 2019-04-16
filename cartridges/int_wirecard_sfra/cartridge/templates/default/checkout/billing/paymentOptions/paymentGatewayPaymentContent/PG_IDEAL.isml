@@ -1,0 +1,27 @@
+<!--- TEMPLATENAME: PG_IDEAL.isml --->
+<isset name="idealFields" value="${ pdict.forms.billingForm.PG_IDEAL }" scope="page"/>
+
+<fieldset class="pg-ideal-form">
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group
+            <isif condition=${ idealFields.bic.mandatory === true }>required</isif>
+            ${ idealFields.bic.htmlName }">
+                <label class="form-control-label" for="ideal_bic">${ Resource.msg('paymentpaygate.bic', 'forms', null) }</label>
+                <select class="form-control custom-select" id="ideal_bic" <isprint value=${ idealFields.bic.attributes} encoding="off"/>>
+                    <isloop items=${ idealFields.bic.options } var="bic">
+                        <option id="${ bic.id }" value="${ bic.htmlValue }"
+                        <isif condition="${ pdict.order.billing.payment.selectedPaymentInstruments
+                                && pdict.order.billing.payment.selectedPaymentInstruments.length > 0
+                                && bic.id == pdict.order.billing.payment.selectedPaymentInstruments[0].bic }">
+                            selected
+                        </isif> >
+                        ${ bic.label }
+                        </option>
+                    </isloop>
+                </select>
+                <div class="invalid-feedback"></div>
+            </div>
+        </div>
+    </div>
+</fieldset>

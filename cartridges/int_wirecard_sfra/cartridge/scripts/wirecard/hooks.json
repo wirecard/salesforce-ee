@@ -1,8 +1,0 @@
-{
-  "hooks": [
-    {
-      "name": "app.payment.processor.wirecard",
-      "script": "./hooks/wirecard"
-    }
-  ]
-}

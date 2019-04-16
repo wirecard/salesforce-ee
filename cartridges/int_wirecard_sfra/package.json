@@ -1,4 +1,4 @@
 {
-  "hooks": "./cartridge/scripts/wirecard/hooks.json",
+  "hooks": "./cartridge/scripts/paymentgateway/hooks.json",
   "coreCartridge": "app_storefront_base"
 }

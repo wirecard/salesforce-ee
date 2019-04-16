@@ -3,7 +3,7 @@
         <isinclude template="checkout/billing/paymentOptions/creditCardContent" />
     </isif>
 
-    <isinclude template="checkout/billing/paymentOptions/wirecardPaymentContent" />
+    <isinclude template="checkout/billing/paymentOptions/paymentGatewayPaymentContent" />
 </isloop>
 
 <isscript>

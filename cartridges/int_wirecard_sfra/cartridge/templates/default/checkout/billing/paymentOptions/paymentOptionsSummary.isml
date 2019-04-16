@@ -2,9 +2,9 @@
     <isloop items="${pdict.order.billing.payment.selectedPaymentInstruments}" var="payment">
         <isif condition="${payment.paymentMethod === 'CREDIT_CARD'}">
             <isinclude template="checkout/billing/paymentOptions/creditCardSummary" />
-        <iselseif condition="${ payment.paymentMethod.indexOf('WCD_') > -1 }">
+        <iselseif condition="${ payment.paymentMethod.indexOf('PG_') > -1 }">
             <isscript>
-                var paymentHelper = require('int_wirecard_core/cartridge/scripts/wirecard/helper/PaymentHelper');
+                var paymentHelper = require('int_wirecard_core/cartridge/scripts/paymentgateway/helper/PaymentHelper');
                 var methodImg = paymentHelper.getPaymentImage(payment.paymentMethod);
             </isscript>
             <isif condition="${ methodImg }">

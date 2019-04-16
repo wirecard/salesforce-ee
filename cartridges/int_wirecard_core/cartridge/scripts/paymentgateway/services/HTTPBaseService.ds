@@ -1,0 +1,155 @@
+/**
+ * JSON Rest Service Call Back
+*/
+var BaseService = require('./BaseService');
+
+/**
+ * Base class of all json rest service calls.
+ *
+ * @class
+ * @augments BaseService
+ */
+var HTTPBaseService = BaseService.extend(
+/** @lends HTTPBaseService.prototype */
+{
+    /**
+    *    @constructs HTTPBaseService
+    */
+    init : function( serviceName : String ) {
+        this._super( serviceName );
+        //Sets the service URL path relative to the URL provided in the ServiceCredentials
+        this.relativeURLPath = null;
+        /**    Use this Array to push a key followed by a value to change the request headers    */
+        this.requestHeaders = {};
+        /**    You can change this in the createRequest Method to make a GET-Request */
+        this.requestMethod = "POST";
+        /**    If this is set, the response will be saved in the given file */
+        this.outfile = this.outfile || null;
+        // set encoding to UTF-8 as default
+        this.encoding = this.encoding || "UTF-8";
+        // BASIC or REQUEST (%username% and %password% can will be replaced with credentials)
+        this.authentication = this.authentication || "NONE";
+    },
+
+    /**
+     * Adds a header which is sent with the request.
+     *
+     * @param {String} header The name of the header
+     * @param {String} value The value of the header
+     */
+    setRequestHeader : function(header, value) : Object {
+        // log request and response message if feature is enabled
+        this.requestHeaders[header] = value;
+    },
+
+    /**
+    * Implements the function that should be used to prepare the service call request objects
+    *
+    * @param {dw.svc.HTTPService}    svc                The service itself
+    * @param {dw.util.Map}            urlParameters    Map of key value pairs that have to be added as parameters to the call
+    * @param {String}                payload            Any string that need to be posted
+    *
+    * @return String The string that has to be sent to the service
+    */
+    createRequest : function( svc: dw.svc.HTTPService, urlParameters : dw.util.Map, payload : String ) : String {
+
+        //the request string
+        var request = payload;
+
+        //sets the service call endpoint
+        if ( !empty(this.relativeURLPath) ) {
+            svc.URL = [ svc.URL.replace(/\/$/, ''), this.relativeURLPath ].join('/');
+        }
+
+        //adding header values
+        if ( !empty(this.requestHeaders) ) {
+            for ( var headerID : String in this.requestHeaders ) {
+                svc.addHeader(headerID, this.requestHeaders[headerID]);
+            }
+        }
+
+        //setting request encoding
+        if ( !empty(this.encoding) && this.encoding != "UTF-8") {
+            svc.setEncoding(this.encoding);
+        }
+
+        //setting the authentication mechanism
+        if ( !empty(this.authentication) ) {
+            switch( this.authentication.toUpperCase() ) {
+                case 'BASIC' :
+                    svc.setAuthentication('BASIC');
+                    break;
+                case 'REQUEST' :
+                    svc.setAuthentication('NONE');
+                    if ( !empty(request) ) {
+                        request = request.replace(/%username%/g, svc.configuration.credential.user);
+                        request = request.replace(/%password%/g, svc.configuration.credential.password);
+                    }
+                    break;
+                default:
+                    svc.setRequestMethod('NONE');
+            }
+        }
+
+        //setting request method
+        switch ((this.requestMethod || "GET").toUpperCase()) {
+            case 'DELETE':
+                svc.setRequestMethod('DELETE');
+                break;
+            case 'HEAD':
+                svc.setRequestMethod('HEAD');
+                break;
+            case 'OPTIONS':
+                svc.setRequestMethod('OPTIONS');
+                break;
+            case 'PATCH':
+                svc.setRequestMethod('PATCH');
+                break;
+            case 'POST':
+                svc.setRequestMethod('POST');
+                break;
+            case 'PUT':
+                svc.setRequestMethod('PUT');
+                break;
+            default:
+                svc.setRequestMethod('GET');
+        }
+
+        //adding additional url parameters
+        if ( !empty(urlParameters) ) {
+            if ('keySet' in urlParameters ) {
+                for each( var parameterID : String in urlParameters.keySet() ) {
+                    svc.addParam(parameterID, urlParameters[parameterID]);
+                }
+            } else {
+                for( var parameterID in urlParameters ) {
+                    svc.addParam(parameterID, urlParameters[parameterID]);
+                }
+            }
+        }
+
+        //setting the out file if defined
+        if ( !empty(this.outfile) ) {
+            svc.setOutFile(this.outfile);
+        }
+
+        //returning the body object, assuming that this is what need to be posted!!
+        return request;
+    },
+
+    /**
+    * Implements the function that's ought to be used to parse service responses
+    *
+    * @param {dw.svc.HTTPService}     svc         The service itself
+    * @param {dw.net.HTTPClient}     httpClient     The response object
+    *
+    * @return {String} The response payload
+    */
+    parseResponse : function( svc: dw.svc.HTTPService, httpClient: dw.net.HTTPClient ) : String {
+        return httpClient.text;
+    }
+
+});
+
+//Export the configured service singleton
+module.exports = HTTPBaseService;

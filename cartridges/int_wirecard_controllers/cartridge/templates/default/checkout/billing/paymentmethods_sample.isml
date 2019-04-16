@@ -126,7 +126,7 @@
             --------------------------------------------------------------
         </iscomment>
 
-        <isinclude template="checkout/billing/wirecardpayments"/>
+        <isinclude template="checkout/billing/paymentGatewayPayments"/>
 
         <div class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='PayPal'}">payment-method-expanded</isif>" data-method="Custom">
             <!-- Your custom payment method implementation goes here. -->

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 'use strict';
 
 var collections = require('*/cartridge/scripts/util/collections');
@@ -26,10 +27,11 @@ function getSelectedPaymentInstruments(selectedPaymentInstruments) {
         } else if (paymentInstrument.paymentMethod === 'GIFT_CERTIFICATE') {
             results.giftCertificateCode = paymentInstrument.giftCertificateCode;
             results.maskedGiftCertificateCode = paymentInstrument.maskedGiftCertificateCode;
-        } else if (paymentInstrument.paymentMethod.indexOf('WCD') > -1) {
-            var paymentHelper = require('*/cartridge/scripts/wirecard/helper/PaymentHelper');
-            var methodImg = paymentHelper.getPaymentImage(paymentInstrument.paymentMethod);
-            results.methodImg = methodImg;
+        } else if (paymentInstrument.paymentMethod.indexOf('PG') > -1) {
+            var paymentHelper = require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper');
+            var methodData = paymentHelper.getPaymentMethodData(paymentInstrument.paymentMethod);
+            results.methodImg = methodData.image;
+            results.name = methodData.name;
         }
 
         return results;

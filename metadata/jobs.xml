@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jobs xmlns="http://www.demandware.com/xml/impex/jobs/2015-07-01">
+    <job job-id="PaymentGatewayHandleNotifications" priority="0">
+        <description>Handles notifications stored with custom objects of type PaymentGatewayNotification</description>
+        <parameters/>
+        <split sequential="false">
+            <flow>
+                <context site-id="RefArchGlobal"/>
+                <template-ref template-id="template_74"/>
+            </flow>
+            <flow>
+                <context site-id="SiteGenesisGlobal"/>
+                <template-ref template-id="template_74"/>
+            </flow>
+            <flow-template template-id="template_74">
+                <step step-id="HandleNotification" type="ExecuteScriptModule" enforce-restart="false">
+                    <description/>
+                    <parameters>
+                        <parameter name="ExecuteScriptModule.Module">int_wirecard_core/cartridge/scripts/paymentgateway/jobsteps/HandleNotifications.js</parameter>
+                        <parameter name="ExecuteScriptModule.FunctionName">execute</parameter>
+                        <parameter name="ExecuteScriptModule.Transactional">false</parameter>
+                        <parameter name="ExecuteScriptModule.TimeoutInSeconds">5000</parameter>
+                        <parameter name="MaxProcessingAttempts">3</parameter>
+                    </parameters>
+                    <rules>
+                        <on-exit status="ERROR">
+                            <stop-job/>
+                        </on-exit>
+                    </rules>
+                </step>
+            </flow-template>
+        </split>
+        <rules/>
+        <triggers>
+            <run-recurring enabled="true">
+                <recurrence>
+                    <date-from>2019-03-31Z</date-from>
+                    <start-time>23:00:00.000Z</start-time>
+                    <interval>5m</interval>
+                    <day-of-week/>
+                </recurrence>
+            </run-recurring>
+        </triggers>
+    </job>
+    <job job-id="PaymentGatewayDeleteProcessedNotifications" priority="0">
+        <description>Delete processed (archived) notifications stored with custom objects of type PaymentGatewayArchivedNotification</description>
+        <parameters/>
+        <split sequential="false">
+            <flow>
+                <context site-id="RefArchGlobal"/>
+                <template-ref template-id="template_74"/>
+            </flow>
+            <flow>
+                <context site-id="SiteGenesisGlobal"/>
+                <template-ref template-id="template_74"/>
+            </flow>
+            <flow-template template-id="template_74">
+                <step step-id="HandleNotification" type="ExecuteScriptModule" enforce-restart="false">
+                    <description/>
+                    <parameters>
+                        <parameter name="ExecuteScriptModule.Module">int_wirecard_core/cartridge/scripts/paymentgateway/jobsteps/DeleteNotifications.js</parameter>
+                        <parameter name="ExecuteScriptModule.FunctionName">execute</parameter>
+                        <parameter name="ExecuteScriptModule.Transactional">true</parameter>
+                        <parameter name="ExecuteScriptModule.TimeoutInSeconds">5000</parameter>
+                    </parameters>
+                    <rules>
+                        <on-exit status="ERROR">
+                            <stop-job/>
+                        </on-exit>
+                    </rules>
+                </step>
+            </flow-template>
+        </split>
+        <rules/>
+        <triggers>
+            <run-recurring enabled="true">
+                <recurrence>
+                    <date-from>2019-03-31Z</date-from>
+                    <start-time>23:00:00.000Z</start-time>
+                    <interval>1h</interval>
+                    <day-of-week/>
+                </recurrence>
+            </run-recurring>
+        </triggers>
+    </job>
+</jobs>

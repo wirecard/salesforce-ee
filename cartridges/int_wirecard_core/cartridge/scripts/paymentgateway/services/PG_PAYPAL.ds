@@ -1,0 +1,32 @@
+/**
+ * Script includes
+ */
+var AbstractPaymentGatewayService = require('./AbstractPaymentGatewayService');
+
+var PayPalService = AbstractPaymentGatewayService.extend({
+    init: function (type) {
+        this._super(type);
+        this.paymentMethodID = 'paypal';
+    },
+
+    /**
+     * Retrieves the http user for PayPal.
+     * @returns {String}
+     */
+    getHttpUsername: function() {
+        return this.getSitePreference('paymentGatewayPayPalHttpUser');
+    },
+
+    /**
+     * Retrieves the http password for PayPal.
+     * @returns {String}
+     */
+    getHttpPassword: function() {
+        return this.getSitePreference('paymentGatewayPayPalHttpPassword');
+    }
+});
+
+//Export the configured service singleton
+module.exports = function (type) {
+    return (new PayPalService(type)).getService();
+};

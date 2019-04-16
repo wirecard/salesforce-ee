@@ -1,0 +1,176 @@
+<isscript>
+    importPackage(dw.system);
+</isscript>
+<isdecorate template="application/MenuFrame">
+    <iscontent type="text/html" charset="UTF-8">
+    <isinclude template="inc/Modules">
+
+    <isset
+        name="TOP_URL"
+        value="${URLUtils.url('SiteNavigationBar-ShowMenuitemOverview', 'CurrentMenuItemId', pdict.CurrentMenuItemId)}"
+        scope="PAGE"
+    >
+    <is name1="${pdict.mainmenuname}" url1="${TOP_URL}" name2="PaymentGateway">
+    <isset name="Order" value="${ pdict.Order }" scope="page"/>
+    <isset name="Transaction" value="${ pdict.Transaction }" scope="page"/>
+
+    <script type="text/javascript">
+    function copyXML() {
+        var params = {
+            transactionId: "${ Transaction.transactionId }",
+            paymentMethodID: "${ Transaction.paymentMethodID }"
+        };
+        new Ajax.Request("${URLUtils.url('PaymentGateway-GetTransactionXML')}", {
+            parameters: params,
+            method: 'post',
+            asynchronous: false,
+            onComplete: function(msg) {
+                var textArea = document.createElement('textarea');
+                textArea.value = msg.responseText;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+            }
+        });
+    }
+    </script>
+    <link rel="stylesheet" type="text/css" href="${ URLUtils.staticURL('/css/milligram.min.css') }"/>
+
+    <div class="container">
+        <h1>${Resource.msg('transaction_details_title', 'paymentgateway', null)}</h1>
+
+        <isif condition="${ pdict.Message }">
+            <div class="row">
+                <div class="column">
+                    <div class="<isif condition="${ pdict.isSuccess }">success<iselse/>error</isif>">
+                        ${ pdict.Message }
+                    </div>
+                </div>
+            </div>
+        </isif>
+
+        <div class="row">
+            <div class="column">
+                <h2>${ Resource.msg('panel_details', 'paymentgateway', null) }</h2>
+                <table class="transaction-detail">
+                    <tr>
+                        <td>${ Resource.msg('panel_transaction_id', 'paymentgateway', null) }</td>
+                        <td>${ Transaction.transactionId }</td>
+                    </tr>
+                    <tr>
+                        <td>${ Resource.msg('panel_payment_method', 'paymentgateway', null) }</td>
+                        <td>${ Transaction.paymentMethodID }</td>
+                    </tr>
+                    <tr>
+                        <td>${ Resource.msg('panel_transaction_date', 'paymentgateway', null) }</td>
+                        <td><isprint value="${ Transaction.createdAt }" formatter="yyyy-MM-dd hh:mm:ss" timezone="SITE"/></td>
+                    </tr>
+                    <tr>
+                        <td>${ Resource.msg('customerId', 'paymentgateway', null) }</td>
+                        <td>${ Order.customerNo }</td>
+                    </tr>
+                    <tr>
+                        <td>${ Resource.msg('remoteAddress', 'paymentgateway', null) }</td>
+                        <td>${ Order.remoteHost }</td>
+                    </tr>
+                    <tr>
+                        <td>${ Resource.msg('orderNumber', 'paymentgateway', null) }</td>
+                        <td>${ Order.orderNo }</td>
+                    </tr>
+                    <tr>
+                        <td>${ Resource.msg('transactionType', 'paymentgateway', null) }</td>
+                        <td>${ Transaction.transactionType }</td>
+                    </tr>
+                    <tr>
+                        <td>${ Resource.msg('panel_amount', 'paymentgateway', null) }</td>
+                        <td>
+                            <isprint value="${ Transaction.amount }" style="MONEY_SHORT"/>
+                            <isprint value="${ Transaction.amount.currencyCode }"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>${ Resource.msg('captured_amount', 'paymentgateway', null) }</td>
+                        <td>
+                            <isprint value="${ Transaction.capturedAmount }" style="MONEY_SHORT"/>
+                            <isprint value="${ Transaction.capturedAmount.currencyCode }"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>${ Resource.msg('refunded_amount', 'paymentgateway', null) }</td>
+                        <td>
+                            <isprint value="${ Transaction.refundedAmount }" style="MONEY_SHORT"/>
+                            <isprint value="${ Transaction.refundedAmount.currencyCode }"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>
+                            <button type="button" onclick="copyXML(); return false;">${ Resource.msg('copy_xml_text', 'paymentgateway', null) }</button><br/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="column">
+                <isif condition="${ Transaction.allowedOperations.length > 0 }">
+                    <h2>${ Resource.msg('text_backend_operations', 'paymentgateway', null) }</h2>
+                    <form action="${ URLUtils.https('PaymentGateway-ExecuteOperation', 'orderNo', Order.orderNo ) }" method="post">
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="" for="operation">
+                                    ${ Resource.msg('text_transaction', 'paymentgateway', null) }
+                                </label>
+                                <select id="operation" name="operation" required>
+                                    <option value="">${ Resource.msg('text_transaction_empty_option', 'paymentgateway', null) }</option>
+                                    <isloop items="${ Transaction.allowedOperations }" var="operation">
+                                        <option value="${ operation.action }">${ operation.label }</option>
+                                    </isloop>
+                                </select>
+                            </div>
+                            <div class="form-group amount" style="display:none;">
+                                <label class="" for="amount">
+                                    ${ Resource.msg('text_request_amount', 'paymentgateway', null) }
+                                </label>
+                                <input value="" id="amount" name="amount" type="number" step="0.01"/>
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" name="orderNo" value="${ Order.orderNo }"/>
+                                <input type="hidden" name="transactionId" value="${ Transaction.transactionId }"/>
+                                <input type="hidden" name="merchantAccountId" value="${ Transaction.merchantAccountId }"/>
+                                <button type="submit" value="${ Resource.msg('submit_button', 'paymentgateway', null)}">
+                                    ${ Resource.msg('submit_button', 'paymentgateway', null) }
+                                </button>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <script type="text/javascript">
+                        var partialAllowedMethods = "<isprint value="${ Transaction.partialAllowedOperations.join(',') }"/>";
+                        $('operation').observe('change', function (event) {
+                            var op = $(this.id).getValue();
+                            if (partialAllowedMethods.split(',').indexOf(op) > -1) {
+                                $$('.amount')[0].show();
+                            } else {
+                                $$('.amount')[0].hide();
+                            }
+                        });
+                    </script>
+                <iselse/>
+                    <h2>${ Resource.msg('no_post_processing_operations', 'paymentgateway', null) }</h2>
+                </isif>
+            </div>
+        </div>
+        <div class="row">
+            <!--- back button --->
+            <div class="column">
+                <button type="button" class="float-right" onclick="window.location='${ URLUtils.https('PaymentGateway-Transactions') }'">${ Resource.msg('back_button', 'paymentgateway', null) }</button>
+            </div>
+        </div>
+    </div>
+    <style>
+        table.transaction-detail { width: unset; }
+        td#bm_content_column > table > tbody > tr > td,
+        td#bm_content_column > table > tbody > tr > td > table > tbody > tr > td,
+        table.transaction-detail tr:last-child td { border-bottom: none }
+        div.row { flex-wrap: nowrap; }
+    </style>
+</isdecorate>

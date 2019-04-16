@@ -9,5 +9,5 @@ npm-debug.log
 cartridges/**/.settings/*
 
 # exclude generated static assets
-cartridges/**/cartridge/static/default/css/*
+cartridges/int_*/cartridge/static/default/css/*
 cartridges/**/cartridge/static/default/js/*

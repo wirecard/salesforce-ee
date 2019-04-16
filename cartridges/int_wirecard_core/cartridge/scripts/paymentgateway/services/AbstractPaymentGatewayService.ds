@@ -1,0 +1,134 @@
+/**
+ * API includes
+ */
+var Site = require('dw/system/Site');
+var pgLogger = require('dw/system/Logger').getLogger('paymentgateway', 'paymentgateway');
+/**
+ * Script includes
+ */
+var HTTPBaseService = require('./HTTPBaseService');
+
+var AbstractPaymentGatewayService = HTTPBaseService.extend({
+    paymentMethodID: '',
+
+    init: function (type) {
+        // call parent init method to set service name
+        var serviceName = 'wirecard.paymentgateway';
+        this._super(serviceName);
+
+        // set authentication method
+        this.authentication = 'BASIC';
+
+        // request header
+        var authorizationHash = this.getAuthorizationHash();
+        this.requestHeaders = {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Basic ' + authorizationHash
+        };
+
+        // set service endpoint
+        var relativeURLPath = 'engine/rest/';
+        if (type === 'payments') {
+            relativeURLPath += 'payments';
+        } else {
+            relativeURLPath += 'paymentmethods';
+        }
+        this.relativeURLPath = relativeURLPath;
+    },
+
+    /**
+     * Prepare the request i.e. create request body as json
+     * @param {dw.svc.HTTPService}    svc       The service itself
+     * @param {dw.util.Map}           params    Map of key value pairs that have to be added as parameters to the call
+     * @return String The string that has to be sent to the service
+     */
+    createRequest: function (svc, params) {
+        //sets the service call endpoint
+        if ( !empty(this.relativeURLPath) ) {
+            svc.URL = [ svc.URL.replace(/\/$/, ''), this.relativeURLPath ].join('/');
+        }
+
+        //adding header values
+        if ( !empty(this.requestHeaders) ) {
+            for ( var headerID : String in this.requestHeaders ) {
+                svc.addHeader(headerID, this.requestHeaders[headerID]);
+            }
+        }
+
+        //setting the authentication mechanism
+        svc.setAuthentication(this.authentication);
+
+        //setting request method
+        svc.setRequestMethod(this.requestMethod);
+        var requestData = JSON.stringify(params);
+        require('*/cartridge/scripts/paymentgateway/transaction/Logger').log(params);
+
+        // log request url for debugging
+        pgLogger.debug( 'Called service: ' + svc.URL );
+        return requestData;
+    },
+
+    /**
+     * Parse response
+     * @param {dw.svc.HTTPService} svc
+     * @param {dw.net.HTTPClient} httpClient
+     * @returns {Object}
+     */
+    parseResponse : function (svc, httpClient) {
+        var self = this;
+        var result = {};
+
+        if ([200, 201].indexOf(httpClient.getStatusCode()) > -1) {
+            var transactionHelper = require('*/cartridge/scripts/paymentgateway/helper/TransactionHelper');
+            result = transactionHelper.parseTransactionResponse(httpClient.text, self.paymentMethodID);
+            require('*/cartridge/scripts/paymentgateway/transaction/Logger').log(result, 'response');
+        }
+        return result;
+    },
+
+    /**
+     * Retrieves the auth header hash.
+     * @returns {String}
+     */
+    getAuthorizationHash: function() {
+        var Encoding = require('dw/crypto/Encoding');
+        var Bytes = require('dw/util/Bytes');
+        var username = this.getHttpUsername();
+        var password = this.getHttpPassword();
+        var bytes = new Bytes(username + ':' + password, this.encoding);
+        return Encoding.toBase64(bytes);
+    },
+
+    /**
+     * Retrieves the http user for current payment method.
+     * @returns {String}
+     */
+    getHttpUsername: function() {
+        throw new Error('Method getHttpUserName missing for called service!');
+    },
+
+    /**
+     * Retrieves the http password for current payment method.
+     * @returns {String}
+     */
+    getHttpPassword: function() {
+        throw new Error('Method getHttpPassword missing for called service!');
+    },
+
+    /**
+     * Retrieves specific configuration value.
+     * @param {String} key
+     * @returns {String}
+     */
+    getSitePreference: function (key) {
+        var result = Site.getCurrent().getCustomPreferenceValue(key);
+        if (empty(result)) {
+            result = '';
+        }
+        return result;
+    }
+});
+
+//Export the service
+module.exports = AbstractPaymentGatewayService;

@@ -1,0 +1,77 @@
+<isscript>
+    importPackage(dw.system);
+</isscript>
+<isdecorate template="application/MenuFrame">
+    <iscontent type="text/html" charset="UTF-8">
+    <isinclude template="inc/Modules">
+    <isinclude template="paymentgateway/bm/modules">
+
+    <isset
+        name="TOP_URL"
+        value="${URLUtils.url('SiteNavigationBar-ShowMenuitemOverview', 'CurrentMenuItemId', pdict.CurrentMenuItemId)}"
+        scope="PAGE"
+    >
+    <is name1="${pdict.mainmenuname}" url1="${TOP_URL}" name2="PaymentGateway">
+    <script type="text/javascript">
+    //<![CDATA[
+    function checkCredentials(btn, inputElement) {
+        var httpData = $F(inputElement);
+        new Ajax.Request("${URLUtils.url('PaymentGateway-HttpAccessTest')}", {
+            parameters: JSON.parse(httpData),
+            onSuccess: function(msg) {
+                btn.addClassName('green');
+                Form.Element.disable(btn.id);
+            },
+            on510: function(msg) {
+                btn.addClassName('red');
+            }
+        });
+    }
+    //]]>
+    </script>
+    <link rel="stylesheet" type="text/css" href="${ URLUtils.staticURL('/css/milligram.min.css') }"/>
+
+    <div class="container">
+        <div class="row">
+            <div class="column">
+                <h1>${Resource.msg('configuration.testHttpCredentials', 'paymentgateway', null)}</h1>
+
+                <table class="httptest">
+                    <tr style="vertical-align: top;">
+                        <th>${ Resource.msg('panel_payment_method', 'paymentgateway', null) }</th>
+                        <th>${ Resource.msg('configuration.httpUser', 'paymentgateway', null) }</th>
+                        <th>${ Resource.msg('configuration.httpPassword', 'paymentgateway', null) }</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                    <isloop items="${pdict.HttpAccessData}" var="httpData" status="loop_state">
+                        <tr style="vertical-align: top;" class="tr-${ loop_state.odd ? 'odd' : 'even' }">
+                            <td class="infobox">
+                                <isprint value="${ httpData.methodID }"/>
+                            </td>
+                            <td class="infobox">
+                                <isprint value="${ httpData.user }"/>
+                            </td>
+                            <td class="infobox">
+                                <isprint value="${ httpData.password }"/>
+                            </td>
+                            <td class="infobox">
+                                <input type="hidden" id="http_data_${ httpData.sfccName }" value="${ JSON.stringify(httpData) }"/>
+                                <button type="button" id="test_http_data_${ httpData.sfccName }" onclick="checkCredentials(this, http_data_${ httpData.sfccName })" class="check" value="${ Resource.msg('test', 'paymentgateway', null)}">
+                                    ${ Resource.msg('test', 'paymentgateway', null) }
+                                </button>
+                            </td>
+                        </tr>
+                    </isloop>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        table.httptest td.infobox button.check.green { background-color: #42f477; }
+        table.httptest td.infobox button.check.red { background-color: #ff0000; }
+        td#bm_content_column > table > tbody > tr > td,
+        td#bm_content_column > table > tbody > tr > td > table > tbody > tr > td,
+        table.transaction-detail tr:last-child td { border-bottom: none }
+    </style>
+</isdecorate>

@@ -58,11 +58,11 @@
         <!-- fields for BML selection -->
         <include formid="bml" name="bml"/>
 
-        <!-- fields for WIRECARD_IDEAL -->
-        <include formid="WCD_IDEAL" name="WCD_IDEAL"/>
+        <!-- fields for PG_IDEAL -->
+        <include formid="PG_IDEAL" name="PG_IDEAL"/>
 
-        <!-- fields for WIRECARD_GIROPAY -->
-        <include formid="WCD_GIROPAY" name="WCD_GIROPAY"/>
+        <!-- fields for PG_GIROPAY -->
+        <include formid="PG_GIROPAY" name="PG_GIROPAY"/>
 
     </group>
     <field formid="couponCode" label="billingcoupon.couponenter" type="string" mandatory="false" missing-error="billingcoupon.couponinvalid" value-error="billingcoupon.couponinvalid" />

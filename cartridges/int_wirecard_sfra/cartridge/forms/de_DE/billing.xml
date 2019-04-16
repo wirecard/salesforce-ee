@@ -11,5 +11,5 @@
     <include formid="creditCardFields" name="creditCard"/>
 
     <!--  wirecard payment method forms -->
-    <include formid="WCD_IDEAL" name="WCD_IDEAL"/>
+    <include formid="PG_IDEAL" name="PG_IDEAL"/>
 </form>

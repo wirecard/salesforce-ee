@@ -1,0 +1,1 @@
+<iscontent type="application/javascript" charset="UTF-8" compact="true"/><isprint value="${ JSON.stringify(pdict.json, null, 2) }"/>

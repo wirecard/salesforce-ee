@@ -1,0 +1,4 @@
+<!--- TEMPLATENAME: checkout/confirmation/paymentGatewayPaymentDetails.isml --->
+<div class="pg-selected-payment">
+    ${ payment.paymentMethod }
+</div>

@@ -9,7 +9,7 @@
 </style>
 <div class="payment-method-options form-indent">
     <isscript>
-        var paymentHelper = require('int_wirecard_core/cartridge/scripts/wirecard/helper/PaymentHelper');
+        var paymentHelper = require('int_wirecard_core/cartridge/scripts/paymentgateway/helper/PaymentHelper');
     </isscript>
     <isloop items="${pdict.CurrentForms.billing.paymentMethods.selectedPaymentMethodID.options}" var="paymentMethodType">
 

@@ -1,0 +1,18 @@
+<!--- TEMPLATENAME: paymentGatewayPaymentContent.isml --->
+<isscript>
+    var selectedPaymentInstruments = pdict.order.billing.payment.selectedPaymentInstruments;
+    var selectedPaymentInstrument = selectedPaymentInstruments && selectedPaymentInstruments.length ? selectedPaymentInstruments[0] : null;
+    var isActive = selectedPaymentInstrument && selectedPaymentInstrument.paymentMethod === paymentOption.ID;
+</isscript>
+
+<!--- paymentHelper included in checkout/billing/paymentOptions/paymentOptionsTabs --->
+<isif condition="${ paymentHelper.hasPaymentForm(paymentOption.ID) }">
+    <isscript>
+        var templateName = "checkout/billing/paymentOptions/paymentGatewayPaymentContent/" + paymentOption.ID;
+    </isscript>
+    <div class="tab-pane <isif condition="${ isActive }">active </isif>${ paymentOption.ID }-content" id="${ paymentOption.ID }-content" role="tabpanel">
+
+        <isinclude template="${ templateName }" />
+
+    </div>
+</isif>

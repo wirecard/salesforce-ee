@@ -1,0 +1,95 @@
+<isscript>
+    importPackage(dw.system);
+    var transactionHelper = require('int_wirecard_core/cartridge/scripts/paymentgateway/helper/TransactionHelper');
+    var parameterMap = request.httpParameterMap;
+    var offset = parameterMap.start || 0;
+</isscript>
+<isdecorate template="application/MenuFrame">
+    <iscontent type="text/html" charset="UTF-8">
+    <isinclude template="inc/Modules">
+    <isinclude template="paymentgateway/bm/modules">
+
+    <isset
+            name="TOP_URL"
+            value="${URLUtils.url('SiteNavigationBar-ShowMenuitemOverview', 'CurrentMenuItemId', pdict.CurrentMenuItemId)}"
+            scope="PAGE"
+    >
+    <is name1="${pdict.mainmenuname}" url1="${TOP_URL}" name2="PaymentGateway">
+    <link rel="stylesheet" type="text/css" href="${ URLUtils.staticURL('/css/milligram.min.css') }"/>
+    <h1>${Resource.msg('heading_title_transactions', 'paymentgateway', null)}</h1>
+
+    <isif condition="${pdict.OrderPagingModel.empty}">
+
+        <div class="no-transactions">${ Resource.msg('paymentgateway.notransactions','paymentgateway', null)}</div>
+
+    <iselse/>
+
+        <div class="search-result-options">
+            <istransactionpagingbar pageurl="${ URLUtils.https('PaymentGateway-Transactions') }" pagingmodel="${ pdict.OrderPagingModel }"/>
+        </div>
+
+        <table class="transactions">
+            <thead>
+                <tr style="vertical-align: top;">
+                    <th>${ Resource.msg('orderNumber', 'paymentgateway', null) }</th>
+                    <th>${ Resource.msg('panel_payment_method', 'paymentgateway', null) }</th>
+                    <th>${ Resource.msg('panel_transaction_id', 'paymentgateway', null) }</th>
+                    <th>${ Resource.msg('panel_parent_transaction_id', 'paymentgateway', null) }</th>
+                    <th>${ Resource.msg('transactionType', 'paymentgateway', null) }</th>
+                    <th>${ Resource.msg('transactionState', 'paymentgateway', null) }</th>
+                    <th>${ Resource.msg('panel_amount', 'paymentgateway', null) }</th>
+                    <th>${ Resource.msg('panel_currency', 'paymentgateway', null) }</th>
+                    <th>${ Resource.msg('panel_transaction_date', 'paymentgateway', null) }</th>
+                </tr>
+            </thead>
+            <tbody>
+            <isloop items="${pdict.OrderPagingModel.pageElements}" var="order" status="loop_state">
+                <isscript>
+                    var transactionData = transactionHelper.getPaymentGatewayTransactionDataFromOrder(order);
+                    var trClass = loop_state.odd ? "odd": "even";
+                </isscript>
+                <isloop items="${ transactionData }" var="transaction" status="loop_state_tr">
+                    <tr style="vertical-align: top;" class="tr-transaction ${ trClass }">
+                        <isif condition="${ loop_state_tr.first }">
+                            <td class="infobox" rowspan="${ transactionData.size() }">
+                                <isprint value="${ order.orderNo }"/>
+                            </td>
+                            <td class="infobox" rowspan="${ transactionData.size() }">
+                                <isprint value="${ transaction.paymentMethodID }"/>
+                            </td>
+                        </isif>
+                        <td class="infobox transaction-link">
+                            <a href="${ URLUtils.https('PaymentGateway-TransactionDetail', 'orderNo', order.orderNo, 'transactionId', transaction.transactionId) }"><isprint value="${ transaction.transactionId }"/></a>
+                        </td>
+                        <td class="infobox">
+                            <isprint value="${ transaction.parentTransactionId }"/>
+                        </td>
+                        <td class="infobox">
+                            <isprint value="${ transaction.transactionType }"/>
+                        </td>
+                        <td class="infobox">
+                            <isprint value="${ transaction.transactionState }"/>
+                        </td>
+                        <td class="infobox">
+                            <isprint value="${ transaction.amount }" style="MONEY_SHORT"/>
+                        </td>
+                        <td class="infobox">
+                            <isprint value="${ transaction.amount.currencyCode }"/>
+                        </td>
+                        <td class="infobox">
+                            <isprint value="${ transaction.createdAt }" formatter="yyyy-MM-dd hh:mm:ss" timezone="SITE"/>
+                        </td>
+                    </tr>
+                </isloop>
+            </isloop>
+            </tbody>
+        </table>
+
+        <style>
+            table.transactions tr.tr-transaction.odd td { background: #e6f7f5; }
+            table.transactions tr td.transaction-link { padding-left: 0; }
+            td#bm_content_column > table > tbody > tr > td,
+            td#bm_content_column > table > tbody > tr > td > table > tbody > tr > td { border-bottom: none }
+        </style>
+    </isif>
+</isdecorate>
