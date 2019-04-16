@@ -27,7 +27,7 @@ WebUI.selectOptionByValue(findTestObject('sfra/product page/Quantity'), quantity
 
 WebUI.click(findTestObject('sfra/product page/Swatch/JJ887XX'))
 
-WebUI.waitForElementClickable(findTestObject('sfra/product page/Add to cart'), 5)
+WebUI.delay(3)
 
 WebUI.click(findTestObject('sfra/product page/Add to cart'))
 

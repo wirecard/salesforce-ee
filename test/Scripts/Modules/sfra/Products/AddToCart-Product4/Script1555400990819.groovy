@@ -13,11 +13,23 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
-println('PayPal')
+WebUI.setText(findTestObject('sfra/homepage/Searchbox'), productId)
+
+WebUI.waitForElementClickable(findTestObject('sfra/homepage/Search'), 5)
+
+WebUI.click(findTestObject('sfra/homepage/Search'))
+
+WebUI.waitForElementClickable(findTestObject('sfra/product page/Link to Product'), 2)
+
+WebUI.click(findTestObject('sfra/product page/Link to Product'))
+
+WebUI.selectOptionByValue(findTestObject('sfra/product page/Quantity'), quantity, false)
+
+WebUI.click(findTestObject('sfra/product page/Swatch/YELLOSI'))
 
 WebUI.delay(3)
 
-WebUI.waitForElementClickable(findTestObject('sfra/checkout/select payment/PayPal'), 2)
+WebUI.click(findTestObject('sfra/product page/Add to cart'))
 
-WebUI.click(findTestObject('sfra/checkout/select payment/PayPal'))
+WebUI.delay(3)
 

@@ -25,5 +25,11 @@ WebUI.click(findTestObject('sitegenesis/product page/Swatch/JJ887XX'))
 
 WebUI.delay(3)
 
+println(quantity)
+
+WebUI.modifyObjectProperty(findTestObject('sitegenesis/product page/Quantity'), 'value', 'equals', quantity, false)
+
+WebUI.delay(2)
+
 WebUI.click(findTestObject('sitegenesis/product page/Add to cart'))
 
