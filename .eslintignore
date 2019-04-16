@@ -1,6 +1,9 @@
 # exclude js bundles
 cartridges/**/cartridge/static/
 
+# exclude sitegenesis storefront cartridges with sample files
+cartridges/app_storefront_*
+
 # exclude sfcc standard scripts
 cartridges/**/cartridge/scripts/app.js
 cartridges/**/cartridge/scripts/guard.js
