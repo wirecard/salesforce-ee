@@ -168,9 +168,11 @@ exports.HttpAccessOverview = guard.ensure(['get', 'https'], function () {
 
     var httpCredentials = [
         {
-            methodID: 'PayPal',
-            user    : getSitePreference('paymentGatewayPayPalHttpUser'),
-            password: getSitePreference('paymentGatewayPayPalHttpPassword')
+            methodName: 'PayPal',
+            methodID  : 'PG_PAYPAL',
+            user      : getSitePreference('paymentGatewayPayPalHttpUser'),
+            password  : getSitePreference('paymentGatewayPayPalHttpPassword'),
+            baseUrl   : getSitePreference('paymentGatewayPayPalBaseUrl')
         }
     ];
     app.getView({
@@ -183,12 +185,18 @@ exports.HttpAccessOverview = guard.ensure(['get', 'https'], function () {
  */
 exports.HttpAccessTest = guard.ensure(['post', 'https'], function () {
     var parameterMap = request.httpParameterMap;
-    var userName = parameterMap.user.value;
-    var password = parameterMap.password.value;
+    var paymentMethodID = parameterMap.methodID.value;
+
+    var preferenceHelper = require('*/cartridge/scripts/paymentgateway/PreferencesHelper');
+    var preferences = preferenceHelper.getPreferenceForMethodID(paymentMethodID);
+
     var result;
 
     try {
-        var service = require('*/cartridge/scripts/paymentgateway/services/TestHttpCredentials')(userName, password);
+        var userName = preferences.userName;
+        var password = preferences.password;
+        var baseUrl = preferences.baseUrl;
+        var service = require('*/cartridge/scripts/paymentgateway/services/TestHttpCredentials')(userName, password, baseUrl);
         result = service.call();
         // 404 means acknowledged otherwise api responds with 401 unauthorized
         if (result.error !== 404) {
@@ -200,7 +208,7 @@ exports.HttpAccessTest = guard.ensure(['post', 'https'], function () {
         Logger.error(
             StringUtils.format(
                 'Invalid merchant credentials for {0}\n {1}',
-                parameterMap.methodID,
+                paymentMethodID,
                 result
             )
         );
@@ -225,13 +233,14 @@ exports.GetTransactionXML = guard.ensure(['post', 'https'], function () {
     try {
         var userName = preferences.userName;
         var password = preferences.password;
+        var baseUrl = preferences.baseUrl;
 
         var HashMap = require('dw/util/HashMap');
         var params = new HashMap();
         params.put('merchantAccountID', preferences.merchantAccountID);
         params.put('transactionID', transactionId);
 
-        var service = require('*/cartridge/scripts/paymentgateway/services/GetTransaction')(userName, password);
+        var service = require('*/cartridge/scripts/paymentgateway/services/GetTransaction')(userName, password, baseUrl);
         var result = service.call(params);
         if (!result || result.status != 'OK') {
             throw new Error('Api-error: ' + result.errorMessage);

@@ -19,6 +19,7 @@ var PreferencesMapping = {
     PG_PAYPAL: {
         userName         : 'paymentGatewayPayPalHttpUser',
         password         : 'paymentGatewayPayPalHttpPassword',
+        baseUrl          : 'paymentGatewayPayPalBaseUrl',
         merchantAccountID: 'paymentGatewayPayPalMerchantAccountID'
     }
 };

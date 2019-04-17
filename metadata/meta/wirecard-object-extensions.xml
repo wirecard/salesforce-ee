@@ -58,6 +58,14 @@
                 <min-length>0</min-length>
                 <default-value>8695f3e4-76e8-414b-96cd-a1e5dafcf20c</default-value>
             </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayPayPalBaseUrl">
+                <display-name xml:lang="x-default">Api base-url</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>https://api-test.wirecard.com</default-value>
+            </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayPayPalHttpUser">
                 <display-name xml:lang="x-default">Http user</display-name>
                 <type>string</type>
@@ -118,6 +126,7 @@
             <attribute-group group-id="PAYMENTGATEWAY_PAYPAL">
                 <display-name xml:lang="x-default">Payment gateway settings for PayPal</display-name>
                 <attribute attribute-id="paymentGatewayPayPalMerchantAccountID"/>
+                <attribute attribute-id="paymentGatewayPayPalBaseUrl"/>
                 <attribute attribute-id="paymentGatewayPayPalHttpUser"/>
                 <attribute attribute-id="paymentGatewayPayPalHttpPassword"/>
                 <attribute attribute-id="paymentGatewayPayPalAddDescriptorToRequest"/>

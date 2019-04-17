@@ -14,11 +14,11 @@
     <is name1="${pdict.mainmenuname}" url1="${TOP_URL}" name2="PaymentGateway">
     <script type="text/javascript">
     //<![CDATA[
-    function checkCredentials(btn, inputElement) {
-        var httpData = $F(inputElement);
+    function checkCredentials(btn, paymentMethodId) {
         new Ajax.Request("${URLUtils.url('PaymentGateway-HttpAccessTest')}", {
-            parameters: JSON.parse(httpData),
+            parameters: { methodID: paymentMethodId },
             onSuccess: function(msg) {
+                btn.removeClassName('red');
                 btn.addClassName('green');
                 Form.Element.disable(btn.id);
             },
@@ -41,12 +41,13 @@
                         <th>${ Resource.msg('panel_payment_method', 'paymentgateway', null) }</th>
                         <th>${ Resource.msg('configuration.httpUser', 'paymentgateway', null) }</th>
                         <th>${ Resource.msg('configuration.httpPassword', 'paymentgateway', null) }</th>
+                        <th>${ Resource.msg('config_base_url', 'paymentgateway', null) }</th>
                         <th>&nbsp;</th>
                     </tr>
                     <isloop items="${pdict.HttpAccessData}" var="httpData" status="loop_state">
                         <tr style="vertical-align: top;" class="tr-${ loop_state.odd ? 'odd' : 'even' }">
                             <td class="infobox">
-                                <isprint value="${ httpData.methodID }"/>
+                                <isprint value="${ httpData.methodName }"/>
                             </td>
                             <td class="infobox">
                                 <isprint value="${ httpData.user }"/>
@@ -55,8 +56,10 @@
                                 <isprint value="${ httpData.password }"/>
                             </td>
                             <td class="infobox">
-                                <input type="hidden" id="http_data_${ httpData.sfccName }" value="${ JSON.stringify(httpData) }"/>
-                                <button type="button" id="test_http_data_${ httpData.sfccName }" onclick="checkCredentials(this, http_data_${ httpData.sfccName })" class="check" value="${ Resource.msg('test', 'paymentgateway', null)}">
+                                <isprint value="${ httpData.baseUrl }"/>
+                            </td>
+                            <td class="infobox">
+                                <button type="button" id="test_http_data_${ httpData.methodID }" onclick="checkCredentials(this, '${ httpData.methodID }')" class="check" value="${ Resource.msg('test', 'paymentgateway', null)}">
                                     ${ Resource.msg('test', 'paymentgateway', null) }
                                 </button>
                             </td>
