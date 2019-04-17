@@ -44,9 +44,15 @@ var AbstractPaymentGatewayService = HTTPBaseService.extend({
      * @return String The string that has to be sent to the service
      */
     createRequest: function (svc, params) {
+        var url = svc.URL;
+        if (Object.prototype.hasOwnProperty.call(this, 'getBaseUrl') && typeof this.getBaseUrl === 'function') {
+            url = this.getBaseUrl();
+        }
         //sets the service call endpoint
         if ( !empty(this.relativeURLPath) ) {
-            svc.URL = [ svc.URL.replace(/\/$/, ''), this.relativeURLPath ].join('/');
+            svc.URL = [ url.replace(/\/$/, ''), this.relativeURLPath ].join('/');
+        } else {
+            svc.URL = url.replace(/\/$/, '');
         }
 
         //adding header values
