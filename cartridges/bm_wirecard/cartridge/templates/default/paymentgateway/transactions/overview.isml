@@ -90,6 +90,39 @@
             table.transactions tr td.transaction-link { padding-left: 0; }
             td#bm_content_column > table > tbody > tr > td,
             td#bm_content_column > table > tbody > tr > td > table > tbody > tr > td { border-bottom: none }
+
+            div.pager-select {
+                display: flex;
+                align-items: center;
+                padding: 0;
+            }
+
+            .pager-select label,
+            .pager-select select {
+                margin: 0;
+            }
+
+            .pager-select label {
+                margin: 0 10px;
+            }
+
+            .pager-select select {
+                min-width: 80px;
+            }
+
+            .pager li {
+                margin-bottom: 0;
+            }
+
+            .pagination {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .pagination.clearfix::after {
+                content: none;
+            }
         </style>
     </isif>
 </isdecorate>

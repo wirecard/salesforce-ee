@@ -1,5 +1,6 @@
 'use strict';
 
+var Money = require('dw/value/Money');
 var Resource = require('dw/web/Resource');
 var Site = require('dw/system/Site').getCurrent();
 
@@ -242,7 +243,8 @@ Transaction.prototype.getBackendOperationForCancel = function () {
         var operation = this.getCancelTransactionType();
         return {
             label: Resource.msg('text_cancel_transaction', 'paymentgateway', null),
-            action: operation.type
+            action: operation.type,
+            amount: { decimalValue: 0 }
         };
     } catch (err) {
         return false;
@@ -254,11 +256,21 @@ Transaction.prototype.getBackendOperationForCancel = function () {
  * @returns {Object|false}
  */
 Transaction.prototype.getBackendOperationForCapture = function () {
+    var self = this;
     try {
         var operation = this.getCaptureTransactionType();
+
+        var maxAmount = self['requested-amount'] || 0;
+        var capturedAmount = Number(self.order.custom.paymentGatewayCapturedAmount);
+        if (capturedAmount < maxAmount) {
+            maxAmount -= capturedAmount;
+        } else {
+            throw new Error('maximum possible amount already captured!');
+        }
         return {
             label: Resource.msg('text_capture_transaction', 'paymentgateway', null),
             action: operation.type,
+            amount: new Money(maxAmount, self.order.currencyCode),
             partialAllowed: Object.prototype.hasOwnProperty.call(operation, 'partialAllowed')
         };
     } catch (err) {
@@ -271,11 +283,21 @@ Transaction.prototype.getBackendOperationForCapture = function () {
  * @returns {Object|false}
  */
 Transaction.prototype.getBackendOperationForRefund = function () {
+    var self = this;
     try {
         var operation = this.getRefundTransactionType();
+
+        var maxAmount = self['requested-amount'] || 0;
+        var refundedAmount = Object.prototype.hasOwnProperty.call(self, 'refunded-amount') ? self['refunded-amount'] : 0;
+        if (refundedAmount < maxAmount) {
+            maxAmount -= refundedAmount;
+        } else {
+            throw new Error('maximum possible amount already refunded!');
+        }
         return {
             label: Resource.msg('text_refund_transaction', 'paymentgateway', null),
             action: operation.type,
+            amount: new Money(maxAmount, self.order.currencyCode),
             partialAllowed: Object.prototype.hasOwnProperty.call(operation, 'partialAllowed')
         };
     } catch (err) {
@@ -285,15 +307,13 @@ Transaction.prototype.getBackendOperationForRefund = function () {
 
 /**
  * Retrieve possible backend operations for current transaction
- * @param {boolean} canCapture - if order can be captured
- * @param {boolean} canRefund - if order can be refunded
  * @param {boolean} canCancel - if order can be cancelled
  * @returns {Array}
  */
-Transaction.prototype.getBackendOperations = function (canCapture, canRefund, canCancel) {
+Transaction.prototype.getBackendOperations = function (canCancel) {
     var operations = [];
     var captureActions = this.getBackendOperationForCapture();
-    if (canCapture && captureActions) {
+    if (canCancel && captureActions) {
         operations.push(captureActions);
     }
     var cancelActions = this.getBackendOperationForCancel();
@@ -301,7 +321,7 @@ Transaction.prototype.getBackendOperations = function (canCapture, canRefund, ca
         operations.push(cancelActions);
     }
     var refundActions = this.getBackendOperationForRefund();
-    if (canRefund && refundActions) {
+    if (canCancel && refundActions) {
         operations.push(refundActions);
     }
     return operations;

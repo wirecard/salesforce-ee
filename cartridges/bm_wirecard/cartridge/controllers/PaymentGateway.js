@@ -97,7 +97,9 @@ exports.ExecuteOperation = guard.ensure(['post', 'https'], function () {
     var orderNo = parameterMap.orderNo.value;
     var transactionId = parameterMap.transactionId.value;
     var operation = parameterMap.operation.value;
+    var amount = parameterMap.amount.value;
 
+    var Type = require('*/cartridge/scripts/paymentgateway/transaction/Type');
     var Resource = require('dw/web/Resource');
     var OrderMgr = require('dw/order/OrderMgr');
     var order = OrderMgr.getOrder(orderNo);
@@ -107,6 +109,8 @@ exports.ExecuteOperation = guard.ensure(['post', 'https'], function () {
 
     if (!(order instanceof dw.order.Order)) {
         Logger.error(msg.message);
+    } else if ((!amount || amount == 0) && Type.Cancel.indexOf(operation) === -1) {
+        msg.message = Resource.msgf('requested_operation_no_available_for_amount', 'paymentgateway', null, amount, order.currencyCode);
     } else {
         var backendOperation = require('*/cartridge/scripts/paymentgateway/BackendOperation');
         try {
@@ -114,7 +118,7 @@ exports.ExecuteOperation = guard.ensure(['post', 'https'], function () {
                 order,
                 {
                     action           : operation,
-                    amount           : parameterMap.amount.value,
+                    amount           : amount,
                     transactionId    : transactionId,
                     merchantAccountId: parameterMap.merchantAccountId.value
                 }

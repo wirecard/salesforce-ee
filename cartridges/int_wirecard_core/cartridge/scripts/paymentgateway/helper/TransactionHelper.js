@@ -60,6 +60,7 @@ var TransactionHelper = {
         var allTransactions = this.getPaymentGatewayTransactionDataFromOrder(order);
         var allTransactionsIterator = allTransactions.iterator();
         var canCancel = true;
+        var refundedAmount = 0;
 
         while (allTransactionsIterator.hasNext()) {
             var tmpTransaction = allTransactionsIterator.next();
@@ -70,6 +71,11 @@ var TransactionHelper = {
                 && tmpTransaction.transactionState === 'success'
             ) {
                 canCancel = false;
+            } else if (tmpTransaction.parentTransactionId == transactionId
+                && Type.Refund.indexOf(tmpTransaction.transactionType) > -1
+                && tmpTransaction.transactionState === 'success'
+            ) {
+                refundedAmount += tmpTransaction.amount.value;
             }
         }
         if (!transactionData) {
@@ -78,15 +84,16 @@ var TransactionHelper = {
             );
         }
 
-        var OrderEntity = require('*/cartridge/scripts/paymentgateway/transaction/entity/Order');
-        var orderAmount = OrderEntity.getFixedContainerTotalAmount(order);
-        // check if capture is possible
-        var canCapture = canCancel && orderAmount.value > order.custom.paymentGatewayCapturedAmount;
-        // check if refund is possible
-        var canRefund = canCancel && orderAmount.value > order.custom.paymentGatewayRefundedAmount;
-
-        var transaction = this.getTransaction(transactionData.paymentMethodID, order, { 'transaction-type': transactionData.transactionType });
-        transactionData.allowedOperations = transaction.getBackendOperations(canCapture, canRefund, canCancel);
+        var transaction = this.getTransaction(
+            transactionData.paymentMethodID,
+            order,
+            {
+                'requested-amount': transactionData.amount.value,
+                'transaction-type': transactionData.transactionType,
+                'refunded-amount': refundedAmount
+            }
+        );
+        transactionData.allowedOperations = transaction.getBackendOperations(canCancel);
         var partialAllowedOperations = [];
         transactionData.allowedOperations.forEach(function (item) {
             if (Object.prototype.hasOwnProperty.call(item, 'partialAllowed')) {
@@ -212,8 +219,9 @@ var TransactionHelper = {
      * Save capture / refund amount
      * @param {dw.order.Order} order - current order
      * @param {Object} transaction - transaction data
+     * @param {boolean} overwrite - if true replaces preceding initial transaction
      */
-    saveBackendTransaction: function (order, transaction) {
+    saveBackendTransaction: function (order, transaction, overwrite) {
         var Transaction = require('dw/system/Transaction');
         var Type = require('*/cartridge/scripts/paymentgateway/transaction/Type');
 
@@ -232,7 +240,7 @@ var TransactionHelper = {
             }
         }
         // finally save transaction with order
-        this.saveTransactionToOrder(order, transaction);
+        this.saveTransactionToOrder(order, transaction, overwrite);
     },
 
     /**
