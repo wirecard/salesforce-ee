@@ -1,0 +1,3 @@
+paymentMethodId,login
+PG_PAYPAL,false
+PG_CREDIT,true

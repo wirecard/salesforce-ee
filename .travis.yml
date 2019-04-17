@@ -1,0 +1,39 @@
+language: java
+services:
+  - docker
+addons:
+  artifacts:
+    # if would like to download artifacts ,travis-ci recommend to upload the remote location like aws s3
+    # set enviroment variable in travis-ci
+    # ARTIFACTS_KEY=(AWS access key id)
+    # ARTIFACTS_SECRET=(AWS secret access key)
+    # ARTIFACTS_BUCKET=(S3 bucket name)
+    # For more information configuration for this ,please refer https://docs.travis-ci.com/user/uploading-artifacts/
+    # this example is store to local hard disk travis-ci
+    target_paths: report/*
+    debug: true
+jobs:
+  include:
+    - stage: "Test"
+      name: "Run Test and report"
+      script:
+        - export CWD=$(pwd)
+        - cd ../
+        - git clone --depth=50 --branch=master https://$STOREFRONT_TOKEN@github.com/SalesforceCommerceCloud/storefront-reference-architecture.git
+        - cd storefront-reference-architecture
+        - npm install
+        - npm run compile:scss
+        - npm run compile:js
+        - npm run compile:fonts
+        - cd ../
+        - git clone --depth=50 --branch=master https://$STOREFRONT_TOKEN@github.com/SalesforceCommerceCloud/sitegenesis.git
+        - cd sitegenesis
+        - npm install
+        - npm install -g gulp
+        - gulp build
+        - find -maxdepth 0 -type d -exec cp -r {} "../storefront-reference-architecture/cartridges/" \;
+        - if test -d $CWD/cartridges; then find $CWD/cartridges -maxdepth 0 -type d -exec cp -r {} "../storefront-reference-architecture/cartridges/" \;; fi
+        - cd ../storefront-reference-architecture/cartridges/
+        - find {app_*,modules} -maxdepth 0 -type d -exec node ../node_modules/.bin/dwupload --cartridge {} --username $SFCC_USER --password $SFCC_PASSWORD --hostname $SANDBOX_URL \;
+        - docker pull katalonstudio/katalon
+        - docker run -t --rm -v "${CWD}/test":/katalon/katalon/source/ katalonstudio/katalon katalon-execute.sh -browserType="Remote" -remoteWebDriverUrl="https://${BROWSERSTACK_USER}:${BROWSERSTACK_ACCESS_KEY}@hub-cloud.browserstack.com/wd/hub" -executionProfile="ci_console" -g_SiteURL="$SANDBOX_URL" -retry=0 -statusDelay=15 -testSuiteCollectionPath="Test Suites/WirecardExecution"
