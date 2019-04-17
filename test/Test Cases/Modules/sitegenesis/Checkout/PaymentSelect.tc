@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>PaymentSelect</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>b029cb15-159d-4fae-9309-a1a870a69c96</testCaseGuid>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>6bfa4f38-874c-4c32-a566-faa53945076f</id>
+      <masked>false</masked>
+      <name>paymentMethodId</name>
+   </variable>
+</TestCaseEntity>

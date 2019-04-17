@@ -11,11 +11,7 @@
       </entry>
       <entry>
          <key>BASIC</key>
-         <value>//a[@href = 'Checkout-Begin' and (text() = '
-                            Checkout as Guest
-                        ' or . = '
-                            Checkout as Guest
-                        ')]</value>
+         <value>//a[contains(@class, 'checkout-as-guest')]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -23,39 +19,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>tag</name>
-      <type>Main</type>
-      <value>a</value>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>contains</matchCondition>
-      <name>href</name>
-      <type>Main</type>
-      <value>Checkout-Begin</value>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>class</name>
-      <type>Main</type>
-      <value>btn btn-block btn-primary checkout-as-guest</value>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>text</name>
-      <type>Main</type>
-      <value>
-                            Checkout as Guest
-                        </value>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>id(&quot;ext-gen47&quot;)/body[1]/div[@class=&quot;page&quot;]/div[@class=&quot;container&quot;]/div[@class=&quot;row justify-content-center&quot;]/div[@class=&quot;col-md-6 col-sm-8&quot;]/div[@class=&quot;card&quot;]/div[@class=&quot;card-body&quot;]/a[@class=&quot;btn btn-block btn-primary checkout-as-guest&quot;]</value>
+      <value>//a[contains(@class, 'checkout-as-guest')]</value>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>

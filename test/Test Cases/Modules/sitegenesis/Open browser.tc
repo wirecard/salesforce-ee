@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>Open browser</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>4630bb72-d7b8-4207-9aaf-833a2046e84c</testCaseGuid>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>662ebde5-effd-42bf-bac4-543c5df172c9</id>
+      <masked>false</masked>
+      <name>relativeURLHomepage</name>
+   </variable>
+</TestCaseEntity>

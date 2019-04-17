@@ -13,20 +13,26 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
-WebUI.callTestCase(findTestCase('Modules/sfra/Open browser'), [:], FailureHandling.STOP_ON_FAILURE)
+WebUI.callTestCase(findTestCase('Modules/sfra/Open browser'), [('relativeURLHomepage') : relativeURLHomepage], FailureHandling.STOP_ON_FAILURE)
 
-WebUI.callTestCase(findTestCase('Modules/sfra/AddToCart'), [:], FailureHandling.STOP_ON_FAILURE)
+WebUI.callTestCase(findTestCase('Modules/sfra/Accept consent tracking'), [:], FailureHandling.STOP_ON_FAILURE)
 
-WebUI.callTestCase(findTestCase('Modules/sfra/GoToCheckout'), [:], FailureHandling.STOP_ON_FAILURE)
+WebUI.callTestCase(findTestCase('Modules/sfra/Products/AddToCart-Product1'), [:], FailureHandling.STOP_ON_FAILURE)
+
+WebUI.callTestCase(findTestCase('Modules/sfra/Checkout/GoToCheckout'), [:], FailureHandling.STOP_ON_FAILURE)
 
 if (login == 'false') {
-    WebUI.callTestCase(findTestCase('Modules/sfra/CheckoutGuest'), [('address1') : findTestData('customers').getValue(3, 
-                1)], FailureHandling.STOP_ON_FAILURE)
+    WebUI.callTestCase(findTestCase('Modules/sfra/Checkout/CheckoutGuest'), [:], FailureHandling.STOP_ON_FAILURE)
+
+    WebUI.callTestCase(findTestCase('Modules/sfra/Checkout/ShippingAddress'), [('firstName') : firstName, ('lastName') : lastName
+            , ('address1') : address1, ('zipCode') : zipCode, ('city') : city, ('state') : state, ('country') : country, ('email') : email
+            , ('phone') : phone], FailureHandling.STOP_ON_FAILURE)
 } else {
-    WebUI.callTestCase(findTestCase('Modules/sfra/CheckoutLogin'), [:], FailureHandling.STOP_ON_FAILURE)
+    WebUI.callTestCase(findTestCase('Modules/sfra/Checkout/CheckoutLogin'), [('email') : email, ('password') : password], 
+        FailureHandling.STOP_ON_FAILURE)
 }
 
-WebUI.callTestCase(findTestCase('Modules/sfra/PaymentSelect'), [('paymentMethodId') : paymentMethodId], FailureHandling.STOP_ON_FAILURE)
+WebUI.callTestCase(findTestCase('Modules/sfra/Checkout/PaymentSelect'), [('paymentMethodId') : paymentMethodId], FailureHandling.STOP_ON_FAILURE)
 
-WebUI.callTestCase(findTestCase('Modules/sfra/PlaceOrder'), [:], FailureHandling.STOP_ON_FAILURE)
+WebUI.callTestCase(findTestCase('Modules/sfra/Checkout/PlaceOrder'), [('paymentMethodId') : paymentMethodId], FailureHandling.STOP_ON_FAILURE)
 

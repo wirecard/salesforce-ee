@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>PayPal</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>7ac97657-765e-4b0d-9b5f-ff92ee3d4a2f</testCaseGuid>
+   <variable>
+      <defaultValue>findTestData('payment_methods').getValue(1, 1)</defaultValue>
+      <description></description>
+      <id>42e3baf6-98a8-46f2-9dd7-852994146e78</id>
+      <masked>false</masked>
+      <name>username</name>
+   </variable>
+   <variable>
+      <defaultValue>findTestData('payment_methods').getValue(2, 1)</defaultValue>
+      <description></description>
+      <id>fa37e04b-22fa-44a6-b301-490d8afc1f8b</id>
+      <masked>false</masked>
+      <name>password</name>
+   </variable>
+</TestCaseEntity>
