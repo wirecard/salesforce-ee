@@ -59,6 +59,10 @@
                         <td>${ Transaction.transactionId }</td>
                     </tr>
                     <tr>
+                        <td>${ Resource.msg('panel_parent_transaction_id', 'paymentgateway', null) }</td>
+                        <td>${ Transaction.parentTransactionId }</td>
+                    </tr>
+                    <tr>
                         <td>${ Resource.msg('panel_payment_method', 'paymentgateway', null) }</td>
                         <td>${ Transaction.paymentMethodID }</td>
                     </tr>
@@ -75,7 +79,7 @@
                         <td>${ Order.remoteHost }</td>
                     </tr>
                     <tr>
-                        <td>${ Resource.msg('orderNumber', 'paymentgateway', null) }</td>
+                        <td>${ Resource.msg('panel_order_number', 'paymentgateway', null) }</td>
                         <td>${ Order.orderNo }</td>
                     </tr>
                     <tr>

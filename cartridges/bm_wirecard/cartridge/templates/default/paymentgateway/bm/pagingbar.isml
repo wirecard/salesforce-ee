@@ -126,7 +126,7 @@
         }
 
         div.pager > ul li.current-page {
-            background-color: #84BD00;
+            background-color: #4cccdb;
             color: white;
         }
 
