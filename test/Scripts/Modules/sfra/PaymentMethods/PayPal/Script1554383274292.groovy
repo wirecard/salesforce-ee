@@ -15,7 +15,7 @@ import internal.GlobalVariable as GlobalVariable
 
 println('PayPal')
 
-WebUI.delay(3)
+WebUI.delay(10)
 
 WebUI.waitForElementClickable(findTestObject('sfra/checkout/select payment/PayPal'), 2)
 

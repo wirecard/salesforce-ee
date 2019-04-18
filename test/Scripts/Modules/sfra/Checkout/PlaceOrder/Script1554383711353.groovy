@@ -15,6 +15,8 @@ import internal.GlobalVariable as GlobalVariable
 
 WebUI.waitForElementClickable(findTestObject('sfra/checkout/Link place order'), 5)
 
+WebUI.delay(5)
+
 WebUI.click(findTestObject('sfra/checkout/Link place order'))
 
 switch (paymentMethodId) {
