@@ -97,7 +97,7 @@ exports.ExecuteOperation = guard.ensure(['post', 'https'], function () {
     var orderNo = parameterMap.orderNo.value;
     var transactionId = parameterMap.transactionId.value;
     var operation = parameterMap.operation.value;
-    var amount = parameterMap.amount.value;
+    var amount = Number(parameterMap.amount.value);
 
     var Type = require('*/cartridge/scripts/paymentgateway/transaction/Type');
     var Resource = require('dw/web/Resource');
@@ -109,7 +109,7 @@ exports.ExecuteOperation = guard.ensure(['post', 'https'], function () {
 
     if (!(order instanceof dw.order.Order)) {
         Logger.error(msg.message);
-    } else if ((!amount || amount == 0) && Type.Cancel.indexOf(operation) === -1) {
+    } else if (amount === 0 && Type.Cancel.indexOf(operation) === -1) {
         msg.message = Resource.msgf('requested_operation_no_available_for_amount', 'paymentgateway', null, amount, order.currencyCode);
     } else {
         var backendOperation = require('*/cartridge/scripts/paymentgateway/BackendOperation');
@@ -152,29 +152,25 @@ exports.ExecuteOperation = guard.ensure(['post', 'https'], function () {
  * Display http user / password overview
  */
 exports.HttpAccessOverview = guard.ensure(['get', 'https'], function () {
-    /**
-     * Helper function to retrieve specific config value
-     * @param {string} key - site preference name
-     * @returns {string}
-     */
-    var Site = require('dw/system/Site').getCurrent();
-    var getSitePreference = function (key) {
-        var result = Site.getCustomPreferenceValue(key);
-        if (!result) {
-            result = '';
-        }
-        return result;
-    };
+    var preferenceHelper = require('*/cartridge/scripts/paymentgateway/PreferencesHelper');
+    var httpCredentials = [];
+    var preferences;
 
-    var httpCredentials = [
-        {
-            methodName: 'PayPal',
-            methodID  : 'PG_PAYPAL',
-            user      : getSitePreference('paymentGatewayPayPalHttpUser'),
-            password  : getSitePreference('paymentGatewayPayPalHttpPassword'),
-            baseUrl   : getSitePreference('paymentGatewayPayPalBaseUrl')
+    [
+        { methodName: 'PayPal', methodID: 'PG_PAYPAL' }
+    ].forEach(function (p) {
+        preferences = preferenceHelper.getPreferenceForMethodID(p.methodID);
+        if (Object.prototype.hasOwnProperty.call(preferences, 'userName')) {
+            httpCredentials.push({
+                methodName: p.methodName,
+                methodID  : p.methodID,
+                user      : preferences.userName,
+                password  : preferences.password,
+                baseUrl   : preferences.baseUrl
+            });
         }
-    ];
+    });
+
     app.getView({
         HttpAccessData: httpCredentials
     }).render('paymentgateway/httpaccesstest');
@@ -193,10 +189,7 @@ exports.HttpAccessTest = guard.ensure(['post', 'https'], function () {
     var result;
 
     try {
-        var userName = preferences.userName;
-        var password = preferences.password;
-        var baseUrl = preferences.baseUrl;
-        var service = require('*/cartridge/scripts/paymentgateway/services/TestHttpCredentials')(userName, password, baseUrl);
+        var service = require('*/cartridge/scripts/paymentgateway/services/TestHttpCredentials')(preferences.userName, preferences.password, preferences.baseUrl);
         result = service.call();
         // 404 means acknowledged otherwise api responds with 401 unauthorized
         if (result.error !== 404) {
@@ -243,7 +236,7 @@ exports.GetTransactionXML = guard.ensure(['post', 'https'], function () {
         var service = require('*/cartridge/scripts/paymentgateway/services/GetTransaction')(userName, password, baseUrl);
         var result = service.call(params);
         if (!result || result.status != 'OK') {
-            throw new Error('Api-error: ' + result.errorMessage);
+            throw new Error('Api-error: ' + Object.prototype.hasOwnProperty.call(result, 'errorMessage') ? result.errorMessage : 'n/a');
         }
         data = result.object;
     } catch (err) {

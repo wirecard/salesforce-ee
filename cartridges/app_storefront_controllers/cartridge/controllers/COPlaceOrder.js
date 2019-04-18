@@ -37,7 +37,7 @@ var PaymentProcessor = app.getModel('PaymentProcessor');
  */
 function handlePayments(order) {
 
-    if (order.getTotalNetPrice() !== 0.00) {
+    if (order.getTotalNetPrice() !== 0) {
 
         var paymentInstruments = order.getPaymentInstruments();
 

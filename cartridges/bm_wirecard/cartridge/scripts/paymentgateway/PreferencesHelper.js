@@ -36,8 +36,8 @@ function getPreferenceForMethodID(paymentMethodID) {
         Object.keys(PreferencesMapping[paymentMethodID]).forEach(function (k) {
             result[k] = getSitePreference(PreferencesMapping[paymentMethodID][k]);
         });
-        return result;
     }
+    return result;
 }
 
 module.exports = { getPreferenceForMethodID: getPreferenceForMethodID };
