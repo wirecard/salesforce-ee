@@ -162,6 +162,42 @@
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
             </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayOrderState">
+                <display-name xml:lang="x-default">Payment Gateway Order State</display-name>
+                <type>enum-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <value-definitions>
+                    <value-definition>
+                        <display xml:lang="x-default">Open</display>
+                        <value>open</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">Authorized</display>
+                        <value>authorized</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">Pending</display>
+                        <value>pending</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">Processing</display>
+                        <value>processing</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">Paid</display>
+                        <value>paid</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">Refunded</display>
+                        <value>refunded</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">Partially refunded</display>
+                        <value>partiallyRefunded</value>
+                    </value-definition>
+                </value-definitions>
+            </attribute-definition>
         </custom-attribute-definitions>
         <group-definitions>
             <attribute-group group-id="PaymentGateway">
@@ -169,6 +205,7 @@
                 <attribute attribute-id="paymentGatewayTransactions"/>
                 <attribute attribute-id="paymentGatewayCapturedAmount"/>
                 <attribute attribute-id="paymentGatewayRefundedAmount"/>
+                <attribute attribute-id="paymentGatewayOrderState"/>
             </attribute-group>
         </group-definitions>
     </type-extension>

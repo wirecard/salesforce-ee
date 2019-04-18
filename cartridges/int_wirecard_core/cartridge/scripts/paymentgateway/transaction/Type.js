@@ -17,7 +17,10 @@ Type.All = {
     REFUND_CAPTURE: 'refund-capture',
     REFUND_DEBIT: 'refund-debit',
     VOID_AUTHORIZATION: 'void-authorization',
-    VOID_DEBIT: 'void-debit'
+    VOID_DEBIT: 'void-debit',
+    CHECK_ENROLLMENT: 'check-enrollment',
+    PENDING_DEBIT: 'pending-debit',
+    PURCHASE: 'purchase'
 };
 
 /**
