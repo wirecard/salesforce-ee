@@ -15,15 +15,23 @@
     <script type="text/javascript">
     //<![CDATA[
     function checkCredentials(btn, paymentMethodId) {
+        var messageEl = $('http_message');
+        messageEl.removeClassName('error');
+        messageEl.removeClassName('success');
+        messageEl.update('');
         new Ajax.Request("${URLUtils.url('PaymentGateway-HttpAccessTest')}", {
             parameters: { methodID: paymentMethodId },
             onSuccess: function(msg) {
                 btn.removeClassName('red');
                 btn.addClassName('green');
                 Form.Element.disable(btn.id);
+                messageEl.update('${ Resource.msg('success_credentials', 'paymentgateway', null) }');
+                messageEl.addClassName('success');
             },
             on510: function(msg) {
                 btn.addClassName('red');
+                messageEl.update('${ Resource.msg('error_credentials', 'paymentgateway', null) }');
+                messageEl.addClassName('error');
             }
         });
     }
@@ -35,6 +43,11 @@
         <div class="row">
             <div class="column">
                 <h1>${Resource.msg('configuration.testHttpCredentials', 'paymentgateway', null)}</h1>
+                <div class="row">
+                    <div class="column">
+                        <div id="http_message" class=""></div>
+                    </div>
+                </div>
 
                 <table class="httptest">
                     <tr style="vertical-align: top;">

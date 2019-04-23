@@ -33,6 +33,8 @@ WebUI.setText(findTestObject('sfra/checkout/shipping/Shipping phone'), phone)
 
 WebUI.setText(findTestObject('sfra/checkout/shipping/Shipping email'), email)
 
+WebUI.delay(3)
+
 WebUI.waitForElementClickable(findTestObject('sfra/checkout/Link Proceed to payment'), 3)
 
 WebUI.click(findTestObject('sfra/checkout/Link Proceed to payment'))
