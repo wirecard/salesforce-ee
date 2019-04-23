@@ -31,5 +31,3 @@ WebUI.delay(3)
 
 WebUI.click(findTestObject('sfra/product page/Add to cart'))
 
-WebUI.delay(3)
-

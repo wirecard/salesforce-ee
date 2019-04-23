@@ -13,3 +13,4 @@ Reports/*
 
 Profiles/*.glbl
 !Profiles/ci_console.glbl
+!Profiles/default.glbl

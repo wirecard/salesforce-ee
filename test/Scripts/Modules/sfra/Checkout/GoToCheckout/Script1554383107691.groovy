@@ -13,6 +13,10 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
+WebUI.delay(2)
+
+WebUI.waitForElementClickable(findTestObject('sfra/checkout/Minicart link'), 3)
+
 WebUI.click(findTestObject('sfra/checkout/Minicart link'))
 
 WebUI.click(findTestObject('sfra/checkout/Link checkout'))

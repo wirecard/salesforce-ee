@@ -11,7 +11,7 @@
       </entry>
       <entry>
          <key>BASIC</key>
-         <value>//a[@class = 'link']</value>
+         <value>//div[@class='tile-body']/div[@class='pdp-link']/a[@class='link'][count(. | //a[@class = 'link']) = count(//a[@class = 'link'])]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -29,6 +29,13 @@
       <name>class</name>
       <type>Main</type>
       <value>link</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//div[@class='tile-body']/div[@class='pdp-link']/a[@class='link']</value>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
