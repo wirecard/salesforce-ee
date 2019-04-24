@@ -222,20 +222,24 @@ var TransactionHelper = {
      * @param {boolean} overwrite - if true replaces preceding initial transaction
      */
     saveBackendTransaction: function (order, transaction, overwrite) {
+        var Money = require('dw/value/Money');
         var Transaction = require('dw/system/Transaction');
         var Type = require('*/cartridge/scripts/paymentgateway/transaction/Type');
+        var result;
 
         if (transaction.transactionState === 'success') {
             if (Type.Capture.indexOf(transaction.transactionType) > -1) {
-                var alreadyCaptured = order.custom.paymentGatewayCapturedAmount || 0;
+                var alreadyCaptured = new Money(order.custom.paymentGatewayCapturedAmount || 0, order.currencyCode);
+                result = alreadyCaptured.add(new Money(transaction.requestedAmount.value, order.currencyCode));
                 Transaction.wrap(function () {
-                    order.custom.paymentGatewayCapturedAmount = parseFloat(alreadyCaptured) + parseFloat(transaction.requestedAmount.value);
+                    order.custom.paymentGatewayCapturedAmount = result.value;
                 });
             }
             if (Type.Refund.indexOf(transaction.transactionType) > -1) {
-                var alreadyRefunded = order.custom.paymentGatewayRefundedAmount || 0;
+                var alreadyRefunded = new Money(order.custom.paymentGatewayRefundedAmount || 0, order.currencyCode);
+                result = alreadyRefunded.add(new Money(transaction.requestedAmount.value, order.currencyCode));
                 Transaction.wrap(function () {
-                    order.custom.paymentGatewayRefundedAmount = parseFloat(alreadyRefunded) + parseFloat(transaction.requestedAmount.value);
+                    order.custom.paymentGatewayRefundedAmount = result.value;
                 });
             }
         }
