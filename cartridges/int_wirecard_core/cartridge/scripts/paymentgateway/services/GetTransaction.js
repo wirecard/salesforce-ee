@@ -4,7 +4,7 @@
 var HTTPBaseService = require('./HTTPBaseService');
 
 var GetTransaction = HTTPBaseService.extend({
-    init: function (httpUser, httpPassword) {
+    init: function (httpUser, httpPassword, baseUrl) {
         // call parent init method to set service name
         var serviceName = 'wirecard.paymentgateway';
         this._super(serviceName);
@@ -19,6 +19,9 @@ var GetTransaction = HTTPBaseService.extend({
             Authorization: 'Basic ' + authorizationHash
         };
         this.requestMethod = 'GET';
+
+        // set baseUrl
+        this.baseUrl = baseUrl;
     },
 
     /**
@@ -30,7 +33,7 @@ var GetTransaction = HTTPBaseService.extend({
     createRequest: function (svc, params) {
         // sets the service call endpoint
         svc.URL = [
-            svc.URL,
+            this.baseUrl || svc.URL,
             'engine/rest/merchants',
             params.get('merchantAccountID'),
             'payments',
@@ -67,6 +70,6 @@ var GetTransaction = HTTPBaseService.extend({
 });
 
 // Export the service
-module.exports = function (userName, password) {
-    return (new GetTransaction(userName, password)).getService();
+module.exports = function (userName, password, baseUrl) {
+    return (new GetTransaction(userName, password, baseUrl)).getService();
 };

@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@value = 'submit-shipping' and @name = 'submit']</value>
+         <value>//button[@value = 'submit-shipping' and @name = 'submit']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -25,5 +25,12 @@
       <name>name</name>
       <type>Main</type>
       <value>submit</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>button</value>
    </webElementProperties>
 </WebElementEntity>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>Set email address</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>a0887ec7-8e15-4140-9f99-6f9769b81497</testCaseGuid>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>00e99e22-05f4-4d67-8508-f114e5624048</id>
+      <masked>false</masked>
+      <name>email</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>3eb530d2-28f2-4d2e-aa69-75f341f1cf4b</id>
+      <masked>false</masked>
+      <name>login</name>
+   </variable>
+</TestCaseEntity>

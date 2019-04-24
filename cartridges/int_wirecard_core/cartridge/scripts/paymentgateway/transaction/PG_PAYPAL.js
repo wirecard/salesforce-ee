@@ -16,7 +16,7 @@ var preferenceMapping = {
 function getCaptureTransactionType() {
     var self = this;
     var type;
-    var canPartialRefund = false;
+    var canPartialCapture = false;
 
     if (!self['transaction-type']) {
         throw new Error('transaction-type missing for PayPal Transaction.');
@@ -24,12 +24,12 @@ function getCaptureTransactionType() {
     switch (self['transaction-type']) {
         case Type.AUTHORIZATION:
             type = Type.CAPTURE_AUTHORIZATION;
-            canPartialRefund = true;
+            canPartialCapture = true;
             break;
         default:
             throw new Error('unsupported transaction type!');
     }
-    return { type: type, partialAllowed: canPartialRefund };
+    return { type: type, partialAllowed: canPartialCapture };
 }
 
 /**
@@ -59,14 +59,12 @@ function getCancelTransactionType() {
 function getRefundTransactionType() {
     var self = this;
     var type;
-    var canPartialRefund = false;
     if (!self['transaction-type']) {
         throw new Error('transaction-type missing for PayPal Transaction.');
     }
     switch (self['transaction-type']) {
         case Type.DEBIT:
             type = Type.REFUND_DEBIT;
-            canPartialRefund = true;
             break;
         case Type.CAPTURE_AUTHORIZATION:
             type = Type.REFUND_CAPTURE;
@@ -74,7 +72,7 @@ function getRefundTransactionType() {
         default:
             throw new Error('unsupported transaction type!');
     }
-    return { type: type, partialAllowed: canPartialRefund };
+    return { type: type, partialAllowed: true };
 }
 
 /**

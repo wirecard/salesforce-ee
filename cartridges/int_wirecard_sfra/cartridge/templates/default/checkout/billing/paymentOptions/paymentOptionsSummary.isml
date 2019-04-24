@@ -5,12 +5,12 @@
         <iselseif condition="${ payment.paymentMethod.indexOf('PG_') > -1 }">
             <isscript>
                 var paymentHelper = require('int_wirecard_core/cartridge/scripts/paymentgateway/helper/PaymentHelper');
-                var methodImg = paymentHelper.getPaymentImage(payment.paymentMethod);
+                var pgData = paymentHelper.getPaymentMethodData(payment.paymentMethod);
             </isscript>
-            <isif condition="${ methodImg }">
-                <img class="wc-logo" src="${ methodImg }"/>
+            <isif condition="${ pgData.image }">
+                <img class="pg-logo" src="${ pgData.image }"/>
             </isif>
-            <isprint value="${ payment.paymentMethod }"/>
+            <isprint value="${ pgData.name }"/>
         </isif>
     </isloop>
 </div>

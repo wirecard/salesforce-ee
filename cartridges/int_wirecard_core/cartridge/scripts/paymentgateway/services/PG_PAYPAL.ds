@@ -10,6 +10,14 @@ var PayPalService = AbstractPaymentGatewayService.extend({
     },
 
     /**
+     * Retrieves the base url for PayPal.
+     * @returns {String}
+     */
+    getBaseUrl: function() {
+        return this.getSitePreference('paymentGatewayPayPalBaseUrl');
+    },
+
+    /**
      * Retrieves the http user for PayPal.
      * @returns {String}
      */

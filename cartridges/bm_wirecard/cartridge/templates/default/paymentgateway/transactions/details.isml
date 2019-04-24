@@ -59,6 +59,10 @@
                         <td>${ Transaction.transactionId }</td>
                     </tr>
                     <tr>
+                        <td>${ Resource.msg('panel_parent_transaction_id', 'paymentgateway', null) }</td>
+                        <td>${ Transaction.parentTransactionId }</td>
+                    </tr>
+                    <tr>
                         <td>${ Resource.msg('panel_payment_method', 'paymentgateway', null) }</td>
                         <td>${ Transaction.paymentMethodID }</td>
                     </tr>
@@ -75,7 +79,7 @@
                         <td>${ Order.remoteHost }</td>
                     </tr>
                     <tr>
-                        <td>${ Resource.msg('orderNumber', 'paymentgateway', null) }</td>
+                        <td>${ Resource.msg('panel_order_number', 'paymentgateway', null) }</td>
                         <td>${ Order.orderNo }</td>
                     </tr>
                     <tr>
@@ -123,7 +127,7 @@
                                 <select id="operation" name="operation" required>
                                     <option value="">${ Resource.msg('text_transaction_empty_option', 'paymentgateway', null) }</option>
                                     <isloop items="${ Transaction.allowedOperations }" var="operation">
-                                        <option value="${ operation.action }">${ operation.label }</option>
+                                        <option value="${ operation.action }" data-amount="${ operation.amount.decimalValue }">${ operation.label }</option>
                                     </isloop>
                                 </select>
                             </div>
@@ -131,7 +135,7 @@
                                 <label class="" for="amount">
                                     ${ Resource.msg('text_request_amount', 'paymentgateway', null) }
                                 </label>
-                                <input value="" id="amount" name="amount" type="number" step="0.01"/>
+                                <input value="" id="amount" name="amount" type="number" step="0.01" min="0"/>
                             </div>
                             <div class="form-group">
                                 <input type="hidden" name="orderNo" value="${ Order.orderNo }"/>
@@ -146,11 +150,20 @@
                     <script type="text/javascript">
                         var partialAllowedMethods = "<isprint value="${ Transaction.partialAllowedOperations.join(',') }"/>";
                         $('operation').observe('change', function (event) {
-                            var op = $(this.id).getValue();
-                            if (partialAllowedMethods.split(',').indexOf(op) > -1) {
-                                $$('.amount')[0].show();
+                            var operationDropdown = $(this.id);
+                            var amount;
+                            if (operationDropdown.selectedIndex > 0) {
+                                var option = operationDropdown.options[operationDropdown.selectedIndex];
+                                amount = option.readAttribute('data-amount');
+                            }
+                            var amountEl = $$('.amount')[0];
+                            if (partialAllowedMethods.split(',').indexOf(operationDropdown.getValue()) > -1) {
+                                amountEl.show();
+                                var amountInput = amountEl.down().next();
+                                amountInput.value = amount || '';
+                                amountInput.writeAttribute('max', amount);
                             } else {
-                                $$('.amount')[0].hide();
+                                amountEl.hide();
                             }
                         });
                     </script>

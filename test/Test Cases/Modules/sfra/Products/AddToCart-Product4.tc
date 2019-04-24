@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>AddToCart-Product4</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>6dbacd7e-a116-4a3d-8bae-ee43b216c434</testCaseGuid>
+   <variable>
+      <defaultValue>findTestData('product_testdata').getValue(1, 1)</defaultValue>
+      <description></description>
+      <id>f814a5fc-4471-4e20-96eb-f81d344cdc53</id>
+      <masked>false</masked>
+      <name>productId</name>
+   </variable>
+   <variable>
+      <defaultValue>findTestData('product_testdata').getValue(2, 1)</defaultValue>
+      <description></description>
+      <id>cf0fced7-9e82-4fb9-b440-e1b743c627b5</id>
+      <masked>false</masked>
+      <name>quantity</name>
+   </variable>
+   <variable>
+      <defaultValue>findTestData('product_testdata').getValue(3, 1)</defaultValue>
+      <description></description>
+      <id>2a28b270-1324-4a0e-8fcd-e775a1ddf7ac</id>
+      <masked>false</masked>
+      <name>color</name>
+   </variable>
+</TestCaseEntity>

@@ -89,7 +89,7 @@
             <div class="pager-select">
                 <span>${Resource.msg('global.paginginformation.page.label', 'locale', null)}</span>
                 <label class="select">
-                    <select>
+                    <select onchange="browsePage(this)">
                         <isloop status="i" end="${maxPage}">
                             <option data-start="<isprint value="${i.index * pageSize}" style="0"/>" data-show-all="dynamic" value="${StringHelper.unsanitizeOR(pdict.pagingmodel.appendPaging( pageURL, (i.index * pageSize)))}" <isif condition="${i.index == currentPage}">selected="selected"</isif>><isprint value="${i.index + 1}" style="0" /></option>
                         </isloop>
@@ -99,6 +99,13 @@
             </div>
         </isif>
     </div>
+    <script type="text/javascript">
+    //<![CDATA[
+    function browsePage(dd) {
+        window.location.href = dd.options[dd.selectedIndex].value;
+    }
+    //]]>
+    </script>
     <style>
         div.pager-select { padding: 8px 16px; }
         div.pager > ul {
@@ -119,10 +126,43 @@
         }
 
         div.pager > ul li.current-page {
-            background-color: #84BD00;
+            background-color: #4cccdb;
             color: white;
         }
 
         div.pager > ul li a:hover:not(.active) {background-color: #ddd;}
+
+        div.pager-select {
+            display: flex;
+            align-items: center;
+            padding: 0;
+        }
+
+        .pager-select label,
+        .pager-select select {
+            margin: 0;
+        }
+
+        .pager-select label {
+            margin: 0 10px;
+        }
+
+        .pager-select select {
+            min-width: 80px;
+        }
+
+        .pager li {
+            margin-bottom: 0;
+        }
+
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .pagination.clearfix::after {
+            content: none;
+        }
     </style>
 </isif>

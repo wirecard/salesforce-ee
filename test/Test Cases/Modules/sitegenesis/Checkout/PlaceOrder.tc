@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>PlaceOrder</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>160888a7-d1e6-486f-bc8d-7d9712f0db9e</testCaseGuid>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>9078cb7d-41c5-418d-b84e-3e4eaa4de302</id>
+      <masked>false</masked>
+      <name>paymentMethodId</name>
+   </variable>
+</TestCaseEntity>

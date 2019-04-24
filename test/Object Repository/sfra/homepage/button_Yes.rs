@@ -9,8 +9,12 @@
          <key>XPATH</key>
          <value>//div[@id='consent-tracking']/div/div/div[3]/div/button</value>
       </entry>
+      <entry>
+         <key>BASIC</key>
+         <value>//button[(text() = 'Yes' or . = 'Yes')]</value>
+      </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>

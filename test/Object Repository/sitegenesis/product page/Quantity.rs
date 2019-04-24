@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>Quantity</name>
+   <tag></tag>
+   <elementGuidId>a03b2e9a-a4b0-42b4-8f13-ac7d36e766ce</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//div[@class='product-add-to-cart']/div[@class='inventory']//input[@id='Quantity']</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//div[@class='product-add-to-cart']/div[@class='inventory']//input[@id='Quantity']</value>
+   </webElementProperties>
+</WebElementEntity>
