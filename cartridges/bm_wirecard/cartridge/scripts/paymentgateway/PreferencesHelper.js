@@ -21,6 +21,12 @@ var PreferencesMapping = {
         password         : 'paymentGatewayPayPalHttpPassword',
         baseUrl          : 'paymentGatewayPayPalBaseUrl',
         merchantAccountID: 'paymentGatewayPayPalMerchantAccountID'
+    },
+    PG_SOFORT: {
+        userName         : 'paymentGatewaySofortHttpUser',
+        password         : 'paymentGatewaySofortHttpPassword',
+        baseUrl          : 'paymentGatewaySofortBaseUrl',
+        merchantAccountID: 'paymentGatewaySofortMerchantAccountID'
     }
 };
 

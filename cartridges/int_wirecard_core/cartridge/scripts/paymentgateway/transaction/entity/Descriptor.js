@@ -14,7 +14,7 @@ function Descriptor(transaction) {
             '{0} {1}',
             String(transaction.getSitePreference('paymentGatewayShopName')).substr(0, 9),
             order.orderNo
-        );
+        ).replace(/[^a-zA-Z0-9+,-.äöüÄÖÜ\s]/g,'');
     }
     return result;
 }

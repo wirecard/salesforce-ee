@@ -13,6 +13,7 @@ Type.All = {
     CAPTURE_AUTHORIZATION: 'capture-authorization',
     CREDIT: 'credit',
     DEBIT: 'debit',
+    PENDING_CREDIT: 'pending-credit',
     REFUND: 'refund',
     REFUND_CAPTURE: 'refund-capture',
     REFUND_DEBIT: 'refund-debit',
@@ -55,6 +56,7 @@ Type.Capture = [
  * @var {Array}
  */
 Type.Refund = [
+    Type.All.PENDING_CREDIT,
     Type.All.REFUND_CAPTURE,
     Type.All.REFUND_DEBIT
 ];
