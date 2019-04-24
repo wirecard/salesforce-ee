@@ -251,3 +251,68 @@ exports.GetTransactionXML = guard.ensure(['post', 'https'], function () {
     response.setContentType('application/xml');
     response.writer.print(data);
 });
+
+/**
+ * Display form to contact support
+ */
+exports.SupportForm = guard.ensure(['get', 'https'], function () {
+    var Site = require('dw/system/Site').getCurrent();
+
+    var msg = JSON.parse(session.privacy.paymentGatewaySupport) || {};
+    var displayMsg;
+    delete session.privacy.paymentGatewaySupport;
+    if (Object.prototype.hasOwnProperty.call(msg, 'message')) {
+        displayMsg = msg.message;
+    }
+    var preferenceHelper = require('*/cartridge/scripts/paymentgateway/PreferencesHelper');
+
+    app.getView({
+        defaultSender: Site.getCustomPreferenceValue('customerServiceEmail') || '',
+        methods: preferenceHelper.getAllPreferences(),
+        Message: displayMsg,
+        isSuccess: Object.prototype.hasOwnProperty.call(msg, 'success')
+    }).render('paymentgateway/support/form');
+});
+
+/**
+ * Send email to wirecard support
+ */
+exports.SupportFormPost = guard.ensure(['post', 'https'], function () {
+    var parameterMap = request.httpParameterMap;
+
+    var HashMap = require('dw/util/HashMap');
+    var Mail = require('dw/net/Mail');
+    var Resource = require('dw/web/Resource');
+    var Site = require('dw/system/Site').getCurrent();
+    var Status = require('dw/system/Status');
+    var Template = require('dw/util/Template');
+    var preferenceHelper = require('*/cartridge/scripts/paymentgateway/PreferencesHelper');
+
+    var template = new Template('paymentgateway/support/email');
+    var context = new HashMap();
+    var msg = { message: Resource.msg('success_email', 'paymentgateway', null) };
+    var supportEmailAddress = Site.getCustomPreferenceValue('paymentGatewaySupportEmail');
+
+    try {
+        context.put('comments', parameterMap.comments.value || '');
+        context.put('replyTo', parameterMap.replyTo.value || '');
+        context.put('version', Site.getCustomPreferenceValue('paymentGatewayModuleVersion'));
+        context.put('methodConfigurations', preferenceHelper.getAllPreferences());
+
+        var content = template.render(context);
+        var mail = new Mail();
+        mail.addTo(supportEmailAddress);
+        mail.setFrom(parameterMap.emailSender.value || Site.getCustomPreferenceValue('customerServiceEmail'));
+        mail.setSubject(Resource.msg('support_email_title', 'paymentgateway', null));
+        mail.setContent(content);
+        var status = mail.send();
+        if (status.status === Status.OK) {
+            msg.success = 1;
+        }
+    } catch (err) {
+        msg.message = Resource.msg('error_email', 'paymentgateway', null);
+        Logger.error(msg.message + '\n' + err.fileName + ': ' + err.message + '\n' + err.stack);
+    }
+    session.privacy.paymentGatewaySupport = JSON.stringify(msg);
+    response.redirect(URLUtils.https('PaymentGateway-SupportForm'));
+});

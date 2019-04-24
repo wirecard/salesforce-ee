@@ -18,6 +18,22 @@
                 <min-length>0</min-length>
                 <default-value>Web Shop</default-value>
             </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayModuleVersion">
+                <display-name xml:lang="x-default">Module Version</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>true</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>0.0.1</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewaySupportEmail">
+                <display-name xml:lang="x-default">Support email address</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>true</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>shop-systems-support@wirecard.com</default-value>
+            </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayPayPalAddDescriptorToRequest">
                 <display-name xml:lang="x-default">Send descriptor</display-name>
                 <description xml:lang="x-default">If "Yes" the parameter descriptor is included in request data sent to wpg.</description>
@@ -117,6 +133,8 @@
         <group-definitions>
             <attribute-group group-id="PAYMENTGATEWAY">
                 <display-name xml:lang="x-default">Payment gateway settings</display-name>
+                <attribute attribute-id="paymentGatewayModuleVersion"/>
+                <attribute attribute-id="paymentGatewaySupportEmail"/>
                 <attribute attribute-id="paymentGatewayDebugMode"/>
                 <attribute attribute-id="paymentGatewayShopName"/>
                 <attribute attribute-id="paymentGatewayUrlSalt"/>

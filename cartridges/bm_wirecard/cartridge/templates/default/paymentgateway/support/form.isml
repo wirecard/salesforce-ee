@@ -1,0 +1,57 @@
+<isscript>
+    importPackage(dw.system);
+</isscript>
+<isdecorate template="application/MenuFrame">
+    <iscontent type="text/html" charset="UTF-8">
+    <isinclude template="inc/Modules">
+    <isinclude template="paymentgateway/bm/modules">
+
+    <isset
+        name="TOP_URL"
+        value="${URLUtils.url('SiteNavigationBar-ShowMenuitemOverview', 'CurrentMenuItemId', pdict.CurrentMenuItemId)}"
+        scope="PAGE"
+    >
+    <is name1="${pdict.mainmenuname}" url1="${TOP_URL}" name2="PaymentGateway">
+
+    <link rel="stylesheet" type="text/css" href="${ URLUtils.staticURL('/css/milligram.min.css') }"/>
+
+    <div class="container">
+        <div class="row">
+            <div class="column">
+                <h1>${Resource.msg('heading_title_support', 'paymentgateway', null)}</h1>
+                <isif condition="${ pdict.Message }">
+                    <div class="row">
+                        <div class="column">
+                            <div class="<isif condition="${ pdict.isSuccess }">success<iselse/>error</isif>">
+                                ${ pdict.Message }
+                            </div>
+                        </div>
+                    </div>
+                </isif>
+            <div class="row">
+                <div class="column">
+                    <h3>${ Resource.msg('support_email_title', 'paymentgateway', null) }</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <form action="${ URLUtils.https('PaymentGateway-SupportFormPost') }" method="post">
+                        <fieldset>
+                            <label for="emailSender">${ Resource.msg('config_email', 'paymentgateway', null) }</label>
+                            <input type="email" placeholder="${ pdict.defaultSender }" id="emailSender" name="emailSender">
+                            <label for="replyTo">${ Resource.msg('config_reply_to', 'paymentgateway', null) }</label>
+                            <input type="email" placeholder="youremail@test.com" id="replyTo" name="replyTo">
+                            <label for="comments">Comment</label>
+                            <textarea placeholder="Your comments …" id="comments" name="comments" required></textarea>
+                            <input class="button-primary" type="submit" value="${ Resource.msg('send_email', 'paymentgateway', null) }">
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        td#bm_content_column > table > tbody > tr > td,
+        td#bm_content_column > table > tbody > tr > td > table > tbody > tr > td { border-bottom: none }
+    </style>
+</isdecorate>

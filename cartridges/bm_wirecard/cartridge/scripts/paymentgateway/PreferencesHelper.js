@@ -17,12 +17,20 @@ function getSitePreference(key) {
 
 var PreferencesMapping = {
     PG_PAYPAL: {
-        userName         : 'paymentGatewayPayPalHttpUser',
-        password         : 'paymentGatewayPayPalHttpPassword',
-        baseUrl          : 'paymentGatewayPayPalBaseUrl',
-        merchantAccountID: 'paymentGatewayPayPalMerchantAccountID'
+        userName              : 'paymentGatewayPayPalHttpUser',
+        password              : 'paymentGatewayPayPalHttpPassword',
+        baseUrl               : 'paymentGatewayPayPalBaseUrl',
+        merchantAccountID     : 'paymentGatewayPayPalMerchantAccountID',
+        sendAdditionalData    : 'paymentGatewayPayPalSendAdditionalData',
+        sendBasketData        : 'paymentGatewayPayPalSendBasketData',
+        initialTransactionType: 'paymentGatewayPayPalInitialTransactionType'
     }
 };
+
+var sensitiveFields = [
+    'password',
+    'secret'
+];
 
 /**
  * Retrieve site preference values for given payment method
@@ -40,4 +48,33 @@ function getPreferenceForMethodID(paymentMethodID) {
     return result;
 }
 
-module.exports = { getPreferenceForMethodID: getPreferenceForMethodID };
+/**
+ * Retrieve site preference values for all payment methods
+ * @param {boolean} skipCredentials - if true passwords and sensitive data will be omitted
+ * @returns {ArrayList} - list with preference values
+ */
+function getAllPreferences(skipCredentials) {
+    var ArrayList = require('dw/util/ArrayList')
+    var result = new ArrayList();
+    var tmp;
+    Object.keys(PreferencesMapping).forEach(function(key) {
+        tmp = new ArrayList();
+        tmp.push({ name: 'methodId', value: key });
+        Object.keys(PreferencesMapping[key]).forEach(function (k) {
+            var preferenceValue = getSitePreference(PreferencesMapping[key][k]);
+            if (sensitiveFields.indexOf(k) === -1) {
+                tmp.push({
+                    name: k,
+                    value: Object.prototype.hasOwnProperty.call(preferenceValue, 'value') ? preferenceValue.value : preferenceValue
+                });
+            }
+        });
+        result.push(tmp);
+    });
+    return result;
+}
+
+module.exports = {
+    getAllPreferences: getAllPreferences,
+    getPreferenceForMethodID: getPreferenceForMethodID
+};
