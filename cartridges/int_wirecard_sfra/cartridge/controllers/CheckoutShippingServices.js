@@ -40,13 +40,6 @@ server.replace(
         // verify shipping form data
         var shippingFormErrors = COHelpers.validateShippingForm(form.shippingAddress.addressFields);
 
-        // set basket email address for guest customers
-        if (!req.currentCustomer.raw.isAuthenticated() && form.shippingAddress.addressFields.email.value) {
-            Transaction.wrap(function () {
-                currentBasket.setCustomerEmail(form.shippingAddress.addressFields.email.value);
-            });
-        }
-
         if (Object.keys(shippingFormErrors).length > 0) {
             req.session.privacyCache.set(currentBasket.defaultShipment.UUID, 'invalid');
 
