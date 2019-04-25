@@ -162,7 +162,7 @@ Transaction.prototype.getOrderData = function () {
             result[k] = orderData[k];
         });
         // redirect urls
-        var redirectUrls = new (require('./entity/RedirectUrls'))(self.order);
+        var redirectUrls = new (require('./entity/RedirectUrls'))(self);
         Object.keys(redirectUrls).forEach(function (k) {
             result[k] = redirectUrls[k];
         });

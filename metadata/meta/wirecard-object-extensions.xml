@@ -18,6 +18,15 @@
                 <min-length>0</min-length>
                 <default-value>Web Shop</default-value>
             </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayNotificationEmail">
+                <display-name xml:lang="x-default">Email for notifications</display-name>
+                <description xml:lang="x-default">Email recipient for notifications about payment authorizations / purchases</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <regex>^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$</regex>
+            </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayModuleVersion">
                 <display-name xml:lang="x-default">Module Version</display-name>
                 <type>string</type>
@@ -135,6 +144,7 @@
                 <display-name xml:lang="x-default">Payment gateway settings</display-name>
                 <attribute attribute-id="paymentGatewayModuleVersion"/>
                 <attribute attribute-id="paymentGatewaySupportEmail"/>
+                <attribute attribute-id="paymentGatewayNotificationEmail"/>
                 <attribute attribute-id="paymentGatewayDebugMode"/>
                 <attribute attribute-id="paymentGatewayShopName"/>
                 <attribute attribute-id="paymentGatewayUrlSalt"/>

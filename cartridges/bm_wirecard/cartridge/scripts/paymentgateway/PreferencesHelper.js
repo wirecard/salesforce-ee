@@ -50,21 +50,20 @@ function getPreferenceForMethodID(paymentMethodID) {
 
 /**
  * Retrieve site preference values for all payment methods
- * @param {boolean} skipCredentials - if true passwords and sensitive data will be omitted
  * @returns {ArrayList} - list with preference values
  */
-function getAllPreferences(skipCredentials) {
-    var ArrayList = require('dw/util/ArrayList')
+function getAllPreferences() {
+    var ArrayList = require('dw/util/ArrayList');
     var result = new ArrayList();
     var tmp;
-    Object.keys(PreferencesMapping).forEach(function(key) {
+    Object.keys(PreferencesMapping).forEach(function (key) {
         tmp = new ArrayList();
         tmp.push({ name: 'methodId', value: key });
         Object.keys(PreferencesMapping[key]).forEach(function (k) {
             var preferenceValue = getSitePreference(PreferencesMapping[key][k]);
             if (sensitiveFields.indexOf(k) === -1) {
                 tmp.push({
-                    name: k,
+                    name : k,
                     value: Object.prototype.hasOwnProperty.call(preferenceValue, 'value') ? preferenceValue.value : preferenceValue
                 });
             }
@@ -75,6 +74,6 @@ function getAllPreferences(skipCredentials) {
 }
 
 module.exports = {
-    getAllPreferences: getAllPreferences,
+    getAllPreferences       : getAllPreferences,
     getPreferenceForMethodID: getPreferenceForMethodID
 };

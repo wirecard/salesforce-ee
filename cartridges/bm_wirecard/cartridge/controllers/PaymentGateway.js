@@ -268,9 +268,9 @@ exports.SupportForm = guard.ensure(['get', 'https'], function () {
 
     app.getView({
         defaultSender: Site.getCustomPreferenceValue('customerServiceEmail') || '',
-        methods: preferenceHelper.getAllPreferences(),
-        Message: displayMsg,
-        isSuccess: Object.prototype.hasOwnProperty.call(msg, 'success')
+        methods      : preferenceHelper.getAllPreferences(),
+        Message      : displayMsg,
+        isSuccess    : Object.prototype.hasOwnProperty.call(msg, 'success')
     }).render('paymentgateway/support/form');
 });
 
