@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <payment-settings xmlns="http://www.demandware.com/xml/impex/paymentsettings/2009-09-15">
     <payment-method method-id="PG_SOFORT">
-        <name xml:lang="x-default">Sofort.</name>
+        <name xml:lang="x-default">Wirecard Sofort</name>
         <image>images/payment/paymentgateway/sofort.svg</image>
         <enabled-flag>false</enabled-flag>
         <processor-id>PAYMENTGATEWAY</processor-id>
@@ -30,7 +30,7 @@
     </payment-method>
 
     <payment-method method-id="PG_IDEAL">
-        <name xml:lang="x-default">iDEAL</name>
+        <name xml:lang="x-default">Wirecard iDEAL</name>
         <image>images/payment/paymentgateway/IDEAL_Logo.png</image>
         <enabled-flag>false</enabled-flag>
         <processor-id>PAYMENTGATEWAY</processor-id>
@@ -40,13 +40,13 @@
     </payment-method>
 
     <payment-method method-id="PG_GIROPAY">
-        <name xml:lang="x-default">giropay</name>
+        <name xml:lang="x-default">Wirecard giropay</name>
         <enabled-flag>false</enabled-flag>
         <processor-id>PAYMENTGATEWAY</processor-id>
     </payment-method>
 
     <payment-method method-id="PG_PAYPAL">
-        <name xml:lang="x-default">PayPal</name>
+        <name xml:lang="x-default">Wirecard PayPal</name>
         <image>images/payment/paymentgateway/PayPal.svg</image>
         <enabled-flag>false</enabled-flag>
         <processor-id>PAYMENTGATEWAY</processor-id>

@@ -8,7 +8,9 @@
 function Descriptor(transaction) {
     var order = transaction.order;
     var result = {};
-    if (transaction.getSitePreference('addDescriptorToRequest')) {
+    if ((transaction.paymentMethodID && transaction.paymentMethodID === 'sofortbanking')
+        || transaction.getSitePreference('addDescriptorToRequest')
+    ) {
         var StringUtils = require('dw/util/StringUtils');
         result.descriptor = StringUtils.format(
             '{0} {1}',

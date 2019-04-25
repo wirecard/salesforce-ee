@@ -74,13 +74,6 @@
                 <min-length>0</min-length>
                 <default-value>3!3013=D3fD8X7</default-value>
             </attribute-definition>
-            <attribute-definition attribute-id="paymentGatewaySofortAddDescriptorToRequest">
-                <display-name xml:lang="x-default">Send descriptor</display-name>
-                <description xml:lang="x-default">If "Yes" the parameter descriptor is included in request data sent to wpg.</description>
-                <type>boolean</type>
-                <mandatory-flag>false</mandatory-flag>
-                <default-value>true</default-value>
-            </attribute-definition>
             <attribute-definition attribute-id="paymentGatewaySofortSendAdditionalData">
                 <display-name xml:lang="x-default">Send additional request data</display-name>
                 <description xml:lang="x-default">If "yes" additional data (fps) is added to request</description>
@@ -184,7 +177,6 @@
                 <attribute attribute-id="paymentGatewaySofortBaseUrl"/>
                 <attribute attribute-id="paymentGatewaySofortHttpUser"/>
                 <attribute attribute-id="paymentGatewaySofortHttpPassword"/>
-                <attribute attribute-id="paymentGatewaySofortAddDescriptorToRequest"/>
                 <attribute attribute-id="paymentGatewaySofortSendAdditionalData"/>
                 <attribute attribute-id="paymentGatewaySofortSendBasketData"/>
             </attribute-group>
