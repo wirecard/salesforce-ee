@@ -7,16 +7,23 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[contains(@class, 'PG_PAYPAL-tab')]</value>
+         <value>//ul[contains(@class, 'payment-options')]/li/a[contains(@class, 'PG_PAYPAL-tab')]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>contains</matchCondition>
       <name>class</name>
       <type>Main</type>
       <value>PG_PAYPAL-tab</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//ul[contains(@class, 'payment-options')]/li/a[contains(@class, 'PG_PAYPAL-tab')]</value>
    </webElementProperties>
 </WebElementEntity>

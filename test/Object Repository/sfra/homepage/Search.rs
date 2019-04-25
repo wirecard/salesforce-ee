@@ -11,7 +11,7 @@
       </entry>
       <entry>
          <key>BASIC</key>
-         <value>//button[@type = 'submit' and @name = 'search-button']</value>
+         <value>//div[contains(@class,'search hidden-xs-down')]//div[@class='site-search']//button[@type = 'submit' and @name = 'search-button']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -24,14 +24,14 @@
       <value>button</value>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>type</name>
       <type>Main</type>
       <value>submit</value>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>name</name>
       <type>Main</type>
@@ -43,6 +43,13 @@
       <name>class</name>
       <type>Main</type>
       <value>fa fa-search</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//div[contains(@class,'search hidden-xs-down')]//div[@class='site-search']//button[@type = 'submit' and @name = 'search-button']</value>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
