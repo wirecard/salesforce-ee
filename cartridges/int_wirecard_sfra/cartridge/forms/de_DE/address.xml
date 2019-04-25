@@ -34,12 +34,6 @@
     <!-- use global state list -->
     <include formid="states" name="states"/>
 
-    <field formid="email" label="label.input.email.profile" type="string" mandatory="true"
-            max-length="50" missing-error="error.message.required" parse-error="error.message.parse.email.profile.form"
-            range-error="error.message.lessthan50"
-            regexp="^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$"
-            value-error="ValueErrorText"/>
-
     <!-- phone is mandatory for addresses -->
     <field formid="phone" label="label.input.phonenumber" description="address.phone.example" type="string" mandatory="true"
            binding="phone" min-length="10" max-length="20"

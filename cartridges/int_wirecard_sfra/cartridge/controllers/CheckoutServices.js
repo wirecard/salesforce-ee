@@ -101,13 +101,13 @@ server.replace(
             }
             if (!customerEmail) {
                 // fallback to sfra default - email address comes with credit card form
-                customerEmail = paymentForm.creditCardFields.email.value;
+                customerEmail = paymentForm.contactInfoFields.email.value;
             }
             viewData.email = {
                 value: customerEmail
             };
 
-            viewData.phone = { value: paymentForm.creditCardFields.phone.value };
+            viewData.phone = { value: paymentForm.contactInfoFields.phone.value };
 
             viewData.saveCard = paymentForm.creditCardFields.saveCard.checked;
 
