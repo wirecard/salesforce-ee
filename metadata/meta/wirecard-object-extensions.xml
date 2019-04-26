@@ -151,6 +151,38 @@
                 <mandatory-flag>false</mandatory-flag>
                 <default-value>true</default-value>
             </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewaySEPACreditMerchantAccountID">
+                <display-name xml:lang="x-default">Merchant-Account-ID</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>59a01668-693b-49f0-8a1f-f3c1ba025d45</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewaySEPACreditBaseUrl">
+                <display-name xml:lang="x-default">Api base-url</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>https://api-test.wirecard.com</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewaySEPACreditHttpUser">
+                <display-name xml:lang="x-default">Http user</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>16390-testing</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewaySEPACreditHttpPassword">
+                <display-name xml:lang="x-default">Http password</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>3!3013=D3fD8X7</default-value>
+            </attribute-definition>
         </custom-attribute-definitions>
         <group-definitions>
             <attribute-group group-id="PAYMENTGATEWAY">
@@ -179,6 +211,13 @@
                 <attribute attribute-id="paymentGatewaySofortHttpPassword"/>
                 <attribute attribute-id="paymentGatewaySofortSendAdditionalData"/>
                 <attribute attribute-id="paymentGatewaySofortSendBasketData"/>
+            </attribute-group>
+            <attribute-group group-id="PAYMENTGATEWAY_SEPACREDIT">
+                <display-name xml:lang="x-default">Payment gateway settings for SEPA credit transfer</display-name>
+                <attribute attribute-id="paymentGatewaySEPACreditMerchantAccountID"/>
+                <attribute attribute-id="paymentGatewaySEPACreditBaseUrl"/>
+                <attribute attribute-id="paymentGatewaySEPACreditHttpUser"/>
+                <attribute attribute-id="paymentGatewaySEPACreditHttpPassword"/>
             </attribute-group>
         </group-definitions>
     </type-extension>

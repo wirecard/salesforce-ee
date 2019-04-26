@@ -20,7 +20,7 @@ function getRefundTransactionType() {
     }
     switch (self['transaction-type']) {
         case Type.DEBIT:
-            type = Type.PENDING_CREDIT;
+            type = Type.CREDIT;
             break;
         default:
             throw new Error('unsupported transaction type!');
@@ -38,7 +38,7 @@ function Sofort(order, args) {
     // default params
     var params = {
         paymentMethodID: 'sofortbanking',
-        'transaction-type': 'debit',
+        'transaction-type': Type.DEBIT,
         'merchant-account-id': this.getSitePreference('paymentGatewaySofortMerchantAccountID')
     };
     if (typeof args === 'object') {

@@ -3,6 +3,8 @@
 /* API includes */
 var pgLogger = require('dw/system/Logger').getLogger('paymentgateway');
 
+var Type = require('*/cartridge/scripts/paymentgateway/transaction/Type');
+
 // transaction base path
 var transactionBasePath = '*/cartridge/scripts/paymentgateway/transaction/';
 // service class base path
@@ -54,7 +56,6 @@ var TransactionHelper = {
      */
     getPaymentGatewayTransactionData: function (order, transactionId) {
         var StringUtils = require('dw/util/StringUtils');
-        var Type = require('*/cartridge/scripts/paymentgateway/transaction/Type');
 
         var transactionData;
         var allTransactions = this.getPaymentGatewayTransactionDataFromOrder(order);
@@ -153,6 +154,29 @@ var TransactionHelper = {
     },
 
     /**
+     * Map transaction types for certain payment methods
+     * @param {string} methodName - current payment method name
+     * @param {string} transactionType - one of Type.All
+     * @returns {Object} - contains mapped method name and part of api endpoint payments|paymentmethods
+     */
+    mapTransactionType: function (methodName, transactionType) {
+        var result = {
+            type: 'payments',
+            methodName: methodName
+        };
+        if (methodName === 'PG_SOFORT' && transactionType === Type.All.CREDIT) {
+            var preferenceHelper = require('*/cartridge/scripts/paymentgateway/PreferencesHelper');
+            var sepaPreferences = preferenceHelper.getPreferenceForMethodID('PG_SEPACREDIT');
+            result = {
+                type: 'paymentmethods',
+                methodName: 'PG_SEPACREDIT',
+                merchantAccountId: sepaPreferences.merchantAccountID
+            };
+        }
+        return result;
+    },
+
+    /**
      * Parse transaction status from http response object
      * @param {string} apiErrorText - http client error text
      * @returns {Object} - status with { code: ..., description: ... }
@@ -224,7 +248,6 @@ var TransactionHelper = {
     saveBackendTransaction: function (order, transaction, overwrite) {
         var Money = require('dw/value/Money');
         var Transaction = require('dw/system/Transaction');
-        var Type = require('*/cartridge/scripts/paymentgateway/transaction/Type');
         var result;
 
         if (transaction.transactionState === 'success') {

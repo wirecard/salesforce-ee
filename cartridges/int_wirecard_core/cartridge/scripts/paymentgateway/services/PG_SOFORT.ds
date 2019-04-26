@@ -7,6 +7,7 @@ var SofortService = AbstractPaymentGatewayService.extend({
     init: function (type) {
         this._super(type);
         this.paymentMethodID = 'sofortbanking';
+        this.relativeURLPath = 'engine/rest/paymentmethods';
     },
 
     /**

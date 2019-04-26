@@ -27,6 +27,12 @@ var PreferencesMapping = {
         password         : 'paymentGatewaySofortHttpPassword',
         baseUrl          : 'paymentGatewaySofortBaseUrl',
         merchantAccountID: 'paymentGatewaySofortMerchantAccountID'
+    },
+    PG_SEPACREDIT: {
+        userName         : 'paymentGatewaySEPACreditHttpUser',
+        password         : 'paymentGatewaySEPACreditHttpPassword',
+        baseUrl          : 'paymentGatewaySEPACreditBaseUrl',
+        merchantAccountID: 'paymentGatewaySEPACreditMerchantAccountID'
     }
 };
 
