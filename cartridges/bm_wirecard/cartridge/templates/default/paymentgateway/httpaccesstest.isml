@@ -82,6 +82,7 @@
             </div>
         </div>
     </div>
+    <ispaymentgatewaysupport termsandconditions="1" supportform="1"/>
 
     <style>
         table.httptest td.infobox button.check.green { background-color: #42f477; }

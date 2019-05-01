@@ -84,6 +84,7 @@
             </isloop>
             </tbody>
         </table>
+        <ispaymentgatewaysupport termsandconditions="1" supportform="1"/>
 
         <style>
             table.transactions tr.tr-transaction.odd td { background: #e6f7f5; }

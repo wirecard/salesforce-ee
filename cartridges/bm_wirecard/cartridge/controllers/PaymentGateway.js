@@ -316,3 +316,10 @@ exports.SupportFormPost = guard.ensure(['post', 'https'], function () {
     session.privacy.paymentGatewaySupport = JSON.stringify(msg);
     response.redirect(URLUtils.https('PaymentGateway-SupportForm'));
 });
+
+/**
+ * Show terms and conditions
+ */
+exports.TermsAndConditions = guard.ensure(['get', 'https'], function () {
+    app.getView().render('paymentgateway/support/termsandconditions');
+});

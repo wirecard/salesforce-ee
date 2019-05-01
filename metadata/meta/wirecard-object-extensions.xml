@@ -57,7 +57,7 @@
                 <mandatory-flag>true</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>5</min-length>
-                <default-value>-oc.nMIXT+JnR9Ka</default-value>
+                <default-value></default-value>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayIdealMerchantAccountID">
                 <display-name xml:lang="x-default">iDEAL: Merchant-Account-ID</display-name>

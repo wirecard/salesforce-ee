@@ -50,6 +50,7 @@
             </div>
         </div>
     </div>
+    <ispaymentgatewaysupport termsandconditions="1"/>
     <style>
         td#bm_content_column > table > tbody > tr > td,
         td#bm_content_column > table > tbody > tr > td > table > tbody > tr > td { border-bottom: none }
