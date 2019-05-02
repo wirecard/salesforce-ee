@@ -19,7 +19,8 @@ jobs:
       script:
         - export CWD=$(pwd)
         - cd ../
-        - git clone --depth=50 --branch=master https://$STOREFRONT_TOKEN@github.com/SalesforceCommerceCloud/storefront-reference-architecture.git
+        - git clone --depth=50 https://$STOREFRONT_TOKEN@github.com/SalesforceCommerceCloud/storefront-reference-architecture.git
+        - git checkout v4.0.0
         - cd storefront-reference-architecture
         - npm install
         - npm run compile:scss
