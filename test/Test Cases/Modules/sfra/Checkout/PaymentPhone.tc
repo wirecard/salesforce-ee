@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>PaymentPhone</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>97145968-0c6f-4b0a-90a6-09f87b855b9c</testCaseGuid>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>ca0fe6a5-86f4-4500-b482-b0b432c65ceb</id>
+      <masked>false</masked>
+      <name>phone</name>
+   </variable>
+</TestCaseEntity>

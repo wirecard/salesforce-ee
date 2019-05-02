@@ -15,8 +15,6 @@ import internal.GlobalVariable as GlobalVariable
 
 WebUI.setText(findTestObject('sfra/homepage/Searchbox'), productId)
 
-WebUI.delay(5)
-
 WebUI.waitForElementClickable(findTestObject('sfra/homepage/Search'), 5)
 
 WebUI.click(findTestObject('sfra/homepage/Search'))
@@ -29,7 +27,7 @@ WebUI.selectOptionByValue(findTestObject('sfra/product page/Quantity'), quantity
 
 WebUI.click(findTestObject('sfra/product page/Swatch/JJ887XX'))
 
-WebUI.delay(3)
+WebUI.waitForElementClickable(findTestObject('sfra/product page/Add to cart'), 3)
 
 WebUI.click(findTestObject('sfra/product page/Add to cart'))
 
