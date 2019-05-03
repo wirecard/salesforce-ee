@@ -29,12 +29,12 @@ jobs:
         - cd ../
         - git clone https://$STOREFRONT_TOKEN@github.com/SalesforceCommerceCloud/sitegenesis.git
         - cd sitegenesis
-        - git checkout v104.1.2
+        - git checkout v104.1.1
         - npm install
         - npm install -g gulp
         - gulp build
         - find -maxdepth 0 -type d -exec cp -r {} "../storefront-reference-architecture/cartridges/" \;
-        - if test -d $CWD/cartridges; then find $CWD/cartridges -maxdepth 0 -type d -exec cp -r {} "$CWD/../storefront-reference-architecture/" \;; fi
+        - if test -d $CWD/cartridges; then find $CWD/cartridges -maxdepth 0 -type d -exec cp -rv {} "$CWD/../storefront-reference-architecture/" \;; fi
         - cd ../storefront-reference-architecture/cartridges/
         - ls -lsa
         - find {app_*,modules} -maxdepth 0 -type d -exec node ../node_modules/.bin/dwupload --cartridge {} --username $SFCC_USER --password $SFCC_PASSWORD --hostname $SANDBOX_URL \;
