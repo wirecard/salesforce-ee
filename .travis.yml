@@ -18,6 +18,7 @@ jobs:
       name: "Run Test and report"
       script:
         - export CWD=$(pwd)
+        - npm install
         - cd ../
         - git clone https://$STOREFRONT_TOKEN@github.com/SalesforceCommerceCloud/storefront-reference-architecture.git
         - cd storefront-reference-architecture
