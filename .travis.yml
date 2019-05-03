@@ -33,7 +33,7 @@ jobs:
         - npm install -g gulp
         - gulp build
         - find -maxdepth 0 -type d -exec cp -r {} "../storefront-reference-architecture/cartridges/" \;
-        - if test -d $CWD/cartridges; then find $CWD/cartridges -maxdepth 0 -type d -exec cp -r {} "$CWD/storefront-reference-architecture/cartridges/" \;; fi
+        - if test -d $CWD/cartridges; then find $CWD/cartridges -maxdepth 0 -type d -exec cp -r {} "$CWD/../storefront-reference-architecture/" \;; fi
         - cd ../storefront-reference-architecture/cartridges/
         - find {app_*,modules} -maxdepth 0 -type d -exec node ../node_modules/.bin/dwupload --cartridge {} --username $SFCC_USER --password $SFCC_PASSWORD --hostname $SANDBOX_URL \;
         - docker pull katalonstudio/katalon
