@@ -27,8 +27,9 @@ jobs:
         - npm run compile:js
         - npm run compile:fonts
         - cd ../
-        - git clone --depth=50 --branch=master https://$STOREFRONT_TOKEN@github.com/SalesforceCommerceCloud/sitegenesis.git
+        - git clone https://$STOREFRONT_TOKEN@github.com/SalesforceCommerceCloud/sitegenesis.git
         - cd sitegenesis
+        - git checkout v104.1.2
         - npm install
         - npm install -g gulp
         - gulp build
