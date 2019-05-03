@@ -36,6 +36,7 @@ jobs:
         - find -maxdepth 0 -type d -exec cp -r {} "../storefront-reference-architecture/cartridges/" \;
         - if test -d $CWD/cartridges; then find $CWD/cartridges -maxdepth 0 -type d -exec cp -r {} "$CWD/../storefront-reference-architecture/" \;; fi
         - cd ../storefront-reference-architecture/cartridges/
+        - ls -lsa
         - find {app_*,modules} -maxdepth 0 -type d -exec node ../node_modules/.bin/dwupload --cartridge {} --username $SFCC_USER --password $SFCC_PASSWORD --hostname $SANDBOX_URL \;
         - docker pull katalonstudio/katalon
         - docker run -t --rm -v "${CWD}/test":/katalon/katalon/source/ katalonstudio/katalon katalon-execute.sh -browserType="Remote" -remoteWebDriverUrl="https://${BROWSERSTACK_USER}:${BROWSERSTACK_ACCESS_KEY}@hub-cloud.browserstack.com/wd/hub" -executionProfile="ci_console" -g_SiteURL="$SANDBOX_URL" -retry=0 -statusDelay=15 -testSuitePath="Test Suites/Slot"
