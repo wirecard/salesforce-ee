@@ -32,6 +32,63 @@ function validateCreditCard(form) {
 }
 
 /**
+ * Validate transaction data for PG_CREDITCARD and save transaction data
+ * @param {Object} req - The local instance of the request object
+ * @param {dw.order.Basket} currentBasket - The current basket
+ * @returns {Object} an object that has error information
+ */
+function validatePayment(req, currentBasket) {
+    var result = base.validatePayment(req, currentBasket);
+    var formData = req.form;
+    if (!result.error
+        && Object.prototype.hasOwnProperty.call(formData, 'paymentMethodId')
+        && Object.prototype.hasOwnProperty.call(formData, 'transactionData')
+    ) {
+        var paymentInstruments = currentBasket.getPaymentInstruments(formData.paymentMethodId);
+        for (var i = 0; i < paymentInstruments.length; i++) {
+            var paymentInstrument = paymentInstruments[i];
+            var transactionData = JSON.parse(formData.transactionData);
+            if (!Object.prototype.hasOwnProperty.call(transactionData, 'transaction_id')) {
+                result.error = true;
+            } else {
+                // save transaction data with instrument
+                require('dw/system/Transaction').wrap(function() {
+                    paymentInstrument.custom.paymentGatewayData = formData.transactionData;
+                });
+            }
+        }
+    }
+    return result;
+}
+
+/**
+ * Attempts to create an order from the current basket / with reserved orderNo for PG_CREDITCARD
+ * @param {dw.order.Basket} currentBasket - The current basket
+ * @returns {dw.order.Order} The order object created from the current basket
+ */
+function createOrder(currentBasket) {
+    var order;
+
+    try {
+        if (currentBasket.custom.paymentGatewayReservedOrderNo) {
+            order = Transaction.wrap(function () {
+                return OrderMgr.createOrder(currentBasket, currentBasket.custom.paymentGatewayReservedOrderNo);
+            });
+         } else {
+            order = Transaction.wrap(function () {
+                return OrderMgr.createOrder(currentBasket);
+            });
+        }
+    } catch (error) {
+        Transaction.wrap(function () {
+            delete currentBasket.custom.paymentGatewayReservedOrderNo;
+        });
+        return null;
+    }
+    return order;
+}
+
+/**
  * handles the payment authorization for each payment instrument
  * @param {dw.order.Order} order - the order object
  * @param {string} orderNumber - The order number for the order
@@ -107,12 +164,12 @@ module.exports = {
     validateFields: base.validateFields,
     validateShippingForm: base.validateShippingForm,
     validateBillingForm: base.validateBillingForm,
-    validatePayment: base.validatePayment,
+    validatePayment: validatePayment,
     validateCreditCard: validateCreditCard,
     calculatePaymentTransaction: base.calculatePaymentTransaction,
     recalculateBasket: base.recalculateBasket,
     handlePayments: handlePayments,
-    createOrder: base.createOrder,
+    createOrder: createOrder,
     placeOrder: base.placeOrder,
     savePaymentInstrumentToWallet: base.savePaymentInstrumentToWallet,
     getRenderedPaymentInstruments: base.getRenderedPaymentInstruments,

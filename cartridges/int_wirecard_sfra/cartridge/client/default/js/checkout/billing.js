@@ -2,6 +2,8 @@
 
 var base = require('base/checkout/billing');
 
+var paymentgateway = require('./paymentgateway');
+
 /**
  * Updates the payment information in checkout, based on the supplied order model
  * @param {Object} order - checkout model to use as basis of new truth
@@ -25,7 +27,7 @@ function updatePaymentInformation(order) {
                 + paymentMethodData.expirationMonth
                 + '/' + paymentMethodData.expirationYear
                 + '</span></div>';
-        } else if (/^PG/.test(paymentMethodData.paymentMethod)) {
+        } else if (/^PG_/.test(paymentMethodData.paymentMethod)) {
             // fallback for all methods without specific payment information
             if (Object.prototype.hasOwnProperty.call(paymentMethodData, 'methodImg')) {
                 htmlToAppend += $('<img/>', {
@@ -50,6 +52,13 @@ base.paymentTabs = function () {
         $('input[name$=paymentMethod]').val(methodID);
         // hide other payment methods form
         $('.credit-card-selection-new').find('.tab-pane').removeClass('active');
+        var paymentOptionTab = $('[id=' + methodID + '-content');
+        if (paymentOptionTab.length) {
+            paymentOptionTab.addClass('active');
+            if (methodID === 'PG_CREDITCARD') {
+                paymentgateway.getCreditCardRequestData();
+            }
+        }
     });
 };
 

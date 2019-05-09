@@ -167,7 +167,7 @@ server.get(
                 result = transaction.getPayload();
             }
         }
-        res.render('paymentgateway/debug', { json: result });
+        res.render('paymentgateway/json', { json: result });
         return next();
     }
 );
