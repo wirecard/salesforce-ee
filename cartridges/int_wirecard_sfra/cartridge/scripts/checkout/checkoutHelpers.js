@@ -45,14 +45,14 @@ function validatePayment(req, currentBasket) {
         && Object.prototype.hasOwnProperty.call(formData, 'transactionData')
     ) {
         var paymentInstruments = currentBasket.getPaymentInstruments(formData.paymentMethodId);
-        for (var i = 0; i < paymentInstruments.length; i++) {
-            var paymentInstrument = paymentInstruments[i];
+        if (paymentInstruments.length === 1) {
+            var paymentInstrument = paymentInstruments[0];
             var transactionData = JSON.parse(formData.transactionData);
             if (!Object.prototype.hasOwnProperty.call(transactionData, 'transaction_id')) {
                 result.error = true;
             } else {
                 // save transaction data with instrument
-                require('dw/system/Transaction').wrap(function() {
+                require('dw/system/Transaction').wrap(function () {
                     paymentInstrument.custom.paymentGatewayData = formData.transactionData;
                 });
             }
@@ -74,14 +74,14 @@ function createOrder(currentBasket) {
             order = Transaction.wrap(function () {
                 return OrderMgr.createOrder(currentBasket, currentBasket.custom.paymentGatewayReservedOrderNo);
             });
-         } else {
+        } else {
             order = Transaction.wrap(function () {
                 return OrderMgr.createOrder(currentBasket);
             });
         }
     } catch (error) {
         Transaction.wrap(function () {
-            delete currentBasket.custom.paymentGatewayReservedOrderNo;
+            delete currentBasket.custom.paymentGatewayReservedOrderNo; // eslint-disable-line
         });
         return null;
     }

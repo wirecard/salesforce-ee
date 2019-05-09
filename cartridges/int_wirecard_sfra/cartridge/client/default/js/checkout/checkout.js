@@ -363,7 +363,16 @@ var scrollAnimate = require('base/components/scrollAnimate');
                         });
                     }
                     if (activeTabId.indexOf('PG_CREDITCARD') > -1) {
-                        paymentgateway.submitSeamlessForm('PG_CREDITCARD', submitPlaceOrder);
+                        paymentgateway.submitSeamlessForm('PG_CREDITCARD', submitPlaceOrder, function (errMessage) {
+                            defer.reject({
+                                errorStage: {
+                                    stage: 'payment',
+                                    step: 'paymentInstrument'
+                                },
+                                errorMessage: errMessage
+                            });
+                            paymentgateway.getCreditCardRequestData();
+                        });
                     } else {
                         submitPlaceOrder();
                     }

@@ -1,12 +1,19 @@
-/* globals WirecardPaymentPage */
+/* globals WirecardPaymentPage, paymentGatewayConfig */
 'use strict';
 
 /**
  * Helper function that logs errors from WirePaymentPage
- * @param {string} error - message with error status
+ * @param {string} err - message with error status
+ * @param {Object} cb - error callback function
  */
-function handleError(error) {
-    console.log(error);
+function handleError(err, cb) {
+    var errorMessage = '';
+    if (Object.prototype.hasOwnProperty.call(err, 'status_description_1')) {
+        errorMessage = err.status_description_1;
+    }
+    if (typeof cb === 'function') {
+        cb.call(this, errorMessage);
+    }
 }
 
 /**
@@ -17,7 +24,6 @@ function getCreditCardRequestData() {
         url: paymentGatewayConfig.getRequestDataUrl,
         method: 'get',
         complete: function (msg) {
-            console.log(msg.responseText);
             WirecardPaymentPage.seamlessRenderForm({
                 requestData: JSON.parse(msg.responseText),
                 wrappingDivId: 'pg-creditcard-form',
@@ -33,16 +39,19 @@ function getCreditCardRequestData() {
 /**
  * Submit seamless form and subsequently execute callback fn (place order)
  * @param {string} paymentMethodId - current payment method
- * @param {Object} cb - callback function
+ * @param {Object} cbSuccess - success callback function
+ * @param {Object} cbError - error callback function
  */
-function submitSeamlessForm(paymentMethodId, cb) {
+function submitSeamlessForm(paymentMethodId, cbSuccess, cbError) {
     WirecardPaymentPage.seamlessSubmitForm({
         onSuccess: function (msg) {
-            if (typeof cb === 'function') {
-                cb.call(this, { paymentMethodId: paymentMethodId, transactionData: JSON.stringify(msg) });
+            if (typeof cbSuccess === 'function') {
+                cbSuccess.call(this, { paymentMethodId: paymentMethodId, transactionData: JSON.stringify(msg) });
             }
         },
-        onError: handleError
+        onError: function (err) {
+            handleError(err, cbError);
+        }
     });
 }
 
