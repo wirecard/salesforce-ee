@@ -52,8 +52,8 @@
                 <table class="httptest">
                     <tr style="vertical-align: top;">
                         <th>${ Resource.msg('panel_payment_method', 'paymentgateway', null) }</th>
-                        <th>${ Resource.msg('configuration.httpUser', 'paymentgateway', null) }</th>
-                        <th>${ Resource.msg('configuration.httpPassword', 'paymentgateway', null) }</th>
+                        <th>${ Resource.msg('config_http_user', 'paymentgateway', null) }</th>
+                        <th>${ Resource.msg('config_http_password', 'paymentgateway', null) }</th>
                         <th>${ Resource.msg('config_base_url', 'paymentgateway', null) }</th>
                         <th>&nbsp;</th>
                     </tr>

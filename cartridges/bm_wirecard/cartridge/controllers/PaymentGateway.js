@@ -157,6 +157,7 @@ exports.HttpAccessOverview = guard.ensure(['get', 'https'], function () {
     var preferences;
 
     [
+        { methodName: 'Credit Card', methodID: 'PG_CREDITCARD' },
         { methodName: 'PayPal', methodID: 'PG_PAYPAL' }
     ].forEach(function (p) {
         preferences = preferenceHelper.getPreferenceForMethodID(p.methodID);
