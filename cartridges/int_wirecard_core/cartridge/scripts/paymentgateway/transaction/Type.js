@@ -14,8 +14,10 @@ Type.All = {
     CREDIT: 'credit',
     DEBIT: 'debit',
     REFUND: 'refund',
+    PURCHASE: 'purchase',
     REFUND_CAPTURE: 'refund-capture',
     REFUND_DEBIT: 'refund-debit',
+    REFUND_PURCHASE: 'refund-purchase',
     VOID_AUTHORIZATION: 'void-authorization',
     VOID_DEBIT: 'void-debit'
 };
@@ -30,6 +32,7 @@ Type.Follow = [
     Type.All.REFUND,
     Type.All.REFUND_CAPTURE,
     Type.All.REFUND_DEBIT,
+    Type.All.REFUND_PURCHASE,
     Type.All.VOID_AUTHORIZATION
 ];
 
@@ -56,7 +59,8 @@ Type.Capture = [
  */
 Type.Refund = [
     Type.All.REFUND_CAPTURE,
-    Type.All.REFUND_DEBIT
+    Type.All.REFUND_DEBIT,
+    Type.All.REFUND_PURCHASE
 ];
 
 module.exports = Type;

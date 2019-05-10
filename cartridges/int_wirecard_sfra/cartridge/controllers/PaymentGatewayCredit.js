@@ -5,10 +5,6 @@
  * @module controllers/PaymentGateway
  */
 
-/* API Includes */
-var Resource = require('dw/web/Resource');
-var URLUtils = require('dw/web/URLUtils');
-
 /* Script includes */
 var server = require('server');
 
@@ -59,5 +55,61 @@ server.get(
         next();
     }
 );
+
+/**
+ * Handles incoming notifications for seamless integrated payment methods (credit card)
+ */
+server.post(
+    'Notify',
+    server.middleware.https,
+    function (req, res, next) {
+        var parameterMap = req.querystring;
+        var orderNo = parameterMap.orderNo;
+        var orderToken = parameterMap.orderSec;
+
+        var OrderMgr = require('dw/order/OrderMgr');
+        var Transaction = require('dw/system/Transaction');
+        var order = OrderMgr.getOrder(orderNo);
+
+        if (order) {
+            // parse response
+            var transactionHelper = require('*/cartridge/scripts/paymentgateway/helper/TransactionHelper');
+            var notifyData = transactionHelper.parseTransactionResponse(req.body, null);
+            require('*/cartridge/scripts/paymentgateway/transaction/Logger').log(JSON.parse(req.body), 'notify');
+
+            // check fingerprint
+            var fp;
+            var orderHelper = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper');
+            if (Object.prototype.hasOwnProperty.call(notifyData, 'customFields')
+                && Object.prototype.hasOwnProperty.call(notifyData.customFields, 'fp')
+            ) {
+                fp = notifyData.customFields.fp;
+            }
+            // TODO authenticate request
+            if (true || fp === orderHelper.getOrderFingerprint(order)) {
+                var CustomObjectMgr = require('dw/object/CustomObjectMgr');
+                Transaction.begin();
+                // save notification as custom object
+                var customObj = CustomObjectMgr.getCustomObject('PaymentGatewayNotification', notifyData.transactionId);
+                if (!customObj) {
+                    customObj = CustomObjectMgr.createCustomObject('PaymentGatewayNotification', notifyData.transactionId);
+                }
+                customObj.custom.responseText = req.body;
+                customObj.custom.transactionData = JSON.stringify(notifyData);
+                customObj.custom.transactionType = notifyData.transactionType;
+                customObj.custom.requestedAmount = notifyData.requestedAmount.value;
+                customObj.custom.merchantAccountId = notifyData.merchantAccountId;
+                customObj.custom.transactionState = notifyData.transactionState;
+                customObj.custom.parentTransactionId = notifyData.parentTransactionId;
+                customObj.custom.orderNo = order.orderNo;
+                Transaction.commit();
+            }
+        }
+
+        res.render('paymentgateway/empty');
+        return next();
+    }
+);
+
 
 module.exports = server.exports();

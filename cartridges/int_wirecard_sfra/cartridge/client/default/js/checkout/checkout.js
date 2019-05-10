@@ -319,7 +319,6 @@ var scrollAnimate = require('base/components/scrollAnimate');
                         if (args.length > 0 && typeof args[0] === 'object' && Object.prototype.hasOwnProperty.call(args[0], 'transactionData')) {
                             requestData = args[0];
                         }
-                        console.log(requestData);
                         // disable the placeOrder button here
                         $('body').trigger('checkout:disableButton', '.next-step-button button');
                         $.ajax({

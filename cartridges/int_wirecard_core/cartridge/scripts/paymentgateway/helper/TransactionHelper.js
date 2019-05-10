@@ -281,7 +281,7 @@ var TransactionHelper = {
                     if (Object.prototype.hasOwnProperty.call(resultObject, 'status_description_1')
                         && Object.prototype.hasOwnProperty.call(resultObject, 'status_severity_1')
                     ) {
-                        result['status'] = {
+                        result.status = {
                             code: resultObject.status_code_1,
                             description: resultObject.status_description_1,
                             severity: resultObject.status_severity_1
