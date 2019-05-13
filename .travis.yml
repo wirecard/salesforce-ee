@@ -33,7 +33,7 @@ jobs:
         - npm run compile:scss
         - cd ../
         - git clone https://$STOREFRONT_TOKEN@github.com/SalesforceCommerceCloud/sitegenesis.git
-        - cd ../sitegenesis
+        - cd sitegenesis
         - git checkout v104.1.2
         - #BEGIN fix for npm install
         - npm install --save "git://github.com/jfhbrook/node-ecstatic.git#39f21cdf1998e6169f127874f97fd9dc9efcfacc"
