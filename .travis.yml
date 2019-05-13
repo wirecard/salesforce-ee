@@ -27,7 +27,7 @@ jobs:
         - npm run compile:js
         - npm run compile:fonts
         - #Clone reference architecture first for right base paths in package.json
-        - cd ../$CWD
+        - cd $CWD
         - npm install
         - npm run compile:js
         - npm run compile:scss
