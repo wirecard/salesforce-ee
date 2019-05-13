@@ -6,8 +6,12 @@
    <elementGuidId>42ea1860-d7ff-4c75-8c04-c3087043f735</elementGuidId>
    <selectorCollection>
       <entry>
+         <key>XPATH</key>
+         <value></value>
+      </entry>
+      <entry>
          <key>BASIC</key>
-         <value>//*[@value = 'submit-payment' and @name = 'submit']</value>
+         <value>//button[@type='submit' and @value='submit-payment']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,15 +19,8 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>value</name>
+      <name>xpath</name>
       <type>Main</type>
-      <value>submit-payment</value>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>name</name>
-      <type>Main</type>
-      <value>submit</value>
+      <value>//button[@type='submit' and @value='submit-payment']</value>
    </webElementProperties>
 </WebElementEntity>

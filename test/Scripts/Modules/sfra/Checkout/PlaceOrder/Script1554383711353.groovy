@@ -13,7 +13,9 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
-WebUI.waitForElementClickable(findTestObject('sfra/checkout/Link place order'), 5)
+//WebUI.waitForElementClickable(findTestObject('sfra/checkout/Link proceed to order overview'), 2)
+
+WebUI.waitForElementVisible(findTestObject('sfra/checkout/Link place order'), 5)
 
 WebUI.click(findTestObject('sfra/checkout/Link place order'))
 

@@ -21,10 +21,6 @@ WebUI.setText(findTestObject('Payment methods/PayPal/Password'), password)
 
 WebUI.click(findTestObject('Payment methods/PayPal/Login'))
 
-if (WebUI.verifyElementClickable(findTestObject('Payment methods/PayPal/Continue Select Account'))) {
-	WebUI.click(findTestObject('Payment methods/PayPal/Continue Select Account'))
-}
-
 WebUI.waitForElementClickable(findTestObject('Payment methods/PayPal/Pay button'), 10)
 
 WebUI.click(findTestObject('Payment methods/PayPal/Pay button'))
