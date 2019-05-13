@@ -18,12 +18,14 @@ jobs:
       name: "Run Test and report"
       script:
         - export CWD=$(pwd)
+        - cd ../
+        - #Clone reference architecture first for right base paths in package.json
+        - git clone https://$STOREFRONT_TOKEN@github.com/SalesforceCommerceCloud/storefront-reference-architecture.git
+        - cd $CWD
         - npm install
         - npm run compile:js
         - npm run compile:scss
-        - cd ../
-        - git clone https://$STOREFRONT_TOKEN@github.com/SalesforceCommerceCloud/storefront-reference-architecture.git
-        - cd storefront-reference-architecture
+        - cd ../storefront-reference-architecture
         - git checkout v4.0.0
         - npm install
         - npm run compile:scss
