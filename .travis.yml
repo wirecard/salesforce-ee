@@ -19,21 +19,21 @@ jobs:
       script:
         - export CWD=$(pwd)
         - cd ../
-        - #Clone reference architecture first for right base paths in package.json
         - git clone https://$STOREFRONT_TOKEN@github.com/SalesforceCommerceCloud/storefront-reference-architecture.git
-        - cd $CWD
-        - npm install
-        - npm run compile:js
-        - npm run compile:scss
-        - cd ../storefront-reference-architecture
+        - cd ./storefront-reference-architecture
         - git checkout v4.0.0
         - npm install
         - npm run compile:scss
         - npm run compile:js
         - npm run compile:fonts
+        - #Clone reference architecture first for right base paths in package.json
+        - cd ../$CWD
+        - npm install
+        - npm run compile:js
+        - npm run compile:scss
         - cd ../
         - git clone https://$STOREFRONT_TOKEN@github.com/SalesforceCommerceCloud/sitegenesis.git
-        - cd sitegenesis
+        - cd ../sitegenesis
         - git checkout v104.1.2
         - #BEGIN fix for npm install
         - npm install --save "git://github.com/jfhbrook/node-ecstatic.git#39f21cdf1998e6169f127874f97fd9dc9efcfacc"
