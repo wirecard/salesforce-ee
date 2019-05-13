@@ -19,6 +19,8 @@ jobs:
       script:
         - export CWD=$(pwd)
         - npm install
+        - npm run compile:js
+        - npm run compile:scss
         - cd ../
         - git clone https://$STOREFRONT_TOKEN@github.com/SalesforceCommerceCloud/storefront-reference-architecture.git
         - cd storefront-reference-architecture
