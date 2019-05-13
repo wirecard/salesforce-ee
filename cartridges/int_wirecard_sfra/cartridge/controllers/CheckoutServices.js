@@ -34,7 +34,7 @@ server.replace(
             // verify credit card form data
             creditCardErrors = COHelpers.validateCreditCard(paymentForm);
         }
-        
+
         if (Object.keys(creditCardErrors).length || Object.keys(billingFormErrors).length) {
             // respond with form data and errors
             res.json({
