@@ -35,6 +35,7 @@ function RedirectUrls(transaction) {
     if (Object.prototype.hasOwnProperty.call(transaction, 'appendSuccessUrl')) {
         result.success_redirect_url = getUrl(basket, 'PaymentGatewayCredit-TermUrl');
         result.fail_redirect_url = getUrl(basket, 'PaymentGatewayCredit-Fail');
+        result.cancel_redirect_url = getUrl(basket, 'PaymentGateway-Cancel');
     }
     return result;
 }

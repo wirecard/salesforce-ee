@@ -39,8 +39,8 @@ exports.Success = guard.ensure(['https'], function () {
  */
 exports.Cancel = guard.ensure(['https'], function () {
     var parameterMap = request.httpParameterMap;
-    var orderNo = parameterMap.orderNo;
-    var orderToken = parameterMap.orderSec;
+    var orderNo = parameterMap.orderNo.value;
+    var orderToken = parameterMap.orderSec.value;
 
     var OrderMgr = require('dw/order/OrderMgr');
     var order = OrderMgr.getOrder(orderNo);
@@ -50,11 +50,12 @@ exports.Cancel = guard.ensure(['https'], function () {
             OrderMgr.failOrder(order);
         });
 
-        var Status = require('dw/system/Status');
+        var Resource = require('dw/web/Resource');
         app.getController('COSummary').Start({
-            PlaceOrderError: new Status(Status.ERROR, 'general.technical.error')
+            PaymentGatewayError: {
+                description: Resource.msg('canceled_payment_process', 'paymentgateway', null)
+            }
         });
-        // FIXME show message: customer cancellation
     } else {
         response.redirect(URLUtils.https('Cart-Show'));
     }

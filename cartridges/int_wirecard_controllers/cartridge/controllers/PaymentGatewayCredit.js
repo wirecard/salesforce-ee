@@ -144,8 +144,8 @@ exports.RequestData = guard.ensure(['get', 'https'], function () {
  */
 exports.TermUrl = guard.ensure(['https'], function () {
     var parameterMap = request.httpParameterMap;
-    var orderNo = parameterMap.orderNo.stringValue;
-    var orderToken = parameterMap.orderSec.stringValue;
+    var orderNo = parameterMap.orderNo.value;
+    var orderToken = parameterMap.orderSec.value;
 
     var OrderMgr = require('dw/order/OrderMgr');
     var URLUtils = require('dw/web/URLUtils');
@@ -165,12 +165,40 @@ exports.TermUrl = guard.ensure(['https'], function () {
 });
 
 /**
+ * Re-entry point for cancellation handling
+ */
+exports.Cancel = guard.ensure(['https'], function () {
+    var parameterMap = request.httpParameterMap;
+    var orderNo = parameterMap.orderNo.value;
+    var orderToken = parameterMap.orderSec.value;
+
+    var OrderMgr = require('dw/order/OrderMgr');
+    var order = OrderMgr.getOrder(orderNo);
+
+    if (order && order.orderToken == orderToken) {
+        require('dw/system/Transaction').wrap(function () {
+            OrderMgr.failOrder(order);
+        });
+
+        var Resource = require('dw/web/Resource');
+        app.getController('COSummary').Start({
+            PaymentGatewayError: {
+                description: Resource.msg('canceled_payment_process', 'paymentgateway', null)
+            }
+        });
+    } else {
+        response.redirect(URLUtils.https('Cart-Show'));
+    }
+    return;
+});
+
+/**
  * Re-entry point for failure handling
  */
 exports.Fail = guard.ensure(['https'], function () {
     var parameterMap = request.httpParameterMap;
-    var orderNo = parameterMap.orderNo;
-    var orderToken = parameterMap.orderSec;
+    var orderNo = parameterMap.orderNo.value;
+    var orderToken = parameterMap.orderSec.value;
 
     var URLUtils = require('dw/web/URLUtils');
     var OrderMgr = require('dw/order/OrderMgr');
@@ -181,12 +209,25 @@ exports.Fail = guard.ensure(['https'], function () {
             OrderMgr.failOrder(order);
         });
 
-        app.getController('COSummary').Start({
-            PaymentGatewayError: {
-                code       : parameterMap.status_code_1,
-                description: parameterMap.status_description_1
+        var errorObject;
+        if (parameterMap.status_code_1.value && parameterMap.status_description_1.value) {
+            errorObject = {
+                PaymentGatewayError: {
+                    code       : parameterMap.status_code_1.value,
+                    description: parameterMap.status_description_1.value
+                }
+            };
+        } else {
+            var Status = require('dw/system/Status');
+            errorObject = {
+                PlaceOrderError: {
+                    error: true,
+                    PlaceOrderError: new Status(Status.ERROR, 'confirm.error.technical')
+                }
             }
-        });
+        }
+
+        app.getController('COSummary').Start(errorObject);
         return;
     }
     response.redirect(URLUtils.https('Cart-Show'));
