@@ -109,7 +109,7 @@ function getIs3DSecure(amount) {
     var config3dMin = getSitePreference('config3dMin');
 
     if ((config3dMin && config3dMin < amount.value)
-        || (sslMax && sslMax < amount.value)
+        || (sslMax && sslMax <= amount.value)
     ) {
         is3dSecure = true;
     }

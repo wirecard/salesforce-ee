@@ -122,6 +122,15 @@
                 <min-length>0</min-length>
                 <default-value>1d08d0ea-535e-4b1a-b50b-d1591e97b8ea</default-value>
             </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayCreditCardMerchantAccountID3DS">
+                <display-name xml:lang="x-default">3-D Secure MAID</display-name>
+                <description xml:lang="x-default">Unique identifier assigned to your 3-D Secure merchant account.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>cad16b4a-abf2-450d-bcb8-1725a4cef443</default-value>
+            </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayCreditCardHttpUser">
                 <display-name xml:lang="x-default">Username</display-name>
                 <description xml:lang="x-default">Username as provided in your Wirecard contract.</description>
@@ -148,6 +157,15 @@
                 <min-length>0</min-length>
                 <default-value>1ddab375-08da-4704-83da-36610518efcf</default-value>
             </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayCreditCardSecret3DS">
+                <display-name xml:lang="x-default">3-D Secure Secret Key</display-name>
+                <description xml:lang="x-default">Secret Key is mandatory to calculate the Digital Signature for the 3-D Secure payment.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>b3b131ad-ea7e-48bc-9e71-78d0c6ea579d</default-value>
+            </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayCreditCardBaseUrl">
                 <display-name xml:lang="x-default">Wirecard Server Address (URL)</display-name>
                 <type>string</type>
@@ -155,6 +173,24 @@
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
                 <default-value>https://api-test.wirecard.com</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayCreditCardSslMaxLimit">
+                <display-name xml:lang="x-default">Non 3-D Secure Max. Limit</display-name>
+                <description xml:lang="x-default">Amount in default shop currency</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>300</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayCreditCard3DSMinLimit">
+                <display-name xml:lang="x-default">3-D Secure Min. Limit</display-name>
+                <description xml:lang="x-default">Amount in default shop currency</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>100</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayCreditCardInitialTransactionType">
                 <display-name xml:lang="x-default">Payment Action</display-name>
@@ -218,9 +254,14 @@
             <attribute-group group-id="PAYMENTGATEWAY_CREDITCARD">
                 <display-name xml:lang="x-default">Payment gateway settings for Credit card</display-name>
                 <attribute attribute-id="paymentGatewayCreditCardMerchantAccountID"/>
+                <attribute attribute-id="paymentGatewayCreditCardSecret"/>
                 <attribute attribute-id="paymentGatewayCreditCardHttpUser"/>
                 <attribute attribute-id="paymentGatewayCreditCardHttpPassword"/>
-                <attribute attribute-id="paymentGatewayCreditCardSecret"/>
+                <attribute attribute-id="paymentGatewayCreditCardMerchantAccountID3DS"/>
+                <attribute attribute-id="paymentGatewayCreditCardSecret3DS"/>
+                <attribute attribute-id="paymentGatewayCreditCardEnable3DS"/>
+                <attribute attribute-id="paymentGatewayCreditCardSslMaxLimit"/>
+                <attribute attribute-id="paymentGatewayCreditCard3DSMinLimit"/>
                 <attribute attribute-id="paymentGatewayCreditCardBaseUrl"/>
                 <attribute attribute-id="paymentGatewayCreditCardAddDescriptorToRequest"/>
                 <attribute attribute-id="paymentGatewayCreditCardSendAdditionalData"/>
@@ -262,7 +303,7 @@
                 <display-name xml:lang="x-default">Transaction History</display-name>
                 <type>set-of-string</type>
                 <mandatory-flag>false</mandatory-flag>
-                <externally-managed-flag>false</externally-managed-flag>
+                <externally-managed-flag>true</externally-managed-flag>
                 <min-length>0</min-length>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayCapturedAmount">
@@ -303,13 +344,13 @@
                 <type>text</type>
                 <localizable-flag>false</localizable-flag>
                 <mandatory-flag>true</mandatory-flag>
-                <externally-managed-flag>false</externally-managed-flag>
+                <externally-managed-flag>true</externally-managed-flag>
             </attribute-definition>
             <attribute-definition attribute-id="orderNo">
                 <type>string</type>
                 <localizable-flag>false</localizable-flag>
                 <mandatory-flag>true</mandatory-flag>
-                <externally-managed-flag>false</externally-managed-flag>
+                <externally-managed-flag>true</externally-managed-flag>
                 <min-length>0</min-length>
             </attribute-definition>
             <attribute-definition attribute-id="transactionType">
@@ -351,7 +392,7 @@
                 <type>text</type>
                 <localizable-flag>false</localizable-flag>
                 <mandatory-flag>true</mandatory-flag>
-                <externally-managed-flag>false</externally-managed-flag>
+                <externally-managed-flag>true</externally-managed-flag>
             </attribute-definition>
             <attribute-definition attribute-id="processingAttempts">
                 <type>string</type>
