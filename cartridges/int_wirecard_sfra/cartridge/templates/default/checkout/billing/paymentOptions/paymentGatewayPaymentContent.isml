@@ -6,7 +6,7 @@
 </isscript>
 
 <!--- paymentHelper included in checkout/billing/paymentOptions/paymentOptionsTabs --->
-<isif condition="${ paymentHelper.hasPaymentForm(paymentOption.ID) }">
+<isif condition="${ paymentOption.ID.indexOf('PG_') > -1 }">
     <isscript>
         var templateName = "checkout/billing/paymentOptions/paymentGatewayPaymentContent/" + paymentOption.ID;
     </isscript>

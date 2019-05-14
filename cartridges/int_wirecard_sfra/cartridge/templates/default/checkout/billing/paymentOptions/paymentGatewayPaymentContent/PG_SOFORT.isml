@@ -1,0 +1,7 @@
+<!--- TEMPLATENAME: PG_SOFORT.isml --->
+<fieldset class="payment-form-fields">
+    <input type="hidden" class="form-control"
+           name="${pdict.forms.billingForm.paymentMethod.htmlName}"
+           value="PG_SOFORT"
+    >
+</fieldset>

@@ -27,7 +27,7 @@ function getSelectedPaymentInstruments(selectedPaymentInstruments) {
         } else if (paymentInstrument.paymentMethod === 'GIFT_CERTIFICATE') {
             results.giftCertificateCode = paymentInstrument.giftCertificateCode;
             results.maskedGiftCertificateCode = paymentInstrument.maskedGiftCertificateCode;
-        } else if (paymentInstrument.paymentMethod.indexOf('PG') > -1) {
+        } else if (paymentInstrument.paymentMethod.indexOf('PG_') > -1) {
             var paymentHelper = require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper');
             var methodData = paymentHelper.getPaymentMethodData(paymentInstrument.paymentMethod);
             results.methodImg = methodData.image;
