@@ -238,6 +238,10 @@ var TransactionHelper = {
                     order.custom.paymentGatewayRefundedAmount = parseFloat(alreadyRefunded) + parseFloat(transaction.requestedAmount.value);
                 });
             }
+            Transaction.wrap(function () {
+                order.custom.paymentGatewayOrderState = require('~/cartridge/scripts/paymentgateway/helper/OrderHelper')
+                    .getPaymentGatewayOrderStateFromTransactionType(order, transaction);
+            });
         }
         // finally save transaction with order
         this.saveTransactionToOrder(order, transaction, overwrite);
