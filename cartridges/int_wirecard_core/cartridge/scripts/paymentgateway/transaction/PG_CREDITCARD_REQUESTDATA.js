@@ -7,8 +7,12 @@ var preferenceMapping = {
     sendAdditionalData: 'paymentGatewayCreditCardSendAdditionalData',
     sendBasketData: 'paymentGatewayCreditCardSendBasketData',
     hashSecret: 'paymentGatewayCreditCardSecret',
+    hashSecret3DS: 'paymentGatewayCreditCardSecret3DS',
     merchantAccountId: 'paymentGatewayCreditCardMerchantAccountID',
-    initialTransactionType: 'paymentGatewayCreditCardInitialTransactionType'
+    merchantAccountId3DS: 'paymentGatewayCreditCardMerchantAccountID3DS',
+    initialTransactionType: 'paymentGatewayCreditCardInitialTransactionType',
+    sslMax: 'paymentGatewayCreditCardSslMaxLimit',
+    config3dMin: 'paymentGatewayCreditCard3DSMinLimit'
 };
 
 /**
@@ -48,16 +52,21 @@ function getSitePreference(key) {
 /**
  * Calculate request signature
  * @param {Object} transactionData - request data object
+ * @param {boolean} is3DSecure - flag for 3d secure authentication
  * @returns {string}
  */
-function getSignature(transactionData) {
+function getSignature(transactionData, is3DSecure) {
     var hashParams = [];
     hashFields.forEach(function (key) {
         if (Object.prototype.hasOwnProperty.call(transactionData, key)) {
             hashParams.push(transactionData[key]);
         }
     });
-    hashParams.push(getSitePreference('hashSecret'));
+    if (is3DSecure) {
+        hashParams.push(getSitePreference('hashSecret3DS'));
+    } else {
+        hashParams.push(getSitePreference('hashSecret'));
+    }
 
     var Bytes = require('dw/util/Bytes');
     var MessageDigest = require('dw/crypto/MessageDigest');
@@ -90,6 +99,24 @@ function getRequestID(lineItemCtnr) {
 }
 
 /**
+ * Check if 3d-secure authentication is required
+ * @param {dw.value.Money} amount - amount being paid with pg payment instrument
+ * @returns {boolean}
+ */
+function getIs3DSecure(amount) {
+    var is3dSecure = false;
+    var sslMax = getSitePreference('sslMax');
+    var config3dMin = getSitePreference('config3dMin');
+
+    if ((config3dMin && config3dMin < amount.value)
+        || (sslMax && sslMax < amount.value)
+    ) {
+        is3dSecure = true;
+    }
+    return is3dSecure;
+}
+
+/**
  * Constructor.
  * Possible to call with multiple parameters:
  *      - dw.order.Basket
@@ -102,7 +129,7 @@ function CheckoutTransaction() {
     var self = this;
 
     args.forEach(function (arg) {
-        if (arg instanceof dw.order.Basket) { // eslint-disable-line no-undef
+        if (arg instanceof dw.order.Basket || arg instanceof dw.order.Order) { // eslint-disable-line no-undef
             self.order = arg;
         } else if (typeof arg === 'object') {
             Object.keys(arg).forEach(function (aKey) {
@@ -111,11 +138,7 @@ function CheckoutTransaction() {
         }
     });
     if (!self.order) {
-        throw new Error('Current basket is required for creating transaction!');
-    }
-    // assign temp orderNo to transaction
-    if (self.order.custom.paymentGatewayReservedOrderNo) {
-        self.orderNo = self.order.custom.paymentGatewayReservedOrderNo;
+        throw new Error('Current basket / order is required for creating request data transaction!');
     }
 
     this.preferenceMapping = preferenceMapping;
@@ -130,6 +153,10 @@ function CheckoutTransaction() {
 CheckoutTransaction.prototype.getPayload = function () {
     var self = this;
 
+    var OrderEntity = require('./entity/Order');
+    var amount = OrderEntity.getFixedContainerTotalAmount(self.order);
+    var is3dSecure = getIs3DSecure(amount);
+
     var Calendar = require('dw/util/Calendar');
     var StringUtils = require('dw/util/StringUtils');
     var calendar = new Calendar(new Date());
@@ -139,10 +166,13 @@ CheckoutTransaction.prototype.getPayload = function () {
         request_id: getRequestID(self.order),
         payment_method: 'creditcard',
         transaction_type: getSitePreference('initialTransactionType').value,
-        attempt_three_d: false,
+        attempt_three_d: is3dSecure,
         merchant_account_id: getSitePreference('merchantAccountId'),
         locale: self.locale
     };
+    if (is3dSecure) {
+        result.merchant_account_id = getSitePreference('merchantAccountId3DS');
+    }
 
     // add order data
     var orderData = self.getOrderData();
@@ -199,10 +229,10 @@ CheckoutTransaction.prototype.getOrderData = function () {
     Object.keys(orderData).forEach(function (k) {
         result[k] = orderData[k];
     });
-    // notification url
-    var notificationUrl = new (require('./seamless/NotificationUrl'))(self.order);
-    Object.keys(notificationUrl).forEach(function (k) {
-        result[k] = notificationUrl[k];
+    // redirect urls
+    var redirectUrls = new (require('./seamless/RedirectUrls'))(self);
+    Object.keys(redirectUrls).forEach(function (k) {
+        result[k] = redirectUrls[k];
     });
 
     return result;
