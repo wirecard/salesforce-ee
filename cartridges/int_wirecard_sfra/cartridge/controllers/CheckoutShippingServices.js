@@ -40,13 +40,6 @@ server.replace(
         // verify shipping form data
         var shippingFormErrors = COHelpers.validateShippingForm(form.shippingAddress.addressFields);
 
-        // set basket email address for guest customers
-        if (!req.currentCustomer.raw.isAuthenticated() && form.shippingAddress.addressFields.email.value) {
-            Transaction.wrap(function () {
-                currentBasket.setCustomerEmail(form.shippingAddress.addressFields.email.value);
-            });
-        }
-
         if (Object.keys(shippingFormErrors).length > 0) {
             req.session.privacyCache.set(currentBasket.defaultShipment.UUID, 'invalid');
 
@@ -66,8 +59,7 @@ server.replace(
                 address2: form.shippingAddress.addressFields.address2.value,
                 city: form.shippingAddress.addressFields.city.value,
                 postalCode: form.shippingAddress.addressFields.postalCode.value,
-                countryCode: form.shippingAddress.addressFields.country.value,
-                phone: form.shippingAddress.addressFields.phone.value
+                countryCode: form.shippingAddress.addressFields.country.value
             };
             if (Object.prototype.hasOwnProperty
                 .call(form.shippingAddress.addressFields, 'states')) {

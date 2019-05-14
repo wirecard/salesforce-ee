@@ -54,18 +54,4 @@
       <masked>false</masked>
       <name>country</name>
    </variable>
-   <variable>
-      <defaultValue>''</defaultValue>
-      <description></description>
-      <id>3f99a77c-1e72-492e-9fac-30fd48779363</id>
-      <masked>false</masked>
-      <name>email</name>
-   </variable>
-   <variable>
-      <defaultValue>''</defaultValue>
-      <description></description>
-      <id>9e560612-7785-4689-8793-67b0f979ca81</id>
-      <masked>false</masked>
-      <name>phone</name>
-   </variable>
 </TestCaseEntity>

@@ -11,20 +11,20 @@
       </entry>
       <entry>
          <key>BASIC</key>
-         <value>//div[@class='tile-body']/div[@class='pdp-link']/a[@class='link'][count(. | //a[@class = 'link']) = count(//a[@class = 'link'])]</value>
+         <value>//span[@id='product-0']/div/div/a</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>tag</name>
       <type>Main</type>
       <value>a</value>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
@@ -35,7 +35,7 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//div[@class='tile-body']/div[@class='pdp-link']/a[@class='link']</value>
+      <value>//span[@id='product-0']/div/div/a</value>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>

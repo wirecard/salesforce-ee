@@ -11,7 +11,7 @@
       </entry>
       <entry>
          <key>BASIC</key>
-         <value>//div[contains(@class,'search hidden-xs-down')]//div[@class='site-search']//button[@type = 'submit' and @name = 'search-button']</value>
+         <value>//div[contains(@class,'search')]//div[@class='site-search']//button[@type = 'submit' and @name = 'search-button']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -49,7 +49,7 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//div[contains(@class,'search hidden-xs-down')]//div[@class='site-search']//button[@type = 'submit' and @name = 'search-button']</value>
+      <value>//div[contains(@class,'search')]//div[@class='site-search']//button[@type = 'submit' and @name = 'search-button']</value>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>

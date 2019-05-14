@@ -7,16 +7,16 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id = 'shippingCountry']</value>
+         <value>//*[contains(@name, 'shippingCountry')]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>id</name>
+      <matchCondition>contains</matchCondition>
+      <name>name</name>
       <type>Main</type>
-      <value>shippingCountry</value>
+      <value>country</value>
    </webElementProperties>
 </WebElementEntity>
