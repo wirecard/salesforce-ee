@@ -26,8 +26,13 @@ function RedirectUrls(order) {
     result['cancel-redirect-url'] = getRedirectUrl(order, 'PaymentGateway-Cancel');
     result['fail-redirect-url'] = getRedirectUrl(order, 'PaymentGateway-Fail');
 
+    let format = 'application/json';
+
+    if (require('dw/system/Site').getCurrent().getCustomPreferenceValue('paymentGatewaySignResponses')) {
+        format += '-signed';
+    }
     result.notifications = {
-        format: 'application/json',
+        format: format,
         notification: [{
             url: getRedirectUrl(order, 'PaymentGateway-Notify')
         }]

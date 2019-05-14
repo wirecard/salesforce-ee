@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>Link place order</name>
+   <name>Payment Phone</name>
    <tag></tag>
-   <elementGuidId>099584ab-cbde-4bdb-860c-6c1936b0a0e7</elementGuidId>
+   <elementGuidId>9cbbd249-d00f-466b-aa6c-b7d5643fe609</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//button[@type='submit' and @value='place-order']</value>
+         <value>//*[@id = 'phoneNumber']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,8 +15,8 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>id</name>
       <type>Main</type>
-      <value>//button[@type='submit' and @value='place-order']</value>
+      <value>phoneNumber</value>
    </webElementProperties>
 </WebElementEntity>

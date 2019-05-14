@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>PaymentMail</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>334a8b1d-45d0-47e6-9b5c-9dd31c41cec9</testCaseGuid>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>300b83c4-6bd8-4ae4-8a19-e7ccd420aee0</id>
+      <masked>false</masked>
+      <name>email</name>
+   </variable>
+</TestCaseEntity>
