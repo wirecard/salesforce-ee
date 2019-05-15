@@ -21,9 +21,11 @@ WebUI.click(findTestObject('sfra/product page/Link to Product'))
 
 WebUI.click(findTestObject('sfra/product page/Swatch/JJ887XX'))
 
-WebUI.waitForElementClickable(findTestObject('sfra/product page/Add to cart'), 3)
+WebUI.waitForElementNotPresent(findTestObject('sfra/Loader Underlay'), 10)
+
+WebUI.waitForElementClickable(findTestObject('sfra/product page/Add to cart'), 10)
 
 WebUI.click(findTestObject('sfra/product page/Add to cart'))
 
-WebUI.waitForElementNotPresent(findTestObject('sfra/Loader Underlay'), 3)
+WebUI.waitForElementNotPresent(findTestObject('sfra/Loader Underlay'), 10)
 
