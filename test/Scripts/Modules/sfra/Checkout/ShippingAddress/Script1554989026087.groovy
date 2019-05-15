@@ -29,5 +29,7 @@ WebUI.selectOptionByValue(findTestObject('sfra/checkout/shipping/Shipping state'
 
 WebUI.waitForElementClickable(findTestObject('sfra/checkout/Link Proceed to payment'), 6)
 
+WebUI.setText(findTestObject('sfra/checkout/shipping/Shipping phone'), phone)
+
 WebUI.click(findTestObject('sfra/checkout/Link Proceed to payment'))
 
