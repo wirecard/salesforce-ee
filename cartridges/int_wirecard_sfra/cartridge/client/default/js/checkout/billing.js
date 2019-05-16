@@ -41,16 +41,4 @@ function updatePaymentInformation(order) {
 }
 base.methods.updatePaymentInformation = updatePaymentInformation;
 
-base.paymentTabs = function () {
-    $('.payment-options .nav-item').on('click', function (e) {
-        e.preventDefault();
-        var methodID = $(this).data('method-id');
-        $('.payment-information').data('payment-method-id', methodID);
-        // dotsource custom: update selected payment method in billing form
-        $('input[name$=paymentMethod]').val(methodID);
-        // hide other payment methods form
-        $('.credit-card-selection-new').find('.tab-pane').removeClass('active');
-    });
-};
-
 module.exports = base;
