@@ -44,20 +44,15 @@ function Handle(basket) {
  * @return {Object} returns an error object
  */
 function Authorize(orderNumber, paymentInstrument, paymentProcessor) { // eslint-disable-line
-    var OrderMgr = require('dw/order/OrderMgr');
-    var order = OrderMgr.getOrder(orderNumber);
+    var URLUtils = require('dw/web/URLUtils');
     var result = { success: true };
 
     try {
-        // save transaction data with order
-        var transactionHelper = require('*/cartridge/scripts/paymentgateway/helper/TransactionHelper');
-        transactionHelper.saveSeamlessTransactionToOrder(order, paymentInstrument.custom.paymentGatewayData);
-
         Transaction.wrap(function () {
             paymentInstrument.paymentTransaction.setTransactionID(orderNumber);
             paymentInstrument.paymentTransaction.setPaymentProcessor(paymentProcessor);
-            // delete paymentInstrument.custom.paymentGatewayData;
         });
+        result.saveTransactionURL = URLUtils.https('PaymentGatewayCredit-SaveTransaction', 'orderNo', orderNumber).toString();
     } catch (err) {
         result = { error: true, errorMessage: err.message };
     }

@@ -37,20 +37,40 @@ function getCreditCardRequestData() {
 }
 
 /**
- * Submit seamless form and subsequently execute callback fn (place order)
- * @param {string} paymentMethodId - current payment method
+ * Submit seamless form and subsequently save transaction data with order
+ * @param {string} saveTransactionUrl - payment gateway url which saves transaction data to order
  * @param {Object} cbSuccess - success callback function
  * @param {Object} cbError - error callback function
  */
-function submitSeamlessForm(paymentMethodId, cbSuccess, cbError) {
+function submitSeamlessForm(saveTransactionUrl, cbSuccess, cbError) {
     WirecardPaymentPage.seamlessSubmitForm({
         onSuccess: function (msg) {
-            if (typeof cbSuccess === 'function') {
-                cbSuccess.call(this, { paymentMethodId: paymentMethodId, transactionData: JSON.stringify(msg) });
-            }
+            $.ajax({
+                url: saveTransactionUrl,
+                method: 'post',
+                data: { transactionData: JSON.stringify(msg) },
+                complete: function (response) {
+                    var data = JSON.parse(response.responseText);
+                    if (Object.prototype.hasOwnProperty.call(data, 'continueUrl')
+                        && typeof cbSuccess === 'function'
+                    ) {
+                        cbSuccess.call(this, data);
+                    } else {
+                        handleError({ 'status_description_1': 'General error.' }, cbError);
+                    }
+                }
+            });
         },
         onError: function (err) {
-            handleError(err, cbError);
+            $.ajax({
+                url: paymentGatewayConfig.restoreBasketUrl,
+                method: 'post',
+                data: { transactionData: JSON.stringify(err) },
+                complete: function () {
+                    handleError(err, cbError);
+                    getCreditCardRequestData();
+                }
+            });
         }
     });
 }

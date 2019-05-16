@@ -309,37 +309,23 @@ var scrollAnimate = require('base/components/scrollAnimate');
 
                     return defer;
                 } else if (stage === 'placeOrder') {
-                    var activeTabId = $('.tab-pane.active').attr('id');
-                    /**
-                     * Capsulate submit order
-                     */
-                    function submitPlaceOrder () {
-                        var args = Array.prototype.slice.call(arguments, 0);
-                        var requestData = {};
-                        if (args.length > 0 && typeof args[0] === 'object' && Object.prototype.hasOwnProperty.call(args[0], 'transactionData')) {
-                            requestData = args[0];
-                        }
-                        // disable the placeOrder button here
-                        $('body').trigger('checkout:disableButton', '.next-step-button button');
-                        $.ajax({
-                            url: $('.place-order').data('action'),
-                            method: 'POST',
-                            data: requestData,
-                            success: function (data) {
-                                // enable the placeOrder button here
-                                $('body').trigger('checkout:enableButton', '.next-step-button button');
-                                if (data.error) {
-                                    if (data.cartError) {
-                                        window.location.href = data.redirectUrl;
-                                        defer.reject();
-                                    } else {
-                                        // go to appropriate stage and display error message
-                                        defer.reject(data);
-                                    }
-                                } else if (data.pgRedirectURL) {
-                                    window.location.href = data.pgRedirectURL;
-                                    defer.resolve(data);
+                    $('body').trigger('checkout:disableButton', '.next-step-button button');
+                    $.ajax({
+                        url: $('.place-order').data('action'),
+                        method: 'POST',
+                        success: function (data) {
+                            // enable the placeOrder button here
+                            $('body').trigger('checkout:enableButton', '.next-step-button button');
+                            if (data.error) {
+                                if (data.cartError) {
+                                    window.location.href = data.redirectUrl;
+                                    defer.reject();
                                 } else {
+                                    // go to appropriate stage and display error message
+                                    defer.reject(data);
+                                }
+                            } else if (data.pgTransactionURL) {
+                                paymentgateway.submitSeamlessForm(data.pgTransactionURL, function(data) {
                                     var continueUrl = data.continueUrl;
                                     var urlParams = {
                                         ID: data.orderID,
@@ -353,14 +339,42 @@ var scrollAnimate = require('base/components/scrollAnimate');
 
                                     window.location.href = continueUrl;
                                     defer.resolve(data);
-                                }
-                            },
-                            error: function () {
-                                // enable the placeOrder button here
-                                $('body').trigger('checkout:enableButton', $('.next-step-button button'));
+                                }, function (errMessage) {
+                                    defer.reject({
+                                        errorStage: {
+                                            stage: 'payment',
+                                            step: 'paymentInstrument'
+                                        },
+                                        errorMessage: errMessage
+                                    });
+                                    paymentgateway.getCreditCardRequestData();
+                                });
+                            } else if (data.pgRedirectURL) {
+                                window.location.href = data.pgRedirectURL;
+                                defer.resolve(data);
+                            } else {
+                                var continueUrl = data.continueUrl;
+                                var urlParams = {
+                                    ID: data.orderID,
+                                    token: data.orderToken
+                                };
+
+                                continueUrl += (continueUrl.indexOf('?') !== -1 ? '&' : '?') +
+                                    Object.keys(urlParams).map(function (key) {
+                                        return key + '=' + encodeURIComponent(urlParams[key]);
+                                    }).join('&');
+
+                                window.location.href = continueUrl;
+                                defer.resolve(data);
                             }
-                        });
-                    }
+                        },
+                        error: function () {
+                            // enable the placeOrder button here
+                            $('body').trigger('checkout:enableButton', $('.next-step-button button'));
+                        }
+                    });
+
+                    return defer;
                     if (activeTabId.indexOf('PG_CREDITCARD') > -1) {
                         paymentgateway.submitSeamlessForm('PG_CREDITCARD', submitPlaceOrder, function (errMessage) {
                             defer.reject({

@@ -137,6 +137,8 @@ function handlePayments(order, orderNumber) {
                         result.error = true;
                         result.errorMessage = authorizationResult.errorMessage;
                         break;
+                    } else if (authorizationResult.saveTransactionURL) {
+                        result.saveTransactionURL = authorizationResult.saveTransactionURL;
                     } else if (authorizationResult.redirectURL) {
                         // redirect to wpg
                         result.redirectURL = authorizationResult.redirectURL;

@@ -395,6 +395,11 @@ server.replace(
                 errorMessage: handlePaymentResult.errorMessage || Resource.msg('error.technical', 'checkout', null)
             });
             return next();
+        } else if (Object.prototype.hasOwnProperty.call(handlePaymentResult, 'saveTransactionURL')) { // eslint-disable-line
+            res.json({
+                pgTransactionURL: handlePaymentResult.saveTransactionURL
+            });
+            return next();
         } else if (Object.prototype.hasOwnProperty.call(handlePaymentResult, 'redirectURL')) { // eslint-disable-line
             res.json({
                 pgRedirectURL: handlePaymentResult.redirectURL

@@ -37,7 +37,7 @@ server.get(
             locale = currentLocale.language;
         }
         var params = {
-            order_no: orderNo,
+            orderNo: orderNo,
             locale: locale,
             remoteHost: req.remoteAddress
         };
@@ -52,6 +52,88 @@ server.get(
         } else {
             res.setStatusCode(404);
         }
+        next();
+    }
+);
+
+/**
+ * Save transaction data after seamless form was submitted
+ */
+server.post(
+    'SaveTransaction',
+    server.middleware.https,
+    function (req, res, next) {
+        var result;
+        var parameterMap = req.querystring;
+        var formData = req.form;
+        var orderNo = parameterMap.orderNo;
+        var transactionData = JSON.parse(formData.transactionData);
+
+        var OrderMgr = require('dw/order/OrderMgr');
+        var order = OrderMgr.getOrder(orderNo);
+        // FIXME better check integrity here (fingerprint / custom field?)
+        if (order && transactionData) {
+            // save transaction data with order
+            var transactionHelper = require('*/cartridge/scripts/paymentgateway/helper/TransactionHelper');
+            transactionHelper.saveSeamlessTransactionToOrder(order, transactionData);
+            req.session.privacyCache.set('usingMultiShipping', false);
+
+            var URLUtils = require('dw/web/URLUtils');
+            result = {
+                error: false,
+                orderID: order.orderNo,
+                orderToken: order.orderToken,
+                continueUrl: URLUtils.url('Order-Confirm').toString()
+            };
+        } else {
+            result = {
+                error: true,
+                errorMessage: 'Error while saving transaction to order!'
+            };
+        }
+        res.render('paymentgateway/json', { json: result });
+        next();
+    }
+);
+
+/**
+ * Restore basket / fail order
+ */
+server.post(
+    'RestoreBasket',
+    server.middleware.https,
+    function (req, res, next) {
+        var parameterMap = req.querystring;
+        var orderToken = parameterMap.orderToken;
+        var formData = req.form;
+        try {
+            var transactionData = JSON.parse(formData.transactionData);
+
+            var OrderMgr = require('dw/order/OrderMgr');
+            var order = OrderMgr.getOrder(transactionData.order_number);
+            // FIXME better check integrity here (fingerprint / custom field?)
+            if (order) {
+                var transactionHelper = require('*/cartridge/scripts/paymentgateway/helper/TransactionHelper');
+                transactionHelper.saveSeamlessTransactionToOrder(order, transactionData);
+
+                var Transaction = require('dw/system/Transaction');
+                Transaction.wrap(function () {
+                    OrderMgr.failOrder(order);
+                });
+                var BasketMgr = require('dw/order/BasketMgr');
+                var currentBasket = BasketMgr.getCurrentBasket();
+                if (currentBasket) {
+                    Transaction.wrap(function () {
+                        delete currentBasket.custom.paymentGatewayReservedOrderNo;
+                    });
+                }
+            }
+        } catch (err) {
+            var pgLogger = require('dw/system/Logger').getLogger('paymentgateway');
+            pgLogger.error('Error while restoring basket: \n'
+               + err.fileName + ': ' + err.message + '\n' + err.stack)
+        }
+        res.render('paymentgateway/empty');
         next();
     }
 );

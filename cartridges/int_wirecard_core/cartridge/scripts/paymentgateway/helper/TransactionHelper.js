@@ -217,7 +217,7 @@ var TransactionHelper = {
     /**
      * Save credit card (seamless) transaction with order
      * @param {dw.order.Order} order - related order
-     * @param {string} transactionData - transaction data
+     * @param {Object} transactionData - transaction data as json object
      */
     saveSeamlessTransactionToOrder: function (order, transactionData) {
         this.saveTransactionToOrder(order, this.parseSeamlessTransactionData(transactionData));
@@ -253,12 +253,11 @@ var TransactionHelper = {
 
     /**
      * Parse transaction data from seamless integration
-     * @param {string} transactionData - json data
+     * @param {Object} transactionData - json object
      * @returns {Object} - status with {code: ..., description: ... }
      */
     parseSeamlessTransactionData: function (transactionData) {
         var result = {};
-        var resultObject = JSON.parse(transactionData);
         var stringHelper = require('*/cartridge/scripts/paymentgateway/util/StringHelper');
         var tmp;
 
@@ -276,19 +275,19 @@ var TransactionHelper = {
             'custom_fields'
         ].forEach(function (key) {
             var resultKey = stringHelper.camelize(key.replace(/_/g, '-'));
-            if (Object.prototype.hasOwnProperty.call(resultObject, key)) {
+            if (Object.prototype.hasOwnProperty.call(transactionData, key)) {
                 if (key === 'status_code_1') {
-                    if (Object.prototype.hasOwnProperty.call(resultObject, 'status_description_1')
-                        && Object.prototype.hasOwnProperty.call(resultObject, 'status_severity_1')
+                    if (Object.prototype.hasOwnProperty.call(transactionData, 'status_description_1')
+                        && Object.prototype.hasOwnProperty.call(transactionData, 'status_severity_1')
                     ) {
                         result.status = {
-                            code: resultObject.status_code_1,
-                            description: resultObject.status_description_1,
-                            severity: resultObject.status_severity_1
+                            code: transactionData.status_code_1,
+                            description: transactionData.status_description_1,
+                            severity: transactionData.status_severity_1
                         };
                     }
                 } else if (key === 'completion_time_stamp') {
-                    tmp = resultObject[key].match(/^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/);
+                    tmp = transactionData[key].match(/^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/);
                     var date = new Date();
                     if (tmp.length === 7) {
                         date.setFullYear(tmp[1]);
@@ -301,11 +300,11 @@ var TransactionHelper = {
                     result[resultKey] = date.getTime();
                 } else if (key === 'requested_amount') {
                     result[resultKey] = {
-                        value: resultObject[key],
-                        currency: resultObject.requested_amount_currency
+                        value: transactionData[key],
+                        currency: transactionData.requested_amount_currency
                     };
                 } else {
-                    result[resultKey] = resultObject[key];
+                    result[resultKey] = transactionData[key];
                 }
             }
         });
