@@ -21,6 +21,8 @@ WebUI.setText(findTestObject('Payment methods/PayPal/Password'), password)
 
 WebUI.click(findTestObject('Payment methods/PayPal/Login'))
 
+WebUI.delay(20)
+
 WebUI.waitForElementClickable(findTestObject('Payment methods/PayPal/Pay button'), 10)
 
 WebUI.click(findTestObject('Payment methods/PayPal/Pay button'))

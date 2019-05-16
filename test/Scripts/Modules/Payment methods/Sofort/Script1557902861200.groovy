@@ -13,9 +13,9 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
-WebUI.delay(1)
+WebUI.delay(3)
 
-WebUI.waitForElementPresent(findTestObject('Payment methods/Sofort/Select Country'), 2)
+WebUI.waitForElementPresent(findTestObject('Payment methods/Sofort/Select Country'), 20)
 
 WebUI.selectOptionByValue(findTestObject('Payment methods/Sofort/Select Country'), 'DE', false)
 
@@ -34,6 +34,10 @@ WebUI.click(findTestObject('Payment methods/Sofort/Continue Select Account'))
 WebUI.waitForElementPresent(findTestObject('Payment methods/Sofort/Select Account-1'), 2)
 
 WebUI.click(findTestObject('Payment methods/Sofort/Select Account-1'))
+
+WebUI.delay(3)
+
+WebUI.waitForElementClickable(findTestObject('Payment methods/Sofort/Continue Select Account'), 5)
 
 WebUI.click(findTestObject('Payment methods/Sofort/Continue Select Account'))
 
