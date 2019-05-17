@@ -23,7 +23,11 @@ WebUI.setText(findTestObject('sfra/checkout/shipping/Shipping zipCode'), zipCode
 
 WebUI.setText(findTestObject('sfra/checkout/shipping/Shipping city'), city)
 
+WebUI.waitForElementVisible(findTestObject('sfra/checkout/shipping/Shipping country'), 10)
+
 WebUI.selectOptionByValue(findTestObject('sfra/checkout/shipping/Shipping country'), country, false)
+
+WebUI.waitForElementVisible(findTestObject('sfra/checkout/shipping/Shipping state'), 10)
 
 WebUI.selectOptionByValue(findTestObject('sfra/checkout/shipping/Shipping state'), state, false)
 

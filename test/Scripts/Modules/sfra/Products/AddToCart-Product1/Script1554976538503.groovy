@@ -23,6 +23,8 @@ WebUI.click(findTestObject('sfra/product page/Swatch/JJ887XX'))
 
 WebUI.waitForElementNotPresent(findTestObject('sfra/Loader Underlay'), 10)
 
+WebUI.delay(2)
+
 WebUI.waitForElementClickable(findTestObject('sfra/product page/Add to cart'), 10)
 
 WebUI.click(findTestObject('sfra/product page/Add to cart'))
