@@ -14,7 +14,7 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
 //WebUI.waitForElementClickable(findTestObject('sfra/checkout/Link proceed to order overview'), 2)
-WebUI.delay(3)
+WebUI.delay(10)
 
 WebUI.waitForElementClickable(findTestObject('sfra/checkout/Link place order'), 5)
 
@@ -35,5 +35,5 @@ switch (paymentMethodId) {
 
 WebUI.waitForElementPresent(findTestObject('sfra/checkout/Order success message'), 60)
 
-WebUI.verifyElementPresent(findTestObject('sfra/checkout/Order success message'), 0)
+WebUI.verifyElementPresent(findTestObject('sfra/checkout/Order success message'), 5)
 

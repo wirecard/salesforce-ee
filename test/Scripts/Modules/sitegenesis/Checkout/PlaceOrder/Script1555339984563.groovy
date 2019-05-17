@@ -22,15 +22,15 @@ switch (paymentMethodId) {
         WebUI.callTestCase(findTestCase('Modules/Payment methods/PayPal'), [:], FailureHandling.STOP_ON_FAILURE)
 
         break
-	case 'PG_SOFORT':
-		WebUI.callTestCase(findTestCase('Modules/Payment methods/Sofort'), [:], FailureHandling.STOP_ON_FAILURE)
+    case 'PG_SOFORT':
+        WebUI.callTestCase(findTestCase('Modules/Payment methods/Sofort'), [:], FailureHandling.STOP_ON_FAILURE)
 
-		break
+        break
     default:
         break
 }
 
 WebUI.waitForElementPresent(findTestObject('sitegenesis/checkout/Order success(orderNo)'), 20)
 
-WebUI.verifyElementPresent(findTestObject('sitegenesis/checkout/Order success(orderNo)'), 0)
+WebUI.verifyElementPresent(findTestObject('sitegenesis/checkout/Order success(orderNo)'), 3)
 
