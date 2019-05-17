@@ -15,6 +15,8 @@ import internal.GlobalVariable as GlobalVariable
 
 WebUI.setText(findTestObject('sfra/homepage/Searchbox'), productId)
 
+WebUI.delay(3)
+
 WebUI.waitForElementClickable(findTestObject('sfra/product page/Link to Product'), 5)
 
 WebUI.click(findTestObject('sfra/product page/Link to Product'))
