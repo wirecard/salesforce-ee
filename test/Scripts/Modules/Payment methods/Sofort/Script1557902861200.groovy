@@ -13,7 +13,7 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
-WebUI.delay(20)
+WebUI.delay(60)
 
 WebUI.waitForElementVisible(findTestObject('Payment methods/Sofort/Select Country'), 60)
 
