@@ -11,7 +11,6 @@ var preferenceMapping = {
     merchantAccountId: 'paymentGatewayCreditCardMerchantAccountID',
     merchantAccountId3DS: 'paymentGatewayCreditCardMerchantAccountID3DS',
     initialTransactionType: 'paymentGatewayCreditCardInitialTransactionType',
-    sslMax: 'paymentGatewayCreditCardSslMaxLimit',
     config3dMin: 'paymentGatewayCreditCard3DSMinLimit'
 };
 
@@ -105,12 +104,9 @@ function getRequestID(lineItemCtnr) {
  */
 function getIs3DSecure(amount) {
     var is3dSecure = false;
-    var sslMax = getSitePreference('sslMax');
     var config3dMin = getSitePreference('config3dMin');
 
-    if ((config3dMin && config3dMin < amount.value)
-        || (sslMax && sslMax <= amount.value)
-    ) {
+    if (config3dMin && config3dMin < amount.value) {
         is3dSecure = true;
     }
     return is3dSecure;

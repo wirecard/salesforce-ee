@@ -174,15 +174,6 @@
                 <min-length>0</min-length>
                 <default-value>https://api-test.wirecard.com</default-value>
             </attribute-definition>
-            <attribute-definition attribute-id="paymentGatewayCreditCardSslMaxLimit">
-                <display-name xml:lang="x-default">Non 3-D Secure Max. Limit</display-name>
-                <description xml:lang="x-default">Amount in default shop currency</description>
-                <type>string</type>
-                <mandatory-flag>false</mandatory-flag>
-                <externally-managed-flag>false</externally-managed-flag>
-                <min-length>0</min-length>
-                <default-value>300</default-value>
-            </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayCreditCard3DSMinLimit">
                 <display-name xml:lang="x-default">3-D Secure Min. Limit</display-name>
                 <description xml:lang="x-default">Amount in default shop currency</description>
@@ -259,8 +250,6 @@
                 <attribute attribute-id="paymentGatewayCreditCardHttpPassword"/>
                 <attribute attribute-id="paymentGatewayCreditCardMerchantAccountID3DS"/>
                 <attribute attribute-id="paymentGatewayCreditCardSecret3DS"/>
-                <attribute attribute-id="paymentGatewayCreditCardEnable3DS"/>
-                <attribute attribute-id="paymentGatewayCreditCardSslMaxLimit"/>
                 <attribute attribute-id="paymentGatewayCreditCard3DSMinLimit"/>
                 <attribute attribute-id="paymentGatewayCreditCardBaseUrl"/>
                 <attribute attribute-id="paymentGatewayCreditCardAddDescriptorToRequest"/>
