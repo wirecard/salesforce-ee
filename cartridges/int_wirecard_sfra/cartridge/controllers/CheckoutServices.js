@@ -287,6 +287,8 @@ server.replace(
         var URLUtils = require('dw/web/URLUtils');
         var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
         var hooksHelper = require('*/cartridge/scripts/helpers/hooks');
+        // FIXME remove after frontend tests were fixed
+        var pgLogger = require('dw/system/Logger').getLogger('paymentgateway');
 
         var currentBasket = BasketMgr.getCurrentBasket();
 
@@ -344,6 +346,8 @@ server.replace(
                 },
                 errorMessage: Resource.msg('error.no.billing.address', 'checkout', null)
             });
+            // FIXME remove after frontend tests were fixed
+            pgLogger.error(Resource.msg('error.no.billing.address', 'checkout', null));
             return next();
         }
 
@@ -363,6 +367,8 @@ server.replace(
                 },
                 errorMessage: Resource.msg('error.payment.not.valid', 'checkout', null)
             });
+            // FIXME remove after frontend tests were fixed
+            pgLogger.error(Resource.msg('error.payment.not.valid', 'checkout', null));
             return next();
         }
 
@@ -394,6 +400,8 @@ server.replace(
                 error: true,
                 errorMessage: handlePaymentResult.errorMessage || Resource.msg('error.technical', 'checkout', null)
             });
+            // FIXME remove after frontend tests were fixed
+            pgLogger.error(Resource.msg('error.technical', 'checkout', null));
             return next();
         } else if (Object.prototype.hasOwnProperty.call(handlePaymentResult, 'redirectURL')) { // eslint-disable-line
             res.json({
