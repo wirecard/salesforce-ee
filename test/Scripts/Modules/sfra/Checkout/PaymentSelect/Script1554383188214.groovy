@@ -19,9 +19,9 @@ switch (paymentMethodId) {
 
         break
     case 'PG_SOFORT':
-		WebUI.callTestCase(findTestCase('Modules/sfra/PaymentMethods/Sofort'), [:], FailureHandling.STOP_ON_FAILURE)
-	
-			break
+        WebUI.callTestCase(findTestCase('Modules/sfra/PaymentMethods/Sofort'), [:], FailureHandling.STOP_ON_FAILURE)
+
+        break
     case 'PG_CREDIT':
         WebUI.callTestCase(findTestCase('Modules/sfra/PaymentMethods/CreditCard'), [:], FailureHandling.STOP_ON_FAILURE)
 
@@ -29,6 +29,8 @@ switch (paymentMethodId) {
     default:
         break
 }
+
+WebUI.delay(2)
 
 WebUI.waitForElementClickable(findTestObject('sfra/checkout/Link proceed to order overview'), 5)
 
