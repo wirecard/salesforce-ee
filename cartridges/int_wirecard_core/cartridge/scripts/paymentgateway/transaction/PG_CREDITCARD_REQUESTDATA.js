@@ -11,7 +11,8 @@ var preferenceMapping = {
     merchantAccountId: 'paymentGatewayCreditCardMerchantAccountID',
     merchantAccountId3DS: 'paymentGatewayCreditCardMerchantAccountID3DS',
     initialTransactionType: 'paymentGatewayCreditCardInitialTransactionType',
-    config3dMin: 'paymentGatewayCreditCard3DSMinLimit'
+    config3dMin: 'paymentGatewayCreditCard3DSMinLimit',
+    conversionRates: 'paymentGatewayCreditCardConversionRates'
 };
 
 /**
@@ -104,9 +105,25 @@ function getRequestID(lineItemCtnr) {
  */
 function getIs3DSecure(amount) {
     var is3dSecure = false;
-    var config3dMin = getSitePreference('config3dMin');
+    var config3dMin = /\d/.test(getSitePreference('config3dMin')) ? Number(getSitePreference('config3dMin')) : 0;
+    var conversionRates = getSitePreference('conversionRates') || [];
 
-    if (config3dMin && config3dMin < amount.value) {
+    var Money = require('dw/value/Money');
+    var Site = require('dw/system/Site').current;
+    var min3d = new Money(config3dMin, Site.defaultCurrency);
+    var rate;
+    if (conversionRates.length > 1) {
+        var currencyRegex = new RegExp('^' + amount.currencyCode);
+        for (var i = 0; i < conversionRates.length; i += 1) {
+            var rateItem = conversionRates[i].replace(/^[\s]+|[\"]|[\s]+$/g,"");
+            if (rateItem.match(currencyRegex) && /:{1}/.test(rateItem)) {
+                rate = Number(rateItem.split(':')[1]);
+                min3d = new Money(min3d.multiply(rate).value, amount.currencyCode);
+            }
+        }
+    }
+
+    if (min3d.value < amount.value) {
         is3dSecure = true;
     }
     return is3dSecure;

@@ -221,6 +221,13 @@
                 <mandatory-flag>false</mandatory-flag>
                 <default-value>true</default-value>
             </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayCreditCardConversionRates">
+                <display-name xml:lang="x-default">Conversion Rates</display-name>
+                <description xml:lang="x-default">Enter conversion rates relative to "3-D Secure Min. Limit" (currency: the site's default currency) for any currency, e.g. "USD":"1.12"</description>
+                <type>set-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
         </custom-attribute-definitions>
         <group-definitions>
             <attribute-group group-id="PAYMENTGATEWAY">
@@ -256,6 +263,7 @@
                 <attribute attribute-id="paymentGatewayCreditCardSendAdditionalData"/>
                 <attribute attribute-id="paymentGatewayCreditCardSendBasketData"/>
                 <attribute attribute-id="paymentGatewayCreditCardInitialTransactionType"/>
+                <attribute attribute-id="paymentGatewayCreditCardConversionRates"/>
             </attribute-group>
         </group-definitions>
     </type-extension>

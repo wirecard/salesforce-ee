@@ -1,7 +1,7 @@
 <isset name="addressFields" value="${pdict.forms.shippingForm.shippingAddress.addressFields}" scope="page"/>
 <isif condition="${shippingModel.shippingAddress}">
     <isset name="shippingAddress" value="${shippingModel.shippingAddress}" scope="page" />
-    <iselse/>
+<iselse/>
     <isset name="shippingAddress" value="${{}}" scope="page" />
 </isif>
 
@@ -130,19 +130,4 @@
             <div class="invalid-feedback"><isprint value="${addressFields.phone.error}"/></div>
         </div>
     </div>
-    <isif condition="${ !pdict.customer.registeredUser }" >
-        <div class="col-sm-12">
-            <div class="form-group
-                ${addressFields.email.mandatory === true ? 'required' : ''}
-                ${addressFields.email.htmlName}">
-                <label class="form-control-label" for="shippingEmail">
-                    ${Resource.msg('field.shipping.address.email','address',null)}
-                </label>
-                <input type="email" class="form-control shippingEmail" id="shippingEmail"
-                       value="${ pdict.order.orderEmail || '' }" name="${ addressFields.email.htmlName }" required
-                       autocomplete="shipping address-email">
-                <div class="invalid-feedback"><isprint value="${addressFields.email.error}" ></div>
-            </div>
-        </div>
-    </isif>
 </div>
