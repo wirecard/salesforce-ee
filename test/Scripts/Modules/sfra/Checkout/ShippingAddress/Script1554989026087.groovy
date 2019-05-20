@@ -27,13 +27,13 @@ WebUI.waitForElementVisible(findTestObject('sfra/checkout/shipping/Shipping coun
 
 WebUI.selectOptionByValue(findTestObject('sfra/checkout/shipping/Shipping country'), country, false)
 
+WebUI.setText(findTestObject('sfra/checkout/shipping/Shipping phone'), phone)
+
 WebUI.waitForElementVisible(findTestObject('sfra/checkout/shipping/Shipping state'), 10)
 
 WebUI.selectOptionByValue(findTestObject('sfra/checkout/shipping/Shipping state'), state, false)
 
 WebUI.waitForElementClickable(findTestObject('sfra/checkout/Link Proceed to payment'), 6)
-
-WebUI.setText(findTestObject('sfra/checkout/shipping/Shipping phone'), phone)
 
 WebUI.click(findTestObject('sfra/checkout/Link Proceed to payment'))
 
