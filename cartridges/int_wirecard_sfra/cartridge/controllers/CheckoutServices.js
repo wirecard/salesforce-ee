@@ -58,9 +58,6 @@ server.replace(
         }
 
         var paymentMethodIdValue = paymentForm.paymentMethod.value;
-        // FIXME remove after frontend tests were fixed
-        var pgLogger = require('dw/system/Logger').getLogger('paymentgateway');
-        pgLogger.debug('Payment methodID: ' + paymentMethodIdValue);
         if (!PaymentManager.getPaymentMethod(paymentMethodIdValue).paymentProcessor) {
             throw new Error(Resource.msg(
                 'error.payment.processor.missing',
@@ -88,7 +85,6 @@ server.replace(
 
         if (formFieldErrors.length || paymentFormResult.serverErrors) {
             // respond with form data and errors
-            pgLogger.error('Payment form errors: ' + JSON.stringify(formFieldErrors) + ', ' + JSON.stringify(paymentFormResult.serverErrors));
             res.json({
                 form: paymentForm,
                 fieldErrors: formFieldErrors,
@@ -161,11 +157,9 @@ server.replace(
                 }
             });
 
-            var pgLogger = require('dw/system/Logger').getLogger('paymentgateway');
             // if there is no selected payment option and balance is greater than zero
             if (!paymentMethodID && currentBasket.totalGrossPrice.value > 0) {
                 var noPaymentMethod = {};
-                pgLogger.error(Resource.msg('error.no.selected.payment.method', 'payment', null));
 
                 noPaymentMethod[billingData.paymentMethod.htmlName] = Resource.msg('error.no.selected.payment.method', 'payment', null);
 
@@ -182,7 +176,6 @@ server.replace(
 
             // check to make sure there is a payment processor
             if (!PaymentMgr.getPaymentMethod(paymentMethodID).paymentProcessor) {
-                pgLogger.error(Resource.msg('error.payment.processor.missing', 'payment', null));
                 throw new Error(Resource.msg(
                     'error.payment.processor.missing',
                     'checkout',
@@ -203,7 +196,6 @@ server.replace(
 
             // need to invalidate credit card fields
             if (result.error) {
-            pgLogger.error('Payment form errors: ' + JSON.stringify(result));
                 delete billingData.paymentInformation;
 
                 res.json({
@@ -295,8 +287,6 @@ server.replace(
         var URLUtils = require('dw/web/URLUtils');
         var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
         var hooksHelper = require('*/cartridge/scripts/helpers/hooks');
-        // FIXME remove after frontend tests were fixed
-        var pgLogger = require('dw/system/Logger').getLogger('paymentgateway');
 
         var currentBasket = BasketMgr.getCurrentBasket();
 
@@ -373,8 +363,6 @@ server.replace(
                 },
                 errorMessage: Resource.msg('error.payment.not.valid', 'checkout', null)
             });
-            // FIXME remove after frontend tests were fixed
-            pgLogger.error(Resource.msg('error.payment.not.valid', 'checkout', null));
             return next();
         }
 
