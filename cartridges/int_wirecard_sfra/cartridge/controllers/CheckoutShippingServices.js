@@ -59,8 +59,7 @@ server.replace(
                 address2: form.shippingAddress.addressFields.address2.value,
                 city: form.shippingAddress.addressFields.city.value,
                 postalCode: form.shippingAddress.addressFields.postalCode.value,
-                countryCode: form.shippingAddress.addressFields.country.value,
-                phone: form.shippingAddress.addressFields.phone.value
+                countryCode: form.shippingAddress.addressFields.country.value
             };
             if (Object.prototype.hasOwnProperty
                 .call(form.shippingAddress.addressFields, 'states')) {

@@ -11,3 +11,5 @@ cartridges/**/.settings/*
 # exclude generated static assets
 cartridges/int_*/cartridge/static/default/css/*
 cartridges/**/cartridge/static/default/js/*
+
+.idea

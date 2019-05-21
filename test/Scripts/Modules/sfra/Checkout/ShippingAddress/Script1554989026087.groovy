@@ -23,19 +23,11 @@ WebUI.setText(findTestObject('sfra/checkout/shipping/Shipping zipCode'), zipCode
 
 WebUI.setText(findTestObject('sfra/checkout/shipping/Shipping city'), city)
 
-WebUI.selectOptionByValue(findTestObject('sfra/checkout/shipping/Shipping state'), state, false)
-
-WebUI.delay(1)
-
 WebUI.selectOptionByValue(findTestObject('sfra/checkout/shipping/Shipping country'), country, false)
 
-WebUI.setText(findTestObject('sfra/checkout/shipping/Shipping phone'), phone)
+WebUI.selectOptionByValue(findTestObject('sfra/checkout/shipping/Shipping state'), state, false)
 
-WebUI.setText(findTestObject('sfra/checkout/shipping/Shipping email'), email)
-
-WebUI.delay(3)
-
-WebUI.waitForElementClickable(findTestObject('sfra/checkout/Link Proceed to payment'), 3)
+WebUI.waitForElementClickable(findTestObject('sfra/checkout/Link Proceed to payment'), 6)
 
 WebUI.click(findTestObject('sfra/checkout/Link Proceed to payment'))
 

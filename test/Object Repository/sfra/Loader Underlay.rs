@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>Link place order</name>
+   <name>Loader Underlay</name>
    <tag></tag>
-   <elementGuidId>099584ab-cbde-4bdb-860c-6c1936b0a0e7</elementGuidId>
+   <elementGuidId>fa2ff56b-ae90-4d27-8049-e9f5b13c92dd</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//button[@type='submit' and @value='place-order']</value>
+         <value>//*[contains(@class, 'underlay')]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <matchCondition>contains</matchCondition>
+      <name>class</name>
       <type>Main</type>
-      <value>//button[@type='submit' and @value='place-order']</value>
+      <value>underlay</value>
    </webElementProperties>
 </WebElementEntity>

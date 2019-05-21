@@ -22,6 +22,8 @@ server.replace(
         var billingFormErrors = {};
         var creditCardErrors = {};
         var viewData = {};
+        var BasketMgr = require('dw/order/BasketMgr');
+        var currentBasket = BasketMgr.getCurrentBasket();
 
         // verify billing form data
         billingFormErrors = COHelpers.validateBillingForm(paymentForm.addressFields);
@@ -32,7 +34,6 @@ server.replace(
             // verify credit card form data
             creditCardErrors = COHelpers.validateCreditCard(paymentForm);
         }
-
 
         if (Object.keys(creditCardErrors).length || Object.keys(billingFormErrors).length) {
             // respond with form data and errors
@@ -92,8 +93,6 @@ server.replace(
                 viewData.storedPaymentUUID = req.form.storedPaymentUUID;
             }
 
-            var BasketMgr = require('dw/order/BasketMgr');
-            var currentBasket = BasketMgr.getCurrentBasket();
             var customerEmail = currentBasket.customerEmail;
             // if basket holds an email address that is different to that from customer's profile
             if (req.currentCustomer.profile) {

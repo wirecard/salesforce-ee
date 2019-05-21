@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>Link place order</name>
+   <name>Payment Mail</name>
    <tag></tag>
-   <elementGuidId>099584ab-cbde-4bdb-860c-6c1936b0a0e7</elementGuidId>
+   <elementGuidId>7b020b84-61c5-443d-9f76-812dc5e8d969</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//button[@type='submit' and @value='place-order']</value>
+         <value>//*[@id = 'email']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,8 +15,8 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>id</name>
       <type>Main</type>
-      <value>//button[@type='submit' and @value='place-order']</value>
+      <value>email</value>
    </webElementProperties>
 </WebElementEntity>
