@@ -13,5 +13,9 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
+WebUI.delay(10)
+
+WebUI.waitForElementVisible(findTestObject('sfra/checkout/payment/Payment Mail'), 20)
+
 WebUI.setText(findTestObject('sfra/checkout/payment/Payment Mail'), email)
 

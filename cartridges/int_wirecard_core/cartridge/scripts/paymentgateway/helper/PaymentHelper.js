@@ -15,6 +15,25 @@ var methodsWithForms = {
     }
 };
 
+/**
+ * @var {array} supportedLocalesForSofort - locales for which a dedicated logo is available
+ */
+var supportedLocalesForSofort = [
+    'de_at',
+    'fr_be',
+    'nl_be',
+    'fr_fr',
+    'de_de',
+    'it_it',
+    'nl_nl',
+    'pl_pl',
+    'es_es',
+    'fr_ch',
+    'fr_de',
+    'fr_it',
+    'en_gb'
+];
+
 module.exports = {
     /**
      * Check if given payment method has form elements
@@ -45,16 +64,21 @@ module.exports = {
     /**
      * Retrieve image for given payment method
      * @param {string} methodID - payment method id
-     * @param {boolean} asURLObject
      * @returns {string|dw.web.URL}
      */
-    getPaymentImage: function (methodID, asURLObject) {
+    getPaymentImage: function (methodID) {
         var PaymentMgr = require('dw/order/PaymentMgr');
         var paymentMethod = PaymentMgr.getPaymentMethod(methodID);
 
         var image = '';
-        if (paymentMethod && paymentMethod.image) {
-            image = asURLObject ? paymentMethod.image.URL : paymentMethod.image.URL.toString();
+        if (methodID === 'PG_SOFORT') {
+            var locale = 'en_gb'; // fallback
+            if (request.locale && supportedLocalesForSofort.indexOf(request.locale.toLowerCase()) > -1) {
+                locale = request.locale.toLowerCase();
+            }
+            image = 'https://cdn.klarna.com/1.0/shared/image/generic/badge/xx_XX/pay_now/standard/pink.svg'.replace('xx_XX', locale);
+        } else if (paymentMethod && paymentMethod.image) {
+            image = paymentMethod.image.URL.toString();
         }
         return image;
     },

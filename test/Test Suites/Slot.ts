@@ -106,7 +106,7 @@
    <testCaseLink>
       <guid>37be3ae3-9e3b-4762-ac76-e351be938083</guid>
       <isReuseDriver>false</isReuseDriver>
-      <isRun>false</isRun>
+      <isRun>true</isRun>
       <testCaseId>Test Cases/Stories/sitegenesis/Checkout</testCaseId>
       <testDataLink>
          <combinationType>ONE</combinationType>

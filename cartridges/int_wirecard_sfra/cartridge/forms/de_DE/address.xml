@@ -40,6 +40,13 @@
            range-error="error.message.between10and20"
            parse-error="error.message.parse.phone"/>
 
+    <!-- phone is mandatory for addresses -->
+    <field formid="phone" label="label.input.phonenumber" description="address.phone.example" type="string" mandatory="true"
+           binding="phone" min-length="10" max-length="20"
+           missing-error="address.phone.missing"
+           range-error="error.message.between10and20"
+           parse-error="error.message.parse.phone"/>
+
     <!-- actions provided by the edit shipping address dialog -->
     <action formid="apply" valid-form="true"/>
     <action formid="remove" valid-form="false"/>

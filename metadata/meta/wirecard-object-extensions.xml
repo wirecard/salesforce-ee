@@ -10,8 +10,8 @@
                 <default-value>true</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayShopName">
-                <display-name xml:lang="x-default">Shop Name</display-name>
-                <description xml:lang="x-default">Max length: 9 characters. All characters exceeding this limit will be ignored!</description>
+                <display-name xml:lang="x-default">Descriptor</display-name>
+                <description xml:lang="x-default">Send text which is displayed on the bank statement issued to your consumer by the financial service provider. (Max length: 9 characters)</description>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
@@ -32,10 +32,11 @@
                 <mandatory-flag>true</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>5</min-length>
-                <default-value>-oc.nMIXT+JnR9Ka</default-value>
+                <default-value></default-value>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayIdealMerchantAccountID">
-                <display-name xml:lang="x-default">iDEAL: Merchant-Account-ID</display-name>
+                <display-name xml:lang="x-default">Merchant Account ID (MAID)</display-name>
+                <description xml:lang="x-default">Unique identifier assigned to your merchant account.</description>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
@@ -43,15 +44,58 @@
                 <default-value>4aeccf39-0d47-47f6-a399-c05c1f2fc819</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewaySofortMerchantAccountID">
-                <display-name xml:lang="x-default">sofort: Merchant-Account-ID</display-name>
+                <display-name xml:lang="x-default">Merchant Account ID (MAID)</display-name>
+                <description xml:lang="x-default">Unique identifier assigned to your merchant account.</description>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
                 <default-value>6c0e7efd-ee58-40f7-9bbd-5e7337a052cd</default-value>
             </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewaySofortBaseUrl">
+                <display-name xml:lang="x-default">Wirecard Server Address (URL)</display-name>
+                <description xml:lang="x-default">Wirecard Server Address (URL) (e.g. https://api.wirecard.com).</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>https://api-test.wirecard.com</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewaySofortHttpUser">
+                <display-name xml:lang="x-default">Username</display-name>
+                <description xml:lang="x-default">Username as provided in your Wirecard contract.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>16390-testing</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewaySofortHttpPassword">
+                <display-name xml:lang="x-default">Password</display-name>
+                <description xml:lang="x-default">Password as provided in your Wirecard contract.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>3!3013=D3fD8X7</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewaySofortSendAdditionalData">
+                <display-name xml:lang="x-default">Send additional request data</display-name>
+                <description xml:lang="x-default">If "yes" additional data (fps) is added to request</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewaySofortSendBasketData">
+                <display-name xml:lang="x-default">Send basket request data</display-name>
+                <description xml:lang="x-default">If "yes" basket information is added to request</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayPayPalMerchantAccountID">
-                <display-name xml:lang="x-default">Merchant-Account-ID</display-name>
+                <display-name xml:lang="x-default">Merchant Account ID (MAID)</display-name>
+                <description xml:lang="x-default">Unique identifier assigned to your merchant account.</description>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
@@ -67,7 +111,8 @@
                 <default-value>227dd634-1226-42a8-a598-83e8988e45d9</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayPayPalBaseUrl">
-                <display-name xml:lang="x-default">Api base-url</display-name>
+                <display-name xml:lang="x-default">Wirecard Server Address (URL)</display-name>
+                <description xml:lang="x-default">Wirecard Server Address (URL) (e.g. https://api.wirecard.com).</description>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
@@ -76,6 +121,7 @@
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayPayPalHttpUser">
                 <display-name xml:lang="x-default">Username</display-name>
+                <description xml:lang="x-default">Username as provided in your Wirecard contract.</description>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
@@ -83,7 +129,8 @@
                 <default-value>16390-testing</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayPayPalHttpPassword">
-                <display-name xml:lang="x-default">Http password</display-name>
+                <display-name xml:lang="x-default">Password</display-name>
+                <description xml:lang="x-default">Password as provided in your Wirecard contract.</description>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
@@ -91,24 +138,24 @@
                 <default-value>3!3013=D3fD8X7</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayPayPalInitialTransactionType">
-                <display-name xml:lang="x-default">Transaction type for place order</display-name>
-                <description xml:lang="x-default">Transaction type of request which is triggered when placing an order in the store frontend</description>
+                <display-name xml:lang="x-default">Payment Action</display-name>
+                <description xml:lang="x-default">Select between "Purchase" to capture/invoice your order automatically or "Authorization" to capture/invoice manually.</description>
                 <type>enum-of-string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <value-definitions>
                     <value-definition>
-                        <display xml:lang="x-default">authorization</display>
+                        <display xml:lang="x-default">Authorization</display>
                         <value>authorization</value>
                     </value-definition>
                     <value-definition default="true">
-                        <display xml:lang="x-default">debit</display>
+                        <display xml:lang="x-default">Purchase</display>
                         <value>debit</value>
                     </value-definition>
                 </value-definitions>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayPayPalSendAdditionalData">
-                <display-name xml:lang="x-default">Send additional request data</display-name>
+                <display-name xml:lang="x-default">Send Additional Information</display-name>
                 <description xml:lang="x-default">If "yes" additional data (fps) is added to request</description>
                 <type>boolean</type>
                 <mandatory-flag>false</mandatory-flag>
@@ -133,6 +180,42 @@
                 <description xml:lang="x-default">Name of the Certificate Alias.</description>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewaySEPACreditMerchantAccountID">
+                <display-name xml:lang="x-default">Merchant Account ID (MAID)</display-name>
+                <description xml:lang="x-default">Unique identifier assigned to your merchant account.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>59a01668-693b-49f0-8a1f-f3c1ba025d45</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewaySEPACreditBaseUrl">
+                <display-name xml:lang="x-default">Wirecard Server Address (URL)</display-name>
+                <description xml:lang="x-default">Wirecard Server Address (URL) (e.g. https://api.wirecard.com).</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>https://api-test.wirecard.com</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewaySEPACreditHttpUser">
+                <display-name xml:lang="x-default">Username</display-name>
+                <description xml:lang="x-default">Username as provided in your Wirecard contract.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>16390-testing</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewaySEPACreditHttpPassword">
+                <display-name xml:lang="x-default">Password</display-name>
+                <description xml:lang="x-default">Password as provided in your Wirecard contract.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>3!3013=D3fD8X7</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayCreditCardMerchantAccountID">
                 <display-name xml:lang="x-default">Merchant Account ID (MAID)</display-name>
@@ -273,6 +356,22 @@
                 <attribute attribute-id="paymentGatewayPayPalSendBasketData"/>
                 <attribute attribute-id="paymentGatewayPayPalInitialTransactionType"/>
             </attribute-group>
+            <attribute-group group-id="PAYMENTGATEWAY_SOFORT">
+                <display-name xml:lang="x-default">Payment gateway settings for Sofort.</display-name>
+                <attribute attribute-id="paymentGatewaySofortMerchantAccountID"/>
+                <attribute attribute-id="paymentGatewaySofortBaseUrl"/>
+                <attribute attribute-id="paymentGatewaySofortHttpUser"/>
+                <attribute attribute-id="paymentGatewaySofortHttpPassword"/>
+                <attribute attribute-id="paymentGatewaySofortSendAdditionalData"/>
+                <attribute attribute-id="paymentGatewaySofortSendBasketData"/>
+            </attribute-group>
+            <attribute-group group-id="PAYMENTGATEWAY_SEPACREDIT">
+                <display-name xml:lang="x-default">Payment gateway settings for SEPA credit transfer</display-name>
+                <attribute attribute-id="paymentGatewaySEPACreditMerchantAccountID"/>
+                <attribute attribute-id="paymentGatewaySEPACreditBaseUrl"/>
+                <attribute attribute-id="paymentGatewaySEPACreditHttpUser"/>
+                <attribute attribute-id="paymentGatewaySEPACreditHttpPassword"/>
+            </attribute-group>
             <attribute-group group-id="PAYMENTGATEWAY_CREDITCARD">
                 <display-name xml:lang="x-default">Payment gateway settings for Credit card</display-name>
                 <attribute attribute-id="paymentGatewayCreditCardMerchantAccountID"/>
@@ -300,19 +399,6 @@
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
-                <min-length>0</min-length>
-            </attribute-definition>
-        </custom-attribute-definitions>
-    </type-extension>
-
-    <type-extension type-id="OrderPaymentInstrument">
-        <custom-attribute-definitions>
-            <attribute-definition attribute-id="paymentGatewayData">
-                <display-name xml:lang="x-default">PaymentGateway Data</display-name>
-                <description xml:lang="x-default">Will hold payment related data</description>
-                <type>text</type>
-                <mandatory-flag>false</mandatory-flag>
-                <externally-managed-flag>true</externally-managed-flag>
                 <min-length>0</min-length>
             </attribute-definition>
         </custom-attribute-definitions>

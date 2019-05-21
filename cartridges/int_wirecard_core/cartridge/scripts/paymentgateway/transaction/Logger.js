@@ -9,12 +9,13 @@ var pgLogger = require('dw/system/Logger').getLogger('paymentgateway', 'paymentg
  */
 function maskText(value) {
     var result = value.trim();
-    var keepChars = 3; // can become variable at a later stage
+    var keepChars = Math.min(Math.floor(result.length / 2), 10);
     var regExp = new RegExp("^.*(?=.{" + keepChars + "}$)"); // eslint-disable-line
     var match = result.match(regExp);
     if (match.length === 1) {
-        result = value.substr(0, match[0].length);
-        for (var i = 0; i < (match[0].length - keepChars); i++) {
+        var remainder = result.length - match[0].length;
+        result = result.substr(0, match[0].length);
+        for (var i = 0; i < remainder; i++) {
             result += '*';
         }
     }
@@ -27,7 +28,10 @@ function maskText(value) {
  *     - bic (form field name): callback function
  */
 var fields = {
-    bic: maskText
+    'account-number': maskText,
+    'bank-code': maskText,
+    bic: maskText,
+    iban: maskText
 };
 var fieldKeys = Object.keys(fields);
 

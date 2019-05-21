@@ -7,7 +7,6 @@
 
     /**
      * Create api request json & call service
-     *
      * @param {dw.order.Order} order - current order
      * @param {Object} data - holds { transactionId: ..., action: ..., amount: ..., merchantAccountId: ... }
      * @returns {Object}
@@ -18,17 +17,22 @@
 
         var paymentData = orderHelper.getPaymentGatewayOrderPayment(order);
         var methodName = paymentData.paymentMethodID;
+        var mappedTransactionData = transactionHelper.mapTransactionType(methodName, data.action);
+        var merchantAccountId = data.merchantAccountId;
+        if (Object.prototype.hasOwnProperty.call(mappedTransactionData, 'merchantAccountId')) {
+            merchantAccountId = mappedTransactionData.merchantAccountId;
+        }
         var transaction = transactionHelper.getTransaction(
-            methodName,
+            mappedTransactionData.methodName,
             order,
             {
                 'transaction-type'     : data.action,
                 'parent-transaction-id': data.transactionId,
                 'requested-amount'     : data.amount,
-                'merchant-account-id'  : data.merchantAccountId
+                'merchant-account-id'  : merchantAccountId
             }
         );
-        var paymentService = transactionHelper.getPaymentService(methodName, 'payments');
+        var paymentService = transactionHelper.getPaymentService(methodName, mappedTransactionData.type);
 
         var result;
         var errorMsg;

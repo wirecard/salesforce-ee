@@ -32,36 +32,6 @@ function validateCreditCard(form) {
 }
 
 /**
- * Validate transaction data for PG_CREDITCARD and save transaction data
- * @param {Object} req - The local instance of the request object
- * @param {dw.order.Basket} currentBasket - The current basket
- * @returns {Object} an object that has error information
- */
-function validatePayment(req, currentBasket) {
-    var result = base.validatePayment(req, currentBasket);
-    var formData = req.form;
-    if (!result.error
-        && Object.prototype.hasOwnProperty.call(formData, 'paymentMethodId')
-        && Object.prototype.hasOwnProperty.call(formData, 'transactionData')
-    ) {
-        var paymentInstruments = currentBasket.getPaymentInstruments(formData.paymentMethodId);
-        if (paymentInstruments.length === 1) {
-            var paymentInstrument = paymentInstruments[0];
-            var transactionData = JSON.parse(formData.transactionData);
-            if (!Object.prototype.hasOwnProperty.call(transactionData, 'transaction_id')) {
-                result.error = true;
-            } else {
-                // save transaction data with instrument
-                require('dw/system/Transaction').wrap(function () {
-                    paymentInstrument.custom.paymentGatewayData = formData.transactionData;
-                });
-            }
-        }
-    }
-    return result;
-}
-
-/**
  * Attempts to create an order from the current basket / with reserved orderNo for PG_CREDITCARD
  * @param {dw.order.Basket} currentBasket - The current basket
  * @returns {dw.order.Order} The order object created from the current basket
@@ -166,7 +136,7 @@ module.exports = {
     validateFields: base.validateFields,
     validateShippingForm: base.validateShippingForm,
     validateBillingForm: base.validateBillingForm,
-    validatePayment: validatePayment,
+    validatePayment: base.validatePayment,
     validateCreditCard: validateCreditCard,
     calculatePaymentTransaction: base.calculatePaymentTransaction,
     recalculateBasket: base.recalculateBasket,

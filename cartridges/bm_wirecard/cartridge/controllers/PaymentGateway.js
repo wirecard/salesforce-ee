@@ -158,7 +158,8 @@ exports.HttpAccessOverview = guard.ensure(['get', 'https'], function () {
 
     [
         { methodName: 'Credit Card', methodID: 'PG_CREDITCARD' },
-        { methodName: 'PayPal', methodID: 'PG_PAYPAL' }
+        { methodName: 'PayPal', methodID: 'PG_PAYPAL' },
+        { methodName: 'Sofort.', methodID: 'PG_SOFORT' }
     ].forEach(function (p) {
         preferences = preferenceHelper.getPreferenceForMethodID(p.methodID);
         if (Object.prototype.hasOwnProperty.call(preferences, 'userName')) {
