@@ -273,10 +273,12 @@ var TransactionHelper = {
                     order.custom.paymentGatewayRefundedAmount = result.value;
                 });
             }
-            Transaction.wrap(function () {
-                order.custom.paymentGatewayOrderState = require('~/cartridge/scripts/paymentgateway/helper/OrderHelper')
-                    .getPaymentGatewayOrderStateFromTransactionType(order, transaction);
-            });
+            if (transaction.transactionType != 'check-payer-response') {
+                var orderState = require('~/cartridge/scripts/paymentgateway/helper/OrderHelper').getPaymentGatewayOrderStateFromTransactionType(order, transaction);
+                Transaction.wrap(function () {
+                    order.custom.paymentGatewayOrderState = orderState;
+                });
+            }
         }
         // finally save transaction with order
         this.saveTransactionToOrder(order, transaction, overwrite);
