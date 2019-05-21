@@ -16,15 +16,7 @@ import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import org.openqa.selenium.WebDriver as WebDriver
 import org.openqa.selenium.By as By
 
-WebDriver driver = DriverFactory.getWebDriver()
+WebUI.waitForElementClickable(findTestObject('sfra/homepage/button_Yes'), 5)
 
-consentButton = driver.findElements(By.className('affirm')).size()
-
-if (consentButton > 0) {
-    WebUI.click(findTestObject('sfra/homepage/button_Yes'))
-}
-
-WebUI.verifyElementPresent(findTestObject('sfra/homepage/Searchbox'), 1)
-
-WebUI.verifyElementPresent(findTestObject('sfra/homepage/Search'), 1)
+WebUI.click(findTestObject('sfra/homepage/button_Yes'))
 

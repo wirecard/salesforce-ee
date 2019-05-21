@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//form[@name='confirm']//div[@id='button']/input[@type='submit']</value>
+         <value>//div[@id='button']/input[@id='confirmButtonTop']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,6 +17,6 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//form[@name='confirm']//div[@id='button']/input[@type='submit']</value>
+      <value>//div[@id='button']/input[@id='confirmButtonTop']</value>
    </webElementProperties>
 </WebElementEntity>

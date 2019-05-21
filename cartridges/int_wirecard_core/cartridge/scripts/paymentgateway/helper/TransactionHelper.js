@@ -246,6 +246,10 @@ var TransactionHelper = {
                     order.custom.paymentGatewayRefundedAmount = parseFloat(alreadyRefunded) + parseFloat(transaction.requestedAmount.value);
                 });
             }
+            Transaction.wrap(function () {
+                order.custom.paymentGatewayOrderState = require('~/cartridge/scripts/paymentgateway/helper/OrderHelper')
+                    .getPaymentGatewayOrderStateFromTransactionType(order, transaction);
+            });
         }
         // finally save transaction with order
         this.saveTransactionToOrder(order, transaction, overwrite);
@@ -317,8 +321,30 @@ var TransactionHelper = {
      * @returns {Object} - status with {code: ..., description: ... }
      */
     parseTransactionResponse: function (apiResponse, paymentMethodID) {
-        var result = {};
-        var resultObject = JSON.parse(apiResponse);
+        var result       = {};
+        var resultObject = {};
+
+        try {
+            if (require('dw/system/Site').getCurrent().getCustomPreferenceValue('paymentGatewaySignResponses')) {
+                const apiResponseWrapper = this.getJsonSignedResponseWrapper(apiResponse);
+
+                if (!apiResponseWrapper.isValid()) {
+                    throw 'Invalid api response';
+                }
+                if (!apiResponseWrapper.validateSignature() && !apiResponseWrapper.validateFallbackHash()) {
+                    throw 'Failed Signature validation';
+                }
+
+                resultObject = apiResponseWrapper.getJsonResponse();
+
+                if ('error' in resultObject) {
+                    throw resultObject['error'];
+                }
+            } else {
+                resultObject = JSON.parse(apiResponse);
+            }
+        } catch (e) {}
+
         var stringHelper = require('*/cartridge/scripts/paymentgateway/util/StringHelper');
         var tmp;
 
@@ -375,6 +401,82 @@ var TransactionHelper = {
             }
         });
         return result;
+    },
+
+    /**
+     *
+     * @todo maybe its better in a own file
+     *
+     * @param {string} apiResponse
+     * @returns {{validateSignature: (function(): boolean), getJsonResponse: (function(): object), jsonResponse: {payment: {}}, isValid: (function(): boolean), algorithmMapper: {"rsa-sha256": string}, validateFallbackHash: (function(): boolean)}}
+     */
+    getJsonSignedResponseWrapper: function(apiResponse) {
+        let responseObject = {
+            jsonResponse: { payment: {} },
+            algorithmMapper: {
+                'rsa-sha256': 'SHA256withRSA'
+            },
+            validateSignature: function() {
+                if (!this.isValid()) {
+                    return false;
+                }
+                const SignatureAlgorithm = this.algorithmMapper[this['response-signature-algorithm']];
+                const Signature          = new (require('dw/crypto/Signature'))();
+
+                if (!Signature.isDigestAlgorithmSupported(SignatureAlgorithm)) {
+                    return false;
+                }
+                const CertificateRef = require('dw/crypto/CertificateRef');
+                const Site           = require('dw/system/Site').getCurrent();
+                const Certificate    = new CertificateRef(Site.getCustomPreferenceValue('paymentGatewayCertAlias'));
+
+                return Signature.verifySignature(
+                    this['response-signature-base64'],
+                    this['responsebase64'],
+                    Certificate,
+                    SignatureAlgorithm
+                );
+            },
+            validateFallbackHash: function() {
+                const jsonResponse = this.getJsonResponse();
+
+                if (!'custom-fields' in jsonResponse.payment) {
+                    return false;
+                }
+                const Site = require('dw/system/Site').getCurrent();
+
+                //@fixme use a constant for paymentGatewayUrlSalt
+                const customField = jsonResponse.payment['custom-fields'].filter(function(customField) {
+                    return 'paymentGatewayUrlSalt' in customField['custom-field'];
+                }).shift();
+
+                return Site.getCustomPreferenceValue('paymentGatewayUrlSalt')
+                    === customField['custom-field']['paymentGatewayUrlSalt'];
+            },
+            getJsonResponse: function() {
+                if (!this.isValid() || this.jsonResponse.payment.length || 'error' in this.jsonResponse) {
+                    return this.jsonResponse;
+                }
+                try {
+                    this.jsonResponse = JSON.parse(require('dw/util/StringUtils').decodeBase64(this['responsebase64']));
+                } catch (jsonParseSyntaxError) {
+                    this.jsonResponse['error'] = jsonParseSyntaxError;
+                }
+                return this.jsonResponse;
+            },
+            isValid: function() {
+                return 'response-signature-base64' in this
+                    && 'response-signature-algorithm' in this
+                    && 'responsebase64' in this
+            }
+        };
+
+        apiResponse.split('&').forEach(function(keyValueString) {
+            let [key, value] = keyValueString.split('=', 1);
+            this[key] = value;
+        }, responseObject);
+
+        return responseObject;
     }
 };
 
