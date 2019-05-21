@@ -109,13 +109,12 @@ function getIs3DSecure(amount) {
     var conversionRates = getSitePreference('conversionRates') || [];
 
     var Money = require('dw/value/Money');
-    var Site = require('dw/system/Site').current;
     var min3d = new Money(config3dMin, Site.defaultCurrency);
     var rate;
     if (conversionRates.length > 1) {
         var currencyRegex = new RegExp('^' + amount.currencyCode);
         for (var i = 0; i < conversionRates.length; i += 1) {
-            var rateItem = conversionRates[i].replace(/^[\s]+|[\"]|[\s]+$/g,"");
+            var rateItem = conversionRates[i].replace(/^[\s]+|[\"]|[\s]+$/g, ''); // eslint-disable-line
             if (rateItem.match(currencyRegex) && /:{1}/.test(rateItem)) {
                 rate = Number(rateItem.split(':')[1]);
                 min3d = new Money(min3d.multiply(rate).value, amount.currencyCode);

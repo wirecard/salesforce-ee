@@ -56,7 +56,7 @@ function submitSeamlessForm(saveTransactionUrl, cbSuccess, cbError) {
                     ) {
                         cbSuccess.call(this, data);
                     } else {
-                        handleError({ 'status_description_1': 'General error.' }, cbError);
+                        handleError({ status_description_1: 'General error.' }, cbError);
                     }
                 }
             });

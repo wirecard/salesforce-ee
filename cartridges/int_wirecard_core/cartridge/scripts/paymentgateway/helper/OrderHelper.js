@@ -41,7 +41,6 @@ exports.getOrderFingerprint = function (order) {
 
     /* customer data */
     hashParams.push(order.customerEmail);
-    hashParams.push(order.remoteHost);
     var billingAddress = order.getBillingAddress();
     hashParams.push(billingAddress.getLastName());
     hashParams.push(billingAddress.getFirstName());

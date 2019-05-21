@@ -2,7 +2,6 @@
 
 /* API Includes */
 var Transaction = require('dw/system/Transaction');
-var pgLogger = require('dw/system/Logger').getLogger('paymentgateway');
 
 var collections = require('*/cartridge/scripts/util/collections');
 

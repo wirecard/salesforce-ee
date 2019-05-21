@@ -57,6 +57,40 @@ server.get(
 );
 
 /**
+ * Re-entry point after 3DS authentication
+ */
+server.use(
+    'TermUrl',
+    server.middleware.https,
+    function (req, res, next) {
+        var parameterMap = req.querystring;
+        var orderNo = parameterMap.orderNo;
+
+        var OrderMgr = require('dw/order/OrderMgr');
+        var URLUtils = require('dw/web/URLUtils');
+        var order = OrderMgr.getOrder(orderNo);
+
+        var result;
+        // TODO verify request integrity (signed-json / xmlsig)
+        if (order) {
+            result = {
+                error: false,
+                orderID: order.orderNo,
+                orderToken: order.orderToken,
+                continueUrl: URLUtils.url('Order-Confirm').toString()
+            };
+        } else {
+            result = {
+                error: true,
+                errorMessage: '3d-Secure authentication failed!'
+            };
+        }
+        res.render('paymentgateway/json', { json: result });
+        next();
+    }
+);
+
+/**
  * Save transaction data after seamless form was submitted
  */
 server.post(
@@ -131,7 +165,7 @@ server.post(
         } catch (err) {
             var pgLogger = require('dw/system/Logger').getLogger('paymentgateway');
             pgLogger.error('Error while restoring basket: \n'
-               + err.fileName + ': ' + err.message + '\n' + err.stack)
+               + err.fileName + ': ' + err.message + '\n' + err.stack);
         }
         res.render('paymentgateway/empty');
         next();
@@ -147,7 +181,6 @@ server.post(
     function (req, res, next) {
         var parameterMap = req.querystring;
         var orderNo = parameterMap.orderNo;
-        var orderToken = parameterMap.orderSec;
 
         var OrderMgr = require('dw/order/OrderMgr');
         var Transaction = require('dw/system/Transaction');
@@ -159,33 +192,23 @@ server.post(
             var notifyData = transactionHelper.parseTransactionResponse(req.body, null);
             require('*/cartridge/scripts/paymentgateway/transaction/Logger').log(JSON.parse(req.body), 'notify');
 
-            // check fingerprint
-            var fp;
-            var orderHelper = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper');
-            if (Object.prototype.hasOwnProperty.call(notifyData, 'customFields')
-                && Object.prototype.hasOwnProperty.call(notifyData.customFields, 'fp')
-            ) {
-                fp = notifyData.customFields.fp;
-            }
             // TODO authenticate request
-            if (true || fp === orderHelper.getOrderFingerprint(order)) {
-                var CustomObjectMgr = require('dw/object/CustomObjectMgr');
-                Transaction.begin();
-                // save notification as custom object
-                var customObj = CustomObjectMgr.getCustomObject('PaymentGatewayNotification', notifyData.transactionId);
-                if (!customObj) {
-                    customObj = CustomObjectMgr.createCustomObject('PaymentGatewayNotification', notifyData.transactionId);
-                }
-                customObj.custom.responseText = req.body;
-                customObj.custom.transactionData = JSON.stringify(notifyData);
-                customObj.custom.transactionType = notifyData.transactionType;
-                customObj.custom.requestedAmount = notifyData.requestedAmount.value;
-                customObj.custom.merchantAccountId = notifyData.merchantAccountId;
-                customObj.custom.transactionState = notifyData.transactionState;
-                customObj.custom.parentTransactionId = notifyData.parentTransactionId;
-                customObj.custom.orderNo = order.orderNo;
-                Transaction.commit();
+            var CustomObjectMgr = require('dw/object/CustomObjectMgr');
+            // save notification as custom object
+            var customObj = CustomObjectMgr.getCustomObject('PaymentGatewayNotification', notifyData.transactionId);
+            Transaction.begin();
+            if (!customObj) {
+                customObj = CustomObjectMgr.createCustomObject('PaymentGatewayNotification', notifyData.transactionId);
             }
+            customObj.custom.responseText = req.body;
+            customObj.custom.transactionData = JSON.stringify(notifyData);
+            customObj.custom.transactionType = notifyData.transactionType;
+            customObj.custom.requestedAmount = notifyData.requestedAmount.value;
+            customObj.custom.merchantAccountId = notifyData.merchantAccountId;
+            customObj.custom.transactionState = notifyData.transactionState;
+            customObj.custom.parentTransactionId = notifyData.parentTransactionId;
+            customObj.custom.orderNo = order.orderNo;
+            Transaction.commit();
         }
 
         res.render('paymentgateway/empty');
