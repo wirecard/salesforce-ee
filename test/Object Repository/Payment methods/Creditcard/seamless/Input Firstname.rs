@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>Shipping phone</name>
+   <name>Input Firstname</name>
    <tag></tag>
-   <elementGuidId>0f3f9c39-09e4-4ccb-bc73-51a0d1a7f87f</elementGuidId>
+   <elementGuidId>9f7a66f5-7642-405e-bdff-10b15ae4a1f9</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//form[@class='shipping-form']//input[contains(@id,'shippingPhone')]</value>
+         <value>//form[@id='seamless-form']//input[@id='first_name']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,6 +17,6 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//form[@class='shipping-form']//input[contains(@id,'shippingPhone')]</value>
+      <value>//form[@id='seamless-form']//input[@id='first_name']</value>
    </webElementProperties>
 </WebElementEntity>

@@ -12,6 +12,7 @@ Type.All = {
     CANCEL: 'cancel',
     CAPTURE_AUTHORIZATION: 'capture-authorization',
     CHECK_ENROLLMENT: 'check-enrollment',
+    CHECK_PAYER_RESPONSE: 'check-payer-response',
     CREDIT: 'credit',
     DEBIT: 'debit',
     PENDING_CREDIT: 'pending-credit',

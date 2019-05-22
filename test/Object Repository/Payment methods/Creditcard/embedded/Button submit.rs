@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>Shipping phone</name>
+   <name>Button submit</name>
    <tag></tag>
-   <elementGuidId>0f3f9c39-09e4-4ccb-bc73-51a0d1a7f87f</elementGuidId>
+   <elementGuidId>4633047d-290f-4fa9-b7dd-3e654a329a2a</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//form[@class='shipping-form']//input[contains(@id,'shippingPhone')]</value>
+         <value>//div[@id='hpp-form-buttons']//span[@id='hpp-form-submit']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,6 +17,6 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//form[@class='shipping-form']//input[contains(@id,'shippingPhone')]</value>
+      <value>//div[@id='hpp-form-buttons']//span[@id='hpp-form-submit']</value>
    </webElementProperties>
 </WebElementEntity>

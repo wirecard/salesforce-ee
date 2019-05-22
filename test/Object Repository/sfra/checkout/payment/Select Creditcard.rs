@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>Shipping phone</name>
+   <name>Select Creditcard</name>
    <tag></tag>
-   <elementGuidId>0f3f9c39-09e4-4ccb-bc73-51a0d1a7f87f</elementGuidId>
+   <elementGuidId>5ba8cee3-2745-4b1f-ab39-528ce40ed398</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//form[@class='shipping-form']//input[contains(@id,'shippingPhone')]</value>
+         <value>//ul[contains(@class, 'payment-options')]/li/a[contains(@class, 'PG_CREDITCARD-tab')]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,6 +17,6 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//form[@class='shipping-form']//input[contains(@id,'shippingPhone')]</value>
+      <value>//ul[contains(@class, 'payment-options')]/li/a[contains(@class, 'PG_CREDITCARD-tab')]</value>
    </webElementProperties>
 </WebElementEntity>

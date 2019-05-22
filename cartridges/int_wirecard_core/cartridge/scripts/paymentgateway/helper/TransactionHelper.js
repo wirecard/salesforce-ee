@@ -273,7 +273,7 @@ var TransactionHelper = {
                     order.custom.paymentGatewayRefundedAmount = result.value;
                 });
             }
-            if (transaction.transactionType != 'check-payer-response') {
+            if (transaction.transactionType != Type.All.CHECK_PAYER_RESPONSE) {
                 var orderState = require('~/cartridge/scripts/paymentgateway/helper/OrderHelper').getPaymentGatewayOrderStateFromTransactionType(order, transaction);
                 Transaction.wrap(function () {
                     order.custom.paymentGatewayOrderState = orderState;

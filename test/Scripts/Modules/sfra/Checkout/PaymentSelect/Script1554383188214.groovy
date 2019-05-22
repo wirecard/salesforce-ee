@@ -22,8 +22,10 @@ switch (paymentMethodId) {
         WebUI.callTestCase(findTestCase('Modules/sfra/PaymentMethods/Sofort'), [:], FailureHandling.STOP_ON_FAILURE)
 
         break
-    case 'PG_CREDIT':
+    case 'PG_CREDITCARD':
         WebUI.callTestCase(findTestCase('Modules/sfra/PaymentMethods/CreditCard'), [:], FailureHandling.STOP_ON_FAILURE)
+		
+		WebUI.callTestCase(findTestCase('Modules/Payment methods/CreditCard seamless/Creditcard'), [:], FailureHandling.STOP_ON_FAILURE)
 
         break
     default:

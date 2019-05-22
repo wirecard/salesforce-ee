@@ -13,7 +13,9 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
-WebUI.waitForElementPresent(findTestObject('Payment methods/PayPal/Username'), 20)
+WebUI.delay(10)
+
+WebUI.waitForElementVisible(findTestObject('Payment methods/PayPal/Username'), 10)
 
 WebUI.setText(findTestObject('Payment methods/PayPal/Username'), username)
 
@@ -21,7 +23,7 @@ WebUI.setText(findTestObject('Payment methods/PayPal/Password'), password)
 
 WebUI.click(findTestObject('Payment methods/PayPal/Login'))
 
-WebUI.delay(20)
+WebUI.delay(10)
 
 WebUI.waitForElementClickable(findTestObject('Payment methods/PayPal/Pay button'), 10)
 

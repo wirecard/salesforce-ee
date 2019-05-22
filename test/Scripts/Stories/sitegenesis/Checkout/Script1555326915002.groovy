@@ -15,8 +15,6 @@ import internal.GlobalVariable as GlobalVariable
 
 WebUI.callTestCase(findTestCase('Modules/sitegenesis/Open browser'), [('relativeURLHomepage') : relativeURLHomepage], FailureHandling.STOP_ON_FAILURE)
 
-WebUI.callTestCase(findTestCase('Modules/sitegenesis/Accept consent tracking'), [:], FailureHandling.STOP_ON_FAILURE)
-
 WebUI.callTestCase(findTestCase('Modules/sitegenesis/Products/AddToCart-Product1'), [('productId') : findTestData('product_testdata').getValue(
             1, 1), ('quantity') : findTestData('product_testdata').getValue(2, 1), ('color') : findTestData('product_testdata').getValue(
             3, 1)], FailureHandling.STOP_ON_FAILURE)
