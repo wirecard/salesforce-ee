@@ -9,12 +9,8 @@
     <isinclude template="inc/Modules">
     <isinclude template="paymentgateway/bm/modules">
 
-    <isset
-            name="TOP_URL"
-            value="${URLUtils.url('SiteNavigationBar-ShowMenuitemOverview', 'CurrentMenuItemId', pdict.CurrentMenuItemId)}"
-            scope="PAGE"
-    >
-    <is name1="${pdict.mainmenuname}" url1="${TOP_URL}" name2="PaymentGateway">
+    <isset name="url1" value="${URLUtils.url('SiteNavigationBar-ShowMenuitemOverview', 'CurrentMenuItemId', 'PaymentGateway')}" scope="page"/>
+    <isbreadcrumb name1="PaymentGateway" url1="${ url1 }" name2="Transaction overview">
     <link rel="stylesheet" type="text/css" href="${ URLUtils.staticURL('/css/milligram.min.css') }"/>
     <h1>${Resource.msg('heading_title_transactions', 'paymentgateway', null)}</h1>
 
@@ -59,7 +55,7 @@
                             </td>
                         </isif>
                         <td class="infobox transaction-link">
-                            <a href="${ URLUtils.https('PaymentGateway-TransactionDetail', 'orderNo', order.orderNo, 'transactionId', transaction.transactionId) }"><isprint value="${ transaction.transactionId }"/></a>
+                            <a href="${ URLUtils.https('PaymentGateway-TransactionDetail', 'orderNo', order.orderNo, 'transactionId', transaction.transactionId, 'transactionType', transaction.transactionType) }"><isprint value="${ transaction.transactionId }"/></a>
                         </td>
                         <td class="infobox">
                             <isprint value="${ transaction.parentTransactionId }"/>

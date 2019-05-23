@@ -124,10 +124,14 @@ exports.RequestData = guard.ensure(['get', 'https'], function () {
         if (/^\w{2}_\w{2}$/.test(request.locale)) {
             locale = request.locale.substr(0, 2);
         }
+        var orderHelper = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper');
         var params = {
             locale          : locale,
             remoteHost      : request.httpRemoteAddress,
-            appendSuccessUrl: true
+            appendSuccessUrl: true,
+            customFields: [
+                { name: 'fp', value: orderHelper.getOrderFingerprint(order) }
+            ]
         };
 
         var transaction = new (require('*/cartridge/scripts/paymentgateway/transaction/PG_CREDITCARD_REQUESTDATA'))(order, params);
@@ -233,8 +237,8 @@ exports.Notify = guard.ensure(['post', 'https'], function () {
             fingerprint = notifyData.customFields.fp;
         }
 
-        // TODO verify signature (xmlsig)
-        if (true || fingerprint === orderHelper.getOrderFingerprint(order)) {
+        // FIXME verify signature (xmlsig)
+        if (fingerprint === orderHelper.getOrderFingerprint(order)) {
             var CustomObjectMgr = require('dw/object/CustomObjectMgr');
             Transaction.begin();
             // save notification as custom object

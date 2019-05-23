@@ -109,6 +109,7 @@ function handlePayments(order, orderNumber) {
                         break;
                     } else if (authorizationResult.saveTransactionURL) {
                         result.saveTransactionURL = authorizationResult.saveTransactionURL;
+                        result.restoreBasketURL = authorizationResult.restoreBasketURL;
                     } else if (authorizationResult.redirectURL) {
                         // redirect to wpg
                         result.redirectURL = authorizationResult.redirectURL;

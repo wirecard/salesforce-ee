@@ -24,11 +24,17 @@ exports.getPaymentGatewayOrderPayment = function (order) {
  * @param {dw.order.Order}
  * @returns {string}
  */
-exports.getOrderFingerprint = function (order) {
+exports.getOrderFingerprint = function (order, orderNo) {
     var Mac = require('dw/crypto/Mac');
     var Site = require('dw/system/Site').getCurrent();
     var secret = Site.getCustomPreferenceValue('paymentGatewayUrlSalt');
-    var hashParams = [order.orderNo];
+    var hashParams = [];
+
+    if (orderNo) {
+        hashParams.push(orderNo);
+    } else {
+        hashParams.push(order.orderNo);
+    }
 
     /* product line item data */
     var plis = order.getAllProductLineItems();
@@ -40,7 +46,6 @@ exports.getOrderFingerprint = function (order) {
     }
 
     /* customer data */
-    hashParams.push(order.customerEmail);
     var billingAddress = order.getBillingAddress();
     hashParams.push(billingAddress.getLastName());
     hashParams.push(billingAddress.getFirstName());

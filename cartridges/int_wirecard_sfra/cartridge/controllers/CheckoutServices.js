@@ -397,7 +397,8 @@ server.replace(
             return next();
         } else if (Object.prototype.hasOwnProperty.call(handlePaymentResult, 'saveTransactionURL')) { // eslint-disable-line
             res.json({
-                pgTransactionURL: handlePaymentResult.saveTransactionURL
+                pgTransactionURL: handlePaymentResult.saveTransactionURL,
+                pgRestoreBasketURL: handlePaymentResult.restoreBasketURL
             });
             return next();
         } else if (Object.prototype.hasOwnProperty.call(handlePaymentResult, 'redirectURL')) { // eslint-disable-line

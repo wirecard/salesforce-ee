@@ -59,6 +59,7 @@ exports.TransactionDetail = guard.ensure(['get', 'https'], function () {
     var parameterMap = request.httpParameterMap;
     var orderNo = parameterMap.orderNo.value;
     var transactionId = parameterMap.transactionId.value;
+    var transactionType = parameterMap.transactionType.value;
 
     var OrderMgr = require('dw/order/OrderMgr');
     var order = OrderMgr.getOrder(orderNo);
@@ -76,7 +77,7 @@ exports.TransactionDetail = guard.ensure(['get', 'https'], function () {
                 displayMsg = msg.message;
             }
 
-            var transactionData = transactionHelper.getPaymentGatewayTransactionData(order, transactionId);
+            var transactionData = transactionHelper.getPaymentGatewayTransactionData(order, transactionId, transactionType);
             app.getView({
                 isSuccess  : Object.prototype.hasOwnProperty.call(msg, 'success'),
                 Message    : displayMsg,

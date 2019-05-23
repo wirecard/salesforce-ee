@@ -52,6 +52,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor) { // eslint
             paymentInstrument.paymentTransaction.setPaymentProcessor(paymentProcessor);
         });
         result.saveTransactionURL = URLUtils.https('PaymentGatewayCredit-SaveTransaction', 'orderNo', orderNumber).toString();
+        result.restoreBasketURL = URLUtils.https('PaymentGatewayCredit-RestoreBasket', 'orderNo', orderNumber).toString();
     } catch (err) {
         result = { error: true, errorMessage: err.message };
     }

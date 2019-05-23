@@ -325,7 +325,7 @@ var scrollAnimate = require('base/components/scrollAnimate');
                                     defer.reject(data);
                                 }
                             } else if (data.pgTransactionURL) {
-                                paymentgateway.submitSeamlessForm(data.pgTransactionURL, function(data) {
+                                paymentgateway.submitSeamlessForm(data.pgTransactionURL, data.pgRestoreBasketURL,function(data) {
                                     var continueUrl = data.continueUrl;
                                     var urlParams = {
                                         ID: data.orderID,

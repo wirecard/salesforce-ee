@@ -8,8 +8,7 @@ exports.getConfig = function () {
     var URLUtils = require('dw/web/URLUtils');
 
     var config = {
-        getRequestDataUrl: URLUtils.https('PaymentGatewayCredit-RequestData').toString(),
-        restoreBasketUrl: URLUtils.https('PaymentGatewayCredit-RestoreBasket').toString()
+        getRequestDataUrl: URLUtils.https('PaymentGatewayCredit-RequestData').toString()
     };
 
     return JSON.stringify(config);

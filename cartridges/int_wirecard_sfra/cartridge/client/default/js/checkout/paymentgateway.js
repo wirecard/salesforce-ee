@@ -42,7 +42,7 @@ function getCreditCardRequestData() {
  * @param {Object} cbSuccess - success callback function
  * @param {Object} cbError - error callback function
  */
-function submitSeamlessForm(saveTransactionUrl, cbSuccess, cbError) {
+function submitSeamlessForm(saveTransactionUrl, restoreBasketUrl, cbSuccess, cbError) {
     WirecardPaymentPage.seamlessSubmitForm({
         onSuccess: function (msg) {
             $.ajax({
@@ -63,12 +63,15 @@ function submitSeamlessForm(saveTransactionUrl, cbSuccess, cbError) {
         },
         onError: function (err) {
             $.ajax({
-                url: paymentGatewayConfig.restoreBasketUrl,
+                url: restoreBasketUrl,
                 method: 'post',
                 data: { transactionData: JSON.stringify(err) },
-                complete: function () {
+                complete: function (response) {
+                    var data = JSON.parse(response.responseText);
                     handleError(err, cbError);
-                    getCreditCardRequestData();
+                    if (!(Object.prototype.hasOwnProperty.call(data, 'success'))) {
+                        window.location.href = data.redirectUrl;
+                    }
                 }
             });
         }

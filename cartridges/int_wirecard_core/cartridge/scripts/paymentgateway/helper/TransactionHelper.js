@@ -52,9 +52,10 @@ var TransactionHelper = {
      * Retrieve data for a single transaction
      * @param {dw.order.Order} - related order
      * @param {string} transactionId - as provided by payment gateway
+     * @param {string} transactionType - as provided by payment gateway
      * @returns {Object}
      */
-    getPaymentGatewayTransactionData: function (order, transactionId) {
+    getPaymentGatewayTransactionData: function (order, transactionId, transactionType) {
         var StringUtils = require('dw/util/StringUtils');
 
         var transactionData;
@@ -65,7 +66,7 @@ var TransactionHelper = {
 
         while (allTransactionsIterator.hasNext()) {
             var tmpTransaction = allTransactionsIterator.next();
-            if (tmpTransaction.transactionId == transactionId) {
+            if (tmpTransaction.transactionId == transactionId && tmpTransaction.transactionType == transactionType) {
                 transactionData = tmpTransaction;
             } else if (tmpTransaction.parentTransactionId == transactionId
                 && Type.Cancel.indexOf(tmpTransaction.transactionType) > -1
@@ -212,7 +213,9 @@ var TransactionHelper = {
         for (var i = 0; i < savedTransactions.length; i++) {
             var transaction = JSON.parse(savedTransactions[i]);
 
-            if (transaction.transactionId == newTransaction.transactionId) {
+            if ((transaction.transactionId == newTransaction.transactionId)
+                && (transaction.transactionType == newTransaction.transactionType)
+            ) {
                 if (overwrite) {
                     // replace backend transaction with notification response
                     allPaymentTransactions.push(JSON.stringify(newTransaction));

@@ -6,12 +6,8 @@
     <isinclude template="inc/Modules">
     <isinclude template="paymentgateway/bm/modules">
 
-    <isset
-        name="TOP_URL"
-        value="${URLUtils.url('SiteNavigationBar-ShowMenuitemOverview', 'CurrentMenuItemId', pdict.CurrentMenuItemId)}"
-        scope="PAGE"
-    >
-    <is name1="${pdict.mainmenuname}" url1="${TOP_URL}" name2="PaymentGateway">
+    <isset name="url1" value="${URLUtils.url('SiteNavigationBar-ShowMenuitemOverview', 'CurrentMenuItemId', 'PaymentGateway')}" scope="page"/>
+    <isbreadcrumb name1="PaymentGateway" url1="${ url1 }" name2="${Resource.msg('configuration.testHttpCredentials', 'paymentgateway', null)}">
     <script type="text/javascript">
     //<![CDATA[
     function checkCredentials(btn, paymentMethodId) {
