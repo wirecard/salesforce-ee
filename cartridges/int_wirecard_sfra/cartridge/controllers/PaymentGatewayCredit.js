@@ -142,14 +142,11 @@ server.post(
     function (req, res, next) {
         var parameterMap = req.querystring;
         var orderNo = parameterMap.orderNo;
-        var formData = req.form;
 
         var result = {
             redirectUrl: URLUtils.url('Cart-Show').toString()
         };
         try {
-            var transactionData = JSON.parse(formData.transactionData);
-
             var OrderMgr = require('dw/order/OrderMgr');
             var order = OrderMgr.getOrder(orderNo);
             if (order) {

@@ -85,7 +85,7 @@ exports.TransactionDetail = guard.ensure(['get', 'https'], function () {
                 Transaction: transactionData
             }).render('paymentgateway/transactions/details');
         } catch (err) {
-            Logger.error('Error while rendering transaction details ' + '\n' + err.fileName + ': ' + err.message + '\n' + err.stack);
+            Logger.error('Error while rendering transaction details \n' + err.fileName + ': ' + err.message + '\n' + err.stack);
             response.redirect(URLUtils.https('PaymentGateway-Transactions'));
         }
     }
