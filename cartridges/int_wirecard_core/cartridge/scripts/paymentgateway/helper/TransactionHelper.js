@@ -201,8 +201,12 @@ var TransactionHelper = {
      * @param {dw.order.Order} order - related order
      * @param {Object} newTransaction - transaction data
      * @param {boolean} overwrite - if true replaces preceding initial transaction
+     * @returns {void}
      */
     saveTransactionToOrder: function (order, newTransaction, overwrite) {
+        if (newTransaction.transactionType === Type.All.CHECK_PAYER_RESPONSE) {
+            return;
+        }
         var ArrayList = require('dw/util/ArrayList');
         var Transaction = require('dw/system/Transaction');
 

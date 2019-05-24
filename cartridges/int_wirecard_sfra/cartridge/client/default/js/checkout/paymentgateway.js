@@ -39,6 +39,7 @@ function getCreditCardRequestData() {
 /**
  * Submit seamless form and subsequently save transaction data with order
  * @param {string} saveTransactionUrl - payment gateway url which saves transaction data to order
+ * @param {string} restoreBasketUrl - url for restoring the basket in case of an error
  * @param {Object} cbSuccess - success callback function
  * @param {Object} cbError - error callback function
  */

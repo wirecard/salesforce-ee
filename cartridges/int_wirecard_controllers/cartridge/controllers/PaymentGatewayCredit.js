@@ -155,7 +155,6 @@ exports.TermUrl = guard.ensure(['https'], function () {
     var URLUtils = require('dw/web/URLUtils');
     var order = OrderMgr.getOrder(orderNo);
 
-    // TODO verify request integrity (signed-json / xmlsig)
     if (order && orderToken) {
         // clear sessions as in COPlaceorder.clearForms
         session.forms.singleshipping.clearFormElement();

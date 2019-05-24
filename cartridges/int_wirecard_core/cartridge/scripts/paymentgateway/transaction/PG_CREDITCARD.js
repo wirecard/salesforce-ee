@@ -62,10 +62,10 @@ function getRefundTransactionType() {
     }
     switch (self['transaction-type']) {
         case Type.PURCHASE:
-            type = Type.REFUND_PURCHASE;
+            type = Type.VOID_PURCHASE;
             break;
         case Type.CAPTURE_AUTHORIZATION:
-            type = Type.REFUND_CAPTURE;
+            type = Type.VOID_CAPTURE;
             break;
         default:
             throw new Error('unsupported transaction type!');

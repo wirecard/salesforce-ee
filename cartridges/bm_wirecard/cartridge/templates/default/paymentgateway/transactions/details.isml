@@ -138,6 +138,7 @@
                             <div class="form-group">
                                 <input type="hidden" name="orderNo" value="${ Order.orderNo }"/>
                                 <input type="hidden" name="transactionId" value="${ Transaction.transactionId }"/>
+                                <input type="hidden" name="transactionType" value="${ Transaction.transactionType }"/>
                                 <input type="hidden" name="merchantAccountId" value="${ Transaction.merchantAccountId }"/>
                                 <button type="submit" value="${ Resource.msg('submit_button', 'paymentgateway', null)}">
                                     ${ Resource.msg('submit_button', 'paymentgateway', null) }

@@ -41,7 +41,9 @@ Type.Follow = [
     Type.All.REFUND_CAPTURE,
     Type.All.REFUND_DEBIT,
     Type.All.REFUND_PURCHASE,
-    Type.All.VOID_AUTHORIZATION
+    Type.All.VOID_AUTHORIZATION,
+    Type.All.VOID_CAPTURE,
+    Type.All.VOID_PURCHASE
 ];
 
 /**
@@ -70,7 +72,20 @@ Type.Refund = [
     Type.All.PENDING_CREDIT,
     Type.All.REFUND_CAPTURE,
     Type.All.REFUND_DEBIT,
-    Type.All.REFUND_PURCHASE
+    Type.All.REFUND_PURCHASE,
+    Type.All.VOID_CAPTURE,
+    Type.All.VOID_PURCHASE
 ];
+
+/**
+ * Object with type pairs that succeed each other
+ * @var {Object}
+ */
+Type.FollowMapping = function () {
+    var mapping = [];
+    mapping[Type.All.VOID_CAPTURE] = Type.All.REFUND_CAPTURE;
+    mapping[Type.All.VOID_PURCHASE] = Type.All.REFUND_PURCHASE;
+    return mapping;
+};
 
 module.exports = Type;
