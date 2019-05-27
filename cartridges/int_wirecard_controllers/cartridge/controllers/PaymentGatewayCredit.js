@@ -126,9 +126,10 @@ exports.RequestData = guard.ensure(['get', 'https'], function () {
         }
         var orderHelper = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper');
         var params = {
-            locale      : locale,
-            remoteHost  : request.httpRemoteAddress,
-            customFields: [
+            locale        : locale,
+            remoteHost    : request.httpRemoteAddress,
+            redirectRoutes: { success: 'PaymentGateway-Success', termUrl: 'PaymentGateway-Success' },
+            customFields  : [
                 { name: 'fp', value: orderHelper.getOrderFingerprint(order) }
             ]
         };
@@ -140,30 +141,6 @@ exports.RequestData = guard.ensure(['get', 'https'], function () {
     }
     response.setContentType('application/json');
     response.writer.println(JSON.stringify(result, null, 2));
-});
-
-/**
- * Re-entry point after 3DS authentication
- */
-exports.TermUrl = guard.ensure(['https'], function () {
-    var parameterMap = request.httpParameterMap;
-    var orderNo = parameterMap.orderNo.value;
-    var orderToken = parameterMap.orderSec.value;
-
-    var OrderMgr = require('dw/order/OrderMgr');
-    var URLUtils = require('dw/web/URLUtils');
-    var order = OrderMgr.getOrder(orderNo);
-
-    if (order && orderToken) {
-        // clear sessions as in COPlaceorder.clearForms
-        session.forms.singleshipping.clearFormElement();
-        session.forms.multishipping.clearFormElement();
-        session.forms.billing.clearFormElement();
-        app.getController('COSummary').ShowConfirmation(order);
-    } else {
-        response.redirect(URLUtils.https('Cart-Show'));
-    }
-    return;
 });
 
 /**

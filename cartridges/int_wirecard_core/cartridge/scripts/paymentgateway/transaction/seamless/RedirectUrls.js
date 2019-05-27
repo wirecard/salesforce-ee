@@ -32,13 +32,24 @@ function RedirectUrls(transaction) {
         notification_transaction_url: getUrl(basket, 'PaymentGatewayCredit-Notify'),
         notifications_format: 'application/json'
     };
-    if (transaction.is3DSecure) {
-        result.success_redirect_url = getUrl(basket, 'PaymentGatewayCredit-TermUrl');
-    } else {
-        result.success_redirect_url = getUrl(basket, 'PaymentGatewayCredit-Success');
+    var routes = {
+        cancel : 'PaymentGatewayCredit-Cancel',
+        fail   : 'PaymentGatewayCredit-Fail',
+        success: 'PaymentGatewayCredit-Success',
+        termUrl: 'PaymentGatewayCredit-TermUrl'
+    };
+    if (Object.prototype.hasOwnProperty.call(transaction, 'redirectRoutes')) {
+        Object.keys(transaction.redirectRoutes).forEach(function (key) {
+            routes[key] = transaction.redirectRoutes[key];
+        });
     }
-    result.fail_redirect_url = getUrl(basket, 'PaymentGatewayCredit-Fail');
-    result.cancel_redirect_url = getUrl(basket, 'PaymentGatewayCredit-Cancel');
+    if (transaction.is3DSecure) {
+        result.success_redirect_url = getUrl(basket, routes.termUrl);
+    } else {
+        result.success_redirect_url = getUrl(basket, routes.success);
+    }
+    result.fail_redirect_url = getUrl(basket, routes.fail);
+    result.cancel_redirect_url = getUrl(basket, routes.cancel);
     return result;
 }
 
