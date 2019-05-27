@@ -369,6 +369,7 @@ server.replace(
                 },
                 errorMessage: Resource.msg('error.payment.not.valid', 'checkout', null)
             });
+            pgLogger.debug('Demandware is ..!!');
             return next();
         }
 

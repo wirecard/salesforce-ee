@@ -6,9 +6,9 @@
    <containsHeaders>true</containsHeaders>
    <csvSeperator>COMMA</csvSeperator>
    <dataFileGUID>48cc1e93-c6ae-4212-ab51-d5d006762eba</dataFileGUID>
-   <dataSourceUrl>/Users/sni/demandware/workspace/wirecard/cartridges/salesforce-ee/test/Data Files/creditcards.csv</dataSourceUrl>
+   <dataSourceUrl>Data Files/creditcards.csv</dataSourceUrl>
    <driver>CSV</driver>
-   <isInternalPath>false</isInternalPath>
+   <isInternalPath>true</isInternalPath>
    <query></query>
    <secureUserAccount>false</secureUserAccount>
    <sheetName></sheetName>
