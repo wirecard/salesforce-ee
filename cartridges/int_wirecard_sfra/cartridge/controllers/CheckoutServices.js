@@ -352,6 +352,12 @@ server.replace(
             basketCalculationHelpers.calculateTotals(currentBasket);
         });
 
+        // FIXME this is for monitoring test behaviour
+        var orderHelper = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper');
+        var pgLogger = require('dw/system/Logger').getLogger('paymentgateway');
+        var pgPaymentMethod = orderHelper.getPaymentGatewayOrderPayment(currentBasket);
+        pgLogger.debug('Selected payment method (placeOrder): ' + pgPaymentMethod.paymentMethodID);
+
         // Re-validates existing payment instruments
         var validPayment = COHelpers.validatePayment(req, currentBasket);
         if (validPayment.error) {
