@@ -32,11 +32,13 @@ function RedirectUrls(transaction) {
         notification_transaction_url: getUrl(basket, 'PaymentGatewayCredit-Notify'),
         notifications_format: 'application/json'
     };
-    if (Object.prototype.hasOwnProperty.call(transaction, 'appendSuccessUrl')) {
+    if (transaction.is3DSecure) {
         result.success_redirect_url = getUrl(basket, 'PaymentGatewayCredit-TermUrl');
-        result.fail_redirect_url = getUrl(basket, 'PaymentGatewayCredit-Fail');
-        result.cancel_redirect_url = getUrl(basket, 'PaymentGateway-Cancel');
+    } else {
+        result.success_redirect_url = getUrl(basket, 'PaymentGatewayCredit-Success');
     }
+    result.fail_redirect_url = getUrl(basket, 'PaymentGatewayCredit-Fail');
+    result.cancel_redirect_url = getUrl(basket, 'PaymentGatewayCredit-Cancel');
     return result;
 }
 

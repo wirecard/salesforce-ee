@@ -60,6 +60,10 @@ base.paymentTabs = function () {
             }
         }
     });
+    var activeTab = $('.payment-options .nav-item > a.nav-link.active');
+    if (activeTab.length === 1 && /PG_CREDITCARD/.test(activeTab.attr('class'))) {
+        paymentgateway.getCreditCardRequestData();
+    }
 };
 
 module.exports = base;

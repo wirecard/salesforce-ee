@@ -8,7 +8,28 @@
 /* Script includes */
 var server = require('server');
 
+var Resource = require('dw/web/Resource');
 var URLUtils = require('dw/web/URLUtils');
+
+/**
+ * Helper function to fetch fingerprint value from form data
+ * @param {dw.util.List} formData - as provided by req.form
+ * @returns {string} - fingerprint or undefined if not provided
+ */
+function getFpFromFormData(formData) {
+    var fp;
+    var fpValueKey;
+    Object.keys(formData).forEach(function (k) {
+        var tmpValue = formData[k];
+        if (/^fp$/.test(tmpValue)) {
+            fpValueKey = k.replace(/name/g, 'value');
+        }
+    });
+    if (fpValueKey && Object.prototype.hasOwnProperty.call(formData, fpValueKey)) {
+        fp = formData[fpValueKey];
+    }
+    return fp;
+}
 
 /**
  * Fetch request data to render seamless form
@@ -63,10 +84,10 @@ server.get(
 );
 
 /**
- * Re-entry point after 3DS authentication
+ * Re-entry point after non-3DS transaction
  */
 server.use(
-    'TermUrl',
+    'Success',
     server.middleware.https,
     function (req, res, next) {
         var parameterMap = req.querystring;
@@ -96,6 +117,99 @@ server.use(
 );
 
 /**
+ * Cancel redirect from payment gateway
+ */
+server.get(
+    'Cancel',
+    server.middleware.https,
+    function (req, res, next) {
+        var params = req.querystring;
+        var orderNo = params.orderNo;
+
+        var OrderMgr = require('dw/order/OrderMgr');
+        var Transaction = require('dw/system/Transaction');
+        var order = OrderMgr.getOrder(orderNo);
+
+        if (order) {
+            Transaction.wrap(function () {
+                OrderMgr.failOrder(order);
+            });
+
+            req.session.privacyCache.set(
+                'pgPlaceOrderError',
+                Resource.msg('order.cancellation.byCustomer', 'paymentgateway', null)
+            );
+            res.redirect(URLUtils.https('Checkout-Begin', 'stage', 'payment'));
+        } else {
+            res.redirect(URLUtils.https('Cart-Show'));
+        }
+        next();
+    }
+);
+
+/**
+ * Re-entry point after 3DS authentication
+ */
+server.post(
+    'TermUrl',
+    server.middleware.https,
+    function (req, res, next) {
+        var parameterMap = req.querystring;
+        var orderNo = parameterMap.orderNo;
+
+        var OrderMgr = require('dw/order/OrderMgr');
+        var order = OrderMgr.getOrder(orderNo);
+
+        var fp = getFpFromFormData(req.form);
+        var orderHelper = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper');
+        if (order && fp === orderHelper.getOrderFingerprint(order)) {
+            // Reset usingMultiShip after successful Order placement
+            req.session.privacyCache.set('usingMultiShipping', false);
+
+            res.redirect(
+                URLUtils.https('Order-Confirm', 'ID', order.orderNo, 'token', order.orderToken)
+            );
+        } else {
+            res.redirect(URLUtils.https('Cart-Show'));
+        }
+        next();
+    }
+);
+
+/**
+ * Fail redirect from payment gateway
+ */
+server.use(
+    'Fail',
+    server.middleware.https,
+    function (req, res, next) {
+        var params = req.querystring;
+        var orderNo = params.orderNo;
+
+        var OrderMgr = require('dw/order/OrderMgr');
+        var Transaction = require('dw/system/Transaction');
+        var order = OrderMgr.getOrder(orderNo);
+
+        var fp = getFpFromFormData(req.form);
+        var orderHelper = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper');
+        if (order && fp === orderHelper.getOrderFingerprint(order)) {
+            Transaction.wrap(function () {
+                OrderMgr.failOrder(order);
+            });
+
+            req.session.privacyCache.set(
+                'pgPlaceOrderError',
+                Resource.msg('payment_failed_text', 'paymentgateway', null)
+            );
+            res.redirect(URLUtils.https('Checkout-Begin', 'stage', 'payment'));
+        } else {
+            res.redirect(URLUtils.https('Cart-Show'));
+        }
+        next();
+    }
+);
+
+/**
  * Save transaction data after seamless form was submitted
  */
 server.post(
@@ -111,17 +225,40 @@ server.post(
         var OrderMgr = require('dw/order/OrderMgr');
         var order = OrderMgr.getOrder(orderNo);
         if (order && transactionData) {
-            // save transaction data with order
-            var transactionHelper = require('*/cartridge/scripts/paymentgateway/helper/TransactionHelper');
-            transactionHelper.saveSeamlessTransactionToOrder(order, transactionData);
-            req.session.privacyCache.set('usingMultiShipping', false);
+            var three3dsParams = {};
+            [
+                'acs_url',
+                'merchant_account_id',
+                'nonce3d',
+                'pareq',
+                'notification_url_1',
+                'transaction_type'
+            ].forEach(function (k) {
+                if (Object.prototype.hasOwnProperty.call(transactionData, k)) {
+                    three3dsParams[k] = transactionData[k].replace(/&#47;/g, '/');
+                }
+            });
+            if (Object.keys(three3dsParams).length === 6) {
+                result = {
+                    acsUrl: three3dsParams.acs_url,
+                    pareq: three3dsParams.pareq,
+                    termUrl: three3dsParams.notification_url_1,
+                    md: [
+                        'merchant_account_id=' + three3dsParams.merchant_account_id,
+                        'nonce3d=' + three3dsParams.nonce3d,
+                        'transaction_type=' + three3dsParams.transaction_type
+                    ].join('&')
+                };
+            } else {
+                req.session.privacyCache.set('usingMultiShipping', false);
 
-            result = {
-                error: false,
-                orderID: order.orderNo,
-                orderToken: order.orderToken,
-                continueUrl: URLUtils.url('Order-Confirm').toString()
-            };
+                result = {
+                    error: false,
+                    orderID: order.orderNo,
+                    orderToken: order.orderToken,
+                    continueUrl: URLUtils.url('Order-Confirm').toString()
+                };
+            }
         } else {
             result = {
                 error: true,

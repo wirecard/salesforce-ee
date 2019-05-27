@@ -1,4 +1,3 @@
 paymentMethodId,login
-PG_CREDITCARD,false
 PG_PAYPAL,false
 PG_SOFORT,false

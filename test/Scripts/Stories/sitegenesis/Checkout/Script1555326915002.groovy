@@ -15,6 +15,8 @@ import internal.GlobalVariable as GlobalVariable
 
 WebUI.callTestCase(findTestCase('Modules/sitegenesis/Open browser'), [('relativeURLHomepage') : relativeURLHomepage], FailureHandling.STOP_ON_FAILURE)
 
+WebUI.callTestCase(findTestCase('Modules/sitegenesis/Accept consent tracking'), [:], FailureHandling.STOP_ON_FAILURE)
+
 WebUI.callTestCase(findTestCase('Modules/sitegenesis/Products/AddToCart-Product1'), [('productId') : findTestData('product_testdata').getValue(
             1, 1), ('quantity') : findTestData('product_testdata').getValue(2, 1), ('color') : findTestData('product_testdata').getValue(
             3, 1)], FailureHandling.STOP_ON_FAILURE)
@@ -34,10 +36,10 @@ if (login == 'false') {
 
 WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/SelectShipping'), [:], FailureHandling.STOP_ON_FAILURE)
 
-WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/Billing/Set email address'), [('email') : email, ('login') : login], 
+WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/Billing/Set email address'), [('email') : email, ('login') : login],
     FailureHandling.STOP_ON_FAILURE)
 
-WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentSelect'), [('paymentMethodId') : paymentMethodId], 
+WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentSelect'), [('paymentMethodId') : paymentMethodId],
     FailureHandling.STOP_ON_FAILURE)
 
 WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PlaceOrder'), [('paymentMethodId') : paymentMethodId], FailureHandling.STOP_ON_FAILURE)

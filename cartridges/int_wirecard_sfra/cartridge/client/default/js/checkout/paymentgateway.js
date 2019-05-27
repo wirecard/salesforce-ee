@@ -52,7 +52,18 @@ function submitSeamlessForm(saveTransactionUrl, restoreBasketUrl, cbSuccess, cbE
                 data: { transactionData: JSON.stringify(msg) },
                 complete: function (response) {
                     var data = JSON.parse(response.responseText);
-                    if (Object.prototype.hasOwnProperty.call(data, 'continueUrl')
+                    if (Object.prototype.hasOwnProperty.call(data, 'acsUrl')) {
+                        var now = new Date().getTime();
+                        $('body').append(
+                            $('<form/>', {
+                                action: data.acsUrl, enctype: 'application/x-www-form-urlencoded', method: 'post', name: 'pgacsform_' + now
+                            })
+                                .append($('<input/>', { name: 'PaReq', value: data.pareq, type: 'hidden' }))
+                                .append($('<input/>', { name: 'TermUrl', value: data.termUrl, type: 'hidden' }))
+                                .append($('<input/>', { name: 'MD', value: data.md, type: 'hidden' }))
+                        );
+                        $('form[name=pgacsform_' + now + ']').submit();
+                    } else if (Object.prototype.hasOwnProperty.call(data, 'continueUrl')
                         && typeof cbSuccess === 'function'
                     ) {
                         cbSuccess.call(this, data);

@@ -167,7 +167,7 @@ CheckoutTransaction.prototype.getPayload = function () {
 
     var OrderEntity = require('./entity/Order');
     var amount = OrderEntity.getFixedContainerTotalAmount(self.order);
-    var is3dSecure = getIs3DSecure(amount);
+    self.is3DSecure = getIs3DSecure(amount);
 
     var Calendar = require('dw/util/Calendar');
     var StringUtils = require('dw/util/StringUtils');
@@ -178,11 +178,11 @@ CheckoutTransaction.prototype.getPayload = function () {
         request_id: getRequestID(self.order),
         payment_method: 'creditcard',
         transaction_type: getSitePreference('initialTransactionType').value,
-        attempt_three_d: is3dSecure,
+        attempt_three_d: self.is3DSecure,
         merchant_account_id: getSitePreference('merchantAccountId'),
         locale: self.locale
     };
-    if (is3dSecure) {
+    if (self.is3DSecure) {
         result.merchant_account_id = getSitePreference('merchantAccountId3DS');
     }
 

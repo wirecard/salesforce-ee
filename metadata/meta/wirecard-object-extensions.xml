@@ -34,15 +34,6 @@
                 <min-length>5</min-length>
                 <default-value></default-value>
             </attribute-definition>
-            <attribute-definition attribute-id="paymentGatewayIdealMerchantAccountID">
-                <display-name xml:lang="x-default">Merchant Account ID (MAID)</display-name>
-                <description xml:lang="x-default">Unique identifier assigned to your merchant account.</description>
-                <type>string</type>
-                <mandatory-flag>false</mandatory-flag>
-                <externally-managed-flag>false</externally-managed-flag>
-                <min-length>0</min-length>
-                <default-value>4aeccf39-0d47-47f6-a399-c05c1f2fc819</default-value>
-            </attribute-definition>
             <attribute-definition attribute-id="paymentGatewaySofortMerchantAccountID">
                 <display-name xml:lang="x-default">Merchant Account ID (MAID)</display-name>
                 <description xml:lang="x-default">Unique identifier assigned to your merchant account.</description>
@@ -339,8 +330,6 @@
                 <attribute attribute-id="paymentGatewayDebugMode"/>
                 <attribute attribute-id="paymentGatewayShopName"/>
                 <attribute attribute-id="paymentGatewayUrlSalt"/>
-                <attribute attribute-id="paymentGatewayIdealMerchantAccountID"/>
-                <attribute attribute-id="paymentGatewaySofortMerchantAccountID"/>
                 <attribute attribute-id="paymentGatewaySignResponses"/>
                 <attribute attribute-id="paymentGatewayCertAlias"/>
             </attribute-group>

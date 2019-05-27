@@ -128,7 +128,6 @@ exports.RequestData = guard.ensure(['get', 'https'], function () {
         var params = {
             locale          : locale,
             remoteHost      : request.httpRemoteAddress,
-            appendSuccessUrl: true,
             customFields: [
                 { name: 'fp', value: orderHelper.getOrderFingerprint(order) }
             ]
