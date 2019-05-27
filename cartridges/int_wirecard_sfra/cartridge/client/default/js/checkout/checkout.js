@@ -475,6 +475,8 @@ var scrollAnimate = require('base/components/scrollAnimate');
                                 if ($billingAddressSameAsShipping.is(':checked')) {
                                     $billingAddressSameAsShipping.prop('checked', false);
                                 }
+                            } else if (data.errorStage.step === 'PG_CREDITCARD') {
+                                paymentgateway.getCreditCardRequestData();
                             }
                         }
 

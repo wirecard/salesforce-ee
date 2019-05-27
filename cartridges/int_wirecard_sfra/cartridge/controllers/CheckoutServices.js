@@ -390,10 +390,14 @@ server.replace(
         var handlePaymentResult = COHelpers.handlePayments(order, order.orderNo);
         // FIXME maybe replace technical error message with more specific one from wpg
         if (handlePaymentResult.error) {
-            res.json({
+            var errorObject = {
                 error: true,
                 errorMessage: handlePaymentResult.errorMessage || Resource.msg('error.technical', 'checkout', null)
-            });
+            };
+            if (Object.prototype.hasOwnProperty.call(handlePaymentResult, 'errorStage')) {
+                errorObject.errorStage = handlePaymentResult.errorStage;
+            }
+            res.json(errorObject);
             return next();
         } else if (Object.prototype.hasOwnProperty.call(handlePaymentResult, 'saveTransactionURL')) { // eslint-disable-line
             res.json({

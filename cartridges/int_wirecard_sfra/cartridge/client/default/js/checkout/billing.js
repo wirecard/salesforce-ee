@@ -60,9 +60,14 @@ base.paymentTabs = function () {
             }
         }
     });
-    var activeTab = $('.payment-options .nav-item > a.nav-link.active');
-    if (activeTab.length === 1 && /PG_CREDITCARD/.test(activeTab.attr('class'))) {
-        paymentgateway.getCreditCardRequestData();
+    var activeItem = $('.payment-options .nav-item > a.nav-link.active');
+    if (activeItem.length === 1 && /PG_CREDITCARD/.test(activeItem.attr('class'))) {
+        if (typeof WirecardPaymentPage === 'undefined') {
+            $('.tab-pane.active').removeClass('active');
+            activeItem.removeClass('active');
+        } else {
+            paymentgateway.getCreditCardRequestData();
+        }
     }
 };
 

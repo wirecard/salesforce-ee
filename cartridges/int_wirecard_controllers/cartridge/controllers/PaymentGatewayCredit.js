@@ -126,8 +126,8 @@ exports.RequestData = guard.ensure(['get', 'https'], function () {
         }
         var orderHelper = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper');
         var params = {
-            locale          : locale,
-            remoteHost      : request.httpRemoteAddress,
+            locale      : locale,
+            remoteHost  : request.httpRemoteAddress,
             customFields: [
                 { name: 'fp', value: orderHelper.getOrderFingerprint(order) }
             ]

@@ -73,6 +73,7 @@ server.get(
             'Handle',
             currentBasket,
             { paymentMethodID: 'PG_CREDITCARD' });
+
         if (result.success) {
             var transaction = new (require('*/cartridge/scripts/paymentgateway/transaction/PG_CREDITCARD_REQUESTDATA'))(currentBasket, params);
             res.render('paymentgateway/json', { json: transaction.getPayload() });

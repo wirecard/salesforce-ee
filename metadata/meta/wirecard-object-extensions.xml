@@ -393,6 +393,19 @@
         </custom-attribute-definitions>
     </type-extension>
 
+    <type-extension type-id="OrderPaymentInstrument">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="paymentGatewayFingerPrint">
+                <display-name xml:lang="x-default">Calculated fingerprint</display-name>
+                <description xml:lang="x-default">For checking the basket's integrity</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>true</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+        </custom-attribute-definitions>
+    </type-extension>
+
     <type-extension type-id="Order">
         <custom-attribute-definitions>
             <attribute-definition attribute-id="paymentGatewayTransactions">

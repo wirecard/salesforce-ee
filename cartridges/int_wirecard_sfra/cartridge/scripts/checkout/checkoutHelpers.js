@@ -106,6 +106,9 @@ function handlePayments(order, orderNumber) {
                         Transaction.wrap(function () { OrderMgr.failOrder(order); });
                         result.error = true;
                         result.errorMessage = authorizationResult.errorMessage;
+                        if (Object.prototype.hasOwnProperty.call(authorizationResult, 'errorStage')) {
+                            result.errorStage = authorizationResult.errorStage;
+                        }
                         break;
                     } else if (authorizationResult.saveTransactionURL) {
                         result.saveTransactionURL = authorizationResult.saveTransactionURL;

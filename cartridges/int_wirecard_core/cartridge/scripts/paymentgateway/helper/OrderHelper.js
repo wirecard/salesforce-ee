@@ -11,7 +11,7 @@ exports.getPaymentGatewayOrderPayment = function (order) {
     var paymentInstruments = order.paymentInstruments.iterator();
     while (paymentInstruments.hasNext()) {
         var instrument = paymentInstruments.next();
-        if (instrument.getPaymentMethod().indexOf('PG', 0) > -1) {
+        if (instrument.getPaymentMethod().indexOf('PG_', 0) > -1) {
             result.paymentMethodID = instrument.getPaymentMethod();
             result.paymentInstrument = instrument;
         }
