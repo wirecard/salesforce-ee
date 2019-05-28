@@ -106,7 +106,6 @@ server.replace(
             var URLUtils = require('dw/web/URLUtils');
             var Locale = require('dw/util/Locale');
             var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
-            var hooksHelper = require('*/cartridge/scripts/helpers/hooks');
 
             var currentBasket = BasketMgr.getCurrentBasket();
             var billingData = res.getViewData();
@@ -242,8 +241,8 @@ server.replace(
                 req.session.privacyCache.set('usingMultiShipping', false);
                 usingMultiShipping = false;
             }
-
-            //hooksHelper('app.customer.subscription', 'subscribeTo', [paymentForm.subscribe.checked, paymentForm.contactInfoFields.email.htmlValue], function () {});
+            // @fixme comment this in if all branches merged. otherwise email subscription did not work
+            // hooksHelper('app.customer.subscription', 'subscribeTo', [paymentForm.subscribe.checked, paymentForm.contactInfoFields.email.htmlValue], function () {});
 
             var currentLocale = Locale.getLocale(req.locale.id);
 
