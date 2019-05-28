@@ -20,7 +20,7 @@ var guard = require(controllerCartridge + '/cartridge/scripts/guard');
  * @return {Object} JSON object containing information about missing payments, errors, or an empty object if the function is successful.
  */
 function handlePayments(order) {
-    if (order.getTotalNetPrice() !== 0.00) {
+    if (order.getTotalNetPrice() !== 0) {
         var paymentInstruments = order.getPaymentInstruments();
 
         if (paymentInstruments.length === 0) {
