@@ -172,4 +172,20 @@ server.get(
     }
 );
 
+server.get('GetPGSummary', server.middleware.https, function (req, res, next) {
+	const paymentMethod = req.querystring.paymentMethod;
+    const instruments 	= require('dw/order/BasketMgr').getCurrentBasket().getPaymentInstruments(paymentMethod);
+    
+    if (instruments.empty) {
+    	return next();	
+    }
+    switch (paymentMethod) {
+    	case 'PG_SEPA' :
+    		res.render('checkout/billing/paymentOptions/paymentOptionsSummary/' + req.querystring.paymentMethod, { payment:  instruments[0]});
+    		return next();
+		default : return next();
+    }
+});
+
+
 module.exports = server.exports();

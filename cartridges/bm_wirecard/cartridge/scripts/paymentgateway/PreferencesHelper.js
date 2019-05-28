@@ -21,6 +21,12 @@ var PreferencesMapping = {
         password         : 'paymentGatewayPayPalHttpPassword',
         baseUrl          : 'paymentGatewayPayPalBaseUrl',
         merchantAccountID: 'paymentGatewayPayPalMerchantAccountID'
+    },
+    PG_SEPA: {
+        userName         : 'paymentGatewaySEPACreditHttpUser',
+        password         : 'paymentGatewaySEPACreditHttpPassword',
+        baseUrl          : 'paymentGatewaySEPACreditBaseUrl',
+        merchantAccountID: 'paymentGatewaySEPACreditMerchantAccountID'
     }
 };
 

@@ -11,7 +11,7 @@ Type.All = {
     AUTHORIZATION_ONLY: 'authorization-only',
     CANCEL: 'cancel',
     CAPTURE_AUTHORIZATION: 'capture-authorization',
-    CREDIT: 'credit',
+    SEPA_CREDIT: 'credit',
     DEBIT: 'debit',
     REFUND: 'refund',
     REFUND_CAPTURE: 'refund-capture',
@@ -20,6 +20,7 @@ Type.All = {
     VOID_DEBIT: 'void-debit',
     CHECK_ENROLLMENT: 'check-enrollment',
     PENDING_DEBIT: 'pending-debit',
+    VOID_PENDING_DEBIT: 'void-pending-debit',
     PURCHASE: 'purchase'
 };
 
@@ -41,7 +42,8 @@ Type.Follow = [
  * @var {Array}
  */
 Type.Cancel = [
-    Type.All.VOID_AUTHORIZATION
+    Type.All.VOID_AUTHORIZATION,
+    Type.All.VOID_PENDING_DEBIT
 ];
 
 /**

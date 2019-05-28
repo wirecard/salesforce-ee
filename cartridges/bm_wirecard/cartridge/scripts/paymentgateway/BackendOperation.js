@@ -28,7 +28,7 @@
                 'merchant-account-id'  : data.merchantAccountId
             }
         );
-        var paymentService = transactionHelper.getPaymentService(methodName, 'payments');
+        var paymentService = transactionHelper.getPaymentService(methodName, transaction.getApiEndpointFromTransactionType());
 
         var result;
         var errorMsg;

@@ -240,6 +240,11 @@ var formHelpers = require('base/checkout/formErrors');
                                 ) {
                                     $('.cancel-new-payment').removeClass('checkout-hidden');
                                 }
+                                //DOTSOURCE CUSTOM BEGIN
+                                members.handleSEPASummary(
+                                    data.order.billing.payment.selectedPaymentInstruments[0]
+                                );
+                                //DOTSOURCE CUSTOM END
 
                                 defer.resolve(data);
                             }
@@ -443,6 +448,38 @@ var formHelpers = require('base/checkout/formErrors');
                 members.currentStage = checkoutStages.indexOf(stageName);
                 updateUrl(members.currentStage);
                 $(plugin).attr('data-checkout-stage', checkoutStages[members.currentStage]);
+            },
+
+            handleSEPASummary: function(paymentMethodData) {
+                switch (paymentMethodData.paymentMethod) {
+                    case 'PG_SEPA' :
+                        $.ajax({
+                            url     : 'PaymentGateway-GetPGSummary',
+                            data : {paymentMethod: paymentMethodData.paymentMethod},
+                            success: (function (response) {
+                                $('.payment-details').append(response);
+
+                                let submitButton = $('button[value=place-order][name=submit][class*=place-order]');
+
+                                if (!submitButton.length) {
+                                    return;
+                                }
+                                submitButton.prop('disabled', true);
+
+                                $(document).on('change', '#mandate_accept', function() {
+                                    if (!submitButton.length) {
+                                        return;
+                                    }
+                                    if ($(this).prop('checked')) {
+                                        submitButton.prop('disabled', false);
+                                    } else {
+                                        submitButton.prop('disabled', true);
+                                    }
+                                });
+                            })
+                        });
+                    break;
+                }
             }
         };
 

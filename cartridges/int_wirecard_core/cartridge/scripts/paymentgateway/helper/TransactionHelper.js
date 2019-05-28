@@ -189,12 +189,10 @@ var TransactionHelper = {
         for (var i = 0; i < savedTransactions.length; i++) {
             var transaction = JSON.parse(savedTransactions[i]);
 
-            if (transaction.transactionId == newTransaction.transactionId) {
-                if (overwrite) {
-                    // replace backend transaction with notification response
-                    allPaymentTransactions.push(JSON.stringify(newTransaction));
-                    updatedTransaction = true;
-                }
+            if (transaction.transactionId == newTransaction.transactionId && overwrite) {
+                // replace backend transaction with notification response
+                allPaymentTransactions.push(JSON.stringify(newTransaction));
+                updatedTransaction = true;
             } else if (!transaction.parentTransactionId
                 && newTransaction.parentTransactionId == transaction.transactionId
             ) {

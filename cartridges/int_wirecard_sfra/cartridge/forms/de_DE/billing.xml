@@ -14,4 +14,6 @@
 
     <!--  wirecard payment method forms -->
     <include formid="PG_IDEAL" name="PG_IDEAL"/>
+    <include formid="PG_SEPA" name="PG_SEPA"/>
+
 </form>

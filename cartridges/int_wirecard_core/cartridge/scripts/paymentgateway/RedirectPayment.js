@@ -13,10 +13,9 @@
      * @param {string} methodName - name of payment method
      * @param {dw.order.Order} order - current order
      * @param {dw.order.PaymentInstrument} paymentInstrument - order paymentinstrument
-     * @param {Object} formData - billing form data for used payment method
      * @returns {Object}
      */
-    function callService(methodName, order, paymentInstrument, formData) { // eslint-disable-line
+    function callService(methodName, order, paymentInstrument) { // eslint-disable-line
         var result = { error: true };
 
         var transactionHelper = require('*/cartridge/scripts/paymentgateway/helper/TransactionHelper');

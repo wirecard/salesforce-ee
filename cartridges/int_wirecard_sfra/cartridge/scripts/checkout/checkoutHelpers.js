@@ -32,6 +32,14 @@ function validateCreditCard(form) {
 }
 
 /**
+ * Validate credit card form fields
+ * @param {Object} form - the form object with pre-validated form fields
+ * @returns {Object} the names of the invalid form fields
+ */
+function validateSEPA(form) {
+
+}
+/**
  * handles the payment authorization for each payment instrument
  * @param {dw.order.Order} order - the order object
  * @param {string} orderNumber - The order number for the order

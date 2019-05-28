@@ -36,7 +36,6 @@ function updatePaymentInformation(order) {
             htmlToAppend += $('<span/>', { html: paymentMethodData.name }).text();
         }
     }
-
     $paymentSummary.empty().append(htmlToAppend);
 }
 base.methods.updatePaymentInformation = updatePaymentInformation;
@@ -50,6 +49,13 @@ base.paymentTabs = function () {
         $('input[name$=paymentMethod]').val(methodID);
         // hide other payment methods form
         $('.credit-card-selection-new').find('.tab-pane').removeClass('active');
+
+        const form   = $('form[name=dwfrm_billing]');
+        const pgSepa = $('input[id=debtorName]', form);
+
+        if (pgSepa.length) {
+            pgSepa.val($('input[name$=_firstName]', form).val() + ' ' + $('input[name$=_lastName]', form).val());
+        }
     });
 };
 

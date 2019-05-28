@@ -231,6 +231,12 @@ Transaction.prototype.getPayload = function () {
     if (!result['merchant-account-id']) {
         throw new Error('No merchant-account-id provided!');
     }
+    let customPayload = this.getCustomPayload();
+
+    //WARNING custom payload overwrites result
+    Object.keys(customPayload).forEach(function(key) {
+    	return result[key] = customPayload[key];
+    });
     return { payment: result };
 };
 
@@ -244,7 +250,8 @@ Transaction.prototype.getBackendOperationForCancel = function () {
         return {
             label: Resource.msg('text_cancel_transaction', 'paymentgateway', null),
             action: operation.type,
-            amount: { decimalValue: 0 }
+            amount: { decimalValue: 0 },
+            apiEndpoint: operation.apiEndpoint
         };
     } catch (err) {
         return false;
@@ -325,6 +332,18 @@ Transaction.prototype.getBackendOperations = function (canCancel) {
         operations.push(refundActions);
     }
     return operations;
+};
+
+/**
+ * @abstract
+ * @returns {{}}
+ */
+Transaction.prototype.getCustomPayload = function() {
+    return {};
+};
+
+Transaction.prototype.getApiEndpointFromTransactionType = function() {
+
 };
 
 module.exports = Transaction;
