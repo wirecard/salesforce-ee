@@ -33,8 +33,8 @@ function RedirectUrls(transaction) {
         notifications_format: 'application/json'
     };
     var routes = {
-        cancel : 'PaymentGatewayCredit-Cancel',
-        fail   : 'PaymentGatewayCredit-Fail',
+        cancel: 'PaymentGatewayCredit-Cancel',
+        fail: 'PaymentGatewayCredit-Fail',
         success: 'PaymentGatewayCredit-Success',
         termUrl: 'PaymentGatewayCredit-TermUrl'
     };

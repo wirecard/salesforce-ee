@@ -47,7 +47,8 @@
                 'transaction-type'     : data.action,
                 'parent-transaction-id': data.transactionId,
                 'requested-amount'     : data.amount,
-                'merchant-account-id'  : merchantAccountId
+                'merchant-account-id'  : merchantAccountId,
+                'originalPaymentMethod': methodName
             }
         );
         var paymentService = transactionHelper.getPaymentService(methodName, mappedTransactionData.type);
