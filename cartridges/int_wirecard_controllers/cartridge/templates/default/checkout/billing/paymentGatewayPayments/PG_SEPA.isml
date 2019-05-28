@@ -1,0 +1,14 @@
+<!--- TEMPLATENAME: PG_SEPA.isml --->
+<isset name="sepaFields" value="${ pdict.CurrentForms.billing.paymentMethods.PG_SEPA }" scope="page"/>
+<isset name="addressFields" value="${ pdict.CurrentForms.billing.billingAddress.addressFields }" scope="page"/>
+<isscript>
+	var address = pdict.order.billing.billingAddress.address;
+    var bicVisible = require('dw/system/Site').getCurrent().getCustomPreferenceValue('paymentGatewaySEPAShowBICInCheckout');
+</isscript>
+
+<isinputfield formfield="${sepaFields.paymentGatewaySEPADebtorName}" type="input" />
+<isinputfield formfield="${sepaFields.paymentGatewaySEPAIBAN}" type="input" />
+
+<isif condition="${ bicVisible === true }">
+	<isinputfield formfield="${sepaFields.paymentGatewaySEPABIC}" type="input" />
+</isif>

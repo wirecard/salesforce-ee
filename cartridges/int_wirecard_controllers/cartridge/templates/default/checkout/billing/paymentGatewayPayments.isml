@@ -20,6 +20,11 @@
 <!--- PG_PAYPAL --->
 <div id="PaymentMethod_PG_PAYPAL" class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='PG_PAYPAL'}">payment-method-expanded</isif>" data-method="PG_PAYPAL"></div>
 
+<!--- PG_SEPA --->
+<div id="PaymentMethod_PG_SEPA" class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='PG_SEPA'}">payment-method-expanded</isif>" data-method="PG_SEPA">
+    <isinclude template="checkout/billing/paymentGatewayPayments/PG_SEPA" />
+</div>
+
 <isif condition="${ require('dw/system/Site').getCurrent().getCustomPreferenceValue('paymentGatewaySendAdditionalData') }" >
 <script type="text/javascript" src="https://h.wirecard.com/fp/tags.js?org_id=6xxznhva&session_id=${ session.sessionID }"></script>
 <noscript>

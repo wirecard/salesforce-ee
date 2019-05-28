@@ -39,13 +39,13 @@
     	Account Owner:
     </p>
     <p class="col-7">
-    	${pdict.payment.custom.paymentGatewaySEPADebtorName}
+    	${pdict.Basket.getPaymentInstruments('PG_SEPA')[0].custom.paymentGatewaySEPADebtorName}
     </p>
    	<p class="col-5">
     	IBAN:
     </p>
     <p class="col-7">
-    	${pdict.payment.custom.paymentGatewaySEPAIBAN}
+    	${pdict.Basket.getPaymentInstruments('PG_SEPA')[0].custom.paymentGatewaySEPAIBAN}
    	</p>
 
    	<isif condition="${pdict.payment.custom.paymentGatewaySEPABIC}">
@@ -53,7 +53,7 @@
     	BIC:
     </p>
     <p class="col-7">
-    	${pdict.payment.custom.paymentGatewaySEPABIC}
+    	${pdict.Basket.getPaymentInstruments('PG_SEPA')[0].custom.paymentGatewaySEPABIC}
    	</p>
    	</isif>
 

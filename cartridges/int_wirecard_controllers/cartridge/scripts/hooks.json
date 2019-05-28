@@ -7,6 +7,10 @@
     {
       "name": "int.wirecard.handlenotify",
       "script": "./paymentgateway/handleNotify"
+    },
+    {
+      "name": "app.payment.method.PG_SEPA",
+      "script": "./paymentgateway/method/PG_SEPA"
     }
   ]
 }
