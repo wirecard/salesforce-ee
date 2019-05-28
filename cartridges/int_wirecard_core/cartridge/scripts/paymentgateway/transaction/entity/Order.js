@@ -54,7 +54,10 @@ function Order(transaction) {
         result['order-number'] = transaction.orderNo;
     }
 
-    if (transaction.getSitePreference('sendBasketData')) {
+    var isPaypal = ['paypal'].indexOf(transaction.paymentMethodID) > -1;
+    if ((transaction.getSitePreference('sendAdditionalData') && !isPaypal)
+        || (transaction.getSitePreference('sendBasketData') && isPaypal)
+    ) {
         var shipping = new Shipping(transaction);
         var productLineItems = new ProductLineItems(transaction);
         var coupons = new Coupons(transaction);

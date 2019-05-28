@@ -59,8 +59,8 @@ Transaction.prototype.getOrderData = function () {
         }
         refundedAmount = new Money(refundedAmount, order.currencyCode);
         var maxTransactionAmount = OrderEntity.getFixedContainerTotalAmount(order).subtract(refundedAmount);
-        if (result['requested-amount']['value'] > maxTransactionAmount.value) {
-            result['requested-amount']['value'] = maxTransactionAmount.value;
+        if (result['requested-amount'].value > maxTransactionAmount.value) {
+            result['requested-amount'].value = maxTransactionAmount.value;
         }
     }
     return result;

@@ -5,7 +5,6 @@ var Site = require('dw/system/Site').getCurrent();
 var preferenceMapping = {
     addDescriptorToRequest: 'paymentGatewayCreditCardAddDescriptorToRequest',
     sendAdditionalData: 'paymentGatewayCreditCardSendAdditionalData',
-    sendBasketData: 'paymentGatewayCreditCardSendBasketData',
     hashSecret: 'paymentGatewayCreditCardSecret',
     hashSecret3DS: 'paymentGatewayCreditCardSecret3DS',
     merchantAccountId: 'paymentGatewayCreditCardMerchantAccountID',

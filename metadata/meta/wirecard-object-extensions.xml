@@ -27,12 +27,12 @@
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayUrlSalt">
                 <display-name xml:lang="x-default">Url salt</display-name>
-                <description xml:lang="x-default">Salt for calculating url fingerprint sha512 hash</description>
+                <description xml:lang="x-default">Salt for calculating url fingerprint sha512 hash. Be careful when change its value: this will make post-order transactions for existing orders impossible!</description>
                 <type>string</type>
                 <mandatory-flag>true</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>5</min-length>
-                <default-value></default-value>
+                <default-value>V6iqqFM2m+)neEdp</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewaySofortMerchantAccountID">
                 <display-name xml:lang="x-default">Merchant Account ID (MAID)</display-name>
@@ -73,13 +73,6 @@
             <attribute-definition attribute-id="paymentGatewaySofortSendAdditionalData">
                 <display-name xml:lang="x-default">Send additional request data</display-name>
                 <description xml:lang="x-default">If "yes" additional data (fps) is added to request</description>
-                <type>boolean</type>
-                <mandatory-flag>false</mandatory-flag>
-                <default-value>true</default-value>
-            </attribute-definition>
-            <attribute-definition attribute-id="paymentGatewaySofortSendBasketData">
-                <display-name xml:lang="x-default">Send basket request data</display-name>
-                <description xml:lang="x-default">If "yes" basket information is added to request</description>
                 <type>boolean</type>
                 <mandatory-flag>false</mandatory-flag>
                 <default-value>true</default-value>
@@ -302,13 +295,6 @@
                 <mandatory-flag>false</mandatory-flag>
                 <default-value>true</default-value>
             </attribute-definition>
-            <attribute-definition attribute-id="paymentGatewayCreditCardSendBasketData">
-                <display-name xml:lang="x-default">Send basket request data</display-name>
-                <description xml:lang="x-default">If "yes" basket information is added to request</description>
-                <type>boolean</type>
-                <mandatory-flag>false</mandatory-flag>
-                <default-value>true</default-value>
-            </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayCreditCardAddDescriptorToRequest">
                 <display-name xml:lang="x-default">Send descriptor</display-name>
                 <description xml:lang="x-default">If "Yes" the parameter descriptor is included in request data sent to wpg.</description>
@@ -352,7 +338,6 @@
                 <attribute attribute-id="paymentGatewaySofortHttpUser"/>
                 <attribute attribute-id="paymentGatewaySofortHttpPassword"/>
                 <attribute attribute-id="paymentGatewaySofortSendAdditionalData"/>
-                <attribute attribute-id="paymentGatewaySofortSendBasketData"/>
             </attribute-group>
             <attribute-group group-id="PAYMENTGATEWAY_SEPACREDIT">
                 <display-name xml:lang="x-default">Payment gateway settings for SEPA credit transfer</display-name>
@@ -373,7 +358,6 @@
                 <attribute attribute-id="paymentGatewayCreditCardBaseUrl"/>
                 <attribute attribute-id="paymentGatewayCreditCardAddDescriptorToRequest"/>
                 <attribute attribute-id="paymentGatewayCreditCardSendAdditionalData"/>
-                <attribute attribute-id="paymentGatewayCreditCardSendBasketData"/>
                 <attribute attribute-id="paymentGatewayCreditCardInitialTransactionType"/>
                 <attribute attribute-id="paymentGatewayCreditCardConversionRates"/>
             </attribute-group>
