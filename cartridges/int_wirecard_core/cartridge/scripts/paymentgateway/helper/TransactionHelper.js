@@ -27,7 +27,7 @@ var TransactionHelper = {
         for (var i = 0; i < order.custom.paymentGatewayTransactions.length; i++) {
             var transaction = JSON.parse(order.custom.paymentGatewayTransactions[i]);
             var createdAt = new Date(transaction.completionTimeStamp);
-            var requestedAmount = transaction.requestedAmount;
+            var requestedAmount = transaction.requestedAmount || { value: 0, currency: order.currencyCode };
             var capturedAmount = order.custom.paymentGatewayCapturedAmount || 0;
             var refundedAmount = order.custom.paymentGatewayRefundedAmount || 0;
 

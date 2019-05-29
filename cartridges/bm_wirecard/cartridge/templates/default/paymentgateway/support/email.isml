@@ -1,0 +1,47 @@
+<iscontent type="text/html " charset="UTF-8"/>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head></head>
+<body>
+<table>
+    <tr>
+        <td>
+            <isif condition="${ pdict.replyTo.length > 0 }">
+                <p>Reply to: ${ pdict.replyTo }</p>
+            </isif>
+            <isif condition="${ pdict.comments.length > 0 }">
+                <p>
+                    <b>Merchant comments:</b><br/>${ pdict.comments }
+                </p><br/>
+            </isif>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div>
+                <p>
+                    Salesforce commerce cloud cartridge <b>int_wirecard</b><br/>
+                    Version ${ pdict.version }
+                </p>
+                <isloop items="${ pdict.methodConfigurations }" var="method">
+                    <table>
+                        <tbody>
+                        <isloop items="${ method }" var="pref">
+                            <tr>
+                                <isif condition="${ pref.name === 'methodId' }">
+                                    <td colspan="2"><b>${ pref.value }</b></td>
+                                <iselse/>
+                                    <td>${ pref.name }</td><td>${ pref.value }</td>
+                                </isif>
+                            </tr>
+                        </isloop>
+                        </tbody>
+                    </table>
+                    <br/>
+                </isloop>
+            </div>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

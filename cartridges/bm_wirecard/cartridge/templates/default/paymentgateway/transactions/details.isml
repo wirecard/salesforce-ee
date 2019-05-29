@@ -2,8 +2,9 @@
     importPackage(dw.system);
 </isscript>
 <isdecorate template="application/MenuFrame">
-    <iscontent type="text/html" charset="UTF-8">
-    <isinclude template="inc/Modules">
+    <iscontent type="text/html" charset="UTF-8"/>
+    <isinclude template="inc/Modules"/>
+    <isinclude template="paymentgateway/bm/modules"/>
 
     <isset name="Order" value="${ pdict.Order }" scope="page"/>
     <isset name="Transaction" value="${ pdict.Transaction }" scope="page"/>
@@ -178,6 +179,7 @@
             </div>
         </div>
     </div>
+    <ispaymentgatewaysupport termsandconditions="1" supportform="1"/>
     <style>
         table.transaction-detail { width: unset; }
         td#bm_content_column > table > tbody > tr > td,
