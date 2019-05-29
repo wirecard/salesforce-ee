@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//form[@class='shipping-form']//input[@id='shippingPhoneNumber']</value>
+         <value>//form[@class='shipping-form']//input[contains(@id,'shippingPhone')]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,6 +17,6 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//form[@class='shipping-form']//input[@id='shippingPhoneNumber']</value>
+      <value>//form[@class='shipping-form']//input[contains(@id,'shippingPhone')]</value>
    </webElementProperties>
 </WebElementEntity>

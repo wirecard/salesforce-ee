@@ -59,6 +59,7 @@ exports.TransactionDetail = guard.ensure(['get', 'https'], function () {
     var parameterMap = request.httpParameterMap;
     var orderNo = parameterMap.orderNo.value;
     var transactionId = parameterMap.transactionId.value;
+    var transactionType = parameterMap.transactionType.value;
 
     var OrderMgr = require('dw/order/OrderMgr');
     var order = OrderMgr.getOrder(orderNo);
@@ -76,7 +77,7 @@ exports.TransactionDetail = guard.ensure(['get', 'https'], function () {
                 displayMsg = msg.message;
             }
 
-            var transactionData = transactionHelper.getPaymentGatewayTransactionData(order, transactionId);
+            var transactionData = transactionHelper.getPaymentGatewayTransactionData(order, transactionId, transactionType);
             app.getView({
                 isSuccess  : Object.prototype.hasOwnProperty.call(msg, 'success'),
                 Message    : displayMsg,
@@ -84,6 +85,7 @@ exports.TransactionDetail = guard.ensure(['get', 'https'], function () {
                 Transaction: transactionData
             }).render('paymentgateway/transactions/details');
         } catch (err) {
+            Logger.error('Error while rendering transaction details \n' + err.fileName + ': ' + err.message + '\n' + err.stack);
             response.redirect(URLUtils.https('PaymentGateway-Transactions'));
         }
     }
@@ -96,6 +98,7 @@ exports.ExecuteOperation = guard.ensure(['post', 'https'], function () {
     var parameterMap = request.httpParameterMap;
     var orderNo = parameterMap.orderNo.value;
     var transactionId = parameterMap.transactionId.value;
+    var transactionType = parameterMap.transactionType.value;
     var operation = parameterMap.operation.value;
     var amount = Number(parameterMap.amount.value);
 
@@ -145,7 +148,7 @@ exports.ExecuteOperation = guard.ensure(['post', 'https'], function () {
         }
     }
     session.privacy.paymentGatewayMsg = JSON.stringify(msg);
-    response.redirect(URLUtils.https('PaymentGateway-TransactionDetail', 'orderNo', orderNo, 'transactionId', transactionId));
+    response.redirect(URLUtils.https('PaymentGateway-TransactionDetail', 'orderNo', orderNo, 'transactionId', transactionId, 'transactionType', transactionType));
 });
 
 /**
@@ -157,6 +160,7 @@ exports.HttpAccessOverview = guard.ensure(['get', 'https'], function () {
     var preferences;
 
     [
+        { methodName: 'Credit Card', methodID: 'PG_CREDITCARD' },
         { methodName: 'PayPal', methodID: 'PG_PAYPAL' },
         { methodName: 'Sofort.', methodID: 'PG_SOFORT' }
     ].forEach(function (p) {

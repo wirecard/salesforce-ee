@@ -16,6 +16,12 @@ function getSitePreference(key) {
 }
 
 var PreferencesMapping = {
+    PG_CREDITCARD: {
+        userName         : 'paymentGatewayCreditCardHttpUser',
+        password         : 'paymentGatewayCreditCardHttpPassword',
+        baseUrl          : 'paymentGatewayCreditCardBaseUrl',
+        merchantAccountID: 'paymentGatewayCreditCardMerchantAccountID'
+    },
     PG_PAYPAL: {
         userName         : 'paymentGatewayPayPalHttpUser',
         password         : 'paymentGatewayPayPalHttpPassword',

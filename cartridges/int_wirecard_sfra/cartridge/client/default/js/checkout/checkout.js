@@ -5,6 +5,7 @@ var baseCheckout = require('base/checkout/checkout');
 var addressHelpers = require('base/checkout/address');
 var shippingHelpers = require('base/checkout/shipping');
 var billingHelpers = require('./billing');
+var paymentgateway = require('./paymentgateway');
 var summaryHelpers = require('base/checkout/summary');
 var formHelpers = require('base/checkout/formErrors');
 var scrollAnimate = require('base/components/scrollAnimate');
@@ -308,7 +309,6 @@ var scrollAnimate = require('base/components/scrollAnimate');
 
                     return defer;
                 } else if (stage === 'placeOrder') {
-                    // disable the placeOrder button here
                     $('body').trigger('checkout:disableButton', '.next-step-button button');
                     $.ajax({
                         url: $('.place-order').data('action'),
@@ -324,6 +324,31 @@ var scrollAnimate = require('base/components/scrollAnimate');
                                     // go to appropriate stage and display error message
                                     defer.reject(data);
                                 }
+                            } else if (data.pgTransactionURL) {
+                                paymentgateway.submitSeamlessForm(data.pgTransactionURL, data.pgRestoreBasketURL,function(data) {
+                                    var continueUrl = data.continueUrl;
+                                    var urlParams = {
+                                        ID: data.orderID,
+                                        token: data.orderToken
+                                    };
+
+                                    continueUrl += (continueUrl.indexOf('?') !== -1 ? '&' : '?') +
+                                        Object.keys(urlParams).map(function (key) {
+                                            return key + '=' + encodeURIComponent(urlParams[key]);
+                                        }).join('&');
+
+                                    window.location.href = continueUrl;
+                                    defer.resolve(data);
+                                }, function (errMessage) {
+                                    defer.reject({
+                                        errorStage: {
+                                            stage: 'payment',
+                                            step: 'paymentInstrument'
+                                        },
+                                        errorMessage: errMessage
+                                    });
+                                    paymentgateway.getCreditCardRequestData();
+                                });
                             } else if (data.pgRedirectURL) {
                                 window.location.href = data.pgRedirectURL;
                                 defer.resolve(data);
@@ -450,6 +475,8 @@ var scrollAnimate = require('base/components/scrollAnimate');
                                 if ($billingAddressSameAsShipping.is(':checked')) {
                                     $billingAddressSameAsShipping.prop('checked', false);
                                 }
+                            } else if (data.errorStage.step === 'PG_CREDITCARD') {
+                                paymentgateway.getCreditCardRequestData();
                             }
                         }
 

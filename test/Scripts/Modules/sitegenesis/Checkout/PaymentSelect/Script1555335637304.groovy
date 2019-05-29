@@ -22,8 +22,8 @@ switch (paymentMethodId) {
         WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentMethods/Sofort'), [:], FailureHandling.STOP_ON_FAILURE)
 
         break
-    case 'PG_CREDIT':
-        WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentMethods/CreditCard'), [:], FailureHandling.STOP_ON_FAILURE)
+    case 'PG_CREDITCARD':
+        WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentMethods/Creditcard'), [:], FailureHandling.STOP_ON_FAILURE)
 
         break
     default:

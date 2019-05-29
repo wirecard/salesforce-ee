@@ -26,7 +26,7 @@ jobs:
         - npm run compile:scss
         - npm run compile:js
         - npm run compile:fonts
-        - #Clone reference architecture first for right base paths in package.json
+        #Clone reference architecture first for right base paths in package.json
         - cd $CWD
         - npm install
         - npm run compile:js
@@ -35,14 +35,14 @@ jobs:
         - git clone https://$STOREFRONT_TOKEN@github.com/SalesforceCommerceCloud/sitegenesis.git
         - cd sitegenesis
         - git checkout v104.1.2
-        - #BEGIN fix for npm install
+        #BEGIN fix for npm install
         - npm install --save "git://github.com/jfhbrook/node-ecstatic.git#39f21cdf1998e6169f127874f97fd9dc9efcfacc"
-        - #END fix for npm install
+        #END fix for npm install
         - npm install
         - npm install -g gulp
-        - #Copy modified scripts
-        - cp -r ../salesforce-ee/cartridges/app_storefront_controllers/ ./app_storefront_controllers/
-        - cp -r ../salesforce-ee/cartridges/app_storefront_core/ ./app_storefront_core/
+        #Copy modified scripts
+        - cp -r ../salesforce-ee/cartridges/app_storefront_controllers/ .
+        - cp -r ../salesforce-ee/cartridges/app_storefront_core/ .
         - gulp build
         - find -maxdepth 0 -type d -exec cp -r {} "../storefront-reference-architecture/cartridges/" \;
         - if test -d $CWD/cartridges; then find $CWD/cartridges -maxdepth 0 -type d -exec cp -r {} "$CWD/../storefront-reference-architecture/" \;; fi

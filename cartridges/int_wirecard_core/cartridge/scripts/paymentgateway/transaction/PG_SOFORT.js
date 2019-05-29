@@ -4,8 +4,7 @@ var Transaction = require('./Transaction');
 var Type = require('./Type').All;
 
 var preferenceMapping = {
-    sendAdditionalData: 'paymentGatewaySofortSendAdditionalData',
-    sendBasketData: 'paymentGatewaySofortSendBasketData'
+    sendAdditionalData: 'paymentGatewaySofortSendAdditionalData'
 };
 
 /**

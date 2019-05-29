@@ -11,17 +11,21 @@ Type.All = {
     AUTHORIZATION_ONLY: 'authorization-only',
     CANCEL: 'cancel',
     CAPTURE_AUTHORIZATION: 'capture-authorization',
+    CHECK_ENROLLMENT: 'check-enrollment',
+    CHECK_PAYER_RESPONSE: 'check-payer-response',
     CREDIT: 'credit',
     DEBIT: 'debit',
     PENDING_CREDIT: 'pending-credit',
+    PENDING_DEBIT: 'pending-debit',
+    PURCHASE: 'purchase',
     REFUND: 'refund',
     REFUND_CAPTURE: 'refund-capture',
     REFUND_DEBIT: 'refund-debit',
+    REFUND_PURCHASE: 'refund-purchase',
     VOID_AUTHORIZATION: 'void-authorization',
+    VOID_CAPTURE: 'void-capture',
     VOID_DEBIT: 'void-debit',
-    CHECK_ENROLLMENT: 'check-enrollment',
-    PENDING_DEBIT: 'pending-debit',
-    PURCHASE: 'purchase'
+    VOID_PURCHASE: 'void-purchase'
 };
 
 /**
@@ -36,7 +40,10 @@ Type.Follow = [
     Type.All.REFUND,
     Type.All.REFUND_CAPTURE,
     Type.All.REFUND_DEBIT,
-    Type.All.VOID_AUTHORIZATION
+    Type.All.REFUND_PURCHASE,
+    Type.All.VOID_AUTHORIZATION,
+    Type.All.VOID_CAPTURE,
+    Type.All.VOID_PURCHASE
 ];
 
 /**
@@ -64,7 +71,21 @@ Type.Refund = [
     Type.All.CREDIT,
     Type.All.PENDING_CREDIT,
     Type.All.REFUND_CAPTURE,
-    Type.All.REFUND_DEBIT
+    Type.All.REFUND_DEBIT,
+    Type.All.REFUND_PURCHASE,
+    Type.All.VOID_CAPTURE,
+    Type.All.VOID_PURCHASE
 ];
+
+/**
+ * Object with type pairs that succeed each other
+ * @var {Object}
+ */
+Type.FollowMapping = function () {
+    var mapping = [];
+    mapping[Type.All.VOID_CAPTURE] = Type.All.REFUND_CAPTURE;
+    mapping[Type.All.VOID_PURCHASE] = Type.All.REFUND_PURCHASE;
+    return mapping;
+};
 
 module.exports = Type;

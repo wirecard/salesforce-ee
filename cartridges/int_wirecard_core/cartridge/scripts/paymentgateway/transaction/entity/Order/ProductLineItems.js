@@ -26,7 +26,7 @@ function getLineItems(transaction) {
             quantity: qty,
             'tax-rate': (vatRate > 0) ? vatRate : 0,
             'tax-amount': (pli.getAdjustedTax().value / qty).toFixed(2),
-            currency: pli.getAdjustedTax().currencyCode,
+            currency: order.currencyCode,
             amount: (pli.getAdjustedGrossPrice().value / qty).toFixed(2)
         };
         orderItems.push(new Item(itemData, paymentMethodID));

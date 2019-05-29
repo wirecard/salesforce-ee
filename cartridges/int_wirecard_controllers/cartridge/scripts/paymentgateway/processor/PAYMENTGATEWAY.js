@@ -4,6 +4,7 @@ var packageJson = require('int_wirecard_controllers/package.json');
 var controllerCartridge = packageJson.controllerCartridge;
 
 /* API Includes */
+var Transaction = require('dw/system/Transaction');
 var pgLogger = require('dw/system/Logger').getLogger('paymentgateway');
 
 var Cart = require(controllerCartridge + '/cartridge/scripts/models/CartModel');
@@ -15,7 +16,7 @@ function Handle(args) {
     var cart = Cart.get(args.Basket);
     var paymentMethodId = args.PaymentMethodID;
 
-    require('dw/system/Transaction').wrap(function () {
+    Transaction.wrap(function () {
         cart.removeExistingPaymentInstruments(paymentMethodId);
         cart.createPaymentInstrument(paymentMethodId, cart.getNonGiftCertificateAmount());
     });
@@ -54,6 +55,13 @@ function Authorize(args) {
     delete responseData.redirectURL;
     var transactionHelper = require('*/cartridge/scripts/paymentgateway/helper/TransactionHelper');
     transactionHelper.saveTransactionToOrder(order, responseData);
+
+    var PaymentMgr = require('dw/order/PaymentMgr');
+    var paymentProcessor = PaymentMgr.getPaymentMethod(paymentInstrument.getPaymentMethod()).getPaymentProcessor();
+    Transaction.wrap(function () {
+        paymentInstrument.paymentTransaction.setTransactionID(order.orderNo);
+        paymentInstrument.paymentTransaction.setPaymentProcessor(paymentProcessor);
+    });
 
     return result;
 }

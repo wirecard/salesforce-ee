@@ -52,9 +52,10 @@ var TransactionHelper = {
      * Retrieve data for a single transaction
      * @param {dw.order.Order} - related order
      * @param {string} transactionId - as provided by payment gateway
+     * @param {string} transactionType - as provided by payment gateway
      * @returns {Object}
      */
-    getPaymentGatewayTransactionData: function (order, transactionId) {
+    getPaymentGatewayTransactionData: function (order, transactionId, transactionType) {
         var StringUtils = require('dw/util/StringUtils');
 
         var transactionData;
@@ -65,7 +66,7 @@ var TransactionHelper = {
 
         while (allTransactionsIterator.hasNext()) {
             var tmpTransaction = allTransactionsIterator.next();
-            if (tmpTransaction.transactionId == transactionId) {
+            if (tmpTransaction.transactionId == transactionId && tmpTransaction.transactionType == transactionType) {
                 transactionData = tmpTransaction;
             } else if (tmpTransaction.parentTransactionId == transactionId
                 && Type.Cancel.indexOf(tmpTransaction.transactionType) > -1
@@ -200,9 +201,12 @@ var TransactionHelper = {
      * @param {dw.order.Order} order - related order
      * @param {Object} newTransaction - transaction data
      * @param {boolean} overwrite - if true replaces preceding initial transaction
-     * @returns {Object}
+     * @returns {void}
      */
     saveTransactionToOrder: function (order, newTransaction, overwrite) {
+        if (newTransaction.transactionType === Type.All.CHECK_PAYER_RESPONSE) {
+            return;
+        }
         var ArrayList = require('dw/util/ArrayList');
         var Transaction = require('dw/system/Transaction');
 
@@ -213,7 +217,9 @@ var TransactionHelper = {
         for (var i = 0; i < savedTransactions.length; i++) {
             var transaction = JSON.parse(savedTransactions[i]);
 
-            if (transaction.transactionId == newTransaction.transactionId) {
+            if ((transaction.transactionId == newTransaction.transactionId)
+                && (transaction.transactionType == newTransaction.transactionType)
+            ) {
                 if (overwrite) {
                     // replace backend transaction with notification response
                     allPaymentTransactions.push(JSON.stringify(newTransaction));
@@ -237,6 +243,15 @@ var TransactionHelper = {
         Transaction.wrap(function () {
             order.custom.paymentGatewayTransactions = allPaymentTransactions;
         });
+    },
+
+    /**
+     * Save credit card (seamless) transaction with order
+     * @param {dw.order.Order} order - related order
+     * @param {Object} transactionData - transaction data as json object
+     */
+    saveSeamlessTransactionToOrder: function (order, transactionData) {
+        this.saveTransactionToOrder(order, this.parseSeamlessTransactionData(transactionData));
     },
 
     /**
@@ -265,13 +280,75 @@ var TransactionHelper = {
                     order.custom.paymentGatewayRefundedAmount = result.value;
                 });
             }
-            Transaction.wrap(function () {
-                order.custom.paymentGatewayOrderState = require('~/cartridge/scripts/paymentgateway/helper/OrderHelper')
-                    .getPaymentGatewayOrderStateFromTransactionType(order, transaction);
-            });
+            if (transaction.transactionType != Type.All.CHECK_PAYER_RESPONSE) {
+                var orderState = require('~/cartridge/scripts/paymentgateway/helper/OrderHelper').getPaymentGatewayOrderStateFromTransactionType(order, transaction);
+                Transaction.wrap(function () {
+                    order.custom.paymentGatewayOrderState = orderState;
+                });
+            }
         }
         // finally save transaction with order
         this.saveTransactionToOrder(order, transaction, overwrite);
+    },
+
+    /**
+     * Parse transaction data from seamless integration
+     * @param {Object} transactionData - json object
+     * @returns {Object} - status with {code: ..., description: ... }
+     */
+    parseSeamlessTransactionData: function (transactionData) {
+        var result = {};
+        var stringHelper = require('*/cartridge/scripts/paymentgateway/util/StringHelper');
+        var tmp;
+
+        [
+            'status_code_1',
+            'request_id',
+            'merchant_account_id',
+            'transaction_type',
+            'transaction_state',
+            'transaction_id',
+            'completion_time_stamp',
+            'requested_amount',
+            'payment_method',
+            'parent_transaction_id',
+            'custom_fields'
+        ].forEach(function (key) {
+            var resultKey = stringHelper.camelize(key.replace(/_/g, '-'));
+            if (Object.prototype.hasOwnProperty.call(transactionData, key)) {
+                if (key === 'status_code_1') {
+                    if (Object.prototype.hasOwnProperty.call(transactionData, 'status_description_1')
+                        && Object.prototype.hasOwnProperty.call(transactionData, 'status_severity_1')
+                    ) {
+                        result.status = {
+                            code: transactionData.status_code_1,
+                            description: transactionData.status_description_1,
+                            severity: transactionData.status_severity_1
+                        };
+                    }
+                } else if (key === 'completion_time_stamp') {
+                    tmp = transactionData[key].match(/^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/);
+                    var date = new Date();
+                    if (tmp.length === 7) {
+                        date.setFullYear(tmp[1]);
+                        date.setMonth(parseInt(tmp[2], 10) - 1);
+                        date.setDate(tmp[3]);
+                        date.setHours(tmp[4]);
+                        date.setMinutes(tmp[5]);
+                        date.setSeconds(tmp[6]);
+                    }
+                    result[resultKey] = date.getTime();
+                } else if (key === 'requested_amount') {
+                    result[resultKey] = {
+                        value: transactionData[key],
+                        currency: transactionData.requested_amount_currency
+                    };
+                } else {
+                    result[resultKey] = transactionData[key];
+                }
+            }
+        });
+        return result;
     },
 
     /**

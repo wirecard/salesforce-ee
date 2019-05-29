@@ -4,6 +4,9 @@
  * @var {Object} methodsWithForms - payment gateway methods that come with form fields
  */
 var methodsWithForms = {
+    PG_CREDITCARD: {
+        transactionData: 'text'
+    },
     PG_GIROPAY: {
         bic: 'text'
     },
@@ -83,10 +86,10 @@ module.exports = {
     /**
      * Retrieve payment method information
      * @param {string} methodID - payment method id
-     * @returns {Object}
+     * @returns {undefined|Object}
      */
     getPaymentMethodData: function (methodID) {
-        var result = {};
+        var result;
         var PaymentMgr = require('dw/order/PaymentMgr');
         var paymentMethod = PaymentMgr.getPaymentMethod(methodID);
 
@@ -94,6 +97,7 @@ module.exports = {
             result = {
                 ID: paymentMethod.ID,
                 name: paymentMethod.name,
+                active: paymentMethod.active,
                 description: paymentMethod.description,
                 image: paymentMethod.image ? paymentMethod.image.URL.toString() : null
             };

@@ -32,6 +32,33 @@ function validateCreditCard(form) {
 }
 
 /**
+ * Attempts to create an order from the current basket / with reserved orderNo for PG_CREDITCARD
+ * @param {dw.order.Basket} currentBasket - The current basket
+ * @returns {dw.order.Order} The order object created from the current basket
+ */
+function createOrder(currentBasket) {
+    var order;
+
+    try {
+        if (currentBasket.custom.paymentGatewayReservedOrderNo) {
+            order = Transaction.wrap(function () {
+                return OrderMgr.createOrder(currentBasket, currentBasket.custom.paymentGatewayReservedOrderNo);
+            });
+        } else {
+            order = Transaction.wrap(function () {
+                return OrderMgr.createOrder(currentBasket);
+            });
+        }
+    } catch (error) {
+        Transaction.wrap(function () {
+            delete currentBasket.custom.paymentGatewayReservedOrderNo; // eslint-disable-line
+        });
+        return null;
+    }
+    return order;
+}
+
+/**
  * handles the payment authorization for each payment instrument
  * @param {dw.order.Order} order - the order object
  * @param {string} orderNumber - The order number for the order
@@ -79,7 +106,13 @@ function handlePayments(order, orderNumber) {
                         Transaction.wrap(function () { OrderMgr.failOrder(order); });
                         result.error = true;
                         result.errorMessage = authorizationResult.errorMessage;
+                        if (Object.prototype.hasOwnProperty.call(authorizationResult, 'errorStage')) {
+                            result.errorStage = authorizationResult.errorStage;
+                        }
                         break;
+                    } else if (authorizationResult.saveTransactionURL) {
+                        result.saveTransactionURL = authorizationResult.saveTransactionURL;
+                        result.restoreBasketURL = authorizationResult.restoreBasketURL;
                     } else if (authorizationResult.redirectURL) {
                         // redirect to wpg
                         result.redirectURL = authorizationResult.redirectURL;
@@ -112,7 +145,7 @@ module.exports = {
     calculatePaymentTransaction: base.calculatePaymentTransaction,
     recalculateBasket: base.recalculateBasket,
     handlePayments: handlePayments,
-    createOrder: base.createOrder,
+    createOrder: createOrder,
     placeOrder: base.placeOrder,
     savePaymentInstrumentToWallet: base.savePaymentInstrumentToWallet,
     getRenderedPaymentInstruments: base.getRenderedPaymentInstruments,

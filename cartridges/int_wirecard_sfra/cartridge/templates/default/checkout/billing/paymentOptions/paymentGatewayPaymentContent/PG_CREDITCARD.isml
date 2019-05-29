@@ -1,0 +1,10 @@
+<!--- TEMPLATENAME: PG_CREDITCARD.isml --->
+<isset name="pgCreditCardFields" value="${ pdict.forms.billingForm.PG_CREDITCARD }" scope="page"/>
+<div id="pg-creditcard-form"></div>
+
+<fieldset class="payment-form-fields">
+    <input type="hidden" class="form-control"
+        name="${pdict.forms.billingForm.paymentMethod.htmlName}"
+        value="PG_CREDITCARD"
+    >
+</fieldset>

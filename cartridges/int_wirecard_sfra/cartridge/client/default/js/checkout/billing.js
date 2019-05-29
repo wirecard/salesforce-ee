@@ -2,6 +2,8 @@
 
 var base = require('base/checkout/billing');
 
+var paymentgateway = require('./paymentgateway');
+
 /**
  * Updates the payment information in checkout, based on the supplied order model
  * @param {Object} order - checkout model to use as basis of new truth
@@ -40,5 +42,33 @@ function updatePaymentInformation(order) {
     $paymentSummary.empty().append(htmlToAppend);
 }
 base.methods.updatePaymentInformation = updatePaymentInformation;
+
+base.paymentTabs = function () {
+    $('.payment-options .nav-item').on('click', function (e) {
+        e.preventDefault();
+        var methodID = $(this).data('method-id');
+        $('.payment-information').data('payment-method-id', methodID);
+        // dotsource custom: update selected payment method in billing form
+        $('input[name$=paymentMethod]').val(methodID);
+        // hide other payment methods form
+        $('.credit-card-selection-new').find('.tab-pane').removeClass('active');
+        var paymentOptionTab = $('[id=' + methodID + '-content');
+        if (paymentOptionTab.length) {
+            paymentOptionTab.addClass('active');
+            if (methodID === 'PG_CREDITCARD') {
+                paymentgateway.getCreditCardRequestData();
+            }
+        }
+    });
+    var activeItem = $('.payment-options .nav-item > a.nav-link.active');
+    if (activeItem.length === 1 && /PG_CREDITCARD/.test(activeItem.attr('class'))) {
+        if (typeof WirecardPaymentPage === 'undefined') {
+            $('.tab-pane.active').removeClass('active');
+            activeItem.removeClass('active');
+        } else {
+            paymentgateway.getCreditCardRequestData();
+        }
+    }
+};
 
 module.exports = base;
