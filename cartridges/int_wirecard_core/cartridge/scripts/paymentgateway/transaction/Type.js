@@ -13,6 +13,7 @@ Type.All = {
     CAPTURE_AUTHORIZATION: 'capture-authorization',
     CREDIT: 'credit',
     DEBIT: 'debit',
+    PENDING_CREDIT: 'pending-credit',
     REFUND: 'refund',
     REFUND_CAPTURE: 'refund-capture',
     REFUND_DEBIT: 'refund-debit',
@@ -30,6 +31,8 @@ Type.All = {
 Type.Follow = [
     Type.All.CANCEL,
     Type.All.CAPTURE_AUTHORIZATION,
+    Type.All.CREDIT,
+    Type.All.PENDING_CREDIT,
     Type.All.REFUND,
     Type.All.REFUND_CAPTURE,
     Type.All.REFUND_DEBIT,
@@ -58,6 +61,8 @@ Type.Capture = [
  * @var {Array}
  */
 Type.Refund = [
+    Type.All.CREDIT,
+    Type.All.PENDING_CREDIT,
     Type.All.REFUND_CAPTURE,
     Type.All.REFUND_DEBIT
 ];

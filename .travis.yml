@@ -40,6 +40,9 @@ jobs:
         - #END fix for npm install
         - npm install
         - npm install -g gulp
+        - #Copy modified scripts
+        - cp -r ../salesforce-ee/cartridges/app_storefront_controllers/ ./app_storefront_controllers/
+        - cp -r ../salesforce-ee/cartridges/app_storefront_core/ ./app_storefront_core/
         - gulp build
         - find -maxdepth 0 -type d -exec cp -r {} "../storefront-reference-architecture/cartridges/" \;
         - if test -d $CWD/cartridges; then find $CWD/cartridges -maxdepth 0 -type d -exec cp -r {} "$CWD/../storefront-reference-architecture/" \;; fi

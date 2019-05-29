@@ -5,6 +5,10 @@
       "script": "./hooks/paymentgateway"
     },
     {
+      "name": "app.payment.form.processor.paymentgateway",
+      "script": "./hooks/paymentgateway_form_processor"
+    },
+    {
       "name": "int.wirecard.handlenotify",
       "script": "./hooks/handleNotify"
     }

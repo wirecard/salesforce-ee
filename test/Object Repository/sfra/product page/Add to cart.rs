@@ -17,25 +17,25 @@
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>tag</name>
       <type>Main</type>
       <value>button</value>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>contains</matchCondition>
       <name>class</name>
       <type>Main</type>
       <value>add-to-cart</value>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>false</isSelected>
+      <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//body[1]/div[@class=&quot;page&quot;]/div[@class=&quot;container product-detail product-wrapper&quot;]/div[@class=&quot;row&quot;]/div[@class=&quot;col-12 col-sm-6&quot;]/div[@class=&quot;row justify-content-center&quot;]/div[@class=&quot;col-12 prices-add-to-cart-actions&quot;]/div[@class=&quot;row cart-and-ipay&quot;]/div[@class=&quot;col-sm-12&quot;]/button[@class=&quot;add-to-cart btn btn-primary&quot;]</value>
+      <value>//button[contains(@class, 'add-to-cart')]</value>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>

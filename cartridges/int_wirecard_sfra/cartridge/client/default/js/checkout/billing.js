@@ -25,7 +25,7 @@ function updatePaymentInformation(order) {
                 + paymentMethodData.expirationMonth
                 + '/' + paymentMethodData.expirationYear
                 + '</span></div>';
-        } else if (/^PG/.test(paymentMethodData.paymentMethod)) {
+        } else if (/^PG_/.test(paymentMethodData.paymentMethod)) {
             // fallback for all methods without specific payment information
             if (Object.prototype.hasOwnProperty.call(paymentMethodData, 'methodImg')) {
                 htmlToAppend += $('<img/>', {
@@ -40,17 +40,5 @@ function updatePaymentInformation(order) {
     $paymentSummary.empty().append(htmlToAppend);
 }
 base.methods.updatePaymentInformation = updatePaymentInformation;
-
-base.paymentTabs = function () {
-    $('.payment-options .nav-item').on('click', function (e) {
-        e.preventDefault();
-        var methodID = $(this).data('method-id');
-        $('.payment-information').data('payment-method-id', methodID);
-        // dotsource custom: update selected payment method in billing form
-        $('input[name$=paymentMethod]').val(methodID);
-        // hide other payment methods form
-        $('.credit-card-selection-new').find('.tab-pane').removeClass('active');
-    });
-};
 
 module.exports = base;

@@ -5,6 +5,20 @@
         <image>images/payment/paymentgateway/sofort.svg</image>
         <enabled-flag>false</enabled-flag>
         <processor-id>PAYMENTGATEWAY</processor-id>
+        <countries>
+            <country country-code="AT"/>
+            <country country-code="BE"/>
+            <country country-code="CH"/>
+            <country country-code="CZ"/>
+            <country country-code="DE"/>
+            <country country-code="ES"/>
+            <country country-code="GB"/>
+            <country country-code="HU"/>
+            <country country-code="IT"/>
+            <country country-code="NL"/>
+            <country country-code="PL"/>
+            <country country-code="SK"/>
+        </countries>
         <currencies>
             <currency>EUR</currency>
             <currency>CHF</currency>

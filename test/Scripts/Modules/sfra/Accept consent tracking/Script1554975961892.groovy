@@ -16,6 +16,8 @@ import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import org.openqa.selenium.WebDriver as WebDriver
 import org.openqa.selenium.By as By
 
+WebUI.delay(5)
+
 WebUI.waitForElementClickable(findTestObject('sfra/homepage/button_Yes'), 5)
 
 WebUI.click(findTestObject('sfra/homepage/button_Yes'))

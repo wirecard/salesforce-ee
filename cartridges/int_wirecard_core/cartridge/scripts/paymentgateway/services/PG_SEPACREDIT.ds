@@ -1,0 +1,40 @@
+/**
+ * Script includes
+ */
+var AbstractPaymentGatewayService = require('./AbstractPaymentGatewayService');
+
+var SEPACreditService = AbstractPaymentGatewayService.extend({
+    init: function (type) {
+        this._super(type);
+        this.paymentMethodID = 'sepacredit';
+    },
+
+    /**
+     * Retrieves the base url for SEPACredit.
+     * @returns {String}
+     */
+    getBaseUrl: function() {
+        return this.getSitePreference('paymentGatewaySEPACreditBaseUrl');
+    },
+
+    /**
+     * Retrieves the http user for SEPACredit.
+     * @returns {String}
+     */
+    getHttpUsername: function() {
+        return this.getSitePreference('paymentGatewaySEPACreditHttpUser');
+    },
+
+    /**
+     * Retrieves the http password for SEPACredit.
+     * @returns {String}
+     */
+    getHttpPassword: function() {
+        return this.getSitePreference('paymentGatewaySEPACreditHttpPassword');
+    }
+});
+
+//Export the configured service singleton
+module.exports = function (type) {
+    return (new SEPACreditService(type)).getService();
+};

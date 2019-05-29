@@ -12,6 +12,5 @@
 
     <include formid="creditCardFields" name="creditCard"/>
 
-    <!--  wirecard payment method forms -->
-    <include formid="PG_IDEAL" name="PG_IDEAL"/>
+    <field formid="subscribe" type="boolean" checked="false" default-value="false" mandatory="false" />
 </form>

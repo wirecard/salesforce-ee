@@ -68,7 +68,7 @@ exports.execute = function (pdict) {
             );
         } catch (err) {
             errorMessage = err.message;
-            pgLogger.error('Error while processing notification for transaction #' + notification.custom.transactionId
+            pgLogger.error('Error while processing notification for transaction ' + notification.custom.transactionId
                 + '\n' + err.fileName + ': ' + err.message + '\n' + err.stack);
         } finally {
             // archive notification
