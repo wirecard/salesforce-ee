@@ -63,7 +63,7 @@ function getRefundTransactionType() {
     }
     switch (self['transaction-type']) {
         case Type.DEBIT:
-            type = Type.SEPA_CREDIT;
+            type = Type.CREDIT;
             break;
         default:
             throw new Error('unsupported transaction type!');

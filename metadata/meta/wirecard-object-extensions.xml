@@ -301,12 +301,19 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
             </attribute-definition>
-            <attribute-definition attribute-id="paymentGatewaySEPASummaryText">
+            <attribute-definition attribute-id="paymentGatewaySEPAMandateText">
                 <display-name xml:lang="x-default">SEPA Mandate order summary text</display-name>
                 <description xml:lang="x-default">summary text for SEPA Mandates</description>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewaySEPAMandateTextAccept">
+                <display-name xml:lang="x-default">SEPA text for acceppting terms and conditions</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayCreditCardMerchantAccountID">
                 <display-name xml:lang="x-default">Merchant Account ID (MAID)</display-name>
@@ -464,7 +471,8 @@
                 <attribute attribute-id="paymentGatewaySEPAMandateZIP"/>
                 <attribute attribute-id="paymentGatewaySEPAMandateCity"/>
                 <attribute attribute-id="paymentGatewaySEPAMandateCountry"/>
-                <attribute attribute-id="paymentGatewaySEPASummaryText"/>
+                <attribute attribute-id="paymentGatewaySEPAMandateText"/>
+                <attribute attribute-id="paymentGatewaySEPAMandateTextAccept"/>
             </attribute-group>
             <attribute-group group-id="PAYMENTGATEWAY_CREDITCARD">
                 <display-name xml:lang="x-default">Payment gateway settings for Credit card</display-name>

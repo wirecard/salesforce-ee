@@ -5,7 +5,7 @@
     var bicVisible = require('dw/system/Site').getCurrent().getCustomPreferenceValue('paymentGatewaySEPAShowBICInCheckout');
     var bicRequired = sepaFields.paymentGatewaySEPABIC.mandatory ? 'required' : '';
 </isscript>
-<fieldset class="pg-sepa-form">
+<fieldset class="pg-sepa-form payment-form-fields">
 
     <div class="row">
         <div class="col-12">
@@ -59,5 +59,10 @@
         </div>
     </div>
     </isif>
+    
+    <input type="hidden" class="form-control"
+    	name="${pdict.forms.billingForm.paymentMethod.htmlName}"
+    	value="PG_SEPA"
+    />
 
 </fieldset>
