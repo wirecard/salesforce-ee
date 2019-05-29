@@ -28,10 +28,21 @@ function getUrl(lineItemCtnr, route) {
  */
 function RedirectUrls(transaction) {
     var basket = transaction.order;
+
+    var format = 'application/json';
+    if (require('dw/system/Site').getCurrent().getCustomPreferenceValue('paymentGatewaySignResponses')) {
+        format += '-signed';
+    }
+
     var result = {
-        notification_transaction_url: getUrl(basket, 'PaymentGatewayCredit-Notify'),
-        notifications_format: 'application/json'
+        notification_url_1: getUrl(basket, 'PaymentGatewayCredit-Notify'),
+        notifications_format: format
     };
+    var mailto = transaction.getSitePreference('paymentGatewayNotificationEmail');
+    if (mailto) {
+        result.notification_url_2 = 'mailto:' + mailto;
+    }
+
     var routes = {
         cancel: 'PaymentGatewayCredit-Cancel',
         fail: 'PaymentGatewayCredit-Fail',
