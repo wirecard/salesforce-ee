@@ -1,0 +1,11 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<isset name="paymentInstruments" value="${pdict.Basket.paymentInstruments}" scope="page"/>
+
+<isloop items="${paymentInstruments}" var="paymentInstr" status="loopstate">
+    <isscript>
+        var pgPaymentMethodId = dw.order.PaymentMgr.getPaymentMethod(paymentInstr.paymentMethod).ID;
+    </isscript>
+    <isif condition="${ /^PG_/.test(pgPaymentMethodId) }">
+        <input type="hidden" name="paymentgateway_method_id" value="${ pgPaymentMethodId }"/>
+    </isif>
+</isloop>

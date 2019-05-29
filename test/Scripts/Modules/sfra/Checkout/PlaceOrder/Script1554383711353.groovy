@@ -14,8 +14,9 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
 //WebUI.waitForElementClickable(findTestObject('sfra/checkout/Link proceed to order overview'), 2)
+WebUI.delay(5)
 
-WebUI.waitForElementVisible(findTestObject('sfra/checkout/Link place order'), 5)
+WebUI.waitForElementClickable(findTestObject('sfra/checkout/Link place order'), 5)
 
 WebUI.click(findTestObject('sfra/checkout/Link place order'))
 
@@ -24,11 +25,15 @@ switch (paymentMethodId) {
         WebUI.callTestCase(findTestCase('Modules/Payment methods/PayPal'), [:], FailureHandling.STOP_ON_FAILURE)
 
         break
+    case 'PG_SOFORT':
+        WebUI.callTestCase(findTestCase('Modules/Payment methods/Sofort'), [:], FailureHandling.STOP_ON_FAILURE)
+
+        break
     default:
         break
 }
 
-WebUI.waitForElementPresent(findTestObject('sfra/checkout/Order success message'), 20)
+WebUI.waitForElementPresent(findTestObject('sfra/checkout/Order success message'), 60)
 
-WebUI.verifyElementPresent(findTestObject('sfra/checkout/Order success message'), 0)
+WebUI.verifyElementPresent(findTestObject('sfra/checkout/Order success message'), 5)
 

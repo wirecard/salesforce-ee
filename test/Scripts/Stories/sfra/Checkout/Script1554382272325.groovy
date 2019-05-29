@@ -25,10 +25,10 @@ if (login == 'false') {
     WebUI.callTestCase(findTestCase('Modules/sfra/Checkout/CheckoutGuest'), [:], FailureHandling.STOP_ON_FAILURE)
 
     WebUI.callTestCase(findTestCase('Modules/sfra/Checkout/ShippingAddress'), [('firstName') : firstName, ('lastName') : lastName
-            , ('address1') : address1, ('zipCode') : zipCode, ('city') : city, ('state') : state, ('country') : country],
+            , ('address1') : address1, ('zipCode') : zipCode, ('city') : city, ('state') : state, ('country') : country, ('phone') : phone], 
         FailureHandling.STOP_ON_FAILURE)
 } else {
-    WebUI.callTestCase(findTestCase('Modules/sfra/Checkout/CheckoutLogin'), [('email') : email, ('password') : password],
+    WebUI.callTestCase(findTestCase('Modules/sfra/Checkout/CheckoutLogin'), [('email') : email, ('password') : password], 
         FailureHandling.STOP_ON_FAILURE)
 }
 

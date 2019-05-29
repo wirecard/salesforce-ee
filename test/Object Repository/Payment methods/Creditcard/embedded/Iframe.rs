@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>Iframe</name>
+   <tag></tag>
+   <elementGuidId>c9586e8d-978f-46c1-a9bf-3d32ce4d6149</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//iframe[@id='wirecard-hpp-frame']</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//iframe[@id='wirecard-hpp-frame']</value>
+   </webElementProperties>
+</WebElementEntity>

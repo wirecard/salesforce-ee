@@ -6,12 +6,8 @@
     <isinclude template="inc/Modules">
     <isinclude template="paymentgateway/bm/modules">
 
-    <isset
-        name="TOP_URL"
-        value="${URLUtils.url('SiteNavigationBar-ShowMenuitemOverview', 'CurrentMenuItemId', pdict.CurrentMenuItemId)}"
-        scope="PAGE"
-    >
-    <is name1="${pdict.mainmenuname}" url1="${TOP_URL}" name2="PaymentGateway">
+    <isset name="url1" value="${URLUtils.url('SiteNavigationBar-ShowMenuitemOverview', 'CurrentMenuItemId', 'PaymentGateway')}" scope="page"/>
+    <isbreadcrumb name1="PaymentGateway" url1="${ url1 }" name2="${Resource.msg('configuration.testHttpCredentials', 'paymentgateway', null)}">
     <script type="text/javascript">
     //<![CDATA[
     function checkCredentials(btn, paymentMethodId) {
@@ -52,8 +48,8 @@
                 <table class="httptest">
                     <tr style="vertical-align: top;">
                         <th>${ Resource.msg('panel_payment_method', 'paymentgateway', null) }</th>
-                        <th>${ Resource.msg('configuration.httpUser', 'paymentgateway', null) }</th>
-                        <th>${ Resource.msg('configuration.httpPassword', 'paymentgateway', null) }</th>
+                        <th>${ Resource.msg('config_http_user', 'paymentgateway', null) }</th>
+                        <th>${ Resource.msg('config_http_password', 'paymentgateway', null) }</th>
                         <th>${ Resource.msg('config_base_url', 'paymentgateway', null) }</th>
                         <th>&nbsp;</th>
                     </tr>
@@ -87,6 +83,7 @@
     <style>
         table.httptest td.infobox button.check.green { background-color: #42f477; }
         table.httptest td.infobox button.check.red { background-color: #ff0000; }
+        table.httptest tr.tr-odd td { background: #e6f7f5; }
         td#bm_content_column > table > tbody > tr > td,
         td#bm_content_column > table > tbody > tr > td > table > tbody > tr > td,
         table.transaction-detail tr:last-child td { border-bottom: none }

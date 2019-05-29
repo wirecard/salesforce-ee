@@ -61,8 +61,10 @@
                 </isif>
 
                 <!--- item price --->
-                ${Resource.msg('label.each.item.price','cart',null)} -
-                ${lineItem.price.formatted || lineItem.price.sales.formatted}
+                <isif condition="${ lineItem.price }">
+                    ${Resource.msg('label.each.item.price','cart',null)} -
+                    ${lineItem.price.formatted || lineItem.price.sales.formatted}
+                </isif>
                 <br/>
                 <!--- quantity --->
                 ${Resource.msg('field.selectquantity','cart',null)}
@@ -168,8 +170,10 @@
             </isif>
 
             <!--- item price --->
-            ${Resource.msg('label.each.item.price','cart',null)} -
-            ${lineItem.price.formatted || lineItem.price.sales.formatted}
+            <isif condition="${ lineItem.price }">
+                ${Resource.msg('label.each.item.price','cart',null)} -
+                ${lineItem.price.formatted || lineItem.price.sales.formatted}
+            </isif>
             <br/>
             <!--- quantity --->
             ${Resource.msg('field.selectquantity','cart',null)}

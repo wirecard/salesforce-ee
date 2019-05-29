@@ -6,8 +6,25 @@
     var StringUtils = require('dw/util/StringUtils');
 
     /**
+     * Check if there's a follow-up transaction for the provided failed transaction
+     * @param {string} methodName - payment method name
+     * @param {Object} transaction - executed transaction
+     * @returns {boolean|string} - false if no follow-up transaction otherwise its type
+     */
+    function checkFollowUpTransaction(methodName, transaction) {
+        var FollowMapping = require('*/cartridge/scripts/paymentgateway/transaction/Type').FollowMapping();
+        // FIXME this may apply to other payment methods as well..
+        if (['PG_CREDITCARD'].indexOf(methodName) > -1
+            && transaction.transactionState !== 'success'
+            && Object.keys(FollowMapping).indexOf(transaction.transactionType) > -1
+        ) {
+            return FollowMapping[transaction.transactionType];
+        }
+        return false;
+    }
+
+    /**
      * Create api request json & call service
-     *
      * @param {dw.order.Order} order - current order
      * @param {Object} data - holds { transactionId: ..., action: ..., amount: ..., merchantAccountId: ... }
      * @returns {Object}
@@ -18,17 +35,23 @@
 
         var paymentData = orderHelper.getPaymentGatewayOrderPayment(order);
         var methodName = paymentData.paymentMethodID;
+        var mappedTransactionData = transactionHelper.mapTransactionType(methodName, data.action);
+        var merchantAccountId = data.merchantAccountId;
+        if (Object.prototype.hasOwnProperty.call(mappedTransactionData, 'merchantAccountId')) {
+            merchantAccountId = mappedTransactionData.merchantAccountId;
+        }
         var transaction = transactionHelper.getTransaction(
-            methodName,
+            mappedTransactionData.methodName,
             order,
             {
                 'transaction-type'     : data.action,
                 'parent-transaction-id': data.transactionId,
                 'requested-amount'     : data.amount,
-                'merchant-account-id'  : data.merchantAccountId
+                'merchant-account-id'  : merchantAccountId,
+                originalPaymentMethod  : methodName
             }
         );
-        var paymentService = transactionHelper.getPaymentService(methodName, 'payments');
+        var paymentService = transactionHelper.getPaymentService(methodName, mappedTransactionData.type);
 
         var result;
         var errorMsg;
@@ -38,6 +61,18 @@
             // save transaction
             if (Object.prototype.hasOwnProperty.call(result, 'transactionId')) {
                 transactionHelper.saveTransactionToOrder(order, result);
+
+                // special handling for credit card / void-purchase / void-capture
+                var followUpTransactionType = checkFollowUpTransaction(methodName, result);
+                if (followUpTransactionType) {
+                    // create copy of original backend service data
+                    var followUpData = {};
+                    Object.keys(data).forEach(function (key) {
+                        followUpData[key] = data[key];
+                    });
+                    followUpData.action = followUpTransactionType;
+                    result = callService(order, followUpData);
+                }
             } else {
                 throw new Error('Server-Error: transaction failed!');
             }

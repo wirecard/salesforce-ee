@@ -48,9 +48,16 @@ function Order(transaction) {
         value: totalOrderAmount.value,
         currency: totalOrderAmount.currencyCode
     };
-    result['order-number'] = order.orderNo;
+    if (Object.prototype.hasOwnProperty.call(order, 'orderNo')) {
+        result['order-number'] = order.orderNo;
+    } else if (Object.prototype.hasOwnProperty.call(transaction, 'orderNo')) {
+        result['order-number'] = transaction.orderNo;
+    }
 
-    if (transaction.getSitePreference('sendBasketData')) {
+    var isPaypal = ['paypal'].indexOf(transaction.paymentMethodID) > -1;
+    if ((transaction.getSitePreference('sendAdditionalData') && !isPaypal)
+        || (transaction.getSitePreference('sendBasketData') && isPaypal)
+    ) {
         var shipping = new Shipping(transaction);
         var productLineItems = new ProductLineItems(transaction);
         var coupons = new Coupons(transaction);

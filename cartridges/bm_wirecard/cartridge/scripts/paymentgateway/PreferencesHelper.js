@@ -16,6 +16,14 @@ function getSitePreference(key) {
 }
 
 var PreferencesMapping = {
+    PG_CREDITCARD: {
+        userName              : 'paymentGatewayCreditCardHttpUser',
+        password              : 'paymentGatewayCreditCardHttpPassword',
+        baseUrl               : 'paymentGatewayCreditCardBaseUrl',
+        merchantAccountID     : 'paymentGatewayCreditCardMerchantAccountID',
+        sendAdditionalData    : 'paymentGatewayCreditCardSendAdditionalData',
+        initialTransactionType: 'paymentGatewayCreditCardInitialTransactionType'
+    },
     PG_PAYPAL: {
         userName              : 'paymentGatewayPayPalHttpUser',
         password              : 'paymentGatewayPayPalHttpPassword',
@@ -24,6 +32,19 @@ var PreferencesMapping = {
         sendAdditionalData    : 'paymentGatewayPayPalSendAdditionalData',
         sendBasketData        : 'paymentGatewayPayPalSendBasketData',
         initialTransactionType: 'paymentGatewayPayPalInitialTransactionType'
+    },
+    PG_SOFORT: {
+        userName          : 'paymentGatewaySofortHttpUser',
+        password          : 'paymentGatewaySofortHttpPassword',
+        baseUrl           : 'paymentGatewaySofortBaseUrl',
+        merchantAccountID : 'paymentGatewaySofortMerchantAccountID',
+        sendAdditionalData: 'paymentGatewaySofortSendAdditionalData'
+    },
+    PG_SEPACREDIT: {
+        userName         : 'paymentGatewaySEPACreditHttpUser',
+        password         : 'paymentGatewaySEPACreditHttpPassword',
+        baseUrl          : 'paymentGatewaySEPACreditBaseUrl',
+        merchantAccountID: 'paymentGatewaySEPACreditMerchantAccountID'
     }
 };
 

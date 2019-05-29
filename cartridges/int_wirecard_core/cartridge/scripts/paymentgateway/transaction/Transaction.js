@@ -167,20 +167,18 @@ Transaction.prototype.getOrderData = function () {
             result[k] = redirectUrls[k];
         });
     } else {
+        var transactionAmount;
         if (Number(self['requested-amount']) !== 0) { // eslint-disable-line
             // either transaction amount is only part of..
-            result['requested-amount'] = {
-                value: Number(self['requested-amount']).toFixed(2),
-                currency: self.order.currencyCode
-            };
+            transactionAmount = new Money(Number(self['requested-amount']), self.order.currencyCode);
         } else {
             // ..or complete order amount
-            var totalOrderAmount = OrderEntity.getFixedContainerTotalAmount(self.order);
-            result['requested-amount'] = {
-                value: totalOrderAmount.value,
-                currency: totalOrderAmount.currencyCode
-            };
+            transactionAmount = OrderEntity.getFixedContainerTotalAmount(self.order);
         }
+        result['requested-amount'] = {
+            value: transactionAmount.value,
+            currency: transactionAmount.currencyCode
+        };
     }
     return result;
 };

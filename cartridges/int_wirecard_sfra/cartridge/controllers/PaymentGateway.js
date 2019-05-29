@@ -75,6 +75,38 @@ server.get(
 );
 
 /**
+ * Cancel redirect from payment gateway
+ */
+server.get(
+    'Fail',
+    server.middleware.https,
+    function (req, res, next) {
+        var params = req.querystring;
+        var orderNo = params.orderNo;
+        var orderToken = params.orderSec;
+
+        var OrderMgr = require('dw/order/OrderMgr');
+        var Transaction = require('dw/system/Transaction');
+        var order = OrderMgr.getOrder(orderNo);
+
+        if (order && order.orderToken === orderToken) {
+            Transaction.wrap(function () {
+                OrderMgr.failOrder(order);
+            });
+
+            req.session.privacyCache.set(
+                'pgPlaceOrderError',
+                Resource.msg('payment_failed_text', 'paymentgateway', null)
+            );
+            res.redirect(URLUtils.https('Checkout-Begin', 'stage', 'payment'));
+        } else {
+            res.redirect(URLUtils.https('Cart-Show'));
+        }
+        next();
+    }
+);
+
+/**
  * Handles incoming notifications
  */
 server.post(
@@ -167,7 +199,7 @@ server.get(
                 result = transaction.getPayload();
             }
         }
-        res.render('paymentgateway/debug', { json: result });
+        res.render('paymentgateway/json', { json: result });
         return next();
     }
 );
