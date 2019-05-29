@@ -16,11 +16,35 @@ function getSitePreference(key) {
 }
 
 var PreferencesMapping = {
+    PG_CREDITCARD: {
+        userName              : 'paymentGatewayCreditCardHttpUser',
+        password              : 'paymentGatewayCreditCardHttpPassword',
+        baseUrl               : 'paymentGatewayCreditCardBaseUrl',
+        merchantAccountID     : 'paymentGatewayCreditCardMerchantAccountID',
+        sendAdditionalData    : 'paymentGatewayCreditCardSendAdditionalData',
+        initialTransactionType: 'paymentGatewayCreditCardInitialTransactionType'
+    },
     PG_PAYPAL: {
-        userName         : 'paymentGatewayPayPalHttpUser',
-        password         : 'paymentGatewayPayPalHttpPassword',
-        baseUrl          : 'paymentGatewayPayPalBaseUrl',
-        merchantAccountID: 'paymentGatewayPayPalMerchantAccountID'
+        userName              : 'paymentGatewayPayPalHttpUser',
+        password              : 'paymentGatewayPayPalHttpPassword',
+        baseUrl               : 'paymentGatewayPayPalBaseUrl',
+        merchantAccountID     : 'paymentGatewayPayPalMerchantAccountID',
+        sendAdditionalData    : 'paymentGatewayPayPalSendAdditionalData',
+        sendBasketData        : 'paymentGatewayPayPalSendBasketData',
+        initialTransactionType: 'paymentGatewayPayPalInitialTransactionType'
+    },
+    PG_SOFORT: {
+        userName          : 'paymentGatewaySofortHttpUser',
+        password          : 'paymentGatewaySofortHttpPassword',
+        baseUrl           : 'paymentGatewaySofortBaseUrl',
+        merchantAccountID : 'paymentGatewaySofortMerchantAccountID',
+        sendAdditionalData: 'paymentGatewaySofortSendAdditionalData'
+    },
+    PG_SEPACREDIT: {
+        userName         : 'paymentGatewaySEPACreditHttpUser',
+        password         : 'paymentGatewaySEPACreditHttpPassword',
+        baseUrl          : 'paymentGatewaySEPACreditBaseUrl',
+        merchantAccountID: 'paymentGatewaySEPACreditMerchantAccountID'
     },
     PG_SEPA: {
         userName         : 'paymentGatewaySEPACreditHttpUser',
@@ -29,6 +53,11 @@ var PreferencesMapping = {
         merchantAccountID: 'paymentGatewaySEPACreditMerchantAccountID'
     }
 };
+
+var sensitiveFields = [
+    'password',
+    'secret'
+];
 
 /**
  * Retrieve site preference values for given payment method
@@ -46,4 +75,32 @@ function getPreferenceForMethodID(paymentMethodID) {
     return result;
 }
 
-module.exports = { getPreferenceForMethodID: getPreferenceForMethodID };
+/**
+ * Retrieve site preference values for all payment methods
+ * @returns {ArrayList} - list with preference values
+ */
+function getAllPreferences() {
+    var ArrayList = require('dw/util/ArrayList');
+    var result = new ArrayList();
+    var tmp;
+    Object.keys(PreferencesMapping).forEach(function (key) {
+        tmp = new ArrayList();
+        tmp.push({ name: 'methodId', value: key });
+        Object.keys(PreferencesMapping[key]).forEach(function (k) {
+            var preferenceValue = getSitePreference(PreferencesMapping[key][k]);
+            if (sensitiveFields.indexOf(k) === -1) {
+                tmp.push({
+                    name : k,
+                    value: Object.prototype.hasOwnProperty.call(preferenceValue, 'value') ? preferenceValue.value : preferenceValue
+                });
+            }
+        });
+        result.push(tmp);
+    });
+    return result;
+}
+
+module.exports = {
+    getAllPreferences       : getAllPreferences,
+    getPreferenceForMethodID: getPreferenceForMethodID
+};

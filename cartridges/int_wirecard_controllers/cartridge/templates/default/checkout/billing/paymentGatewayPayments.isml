@@ -4,6 +4,11 @@
     .payment-method-options .form-row input { margin-bottom: 0; }
 </style>
 
+<!--- PG_CREDITCARD --->
+<div id="PaymentMethod_PG_CREDITCARD" class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='PG_GIROPAY'}">payment-method-expanded</isif>" data-method="PG_CREDITCARD">
+    <!--- placeholder as embedded form will be displayed in cosummary --->
+</div>
+
 <!--- PG_GIROPAY --->
 <div id="PaymentMethod_PG_GIROPAY" class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='PG_GIROPAY'}">payment-method-expanded</isif>" data-method="PG_GIROPAY">
     <isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.PG_GIROPAY.bic}" type="input" />
@@ -25,10 +30,8 @@
     <isinclude template="checkout/billing/paymentGatewayPayments/PG_SEPA" />
 </div>
 
-<isif condition="${ require('dw/system/Site').getCurrent().getCustomPreferenceValue('paymentGatewaySendAdditionalData') }" >
 <script type="text/javascript" src="https://h.wirecard.com/fp/tags.js?org_id=6xxznhva&session_id=${ session.sessionID }"></script>
 <noscript>
     <iframe style="width: 100px; height: 100px; border: 0; position: absolute; top: -5000px;"
         src="https://h.wirecard.com/tags?org_id=6xxznhva&session_id=${ session.sessionID }"></iframe>
 </noscript>
-</isif>

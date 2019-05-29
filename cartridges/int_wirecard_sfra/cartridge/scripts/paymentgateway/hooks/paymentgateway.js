@@ -38,6 +38,8 @@ function Handle(basket, paymentInformation) {
         removePaymentInstruments(basket);
         basket.createPaymentInstrument(paymentMethod, basket.totalGrossPrice);
     });
+    // FIXME this is for monitoring test behaviour
+    pgLogger.debug('Selected payment method: ' + paymentMethod);
     return { success: true };
 }
 

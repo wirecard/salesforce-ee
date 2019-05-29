@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>Tan</name>
+   <tag></tag>
+   <elementGuidId>7b43d38d-e4e2-4db3-a705-a80b89229078</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//form[@id='WizardForm']//input[@id='BackendFormTan']</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//form[@id='WizardForm']//input[@id='BackendFormTan']</value>
+   </webElementProperties>
+</WebElementEntity>

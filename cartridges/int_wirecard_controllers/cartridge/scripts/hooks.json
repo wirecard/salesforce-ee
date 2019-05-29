@@ -5,6 +5,10 @@
       "script": "./paymentgateway/processor/PAYMENTGATEWAY"
     },
     {
+      "name": "app.payment.processor.PAYMENTGATEWAY_CREDITCARD",
+      "script": "./paymentgateway/processor/PAYMENTGATEWAY_CREDITCARD"
+    },
+    {
       "name": "int.wirecard.handlenotify",
       "script": "./paymentgateway/handleNotify"
     },

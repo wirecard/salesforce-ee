@@ -7,7 +7,7 @@
                 var paymentHelper = require('int_wirecard_core/cartridge/scripts/paymentgateway/helper/PaymentHelper');
                 var pgData = paymentHelper.getPaymentMethodData(payment.paymentMethod);
             </isscript>
-            <isif condition="${ pgData.image }">
+            <isif condition="${ Object.prototype.hasOwnProperty.call(pgData, 'image') }">
                 <img class="pg-logo" src="${ pgData.image }"/>
             </isif>
             <isprint value="${ pgData.name }"/>

@@ -10,7 +10,7 @@
          <configuration>
             <groupName>Web Desktop</groupName>
             <profileName>private</profileName>
-            <runConfigurationId>Firefox</runConfigurationId>
+            <runConfigurationId>Chrome</runConfigurationId>
          </configuration>
          <runEnabled>true</runEnabled>
          <testSuiteEntity>Test Suites/Slot</testSuiteEntity>

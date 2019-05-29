@@ -5,6 +5,18 @@
       "script": "./hooks/paymentgateway"
     },
     {
+      "name": "app.payment.form.processor.paymentgateway",
+      "script": "./hooks/paymentgateway_form_processor"
+    },
+    {
+      "name": "app.payment.form.processor.paymentgateway_creditcard",
+      "script": "./hooks/paymentgateway_cc_form_processor"
+    },
+    {
+      "name": "app.payment.processor.paymentgateway_creditcard",
+      "script": "./hooks/paymentgateway_cc_processor"
+    },
+    {
       "name": "int.wirecard.handlenotify",
       "script": "./hooks/handleNotify"
     },

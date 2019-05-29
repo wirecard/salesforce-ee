@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>Sofort</name>
+   <tag></tag>
+   <elementGuidId>0cadbb26-28ff-4ed4-b062-0117888cc1d5</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//div[contains(@class,'payment-method-options')]//input[@value='PG_SOFORT']</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//div[contains(@class,'payment-method-options')]//input[@value='PG_SOFORT']</value>
+   </webElementProperties>
+</WebElementEntity>

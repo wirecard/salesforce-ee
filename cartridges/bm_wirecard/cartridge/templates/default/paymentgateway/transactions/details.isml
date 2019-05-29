@@ -2,17 +2,16 @@
     importPackage(dw.system);
 </isscript>
 <isdecorate template="application/MenuFrame">
-    <iscontent type="text/html" charset="UTF-8">
-    <isinclude template="inc/Modules">
+    <iscontent type="text/html" charset="UTF-8"/>
+    <isinclude template="inc/Modules"/>
+    <isinclude template="paymentgateway/bm/modules"/>
 
-    <isset
-        name="TOP_URL"
-        value="${URLUtils.url('SiteNavigationBar-ShowMenuitemOverview', 'CurrentMenuItemId', pdict.CurrentMenuItemId)}"
-        scope="PAGE"
-    >
-    <is name1="${pdict.mainmenuname}" url1="${TOP_URL}" name2="PaymentGateway">
     <isset name="Order" value="${ pdict.Order }" scope="page"/>
     <isset name="Transaction" value="${ pdict.Transaction }" scope="page"/>
+
+    <isset name="url1" value="${URLUtils.url('SiteNavigationBar-ShowMenuitemOverview', 'CurrentMenuItemId', 'PaymentGateway')}" scope="page"/>
+    <isset name="url2" value="${URLUtils.url('PaymentGateway-Transactions')}" scope="page"/>
+    <isbreadcrumb name1="PaymentGateway" url1="${ url1 }" name2="Transaction overview" url2="${ url2 }" name3="${ 'Transaction: ' + Transaction.transactionId }"/>
 
     <script type="text/javascript">
     function copyXML() {
@@ -140,6 +139,7 @@
                             <div class="form-group">
                                 <input type="hidden" name="orderNo" value="${ Order.orderNo }"/>
                                 <input type="hidden" name="transactionId" value="${ Transaction.transactionId }"/>
+                                <input type="hidden" name="transactionType" value="${ Transaction.transactionType }"/>
                                 <input type="hidden" name="merchantAccountId" value="${ Transaction.merchantAccountId }"/>
                                 <button type="submit" value="${ Resource.msg('submit_button', 'paymentgateway', null)}">
                                     ${ Resource.msg('submit_button', 'paymentgateway', null) }
@@ -179,6 +179,7 @@
             </div>
         </div>
     </div>
+    <ispaymentgatewaysupport termsandconditions="1" supportform="1"/>
     <style>
         table.transaction-detail { width: unset; }
         td#bm_content_column > table > tbody > tr > td,

@@ -17,10 +17,11 @@ function getRedirectUrl(order, route) {
 
 /**
  * Transaction redirect urls
- * @param {dw.order.Order} order - current order
+ * @param {Object} transaction - current transaction
  * @returns {Object} - object with success, cancel, notification urls
  */
-function RedirectUrls(order) {
+function RedirectUrls(transaction) {
+    var order = transaction.order;
     var result = {};
     result['success-redirect-url'] = getRedirectUrl(order, 'PaymentGateway-Success');
     result['cancel-redirect-url'] = getRedirectUrl(order, 'PaymentGateway-Cancel');
@@ -37,6 +38,12 @@ function RedirectUrls(order) {
             url: getRedirectUrl(order, 'PaymentGateway-Notify')
         }]
     };
+    var mailto = transaction.getSitePreference('paymentGatewayNotificationEmail');
+    if (mailto) {
+        result.notifications.notification.push({
+            url: 'mailto:' + mailto
+        });
+    }
     return result;
 }
 

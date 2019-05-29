@@ -1,0 +1,40 @@
+<iscontent type="text/html" charset="UTF-8">
+<ul id="pg_support" class="paymentgateway-menu">
+    <isif condition="${ pdict.termsandconditions == 1 }">
+        <li>
+            <a href="${ URLUtils.https('PaymentGateway-TermsAndConditions') }">${ Resource.msg('terms_of_use', 'paymentgateway', null) }</a>
+        </li>
+    </isif>
+    <isif condition="${ pdict.supportform == 1 }">
+        <li>
+            <a href="${ URLUtils.https('PaymentGateway-SupportForm') }">${ Resource.msg('text_support', 'paymentgateway', null) }</a>
+        </li>
+    </isif>
+</ul>
+<style>
+ul.paymentgateway-menu {
+    position: fixed;
+    right: 0;
+    top: 80%;
+    width: 9em;
+    margin: -2.5em 0 0 0;
+    z-index: 5;
+    background: #4cccdb;
+    color: white;
+    text-align: left;
+    border-right: none;
+    padding: 0.5em 0.5em 0.5em 2em;
+    box-shadow: 0 1px 3px black;
+    border-radius: 3em 0 0 3em;
+    list-style: none;
+}
+ul.paymentgateway-menu li {
+    margin: 0
+}
+ul.paymentgateway-menu li a {
+    color: #fff;
+}
+ul.paymentgateway-menu li a:hover {
+    text-decoration: underline;
+}
+</style>

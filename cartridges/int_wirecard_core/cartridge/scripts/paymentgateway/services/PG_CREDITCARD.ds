@@ -1,0 +1,40 @@
+/**
+ * Script includes
+ */
+var AbstractPaymentGatewayService = require('./AbstractPaymentGatewayService');
+
+var CreditCardService = AbstractPaymentGatewayService.extend({
+    init: function (type) {
+        this._super(type);
+        this.paymentMethodID = 'creditcard';
+    },
+
+    /**
+     * Retrieves the base url for CreditCard.
+     * @returns {String}
+     */
+    getBaseUrl: function() {
+        return this.getSitePreference('paymentGatewayCreditCardBaseUrl');
+    },
+
+    /**
+     * Retrieves the http user for CreditCard.
+     * @returns {String}
+     */
+    getHttpUsername: function() {
+        return this.getSitePreference('paymentGatewayCreditCardHttpUser');
+    },
+
+    /**
+     * Retrieves the http password for CreditCard.
+     * @returns {String}
+     */
+    getHttpPassword: function() {
+        return this.getSitePreference('paymentGatewayCreditCardHttpPassword');
+    }
+});
+
+//Export the configured service singleton
+module.exports = function (type) {
+    return (new CreditCardService(type)).getService();
+};

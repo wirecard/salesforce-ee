@@ -18,6 +18,31 @@
                 <min-length>0</min-length>
                 <default-value>Web Shop</default-value>
             </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayNotificationEmail">
+                <display-name xml:lang="x-default">Email for notifications</display-name>
+                <description xml:lang="x-default">Email recipient for notifications about payment authorizations / purchases</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <regex>^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$</regex>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayModuleVersion">
+                <display-name xml:lang="x-default">Module Version</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>true</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>0.0.1</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewaySupportEmail">
+                <display-name xml:lang="x-default">Support email address</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>true</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>shop-systems-support@wirecard.com</default-value>
+            </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayPayPalAddDescriptorToRequest">
                 <display-name xml:lang="x-default">Send descriptor</display-name>
                 <description xml:lang="x-default">If "Yes" the parameter descriptor is included in request data sent to wpg.</description>
@@ -27,21 +52,12 @@
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayUrlSalt">
                 <display-name xml:lang="x-default">Url salt</display-name>
-                <description xml:lang="x-default">Salt for calculating url fingerprint sha512 hash</description>
+                <description xml:lang="x-default">Salt for calculating url fingerprint sha512 hash. Be careful when change its value: this will make post-order transactions for existing orders impossible!</description>
                 <type>string</type>
                 <mandatory-flag>true</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>5</min-length>
-                <default-value />
-            </attribute-definition>
-            <attribute-definition attribute-id="paymentGatewayIdealMerchantAccountID">
-                <display-name xml:lang="x-default">Merchant Account ID (MAID)</display-name>
-                <description xml:lang="x-default">Unique identifier assigned to your merchant account.</description>
-                <type>string</type>
-                <mandatory-flag>false</mandatory-flag>
-                <externally-managed-flag>false</externally-managed-flag>
-                <min-length>0</min-length>
-                <default-value>4aeccf39-0d47-47f6-a399-c05c1f2fc819</default-value>
+                <default-value>V6iqqFM2m+)neEdp</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewaySofortMerchantAccountID">
                 <display-name xml:lang="x-default">Merchant Account ID (MAID)</display-name>
@@ -82,13 +98,6 @@
             <attribute-definition attribute-id="paymentGatewaySofortSendAdditionalData">
                 <display-name xml:lang="x-default">Send additional request data</display-name>
                 <description xml:lang="x-default">If "yes" additional data (fps) is added to request</description>
-                <type>boolean</type>
-                <mandatory-flag>false</mandatory-flag>
-                <default-value>true</default-value>
-            </attribute-definition>
-            <attribute-definition attribute-id="paymentGatewaySofortSendBasketData">
-                <display-name xml:lang="x-default">Send basket request data</display-name>
-                <description xml:lang="x-default">If "yes" basket information is added to request</description>
                 <type>boolean</type>
                 <mandatory-flag>false</mandatory-flag>
                 <default-value>true</default-value>
@@ -299,15 +308,124 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
             </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayCreditCardMerchantAccountID">
+                <display-name xml:lang="x-default">Merchant Account ID (MAID)</display-name>
+                <description xml:lang="x-default">Unique identifier assigned to your merchant account.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>1d08d0ea-535e-4b1a-b50b-d1591e97b8ea</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayCreditCardMerchantAccountID3DS">
+                <display-name xml:lang="x-default">3-D Secure MAID</display-name>
+                <description xml:lang="x-default">Unique identifier assigned to your 3-D Secure merchant account.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>cad16b4a-abf2-450d-bcb8-1725a4cef443</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayCreditCardHttpUser">
+                <display-name xml:lang="x-default">Username</display-name>
+                <description xml:lang="x-default">Username as provided in your Wirecard contract.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>70000-APILUHN-CARD</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayCreditCardHttpPassword">
+                <display-name xml:lang="x-default">Password</display-name>
+                <description xml:lang="x-default">Password as provided in your Wirecard contract.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>8mhwavKVb91T</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayCreditCardSecret">
+                <display-name xml:lang="x-default">Secret</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>1ddab375-08da-4704-83da-36610518efcf</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayCreditCardSecret3DS">
+                <display-name xml:lang="x-default">3-D Secure Secret Key</display-name>
+                <description xml:lang="x-default">Secret Key is mandatory to calculate the Digital Signature for the 3-D Secure payment.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>b3b131ad-ea7e-48bc-9e71-78d0c6ea579d</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayCreditCardBaseUrl">
+                <display-name xml:lang="x-default">Wirecard Server Address (URL)</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>https://api-test.wirecard.com</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayCreditCard3DSMinLimit">
+                <display-name xml:lang="x-default">3-D Secure Min. Limit</display-name>
+                <description xml:lang="x-default">Amount in default shop currency</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>100</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayCreditCardInitialTransactionType">
+                <display-name xml:lang="x-default">Payment Action</display-name>
+                <description xml:lang="x-default">Select between "Purchase" to capture/invoice your order automatically or "Authorization" to capture/invoice manually.</description>
+                <type>enum-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <value-definitions>
+                    <value-definition>
+                        <display xml:lang="x-default">Authorization</display>
+                        <value>authorization</value>
+                    </value-definition>
+                    <value-definition default="true">
+                        <display xml:lang="x-default">Purchase</display>
+                        <value>purchase</value>
+                    </value-definition>
+                </value-definitions>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayCreditCardSendAdditionalData">
+                <display-name xml:lang="x-default">Send Additional Information</display-name>
+                <description xml:lang="x-default">If "yes" additional data (fps) is added to request</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayCreditCardAddDescriptorToRequest">
+                <display-name xml:lang="x-default">Send descriptor</display-name>
+                <description xml:lang="x-default">If "Yes" the parameter descriptor is included in request data sent to wpg.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayCreditCardConversionRates">
+                <display-name xml:lang="x-default">Conversion Rates</display-name>
+                <description xml:lang="x-default">Enter conversion rates relative to "3-D Secure Min. Limit" (currency: the site's default currency) for any currency, e.g. "USD":"1.12"</description>
+                <type>set-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
         </custom-attribute-definitions>
         <group-definitions>
             <attribute-group group-id="PAYMENTGATEWAY">
                 <display-name xml:lang="x-default">Payment gateway settings</display-name>
+                <attribute attribute-id="paymentGatewayModuleVersion"/>
+                <attribute attribute-id="paymentGatewaySupportEmail"/>
+                <attribute attribute-id="paymentGatewayNotificationEmail"/>
                 <attribute attribute-id="paymentGatewayDebugMode"/>
                 <attribute attribute-id="paymentGatewayShopName"/>
                 <attribute attribute-id="paymentGatewayUrlSalt"/>
-                <attribute attribute-id="paymentGatewayIdealMerchantAccountID"/>
-                <attribute attribute-id="paymentGatewaySofortMerchantAccountID"/>
                 <attribute attribute-id="paymentGatewaySignResponses"/>
                 <attribute attribute-id="paymentGatewayCertAlias"/>
             </attribute-group>
@@ -330,7 +448,6 @@
                 <attribute attribute-id="paymentGatewaySofortHttpUser"/>
                 <attribute attribute-id="paymentGatewaySofortHttpPassword"/>
                 <attribute attribute-id="paymentGatewaySofortSendAdditionalData"/>
-                <attribute attribute-id="paymentGatewaySofortSendBasketData"/>
             </attribute-group>
             <attribute-group group-id="PAYMENTGATEWAY_SEPACREDIT">
                 <display-name xml:lang="x-default">Payment gateway settings for SEPA credit transfer</display-name>
@@ -349,8 +466,50 @@
                 <attribute attribute-id="paymentGatewaySEPAMandateCountry"/>
                 <attribute attribute-id="paymentGatewaySEPASummaryText"/>
             </attribute-group>
+            <attribute-group group-id="PAYMENTGATEWAY_CREDITCARD">
+                <display-name xml:lang="x-default">Payment gateway settings for Credit card</display-name>
+                <attribute attribute-id="paymentGatewayCreditCardMerchantAccountID"/>
+                <attribute attribute-id="paymentGatewayCreditCardSecret"/>
+                <attribute attribute-id="paymentGatewayCreditCardHttpUser"/>
+                <attribute attribute-id="paymentGatewayCreditCardHttpPassword"/>
+                <attribute attribute-id="paymentGatewayCreditCardMerchantAccountID3DS"/>
+                <attribute attribute-id="paymentGatewayCreditCardSecret3DS"/>
+                <attribute attribute-id="paymentGatewayCreditCard3DSMinLimit"/>
+                <attribute attribute-id="paymentGatewayCreditCardBaseUrl"/>
+                <attribute attribute-id="paymentGatewayCreditCardAddDescriptorToRequest"/>
+                <attribute attribute-id="paymentGatewayCreditCardSendAdditionalData"/>
+                <attribute attribute-id="paymentGatewayCreditCardInitialTransactionType"/>
+                <attribute attribute-id="paymentGatewayCreditCardConversionRates"/>
+            </attribute-group>
         </group-definitions>
     </type-extension>
+
+    <type-extension type-id="Basket">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="paymentGatewayReservedOrderNo">
+                <display-name xml:lang="x-default">Reserved OrderNo</display-name>
+                <description xml:lang="x-default">OrderNo that will later be used for creating the order</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+        </custom-attribute-definitions>
+    </type-extension>
+
+    <type-extension type-id="OrderPaymentInstrument">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="paymentGatewayFingerPrint">
+                <display-name xml:lang="x-default">Calculated fingerprint</display-name>
+                <description xml:lang="x-default">For checking the basket's integrity</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>true</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+        </custom-attribute-definitions>
+    </type-extension>
+
     <type-extension type-id="OrderPaymentInstrument">
         <custom-attribute-definitions>
             <attribute-definition attribute-id="paymentGatewaySEPADebtorName">
@@ -382,7 +541,7 @@
                 <display-name xml:lang="x-default">Transaction History</display-name>
                 <type>set-of-string</type>
                 <mandatory-flag>false</mandatory-flag>
-                <externally-managed-flag>false</externally-managed-flag>
+                <externally-managed-flag>true</externally-managed-flag>
                 <min-length>0</min-length>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayCapturedAmount">
@@ -460,13 +619,13 @@
                 <type>text</type>
                 <localizable-flag>false</localizable-flag>
                 <mandatory-flag>true</mandatory-flag>
-                <externally-managed-flag>false</externally-managed-flag>
+                <externally-managed-flag>true</externally-managed-flag>
             </attribute-definition>
             <attribute-definition attribute-id="orderNo">
                 <type>string</type>
                 <localizable-flag>false</localizable-flag>
                 <mandatory-flag>true</mandatory-flag>
-                <externally-managed-flag>false</externally-managed-flag>
+                <externally-managed-flag>true</externally-managed-flag>
                 <min-length>0</min-length>
             </attribute-definition>
             <attribute-definition attribute-id="transactionType">
@@ -508,7 +667,7 @@
                 <type>text</type>
                 <localizable-flag>false</localizable-flag>
                 <mandatory-flag>true</mandatory-flag>
-                <externally-managed-flag>false</externally-managed-flag>
+                <externally-managed-flag>true</externally-managed-flag>
             </attribute-definition>
             <attribute-definition attribute-id="processingAttempts">
                 <type>string</type>

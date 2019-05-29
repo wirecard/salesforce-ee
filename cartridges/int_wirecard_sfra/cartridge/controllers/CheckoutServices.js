@@ -106,6 +106,7 @@ server.replace(
             var URLUtils = require('dw/web/URLUtils');
             var Locale = require('dw/util/Locale');
             var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
+            var hooksHelper = require('*/cartridge/scripts/helpers/hooks');
 
             var currentBasket = BasketMgr.getCurrentBasket();
             var billingData = res.getViewData();
@@ -241,8 +242,8 @@ server.replace(
                 req.session.privacyCache.set('usingMultiShipping', false);
                 usingMultiShipping = false;
             }
-            // @fixme comment this in if all branches merged. otherwise email subscription did not work
-            // hooksHelper('app.customer.subscription', 'subscribeTo', [paymentForm.subscribe.checked, paymentForm.contactInfoFields.email.htmlValue], function () {});
+
+            hooksHelper('app.customer.subscription', 'subscribeTo', [paymentForm.subscribe.checked, paymentForm.contactInfoFields.email.htmlValue], function () {});
 
             var currentLocale = Locale.getLocale(req.locale.id);
 
@@ -351,6 +352,12 @@ server.replace(
             basketCalculationHelpers.calculateTotals(currentBasket);
         });
 
+        // FIXME this is for monitoring test behaviour
+        var orderHelper = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper');
+        var pgLogger = require('dw/system/Logger').getLogger('paymentgateway');
+        var pgPaymentMethod = orderHelper.getPaymentGatewayOrderPayment(currentBasket);
+        pgLogger.debug('Selected payment method (placeOrder): ' + pgPaymentMethod.paymentMethodID);
+
         // Re-validates existing payment instruments
         var validPayment = COHelpers.validatePayment(req, currentBasket);
         if (validPayment.error) {
@@ -362,6 +369,7 @@ server.replace(
                 },
                 errorMessage: Resource.msg('error.payment.not.valid', 'checkout', null)
             });
+            pgLogger.debug('Demandware is ..!!');
             return next();
         }
 
@@ -389,9 +397,19 @@ server.replace(
         var handlePaymentResult = COHelpers.handlePayments(order, order.orderNo);
         // FIXME maybe replace technical error message with more specific one from wpg
         if (handlePaymentResult.error) {
-            res.json({
+            var errorObject = {
                 error: true,
                 errorMessage: handlePaymentResult.errorMessage || Resource.msg('error.technical', 'checkout', null)
+            };
+            if (Object.prototype.hasOwnProperty.call(handlePaymentResult, 'errorStage')) {
+                errorObject.errorStage = handlePaymentResult.errorStage;
+            }
+            res.json(errorObject);
+            return next();
+        } else if (Object.prototype.hasOwnProperty.call(handlePaymentResult, 'saveTransactionURL')) { // eslint-disable-line
+            res.json({
+                pgTransactionURL: handlePaymentResult.saveTransactionURL,
+                pgRestoreBasketURL: handlePaymentResult.restoreBasketURL
             });
             return next();
         } else if (Object.prototype.hasOwnProperty.call(handlePaymentResult, 'redirectURL')) { // eslint-disable-line

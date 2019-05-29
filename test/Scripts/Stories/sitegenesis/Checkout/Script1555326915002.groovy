@@ -36,10 +36,10 @@ if (login == 'false') {
 
 WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/SelectShipping'), [:], FailureHandling.STOP_ON_FAILURE)
 
-WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/Billing/Set email address'), [('email') : email, ('login') : login], 
+WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/Billing/Set email address'), [('email') : email, ('login') : login],
     FailureHandling.STOP_ON_FAILURE)
 
-WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentSelect'), [('paymentMethodId') : paymentMethodId], 
+WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentSelect'), [('paymentMethodId') : paymentMethodId],
     FailureHandling.STOP_ON_FAILURE)
 
 WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PlaceOrder'), [('paymentMethodId') : paymentMethodId], FailureHandling.STOP_ON_FAILURE)

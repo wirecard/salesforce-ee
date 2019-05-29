@@ -11,4 +11,14 @@
         </preferences>
     </payment-processor>
 
+    <payment-processor processor-id="PAYMENTGATEWAY_CREDITCARD">
+        <description>Wirecard credit card payment processor.</description>
+        <preferences>
+            <all-instances/>
+            <development/>
+            <staging/>
+            <production/>
+        </preferences>
+    </payment-processor>
+
 </payment-processors>
