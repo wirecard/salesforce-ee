@@ -64,6 +64,9 @@
         <!-- fields for PG_GIROPAY -->
         <include formid="PG_GIROPAY" name="PG_GIROPAY"/>
 
+        <!-- fields for PG_SEPA -->
+        <include formid="PG_SEPA" name="PG_SEPA"/>
+
     </group>
     <field formid="couponCode" label="billingcoupon.couponenter" type="string" mandatory="false" missing-error="billingcoupon.couponinvalid" value-error="billingcoupon.couponinvalid" />
 
