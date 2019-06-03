@@ -8,7 +8,7 @@
     </payment-method>
 
     <payment-method method-id="PG_SOFORT">
-        <name xml:lang="x-default">Wirecard Sofort</name>
+        <name xml:lang="x-default">Wirecard Sofort.</name>
         <image>images/payment/paymentgateway/sofort.svg</image>
         <enabled-flag>false</enabled-flag>
         <processor-id>PAYMENTGATEWAY</processor-id>
