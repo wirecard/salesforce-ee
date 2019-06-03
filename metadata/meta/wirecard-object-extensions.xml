@@ -33,7 +33,7 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>true</externally-managed-flag>
                 <min-length>0</min-length>
-                <default-value>0.0.1</default-value>
+                <default-value>1.0.0</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewaySupportEmail">
                 <display-name xml:lang="x-default">Support email address</display-name>
