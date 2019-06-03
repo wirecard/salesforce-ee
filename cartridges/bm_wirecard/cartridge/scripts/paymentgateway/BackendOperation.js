@@ -52,12 +52,12 @@
                 originalPaymentMethod  : methodName
             }
         );
-        let transactionType = transaction.getApiEndpointFromTransactionType();
+        let apiEndpoint = transaction.getApiEndpointFromTransactionType();
 
-        if (!transactionType) {
-            transactionType = mappedTransactionData.type;
+        if (!apiEndpoint) {
+            apiEndpoint = mappedTransactionData.type;
         }
-        var paymentService = transactionHelper.getPaymentService(methodName, transactionType);
+        var paymentService = transactionHelper.getPaymentService(methodName, apiEndpoint);
 
         var result;
         var errorMsg;

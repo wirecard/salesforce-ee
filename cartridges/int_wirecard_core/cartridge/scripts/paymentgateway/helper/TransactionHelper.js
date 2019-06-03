@@ -165,7 +165,11 @@ var TransactionHelper = {
             type: 'payments',
             methodName: methodName
         };
-        if (methodName === 'PG_SOFORT' && transactionType === Type.All.CREDIT) {
+        const mappedMethodNames = [
+            'PG_SOFORT',
+            'PG_SEPA'
+        ];
+        if (-1 !== mappedMethodNames.indexOf(methodName) && transactionType === Type.All.CREDIT) {
             var preferenceHelper = require('*/cartridge/scripts/paymentgateway/PreferencesHelper');
             var sepaPreferences = preferenceHelper.getPreferenceForMethodID('PG_SEPACREDIT');
             result = {
