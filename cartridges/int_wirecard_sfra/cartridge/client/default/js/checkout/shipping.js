@@ -29,13 +29,8 @@ function selectShippingMethodAjax(url, urlParams, el) {
                         customer: data.customer,
                         options: { keepOpen: true },
                         urlParams: urlParams
-                    }
-                );
-                $('body').trigger('checkout:postUpdateCheckoutView',
-                    {
-                        el: el
-                    }
-                );
+                    });
+                $('body').trigger('checkout:postUpdateCheckoutView', { el: el });
                 // re-render credit card form
                 var activePayment = $('.payment-options .nav-item > a.nav-link.active');
                 if (activePayment.length === 1
@@ -52,6 +47,9 @@ function selectShippingMethodAjax(url, urlParams, el) {
         });
 }
 
+/**
+ * Bind event listener "change" to shipping method list
+ */
 function selectShippingMethod() {
     $('.shipping-method-list').change(function () {
         var $shippingForm = $(this).parents('form');
