@@ -193,6 +193,7 @@ exports.Cancel = guard.ensure(['https'], function () {
     var orderNo = parameterMap.orderNo.value;
     var orderToken = parameterMap.orderSec.value;
 
+    var URLUtils = require('dw/web/URLUtils');
     var OrderMgr = require('dw/order/OrderMgr');
     var order = OrderMgr.getOrder(orderNo);
 

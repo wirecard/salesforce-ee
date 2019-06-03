@@ -1,3 +1,4 @@
+/* globals cleave */
 'use strict';
 
 var base = require('base/checkout/billing');
@@ -68,6 +69,12 @@ base.paymentTabs = function () {
         } else {
             paymentgateway.getCreditCardRequestData();
         }
+    }
+};
+
+base.handleCreditCardNumber = function () {
+    if ($('.cardNumber').length === 1) {
+        cleave.handleCreditCardNumber('.cardNumber', '#cardType');
     }
 };
 
