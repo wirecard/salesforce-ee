@@ -262,6 +262,14 @@
                 <min-length>0</min-length>
                 <default-value>3!3013=D3fD8X7</default-value>
             </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewaySEPADebitSecret">
+                <display-name xml:lang="x-default">Secret</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>1ddab375-08da-4704-83da-36610518efcf</default-value>
+            </attribute-definition>
             <attribute-definition attribute-id="paymentGatewaySEPADebitInitialTransactionType">
                 <display-name xml:lang="x-default">Initial Payment Action for SEPA</display-name>
                 <description xml:lang="x-default">Select between "Purchase" to capture/invoice your order automatically or "Authorization" to capture/invoice manually.</description>
@@ -505,6 +513,7 @@
                 <attribute attribute-id="paymentGatewaySEPADebitBaseUrl"/>
                 <attribute attribute-id="paymentGatewaySEPADebitHttpUser"/>
                 <attribute attribute-id="paymentGatewaySEPADebitHttpPassword"/>
+                <attribute attribute-id="paymentGatewaySEPADebitSecret"/>
                 <attribute attribute-id="paymentGatewaySEPADebitInitialTransactionType"/>
                 <attribute attribute-id="paymentGatewaySEPAAddDescriptorToRequest"/>
                 <attribute attribute-id="paymentGatewaySEPAShowBICInCheckout"/>
