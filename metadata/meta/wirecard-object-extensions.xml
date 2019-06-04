@@ -250,7 +250,6 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
-                <default-value>508b8896-b37d-4614-845c-26bf8bf2c948</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayCreditCardHttpUser">
                 <display-name xml:lang="x-default">Username</display-name>

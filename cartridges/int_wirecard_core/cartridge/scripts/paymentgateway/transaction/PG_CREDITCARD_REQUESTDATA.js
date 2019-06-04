@@ -104,6 +104,10 @@ function getRequestID(lineItemCtnr) {
  */
 function getIs3DSecure(amount) {
     var is3dSecure = false;
+    var merchantAccountId3DS = getSitePreference('merchantAccountId3DS');
+    if (!merchantAccountId3DS) {
+        return is3dSecure;
+    }
     var config3dMin = /\d/.test(getSitePreference('config3dMin')) ? Number(getSitePreference('config3dMin')) : 0;
     var conversionRates = getSitePreference('conversionRates') || [];
 
@@ -205,7 +209,7 @@ CheckoutTransaction.prototype.getPayload = function () {
             }
         }
     }
-    result.request_signature = getSignature(result);
+    result.request_signature = getSignature(result, self.is3DSecure);
 
     return result;
 };
