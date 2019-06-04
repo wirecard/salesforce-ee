@@ -10,7 +10,7 @@
     <isinclude template="paymentgateway/bm/modules">
 
     <isset name="url1" value="${URLUtils.url('SiteNavigationBar-ShowMenuitemOverview', 'CurrentMenuItemId', 'PaymentGateway')}" scope="page"/>
-    <isbreadcrumb name1="PaymentGateway" url1="${ url1 }" name2="Transaction overview">
+    <isbreadcrumb name1="Wirecard Payment Gateway" url1="${ url1 }" name2="Transaction Table"/>
     <link rel="stylesheet" type="text/css" href="${ URLUtils.staticURL('/css/milligram.min.css') }"/>
     <h1>${Resource.msg('heading_title_transactions', 'paymentgateway', null)}</h1>
 
