@@ -226,7 +226,43 @@
                 <min-length>0</min-length>
                 <default-value>3!3013=D3fD8X7</default-value>
             </attribute-definition>
-            <attribute-definition attribute-id="paymentGatewaySEPAPalInitialTransactionType">
+            <attribute-definition attribute-id="paymentGatewaySEPADebitMerchantAccountID">
+                <display-name xml:lang="x-default">Merchant Account ID (MAID)</display-name>
+                <description xml:lang="x-default">Unique identifier assigned to your merchant account.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>59a01668-693b-49f0-8a1f-f3c1ba025d45</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewaySEPADebitBaseUrl">
+                <display-name xml:lang="x-default">Wirecard Server Address (URL)</display-name>
+                <description xml:lang="x-default">Wirecard Server Address (URL) (e.g. https://api.wirecard.com).</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>https://api-test.wirecard.com</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewaySEPADebitHttpUser">
+                <display-name xml:lang="x-default">Username</display-name>
+                <description xml:lang="x-default">Username as provided in your Wirecard contract.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>16390-testing</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewaySEPADebitHttpPassword">
+                <display-name xml:lang="x-default">Password</display-name>
+                <description xml:lang="x-default">Password as provided in your Wirecard contract.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>3!3013=D3fD8X7</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewaySEPADebitInitialTransactionType">
                 <display-name xml:lang="x-default">Initial Payment Action for SEPA</display-name>
                 <description xml:lang="x-default">Select between "Purchase" to capture/invoice your order automatically or "Authorization" to capture/invoice manually.</description>
                 <type>enum-of-string</type>
@@ -462,7 +498,14 @@
                 <attribute attribute-id="paymentGatewaySEPACreditBaseUrl"/>
                 <attribute attribute-id="paymentGatewaySEPACreditHttpUser"/>
                 <attribute attribute-id="paymentGatewaySEPACreditHttpPassword"/>
-                <attribute attribute-id="paymentGatewaySEPAPalInitialTransactionType"/>
+            </attribute-group>
+            <attribute-group group-id="PAYMENTGATEWAY_SEPA_DIRECT_DEBIT">
+                <display-name xml:lang="x-default">Payment gateway settings for SEPA credit transfer</display-name>
+                <attribute attribute-id="paymentGatewaySEPADebitMerchantAccountID"/>
+                <attribute attribute-id="paymentGatewaySEPADebitBaseUrl"/>
+                <attribute attribute-id="paymentGatewaySEPADebitHttpUser"/>
+                <attribute attribute-id="paymentGatewaySEPADebitHttpPassword"/>
+                <attribute attribute-id="paymentGatewaySEPADebitInitialTransactionType"/>
                 <attribute attribute-id="paymentGatewaySEPAAddDescriptorToRequest"/>
                 <attribute attribute-id="paymentGatewaySEPAShowBICInCheckout"/>
                 <attribute attribute-id="paymentGatewaySEPAMandateCreditorID"/>

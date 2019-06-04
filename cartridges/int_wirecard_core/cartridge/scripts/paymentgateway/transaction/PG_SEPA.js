@@ -82,8 +82,8 @@ function SEPA(order, args) {
     // default params
     var params = {
         paymentMethodID: 'sepadirectdebit',
-        'transaction-type': this.getSitePreference('paymentGatewaySEPAPalInitialTransactionType').value,
-        'merchant-account-id': this.getSitePreference('paymentGatewaySEPACreditMerchantAccountID')
+        'transaction-type': this.getSitePreference('paymentGatewaySEPADebitInitialTransactionType').value,
+        'merchant-account-id': this.getSitePreference('paymentGatewaySEPADebitMerchantAccountID')
     };
     if (typeof args === 'object') {
         Object.keys(args).forEach(function (k) {

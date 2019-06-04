@@ -47,10 +47,10 @@ var PreferencesMapping = {
         merchantAccountID: 'paymentGatewaySEPACreditMerchantAccountID'
     },
     PG_SEPA: {
-        userName         : 'paymentGatewaySEPACreditHttpUser',
-        password         : 'paymentGatewaySEPACreditHttpPassword',
-        baseUrl          : 'paymentGatewaySEPACreditBaseUrl',
-        merchantAccountID: 'paymentGatewaySEPACreditMerchantAccountID'
+        userName         : 'paymentGatewaySEPADebitHttpUser',
+        password         : 'paymentGatewaySEPADebitHttpPassword',
+        baseUrl          : 'paymentGatewaySEPADebitBaseUrl',
+        merchantAccountID: 'paymentGatewaySEPADebitMerchantAccountID'
     }
 };
 

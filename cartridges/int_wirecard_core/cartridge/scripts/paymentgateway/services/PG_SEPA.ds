@@ -17,7 +17,7 @@ var SEPAService = AbstractPaymentGatewayService.extend({
      * @returns {String}
      */
     getBaseUrl: function() {
-        return this.getSitePreference('paymentGatewaySEPACreditBaseUrl');
+        return this.getSitePreference('paymentGatewaySEPADebitBaseUrl');
     },
 
     /**
@@ -25,7 +25,7 @@ var SEPAService = AbstractPaymentGatewayService.extend({
      * @returns {String}
      */
     getHttpUsername: function() {
-        return this.getSitePreference('paymentGatewaySEPACreditHttpUser');
+        return this.getSitePreference('paymentGatewaySEPADebitHttpUser');
     },
 
     /**
@@ -33,7 +33,7 @@ var SEPAService = AbstractPaymentGatewayService.extend({
      * @returns {String}
      */
     getHttpPassword: function() {
-        return this.getSitePreference('paymentGatewaySEPACreditHttpPassword');
+        return this.getSitePreference('paymentGatewaySEPADebitHttpPassword');
     }
 });
 
