@@ -2,12 +2,12 @@
     importPackage(dw.system);
 </isscript>
 <isdecorate template="application/MenuFrame">
-    <iscontent type="text/html" charset="UTF-8">
-    <isinclude template="inc/Modules">
-    <isinclude template="paymentgateway/bm/modules">
+    <iscontent type="text/html" charset="UTF-8"/>
+    <isinclude template="inc/Modules"/>
+    <isinclude template="paymentgateway/bm/modules"/>
 
     <isset name="url1" value="${URLUtils.url('SiteNavigationBar-ShowMenuitemOverview', 'CurrentMenuItemId', 'PaymentGateway')}" scope="page"/>
-    <isbreadcrumb name1="Wirecard Payment Gateway" url1="${ url1 }" name2="${Resource.msg('test_credentials', 'paymentgateway', null)}"/>
+    <isbreadcrumb name1="Wirecard Payment Gateway" url1="${ url1 }" name2="${Resource.msg('test_credentials_username_password', 'paymentgateway', null)}"/>
     <script type="text/javascript">
     //<![CDATA[
     function checkCredentials(btn, paymentMethodId) {
@@ -38,7 +38,7 @@
     <div class="container">
         <div class="row">
             <div class="column">
-                <h1>${Resource.msg('test_credentials', 'paymentgateway', null)}</h1>
+                <h1>${Resource.msg('test_credentials_username_password', 'paymentgateway', null)}</h1>
                 <div class="row">
                     <div class="column">
                         <div id="http_message" class=""></div>

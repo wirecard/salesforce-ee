@@ -45,7 +45,7 @@
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayPayPalAddDescriptorToRequest">
                 <display-name xml:lang="x-default">Send descriptor</display-name>
-                <description xml:lang="x-default">If "Yes" the parameter descriptor is included in request data sent to wpg.</description>
+                <description xml:lang="x-default">Send text which is displayed on the bank statement issued to your consumer by the financial service provider.</description>
                 <type>boolean</type>
                 <mandatory-flag>false</mandatory-flag>
                 <default-value>true</default-value>
@@ -338,7 +338,7 @@
                 <default-value>true</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayCreditCardAddDescriptorToRequest">
-                <display-name xml:lang="x-default">Descriptor</display-name>
+                <display-name xml:lang="x-default">Send descriptor</display-name>
                 <description xml:lang="x-default">Send text which is displayed on the bank statement issued to your consumer by the financial service provider.</description>
                 <type>boolean</type>
                 <mandatory-flag>false</mandatory-flag>
