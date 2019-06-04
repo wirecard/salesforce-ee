@@ -250,6 +250,13 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
+                <default-value>508b8896-b37d-4614-845c-26bf8bf2c948</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayCreditCardUse3DS">
+                <display-name xml:lang="x-default">Enable 3DS</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <default-value>true</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayCreditCardHttpUser">
                 <display-name xml:lang="x-default">Username</display-name>
@@ -388,6 +395,7 @@
                 <attribute attribute-id="paymentGatewayCreditCardSecret"/>
                 <attribute attribute-id="paymentGatewayCreditCardHttpUser"/>
                 <attribute attribute-id="paymentGatewayCreditCardHttpPassword"/>
+                <attribute attribute-id="paymentGatewayCreditCardUse3DS"/>
                 <attribute attribute-id="paymentGatewayCreditCardMerchantAccountID3DS"/>
                 <attribute attribute-id="paymentGatewayCreditCardSecret3DS"/>
                 <attribute attribute-id="paymentGatewayCreditCard3DSMinLimit"/>

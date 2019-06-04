@@ -3,6 +3,7 @@
 
 var base = require('base/checkout/billing');
 var addressHelpers = require('base/checkout/address');
+var cleave = require('base/components/cleave');
 
 var paymentgateway = require('./paymentgateway');
 
