@@ -22,7 +22,7 @@ function Handle(args) {
     });
 
     if (dw.system.HookMgr.hasHook('app.payment.method.' + paymentMethodId)) {
-        dw.system.HookMgr.callHook('app.payment.method.' + paymentMethodId, 'Handle', {
+        return dw.system.HookMgr.callHook('app.payment.method.' + paymentMethodId, 'Handle', {
             Basket: cart,
             Form  : session.forms.billing.paymentMethods
         });

@@ -10,11 +10,15 @@ var PaymentHelper = require('int_wirecard_core/cartridge/scripts/paymentgateway/
  */
 function Handle(args) {
     const SEPAForm  = args.Form;
+
+    if (!SEPAForm.valid) {
+    	return {error: true};
+    }
     let paymentInstrument = args.Basket.getPaymentInstruments('PG_SEPA');
     let customFormData = PaymentHelper.getFormData(SEPAForm, 'PG_SEPA');
 
     if (paymentInstrument.empty) {
-        return;
+        return {};
     }
 
     Transaction.wrap(function () {
@@ -22,6 +26,7 @@ function Handle(args) {
             paymentInstrument[0].custom[key] = customFormData[key];
         });
     });
+    return {};
 }
 
 exports.Handle = Handle;
