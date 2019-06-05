@@ -7,6 +7,7 @@ var preferenceMapping = {
     sendAdditionalData: 'paymentGatewayCreditCardSendAdditionalData',
     hashSecret: 'paymentGatewayCreditCardSecret',
     hashSecret3DS: 'paymentGatewayCreditCardSecret3DS',
+    use3DS: 'paymentGatewayCreditCardUse3DS',
     merchantAccountId: 'paymentGatewayCreditCardMerchantAccountID',
     merchantAccountId3DS: 'paymentGatewayCreditCardMerchantAccountID3DS',
     initialTransactionType: 'paymentGatewayCreditCardInitialTransactionType',
@@ -104,6 +105,9 @@ function getRequestID(lineItemCtnr) {
  */
 function getIs3DSecure(amount) {
     var is3dSecure = false;
+    if (!getSitePreference('use3DS')) {
+        return is3dSecure;
+    }
     var config3dMin = /\d/.test(getSitePreference('config3dMin')) ? Number(getSitePreference('config3dMin')) : 0;
     var conversionRates = getSitePreference('conversionRates') || [];
 
@@ -205,7 +209,7 @@ CheckoutTransaction.prototype.getPayload = function () {
             }
         }
     }
-    result.request_signature = getSignature(result);
+    result.request_signature = getSignature(result, self.is3DSecure);
 
     return result;
 };

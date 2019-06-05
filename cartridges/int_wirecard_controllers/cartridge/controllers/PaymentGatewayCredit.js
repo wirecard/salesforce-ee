@@ -186,6 +186,35 @@ exports.Fail = guard.ensure(['https'], function () {
 });
 
 /**
+ * Re-entry point for cancellation handling
+ */
+exports.Cancel = guard.ensure(['https'], function () {
+    var parameterMap = request.httpParameterMap;
+    var orderNo = parameterMap.orderNo.value;
+    var orderToken = parameterMap.orderSec.value;
+
+    var URLUtils = require('dw/web/URLUtils');
+    var OrderMgr = require('dw/order/OrderMgr');
+    var order = OrderMgr.getOrder(orderNo);
+
+    if (order && order.orderToken == orderToken) {
+        require('dw/system/Transaction').wrap(function () {
+            OrderMgr.failOrder(order);
+        });
+
+        var Resource = require('dw/web/Resource');
+        app.getController('COSummary').Start({
+            PaymentGatewayError: {
+                description: Resource.msg('canceled_payment_process', 'paymentgateway', null)
+            }
+        });
+    } else {
+        response.redirect(URLUtils.https('Cart-Show'));
+    }
+    return;
+});
+
+/**
  * For handling of notification request sent by payment gate
  */
 exports.Notify = guard.ensure(['post', 'https'], function () {

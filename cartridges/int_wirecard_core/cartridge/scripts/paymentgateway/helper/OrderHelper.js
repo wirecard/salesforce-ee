@@ -76,6 +76,8 @@ exports.getPaymentGatewayOrderStateFromTransactionType = function(order, transac
             return orderStates.filter(filterOrderStates, 'open').shift().value;
         case Type.All.PENDING_DEBIT:
             return orderStates.filter(filterOrderStates, 'pending').shift().value;
+        case Type.All.VOID_AUTHORIZATION:
+            return orderStates.filter(filterOrderStates, 'cancelled').shift().value;
         case Type.All.PURCHASE:
             return orderStates.filter(filterOrderStates, 'processing').shift().value;
         default:
