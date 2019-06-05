@@ -213,6 +213,9 @@
     </div>
 
     <form action="${URLUtils.https('COSummary-Submit')}" method="post" class="submit-order">
+        <isif condition="${0 < pdict.Basket.getPaymentInstruments('PG_SEPA').length}">
+            <isinclude template="checkout/summary/paymentOptionsSummary/PG_SEPA" />
+        </isif>
         <fieldset>
             <div class="form-row">
                 <a class="back-to-cart" href="${URLUtils.url('Cart-Show')}">
