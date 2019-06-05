@@ -110,6 +110,14 @@
                 <mandatory-flag>false</mandatory-flag>
                 <default-value>true</default-value>
             </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewaySofortSecret">
+                <display-name xml:lang="x-default">Secret</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>58764ab3-5c56-450e-b747-7237a24e92a7</default-value>
+            </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayPayPalMerchantAccountID">
                 <display-name xml:lang="x-default">Merchant Account ID (MAID)</display-name>
                 <description xml:lang="x-default">Unique identifier assigned to your merchant account.</description>
@@ -249,7 +257,7 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
-                <default-value>1d08d0ea-535e-4b1a-b50b-d1591e97b8ea</default-value>
+                <default-value>53f2895a-e4de-4e82-a813-0d87a10e55e6</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayCreditCardMerchantAccountID3DS">
                 <display-name xml:lang="x-default">3-D Secure MAID</display-name>
@@ -258,7 +266,13 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
-                <default-value>cad16b4a-abf2-450d-bcb8-1725a4cef443</default-value>
+                <default-value>508b8896-b37d-4614-845c-26bf8bf2c948</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayCreditCardUse3DS">
+                <display-name xml:lang="x-default">Enable 3DS</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <default-value>true</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayCreditCardHttpUser">
                 <display-name xml:lang="x-default">Username</display-name>
@@ -267,7 +281,7 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
-                <default-value>70000-APILUHN-CARD</default-value>
+                <default-value>70000-APITEST-AP</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayCreditCardHttpPassword">
                 <display-name xml:lang="x-default">Password</display-name>
@@ -276,7 +290,7 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
-                <default-value>8mhwavKVb91T</default-value>
+                <default-value>qD2wzQ_hrc!8</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayCreditCardSecret">
                 <display-name xml:lang="x-default">Secret Key</display-name>
@@ -284,7 +298,7 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
-                <default-value>1ddab375-08da-4704-83da-36610518efcf</default-value>
+                <default-value>dbc5a498-9a66-43b9-bf1d-a618dd399684</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayCreditCardSecret3DS">
                 <display-name xml:lang="x-default">3-D Secure Secret Key</display-name>
@@ -293,7 +307,7 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
-                <default-value>b3b131ad-ea7e-48bc-9e71-78d0c6ea579d</default-value>
+                <default-value>dbc5a498-9a66-43b9-bf1d-a618dd399684</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayCreditCardBaseUrl">
                 <display-name xml:lang="x-default">Wirecard Server Address (URL)</display-name>
@@ -379,6 +393,7 @@
             <attribute-group group-id="PAYMENTGATEWAY_SOFORT">
                 <display-name xml:lang="x-default">Wirecard Payment Gateway settings for Sofort.</display-name>
                 <attribute attribute-id="paymentGatewaySofortMerchantAccountID"/>
+                <attribute attribute-id="paymentGatewaySofortSecret"/>
                 <attribute attribute-id="paymentGatewaySofortBaseUrl"/>
                 <attribute attribute-id="paymentGatewaySofortHttpUser"/>
                 <attribute attribute-id="paymentGatewaySofortHttpPassword"/>
@@ -399,6 +414,7 @@
                 <attribute attribute-id="paymentGatewayCreditCardSecret"/>
                 <attribute attribute-id="paymentGatewayCreditCardHttpUser"/>
                 <attribute attribute-id="paymentGatewayCreditCardHttpPassword"/>
+                <attribute attribute-id="paymentGatewayCreditCardUse3DS"/>
                 <attribute attribute-id="paymentGatewayCreditCardMerchantAccountID3DS"/>
                 <attribute attribute-id="paymentGatewayCreditCardSecret3DS"/>
                 <attribute attribute-id="paymentGatewayCreditCard3DSMinLimit"/>
@@ -475,6 +491,10 @@
                     <value-definition>
                         <display xml:lang="x-default">Authorized</display>
                         <value>authorized</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">Cancelled</display>
+                        <value>cancelled</value>
                     </value-definition>
                     <value-definition>
                         <display xml:lang="x-default">Pending</display>

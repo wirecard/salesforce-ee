@@ -29,7 +29,7 @@ function RedirectUrls(transaction) {
 
     let format = 'application/json';
 
-    if (require('dw/system/Site').getCurrent().getCustomPreferenceValue('paymentGatewaySignResponses')) {
+    if (transaction.getSitePreference('paymentGatewaySignResponses')) {
         format += '-signed';
     }
     result.notifications = {
