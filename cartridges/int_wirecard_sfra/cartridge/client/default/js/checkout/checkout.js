@@ -539,32 +539,33 @@ var scrollAnimate = require('base/components/scrollAnimate');
             },
 
             handleSEPASummary: function(paymentMethodData) {
+                var disablePlaceOrderButton = function (response) {
+                    $('.payment-details').append(response);
+
+                    let submitButton = $('button[value=place-order][name=submit][class*=place-order]');
+
+                    if (!submitButton.length) {
+                        return;
+                    }
+                    submitButton.prop('disabled', true);
+
+                    $(document).on('change', '#mandate_accept', function() {
+                        if (!submitButton.length) {
+                            return;
+                        }
+                        if ($(this).prop('checked')) {
+                            submitButton.prop('disabled', false);
+                        } else {
+                            submitButton.prop('disabled', true);
+                        }
+                    });
+                };
                 switch (paymentMethodData.paymentMethod) {
                     case 'PG_SEPA' :
                         $.ajax({
                             url     : 'PaymentGateway-GetPGSummary',
                             data : {paymentMethod: paymentMethodData.paymentMethod},
-                            success: (function (response) {
-                                $('.payment-details').append(response);
-
-                                let submitButton = $('button[value=place-order][name=submit][class*=place-order]');
-
-                                if (!submitButton.length) {
-                                    return;
-                                }
-                                submitButton.prop('disabled', true);
-
-                                $(document).on('change', '#mandate_accept', function() {
-                                    if (!submitButton.length) {
-                                        return;
-                                    }
-                                    if ($(this).prop('checked')) {
-                                        submitButton.prop('disabled', false);
-                                    } else {
-                                        submitButton.prop('disabled', true);
-                                    }
-                                });
-                            })
+                            success: disablePlaceOrderButton
                         });
                     break;
                 }
