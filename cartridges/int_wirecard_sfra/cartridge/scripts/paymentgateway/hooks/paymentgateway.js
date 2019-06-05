@@ -84,6 +84,13 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor) { // eslint
  * Creates PaymentInstrument and returns 'success'.
  */
 function processForm(req, paymentForm, viewData) {
+	const success = {
+        error: false,
+        viewData: viewData
+    };
+	if ('undefined' === typeof paymentForm[paymentForm.paymentMethod.value]) {
+	    return success;
+    }
 	const COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
 	const errorFields = COHelpers.validateFields(paymentForm[paymentForm.paymentMethod.value]);
 
@@ -103,10 +110,7 @@ function processForm(req, paymentForm, viewData) {
     viewData.paymentInformation = { pgFormData : customFormData };
     viewData.paymentInformation.paymentMethodID = paymentForm.paymentMethod.value;
 
-    return {
-        error: false,
-        viewData: viewData
-    };
+    return success;
 }
 
 /**
@@ -116,7 +120,7 @@ function savePaymentInformation(req, currentBasket, billingData) {
     let paymentInformation = billingData.paymentInformation.pgFormData;
     let paymentInstrument  = currentBasket.getPaymentInstruments(billingData.paymentInformation.paymentMethodID);
 
-    if (paymentInstrument.empty) {
+    if (paymentInstrument.empty || 'undefined' === typeof paymentInformation) {
     	return;
     }
 
