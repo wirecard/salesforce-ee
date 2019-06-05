@@ -311,7 +311,7 @@ Transaction.prototype.getBackendOperationForRefund = function () {
 Transaction.prototype.getBackendOperations = function (canCancel) {
     var operations = [];
     var captureActions = this.getBackendOperationForCapture();
-    if (canCancel && captureActions) {
+    if (captureActions) {
         operations.push(captureActions);
     }
     var cancelActions = this.getBackendOperationForCancel();
