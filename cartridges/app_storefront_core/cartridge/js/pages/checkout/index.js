@@ -20,7 +20,9 @@ exports.init = function () {
 
     //if on the order review page and there are products that are not available diable the submit order button
     if ($('.order-summary-footer').length > 0) {
+        if ($('.notavailable').length > 0) {
             $('.order-summary-footer .submit-order .button-fancy-large').attr('disabled', 'disabled');
+        }
     }
 
     //DOTSOURCE REWRITE BEGIN
