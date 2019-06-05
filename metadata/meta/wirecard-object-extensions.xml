@@ -517,7 +517,7 @@
                 <attribute attribute-id="paymentGatewaySEPACreditHttpPassword"/>
             </attribute-group>
             <attribute-group group-id="PAYMENTGATEWAY_SEPADIRECTDEBIT">
-                <display-name xml:lang="x-default">Payment gateway settings for SEPA credit transfer</display-name>
+                <display-name xml:lang="x-default">Payment gateway settings for SEPA Direct Debit</display-name>
                 <attribute attribute-id="paymentGatewaySEPADebitMerchantAccountID"/>
                 <attribute attribute-id="paymentGatewaySEPADebitBaseUrl"/>
                 <attribute attribute-id="paymentGatewaySEPADebitHttpUser"/>
