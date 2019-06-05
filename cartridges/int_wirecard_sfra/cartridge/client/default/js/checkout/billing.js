@@ -1,4 +1,3 @@
-/* globals cleave */
 'use strict';
 
 var base = require('base/checkout/billing');
@@ -57,8 +56,10 @@ function updateBillingInformation(order, customer) {
     updateBillingAddressFormValues(order);
 
     // update billing address summary
-    addressHelpers.methods.populateAddressSummary('.billing .address-summary',
-        order.billing.billingAddress.address);
+    addressHelpers.methods.populateAddressSummary(
+        '.billing .address-summary',
+        order.billing.billingAddress.address
+    );
 
     // update billing parts of order summary
     $('.order-summary-email').text(order.orderEmail);
