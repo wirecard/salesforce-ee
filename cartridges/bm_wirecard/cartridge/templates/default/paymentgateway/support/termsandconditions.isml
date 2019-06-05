@@ -2,15 +2,12 @@
     importPackage(dw.system);
 </isscript>
 <isdecorate template="application/MenuFrame">
-    <iscontent type="text/html" charset="UTF-8">
-    <isinclude template="inc/Modules">
-    <isinclude template="paymentgateway/bm/modules">
+    <iscontent type="text/html" charset="UTF-8"/>
+    <isinclude template="inc/Modules"/>
+    <isinclude template="paymentgateway/bm/modules"/>
 
-    <isset
-        name="TOP_URL"
-        value="${URLUtils.url('SiteNavigationBar-ShowMenuitemOverview', 'CurrentMenuItemId', pdict.CurrentMenuItemId)}"
-        scope="PAGE"
-    >
+    <isset name="url1" value="${URLUtils.url('SiteNavigationBar-ShowMenuitemOverview', 'CurrentMenuItemId', 'PaymentGateway')}" scope="page"/>
+    <isbreadcrumb name1="Wirecard Payment Gateway" url1="${ url1 }" name2="${Resource.msg('terms_of_use', 'paymentgateway', null)}"/>
 
     <link rel="stylesheet" type="text/css" href="${ URLUtils.staticURL('/css/milligram.min.css') }"/>
 

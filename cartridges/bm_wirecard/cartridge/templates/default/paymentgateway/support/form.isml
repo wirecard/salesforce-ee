@@ -2,15 +2,12 @@
     importPackage(dw.system);
 </isscript>
 <isdecorate template="application/MenuFrame">
-    <iscontent type="text/html" charset="UTF-8">
-    <isinclude template="inc/Modules">
-    <isinclude template="paymentgateway/bm/modules">
+    <iscontent type="text/html" charset="UTF-8"/>
+    <isinclude template="inc/Modules"/>
+    <isinclude template="paymentgateway/bm/modules"/>
 
-    <isset
-        name="TOP_URL"
-        value="${URLUtils.url('SiteNavigationBar-ShowMenuitemOverview', 'CurrentMenuItemId', pdict.CurrentMenuItemId)}"
-        scope="PAGE"
-    >
+    <isset name="url1" value="${URLUtils.url('SiteNavigationBar-ShowMenuitemOverview', 'CurrentMenuItemId', 'PaymentGateway')}" scope="page"/>
+    <isbreadcrumb name1="Wirecard Payment Gateway" url1="${ url1 }" name2="${Resource.msg('text_support', 'paymentgateway', null)}"/>
 
     <link rel="stylesheet" type="text/css" href="${ URLUtils.staticURL('/css/milligram.min.css') }"/>
 
@@ -41,7 +38,7 @@
                             <label for="replyTo">${ Resource.msg('config_reply_to', 'paymentgateway', null) }</label>
                             <input type="email" placeholder="youremail@test.com" id="replyTo" name="replyTo">
                             <label for="comments">Comment</label>
-                            <textarea placeholder="Your comments …" id="comments" name="comments" required></textarea>
+                            <textarea placeholder="${ Resource.msg('if_additional_info_add_here', 'paymentgateway', null) }" id="comments" name="comments" required></textarea>
                             <input class="button-primary" type="submit" value="${ Resource.msg('send_email', 'paymentgateway', null) }">
                         </fieldset>
                     </form>
