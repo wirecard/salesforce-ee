@@ -204,20 +204,20 @@ server.get(
     }
 );
 
-server.get('GetPGSummary', server.middleware.https, function (req, res, next) {
-	const paymentMethod = req.querystring.paymentMethod;
-    const instruments 	= require('dw/order/BasketMgr').getCurrentBasket().getPaymentInstruments(paymentMethod);
-    
-    if (instruments.empty) {
-    	return next();	
-    }
-    switch (paymentMethod) {
-    	case 'PG_SEPA' :
-    		res.render('checkout/billing/paymentOptions/paymentOptionsSummary/' + req.querystring.paymentMethod, { payment:  instruments[0]});
-    		return next();
-		default : return next();
-    }
-});
+server.get(
+    'GetPGSummary',
+    server.middleware.https,
+    function (req, res, next) {
+        var paymentMethod = req.querystring.paymentMethod;
+        var instruments = require('dw/order/BasketMgr').getCurrentBasket().getPaymentInstruments(paymentMethod);
 
+        if (!instruments.empty && paymentMethod === 'PG_SEPA') {
+            res.render('checkout/billing/paymentOptions/paymentOptionsSummary/' + req.querystring.paymentMethod, { payment: instruments[0] });
+        } else {
+            res.render('paymentgateway/empty');
+        }
+        return next();
+    }
+);
 
 module.exports = server.exports();
