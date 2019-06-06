@@ -305,7 +305,7 @@
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewaySEPAAddDescriptorToRequest">
                 <display-name xml:lang="x-default">Descriptor</display-name>
-                <description xml:lang="x-default">If "Yes" the parameter descriptor is included in request data sent to wpg.</description>
+                <description xml:lang="x-default">Send text which is displayed on the bank statement issued to your consumer by the financial service provider.</description>
                 <type>boolean</type>
                 <mandatory-flag>false</mandatory-flag>
                 <default-value>true</default-value>
