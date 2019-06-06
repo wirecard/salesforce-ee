@@ -83,4 +83,11 @@
         </currencies>
     </payment-method>
 
+    <payment-method method-id="PG_SEPA">
+        <name xml:lang="x-default">Wirecard SEPA Direct Debit</name>
+        <image>images/payment/paymentgateway/SEPA.svg</image>
+        <enabled-flag>false</enabled-flag>
+        <processor-id>PAYMENTGATEWAY</processor-id>
+    </payment-method>
+
 </payment-settings>

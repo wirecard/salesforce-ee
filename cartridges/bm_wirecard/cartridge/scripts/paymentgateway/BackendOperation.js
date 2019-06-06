@@ -25,6 +25,7 @@
 
     /**
      * Create api request json & call service
+     *
      * @param {dw.order.Order} order - current order
      * @param {Object} data - holds { transactionId: ..., action: ..., amount: ..., merchantAccountId: ... }
      * @returns {Object}
@@ -51,7 +52,12 @@
                 originalPaymentMethod  : methodName
             }
         );
-        var paymentService = transactionHelper.getPaymentService(methodName, mappedTransactionData.type);
+        let apiEndpoint = transaction.getApiEndpointFromTransactionType();
+
+        if (!apiEndpoint) {
+            apiEndpoint = mappedTransactionData.type;
+        }
+        var paymentService = transactionHelper.getPaymentService(methodName, apiEndpoint);
 
         var result;
         var errorMsg;

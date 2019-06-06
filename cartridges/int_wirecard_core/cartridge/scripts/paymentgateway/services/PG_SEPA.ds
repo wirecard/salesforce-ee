@@ -1,0 +1,43 @@
+/**
+ * Script includes
+ */
+var AbstractPaymentGatewayService = require('./AbstractPaymentGatewayService');
+
+var SEPAService = AbstractPaymentGatewayService.extend({
+    init: function (type) {
+        this._super(type);
+
+        //overwrite the relative URL path in a more generic way without touching the parent class
+        this.relativeURLPath = 'engine/rest/' + ('undefined' !== typeof type ? type : 'paymentmethods');
+        this.paymentMethodID = 'sepadirectdebit';
+    },
+
+    /**
+     * Retrieves the base url for SEPA.
+     * @returns {String}
+     */
+    getBaseUrl: function() {
+        return this.getSitePreference('paymentGatewaySEPADebitBaseUrl');
+    },
+
+    /**
+     * Retrieves the http user for SEPA.
+     * @returns {String}
+     */
+    getHttpUsername: function() {
+        return this.getSitePreference('paymentGatewaySEPADebitHttpUser');
+    },
+
+    /**
+     * Retrieves the http password for SEPA.
+     * @returns {String}
+     */
+    getHttpPassword: function() {
+        return this.getSitePreference('paymentGatewaySEPADebitHttpPassword');
+    }
+});
+
+//Export the configured service singleton
+module.exports = function (type) {
+    return (new SEPAService(type)).getService();
+};

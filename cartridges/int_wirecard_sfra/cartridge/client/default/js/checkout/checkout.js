@@ -293,6 +293,11 @@ var scrollAnimate = require('base/components/scrollAnimate');
                                 ) {
                                     $('.cancel-new-payment').removeClass('checkout-hidden');
                                 }
+                                //DOTSOURCE CUSTOM BEGIN
+                                members.handleSEPASummary(
+                                    data.order.billing.payment.selectedPaymentInstruments[0]
+                                );
+                                //DOTSOURCE CUSTOM END
 
                                 scrollAnimate();
                                 defer.resolve(data);
@@ -531,6 +536,39 @@ var scrollAnimate = require('base/components/scrollAnimate');
                 members.currentStage = checkoutStages.indexOf(stageName);
                 updateUrl(members.currentStage);
                 $(plugin).attr('data-checkout-stage', checkoutStages[members.currentStage]);
+            },
+
+            handleSEPASummary: function(paymentMethodData) {
+                var disablePlaceOrderButton = function (response) {
+                    $('.payment-details').append(response);
+
+                    let submitButton = $('button[value=place-order][name=submit][class*=place-order]');
+
+                    if (!submitButton.length) {
+                        return;
+                    }
+                    submitButton.prop('disabled', true);
+
+                    $(document).on('change', '#mandate_accept', function() {
+                        if (!submitButton.length) {
+                            return;
+                        }
+                        if ($(this).prop('checked')) {
+                            submitButton.prop('disabled', false);
+                        } else {
+                            submitButton.prop('disabled', true);
+                        }
+                    });
+                };
+                switch (paymentMethodData.paymentMethod) {
+                    case 'PG_SEPA' :
+                        $.ajax({
+                            url     : 'PaymentGateway-GetPGSummary',
+                            data : {paymentMethod: paymentMethodData.paymentMethod},
+                            success: disablePlaceOrderButton
+                        });
+                    break;
+                }
             }
         };
 

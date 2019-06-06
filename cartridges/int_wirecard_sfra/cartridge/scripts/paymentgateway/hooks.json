@@ -19,6 +19,10 @@
     {
       "name": "int.wirecard.handlenotify",
       "script": "./hooks/handleNotify"
+    },
+    {
+      "name": "app.payment.form.processor.paymentgateway",
+      "script": "./hooks/paymentgateway"
     }
   ]
 }

@@ -4,7 +4,6 @@
     var selectedPaymentInstrument = selectedPaymentInstruments && selectedPaymentInstruments.length ? selectedPaymentInstruments[0] : null;
     var isActive = selectedPaymentInstrument && selectedPaymentInstrument.paymentMethod === paymentOption.ID;
 </isscript>
-
 <!--- paymentHelper included in checkout/billing/paymentOptions/paymentOptionsTabs --->
 <isif condition="${ paymentOption.ID.indexOf('PG_') > -1 }">
     <isscript>

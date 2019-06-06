@@ -14,7 +14,8 @@ var app = require(controllerCartridge + '/cartridge/scripts/app');
  */
 var resetPaymentForms = {
     PG_GIROPAY: 'PG_GIROPAY',
-    PG_IDEAL  : 'PG_IDEAL'
+    PG_IDEAL  : 'PG_IDEAL',
+    PG_SEPA   : 'PG_SEPA'
 };
 
 // default payment methods

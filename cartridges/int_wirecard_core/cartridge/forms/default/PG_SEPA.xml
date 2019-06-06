@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19">
+
+    <field
+            formid="paymentGatewaySEPADebtorName"
+            label="paymentgateway.sepa.label.debtorName"
+            missing-error="error.message.required"
+            mandatory="true"
+            type="string"/>
+
+    <field
+            formid="paymentGatewaySEPABIC"
+            label="paymentgateway.sepa.label.bic"
+            regexp="(^[A-Z]{6}[A-Z0-9]{2,5}$)"
+            min-length="8"
+            max-length="11"
+            range-error="address.field.invalid"
+            missing-error="error.message.required"
+            parse-error="error.message.parse.checkout.billing.bic"
+            type="string"/>
+
+    <field
+            formid="paymentGatewaySEPAIBAN"
+            label="paymentgateway.sepa.label.iban"
+            mandatory="true"
+            regexp="(^[A-Z]{2}[0-9]{2}[A-Z0-9]{11,28}$)"
+            min-length="15"
+            max-length="32"
+            range-error="address.field.invalid"
+            missing-error="error.message.required"
+            parse-error="error.message.parse.checkout.billing.iban"
+            type="string"/>
+
+    <field
+            formid="paymentGatewaySEPAMandateAccept"
+            label="paymentgateway.sepa.label.mandateAccept"
+            missing-error="error.message.required"
+            type="boolean"/>
+
+</form>

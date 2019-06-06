@@ -1,0 +1,80 @@
+<!--- TEMPLATENAME: PG_SEPA.isml --->
+<iscontent compact="true" />
+<isscript>
+    const sitePref    = require('dw/system/Site').getCurrent();
+    const sepaFields  = pdict.CurrentForms.billing.PG_SEPA;
+    const search      = new RegExp('\\$\{(paymentGatewaySEPAMandateName)\}', 'g');
+    const mandateText = sitePref.getCustomPreferenceValue('paymentGatewaySEPAMandateText').replace(search, function(match, capture) {
+    	return sitePref.getCustomPreferenceValue(capture) ? sitePref.getCustomPreferenceValue(capture) : '';
+   	});
+  	const mandateName 		= sitePref.getCustomPreferenceValue('paymentGatewaySEPAMandateName');
+	const mandateZIP  		= sitePref.getCustomPreferenceValue('paymentGatewaySEPAMandateZIP');
+    const mandateStreet	 	= sitePref.getCustomPreferenceValue('paymentGatewaySEPAMandateStreet');
+    const mandateCity 		= sitePref.getCustomPreferenceValue('paymentGatewaySEPAMandateCity');
+    const mandateCountry 	= sitePref.getCustomPreferenceValue('paymentGatewaySEPAMandateCountry');
+    const mandateCreditorID = sitePref.getCustomPreferenceValue('paymentGatewaySEPAMandateCreditorID');
+
+</isscript>
+<div class="row saved-payment-information">
+	<h5 class="font-italic col-12">Creditor</h5>
+	<p class="col-5">
+		Creditor ID:
+	</p>
+	<p class="col-7">
+		${mandateCreditorID ? mandateCreditorID : ''}
+ 	</p>
+ 	<p class="col-5">
+		Creditor Address:
+	</p>
+	<address class="col-7">
+	   ${mandateName ? mandateName : ''}
+	   ${mandateZIP ? mandateZIP : ''}
+	   ${mandateStreet ? mandateStreet : ''}
+	   ${mandateCity ? mandateCity : ''}
+	   ${mandateCountry ? mandateCountry : ''}
+   	</address>
+
+	<h5 class="font-italic col-12">Debtor</h5>
+	<p class="col-5">
+    	Account Owner:
+    </p>
+    <p class="col-7">
+    	${pdict.payment.custom.paymentGatewaySEPADebtorName}
+    </p>
+   	<p class="col-5">
+    	IBAN:
+    </p>
+    <p class="col-7">
+    	${pdict.payment.custom.paymentGatewaySEPAIBAN}
+   	</p>
+
+   	<isif condition="${pdict.payment.custom.paymentGatewaySEPABIC}">
+	<p class="col-5">
+    	BIC:
+    </p>
+    <p class="col-7">
+    	${pdict.payment.custom.paymentGatewaySEPABIC}
+   	</p>
+   	</isif>
+
+    <p class="col-12">
+    	${mandateText}
+   	</p>
+</div>
+<div class="row align-items-center">
+    <div class="col-3">
+        <div class="form-group required ${sepaFields.paymentGatewaySEPAMandateAccept.htmlName}">
+            <input  type="checkbox"
+                    class="form-control iban"
+                    id="mandate_accept"
+                    name="${sepaFields.paymentGatewaySEPAMandateAccept.htmlName}"
+                    aria-describedby="mandateAcceptInvalidMessage"
+                    data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
+            />
+            <div class="invalid-feedback" id="mandateAcceptInvalidMessage"></div>
+        </div>
+    </div>
+    <div class="col-9">
+    	<label class="form-control-label" for="mandate_accept">${sitePref.getCustomPreferenceValue('paymentGatewaySEPAMandateTextAccept')}</label>
+    </div>
+</div>

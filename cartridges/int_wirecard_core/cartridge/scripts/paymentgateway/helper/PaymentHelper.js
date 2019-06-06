@@ -12,6 +12,11 @@ var methodsWithForms = {
     },
     PG_IDEAL: {
         bic: 'select'
+    },
+    PG_SEPA: {
+    	paymentGatewaySEPABIC: 'text',
+    	paymentGatewaySEPAIBAN: 'text',
+        paymentGatewaySEPADebtorName: 'text'
     }
 };
 
@@ -35,6 +40,36 @@ var supportedLocalesForSofort = [
 ];
 
 module.exports = {
+    methodRequestKey: {
+        PG_SEPA: {
+            'bank-account'  : {iban: 'paymentGatewaySEPAIBAN', bic: 'paymentGatewaySEPABIC'},
+            'account-holder': {
+                'last-name' : 'paymentGatewaySEPADebtorName'
+            }
+        }
+    },
+
+	getDataForRequest: function(form, methodName) {
+		if (!this.methodRequestKey[methodName]) {
+			return {};
+		}
+		return this.recursiveObjectCreator(this.methodRequestKey[methodName], form);
+	},
+
+	recursiveObjectCreator: function(obj, data) {
+		let response = {};
+
+		Object.keys(obj).forEach(function(key) {
+			if ('object' === typeof obj[key]) {
+				response[key] = this.recursiveObjectCreator(obj[key], data);
+			} else if ('undefined' !== typeof data[obj[key]]) {
+				response[key] = data[obj[key]];
+			}
+		}, this);
+
+		return response;
+	},
+
     /**
      * Check if given payment method has form elements
      * @param {string} methodName - payment method id
@@ -54,9 +89,11 @@ module.exports = {
         var result = {};
         if (form[methodID]) {
             Object.keys(methodsWithForms[methodID]).forEach(function (k) {
-                // FIXME special handling for dropdowns
-                result[k] = form[methodID][k].value;
-            });
+            	if ('undefined' !== typeof form[methodID][k]) {
+	                // FIXME special handling for dropdowns
+        			result[k] = form[methodID][k].value;
+            	}
+        	});
         }
         return result;
     },

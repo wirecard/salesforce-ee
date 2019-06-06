@@ -2,7 +2,7 @@
     <isloop items="${pdict.order.billing.payment.selectedPaymentInstruments}" var="payment">
         <isif condition="${payment.paymentMethod === 'CREDIT_CARD'}">
             <isinclude template="checkout/billing/paymentOptions/creditCardSummary" />
-        <iselseif condition="${ payment.paymentMethod.indexOf('PG_') > -1 }">
+        <iselseif condition="${ payment.paymentMethod.indexOf('PG_') > -1 }" />
             <isscript>
                 var paymentHelper = require('int_wirecard_core/cartridge/scripts/paymentgateway/helper/PaymentHelper');
                 var pgData = paymentHelper.getPaymentMethodData(payment.paymentMethod);
@@ -11,6 +11,10 @@
                 <img class="pg-logo" src="${ pgData.image }"/>
             </isif>
             <isprint value="${ pgData.name }"/>
+
+            <isif condition="${payment.paymentMethod === 'PG_SEPA'}">
+                <isinclude template="checkout/billing/paymentOptions/paymentOptionsSummary/PG_SEPA" />
+            </isif>
         </isif>
     </isloop>
 </div>

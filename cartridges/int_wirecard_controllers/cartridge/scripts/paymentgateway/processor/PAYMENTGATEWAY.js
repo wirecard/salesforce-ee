@@ -21,6 +21,13 @@ function Handle(args) {
         cart.createPaymentInstrument(paymentMethodId, cart.getNonGiftCertificateAmount());
     });
 
+    if (dw.system.HookMgr.hasHook('app.payment.method.' + paymentMethodId)) {
+        return dw.system.HookMgr.callHook('app.payment.method.' + paymentMethodId, 'Handle', {
+            Basket: cart,
+            Form  : session.forms.billing.paymentMethods
+        });
+    }
+
     return { success: true };
 }
 

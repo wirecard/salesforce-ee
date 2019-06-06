@@ -25,6 +25,7 @@ Type.All = {
     VOID_AUTHORIZATION: 'void-authorization',
     VOID_CAPTURE: 'void-capture',
     VOID_DEBIT: 'void-debit',
+    VOID_PENDING_DEBIT: 'void-pending-debit',
     VOID_PURCHASE: 'void-purchase'
 };
 
@@ -51,7 +52,8 @@ Type.Follow = [
  * @var {Array}
  */
 Type.Cancel = [
-    Type.All.VOID_AUTHORIZATION
+    Type.All.VOID_AUTHORIZATION,
+    Type.All.VOID_PENDING_DEBIT
 ];
 
 /**

@@ -5,6 +5,7 @@ var Transaction = require('dw/system/Transaction');
 var pgLogger = require('dw/system/Logger').getLogger('paymentgateway');
 
 var collections = require('*/cartridge/scripts/util/collections');
+var PaymentHelper = require('int_wirecard_core/cartridge/scripts/paymentgateway/helper/PaymentHelper.js');
 
 /**
  * Helper function to remove existing payment instruments from cart
@@ -53,15 +54,12 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor) { // eslint
     var OrderMgr = require('dw/order/OrderMgr');
     var order = OrderMgr.getOrder(orderNumber);
     var methodName = paymentInstrument.paymentMethod;
-    // FIXME use more generic way to extract form data already in this step
-    // var formData = server.forms.getForm('billing');
-    var formData = {};
     var responseData;
 
     try {
         // handles all wirecard payments except credit card (seamless integration)
         var redirectPayment = require('*/cartridge/scripts/paymentgateway/RedirectPayment');
-        responseData = redirectPayment.callService(methodName, order, paymentInstrument, formData);
+        responseData = redirectPayment.callService(methodName, order, paymentInstrument);
     } catch (err) {
         pgLogger.error('Exception while processing the API-Call: ' + err.fileName + ': ' + err.message + '\n' + err.stack);
         return { error: true, errorMessage: err.message };
@@ -78,6 +76,65 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor) { // eslint
 
     return result;
 }
+
+'use strict';
+
+
+/**
+ * Creates PaymentInstrument and returns 'success'.
+ */
+function processForm(req, paymentForm, viewData) {
+	const success = {
+        error: false,
+        viewData: viewData
+    };
+	if ('undefined' === typeof paymentForm[paymentForm.paymentMethod.value]) {
+	    return success;
+    }
+	const COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
+	const errorFields = COHelpers.validateFields(paymentForm[paymentForm.paymentMethod.value]);
+
+	if (Object.keys(errorFields).length) {
+		return {
+			error: true,
+			fieldErrors: errorFields
+		}
+	}
+
+    let customFormData = PaymentHelper.getFormData(paymentForm, paymentForm.paymentMethod.value);
+
+    viewData.paymentMethod = {
+        value: paymentForm.paymentMethod.value,
+        htmlName: paymentForm.paymentMethod.value
+    };
+    viewData.paymentInformation = { pgFormData : customFormData };
+    viewData.paymentInformation.paymentMethodID = paymentForm.paymentMethod.value;
+
+    return success;
+}
+
+/**
+ * Creates PaymentInstrument and returns 'success'.
+ */
+function savePaymentInformation(req, currentBasket, billingData) {
+    let paymentInformation = billingData.paymentInformation.pgFormData;
+    let paymentInstrument  = currentBasket.getPaymentInstruments(billingData.paymentInformation.paymentMethodID);
+
+    if (paymentInstrument.empty || 'undefined' === typeof paymentInformation) {
+    	return;
+    }
+
+    Transaction.wrap(function () {
+    	Object.keys(paymentInformation).forEach(function(key) {
+    		paymentInstrument[0].custom[key] = paymentInformation[key];
+    	});
+    });
+}
+
+
+exports.processForm = processForm;
+exports.savePaymentInformation = savePaymentInformation;
+
 
 /*
  * Export handle / authorize
