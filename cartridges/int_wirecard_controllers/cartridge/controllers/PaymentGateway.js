@@ -102,14 +102,15 @@ exports.Notify = guard.ensure(['post', 'https'], function () {
 
     if (order && order.orderToken === orderToken) {
         // parse response
+        var requestBody       = parameterMap.getRequestBodyAsString();
         var transactionHelper = require('*/cartridge/scripts/paymentgateway/helper/TransactionHelper');
-        var notifyData = transactionHelper.parseTransactionResponse(
-            req.body, null, transactionHelper.RESPONSE_TYPE_NOTIFY
+        var notifyData        = transactionHelper.parseTransactionResponse(
+            requestBody, null, transactionHelper.RESPONSE_TYPE_NOTIFY
         );
-        var rawResponeJson = transactionHelper.getJsonSignedResponseWrapper(req.body).getJsonResponse();
+        var rawResponeJson = transactionHelper.getJsonSignedResponseWrapper(requestBody).getJsonResponse();
         require('*/cartridge/scripts/paymentgateway/transaction/Logger').log(rawResponeJson, 'notify');
 
-        //@todo fingerprint not needed transactionHelper.parseTransactionResponse will check the secret
+        // @todo fingerprint not needed transactionHelper.parseTransactionResponse will check the secret
         var fingerprint;
         var orderHelper = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper');
         if (Object.prototype.hasOwnProperty.call(notifyData, 'customFields')

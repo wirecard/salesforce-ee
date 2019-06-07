@@ -334,7 +334,7 @@ server.post(
             var rawResponeJson = transactionHelper.getJsonSignedResponseWrapper(req.body).getJsonResponse();
             require('*/cartridge/scripts/paymentgateway/transaction/Logger').log(rawResponeJson, 'notify');
 
-            //@todo fingerprint not needed transactionHelper.parseTransactionResponse will check the secret
+            // @todo fingerprint not needed transactionHelper.parseTransactionResponse will check the secret
             // check fingerprint
             var fp;
             var orderHelper = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper');

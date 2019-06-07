@@ -130,7 +130,7 @@ server.post(
             var rawResponeJson = transactionHelper.getJsonSignedResponseWrapper(req.body).getJsonResponse();
             require('*/cartridge/scripts/paymentgateway/transaction/Logger').log(rawResponeJson, 'notify');
 
-            //@todo fingerprint not needed transactionHelper.parseTransactionResponse will check the secret
+            // @todo fingerprint not needed transactionHelper.parseTransactionResponse will check the secret
             var fp;
             var orderHelper = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper');
             if (Object.prototype.hasOwnProperty.call(notifyData, 'customFields')
