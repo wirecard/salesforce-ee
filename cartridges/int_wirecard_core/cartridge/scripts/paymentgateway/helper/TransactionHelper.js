@@ -387,16 +387,16 @@ var TransactionHelper = {
                 const apiResponseWrapper = this.getJsonSignedResponseWrapper(apiResponse, paymentMethodID);
 
                 if (!apiResponseWrapper.validateSignature()) {
-                    throw 'Failed Signature validation';
+                    throw new Error('Failed Signature validation');
                 }
 
                 resultObject = apiResponseWrapper.getJsonResponse();
 
                 if ('error' in resultObject) {
-                    throw resultObject['error'];
+                    throw new Error(resultObject['error']);
                 }
             } else {
-            	resultObject = JSON.parse(apiResponse);
+                resultObject = JSON.parse(apiResponse);
             }
         } catch (e) {
             pgLogger.error(e + '\n');
@@ -501,12 +501,12 @@ var TransactionHelper = {
             }.bind(this),
             validateSignature: function() {
                 if (!this.isValid()) {
-                    throw 'invalid api response';
+                    throw new Error('invalid api response');
                 }
                 let factoryClass = this.algorithmFactory[this['response-signature-algorithm']];
 
                 if ('function' !== typeof factoryClass) {
-                    throw 'invalid response signature algorithm';
+                    throw new Error('invalid response signature algorithm');
                 }
                 const Encoding = require('dw/crypto/Encoding');
 
@@ -561,7 +561,7 @@ var TransactionHelper = {
                 return Site.getCustomPreferenceValue('paymentGatewaySEPACreditSecret');
             case this.PAYMENT_METHOD_ID_SOFORT:
                 return Site.getCustomPreferenceValue('paymentGatewaySofortSecret');
-            default: throw 'No Secret for payment mehtod ID';
+            default: throw new Error('No Secret for payment mehtod ID');
         }
     }
 };
