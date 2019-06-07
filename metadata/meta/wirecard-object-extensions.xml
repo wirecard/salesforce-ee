@@ -374,7 +374,10 @@
                 <type>text</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
-                <default-value>Mandate Text</default-value>
+                <default-value><![CDATA[I authorize the creditor ${paymentGatewaySEPAMandateName} to send instructions to my bank to collect one single direct debit from my account. At the same time I instruct my bank to debit my account in accordance with the instructions from the creditor ${paymentGatewaySEPAMandateName}
+Note: As part of my rights, I am entitled to a refund under the terms and conditions of my agreement with my bank. A refund must be claimed within 8 weeks starting from the date on which my account was debited.
+I irrevocably agree that, in the event that the direct debit is not honored, or objection against the direct debit exists, my bank will disclose to the creditor ${paymentGatewaySEPAMandateName} my full name, address and date of birth.
+Type of payment: one-off.]]></default-value>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewaySEPAMandateTextAccept">
                 <display-name xml:lang="x-default">SEPA text for acceppting terms and conditions</display-name>
