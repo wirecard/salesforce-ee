@@ -240,7 +240,7 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
-                <default-value></default-value>
+                <default-value>ecdf5990-0372-47cd-a55d-037dccfe9d25</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewaySEPADebitMerchantAccountID">
                 <display-name xml:lang="x-default">Merchant Account ID</display-name>
@@ -284,7 +284,7 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
-                <default-value>1ddab375-08da-4704-83da-36610518efcf</default-value>
+                <default-value>5caf2ed9-5f79-4e65-98cb-0b70d6f569aa</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewaySEPADebitInitialTransactionType">
                 <display-name xml:lang="x-default">Payment Action</display-name>
