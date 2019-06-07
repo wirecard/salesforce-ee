@@ -185,19 +185,6 @@
                 <mandatory-flag>false</mandatory-flag>
                 <default-value>true</default-value>
             </attribute-definition>
-            <attribute-definition attribute-id="paymentGatewaySignResponses">
-                <display-name xml:lang="x-default">Sign Responses</display-name>
-                <description xml:lang="x-default">Signature of Response. Requires Certification Alias</description>
-                <type>boolean</type>
-                <mandatory-flag>false</mandatory-flag>
-                <default-value>false</default-value>
-            </attribute-definition>
-            <attribute-definition attribute-id="paymentGatewayCertAlias">
-                <display-name xml:lang="x-default">Certification Alias</display-name>
-                <description xml:lang="x-default">Name of the Certificate Alias.</description>
-                <type>string</type>
-                <mandatory-flag>false</mandatory-flag>
-            </attribute-definition>
             <attribute-definition attribute-id="paymentGatewaySEPACreditMerchantAccountID">
                 <display-name xml:lang="x-default">Merchant Account ID (MAID)</display-name>
                 <description xml:lang="x-default">Unique identifier assigned to your merchant account.</description>
@@ -509,8 +496,6 @@
                 <attribute attribute-id="paymentGatewayDebugMode"/>
                 <attribute attribute-id="paymentGatewayShopName"/>
                 <attribute attribute-id="paymentGatewayUrlSalt"/>
-                <attribute attribute-id="paymentGatewaySignResponses"/>
-                <attribute attribute-id="paymentGatewayCertAlias"/>
             </attribute-group>
             <attribute-group group-id="PAYMENTGATEWAY_PAYPAL">
                 <display-name xml:lang="x-default">Wirecard Payment Gateway settings for PayPal</display-name>

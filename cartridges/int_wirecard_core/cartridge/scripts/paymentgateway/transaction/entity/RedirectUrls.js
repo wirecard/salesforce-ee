@@ -27,11 +27,8 @@ function RedirectUrls(transaction) {
     result['cancel-redirect-url'] = getRedirectUrl(order, 'PaymentGateway-Cancel');
     result['fail-redirect-url'] = getRedirectUrl(order, 'PaymentGateway-Fail');
 
-    let format = 'application/json';
+    let format = 'application/json-signed';
 
-    if (transaction.getSitePreference('paymentGatewaySignResponses')) {
-        format += '-signed';
-    }
     result.notifications = {
         format: format,
         notification: [{

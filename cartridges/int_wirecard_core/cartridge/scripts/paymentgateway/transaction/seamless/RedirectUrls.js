@@ -29,11 +29,7 @@ function getUrl(lineItemCtnr, route) {
 function RedirectUrls(transaction) {
     var basket = transaction.order;
 
-    var format = 'application/json';
-    if (transaction.getSitePreference('paymentGatewaySignResponses')) {
-        format += '-signed';
-    }
-
+    var format = 'application/json-signed';
     var result = {
         notification_url_1: getUrl(basket, 'PaymentGatewayCredit-Notify'),
         notifications_format: format
