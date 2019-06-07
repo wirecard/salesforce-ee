@@ -15,13 +15,26 @@ import internal.GlobalVariable as GlobalVariable
 
 WebUI.delay(10)
 
-WebUI.waitForElementVisible(findTestObject('Payment methods/PayPal/Username'), 10)
+if (WebUI.verifyElementPresent(findTestObject('Payment methods/PayPal/Username'), 5, FailureHandling.OPTIONAL)) {
+	WebUI.setText(findTestObject('Payment methods/PayPal/Username'), username)
+	
+	WebUI.setText(findTestObject('Payment methods/PayPal/Password'), password)
+	
+	WebUI.click(findTestObject('Payment methods/PayPal/Login'))
 
-WebUI.setText(findTestObject('Payment methods/PayPal/Username'), username)
-
-WebUI.setText(findTestObject('Payment methods/PayPal/Password'), password)
-
-WebUI.click(findTestObject('Payment methods/PayPal/Login'))
+} else {
+	WebUI.setText(findTestObject('Payment methods/PayPal/Username (split)'), username)
+	
+	WebUI.click(findTestObject('Payment methods/PayPal/Continue to Password'))
+	
+	WebUI.delay(2)
+	
+	WebUI.waitForElementVisible(findTestObject('Payment methods/PayPal/Password (split)'), 10)
+	
+	WebUI.setText(findTestObject('Payment methods/PayPal/Password (split)'), password)
+	
+	WebUI.click(findTestObject('Payment methods/PayPal/Continue Login'))
+}
 
 WebUI.delay(10)
 
