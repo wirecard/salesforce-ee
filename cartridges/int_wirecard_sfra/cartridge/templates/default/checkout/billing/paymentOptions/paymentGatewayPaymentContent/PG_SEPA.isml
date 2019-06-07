@@ -1,3 +1,12 @@
+<isscript>
+/**
+ * Shop System Plugins:
+ * - Terms of Use can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/_TERMS_OF_USE
+ * - License can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
+ */
+</isscript>
 <!--- TEMPLATENAME: PG_SEPA.isml --->
 <isset name="sepaFields" value="${ pdict.forms.billingForm.PG_SEPA }" scope="page"/>
 <isscript>
@@ -59,7 +68,7 @@
         </div>
     </div>
     </isif>
-    
+
     <input type="hidden" class="form-control"
     	name="${pdict.forms.billingForm.paymentMethod.htmlName}"
     	value="PG_SEPA"

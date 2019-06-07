@@ -1,4 +1,11 @@
 /**
+ * Shop System Plugins:
+ * - Terms of Use can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/_TERMS_OF_USE
+ * - License can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
+ */
+/**
  *
  * <p>This script provides inheritance support and is inspired by base2 and Prototype</p>
  *

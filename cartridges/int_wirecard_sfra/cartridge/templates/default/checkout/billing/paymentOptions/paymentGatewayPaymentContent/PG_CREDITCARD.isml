@@ -1,3 +1,12 @@
+<isscript>
+/**
+ * Shop System Plugins:
+ * - Terms of Use can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/_TERMS_OF_USE
+ * - License can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
+ */
+</isscript>
 <!--- TEMPLATENAME: PG_CREDITCARD.isml --->
 <isset name="pgCreditCardFields" value="${ pdict.forms.billingForm.PG_CREDITCARD }" scope="page"/>
 <div id="pg-creditcard-form"></div>

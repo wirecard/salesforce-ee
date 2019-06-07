@@ -1,4 +1,14 @@
 <isscript>
+/**
+ * Shop System Plugins:
+ * - Terms of Use can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/_TERMS_OF_USE
+ * - License can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
+ */
+</isscript>
+
+<isscript>
     importPackage(dw.system);
     var transactionHelper = require('int_wirecard_core/cartridge/scripts/paymentgateway/helper/TransactionHelper');
     var parameterMap = request.httpParameterMap;
