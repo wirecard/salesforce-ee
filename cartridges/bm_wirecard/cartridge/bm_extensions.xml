@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
+<!--
+  Shop System Plugins:
+  - Terms of Use can be found under:
+  https://github.com/wirecard/salesforce-ee/blob/master/_TERMS_OF_USE
+  - License can be found under:
+  https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
+-->
 <extensions xmlns="http://www.demandware.com/xml/bmmodules/2007-12-11" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.demandware.com/xml/bmmodules/2007-12-11 bmext.xsd">
     <menuitem id="PaymentGateway" position="77489" site="true">
         <name xml:lang="x-default">Wirecard Payment Gateway</name>

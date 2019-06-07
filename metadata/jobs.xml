@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Shop System Plugins:
+  - Terms of Use can be found under:
+  https://github.com/wirecard/salesforce-ee/blob/master/_TERMS_OF_USE
+  - License can be found under:
+  https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
+-->
+
+
 <jobs xmlns="http://www.demandware.com/xml/impex/jobs/2015-07-01">
     <job job-id="PaymentGatewayHandleNotifications" priority="0">
         <description>Handles notifications stored with custom objects of type PaymentGatewayNotification</description>
