@@ -2,6 +2,7 @@
  * API includes
  */
 var Site = require('dw/system/Site');
+var System = require('dw/system/System');
 var pgLogger = require('dw/system/Logger').getLogger('paymentgateway', 'paymentgateway');
 /**
  * Script includes
@@ -24,7 +25,11 @@ var AbstractPaymentGatewayService = HTTPBaseService.extend({
         this.requestHeaders = {
             'Content-type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': 'Basic ' + authorizationHash
+            'Authorization': 'Basic ' + authorizationHash,
+            'plugin-name': 'salesforce-ee',
+            'plugin-version': this.getSitePreference('paymentGatewayModuleVersion'),
+            'shop-system-name': 'salesforce-commerce-cloud',
+            'shop-system-version': System.compatibilityMode
         };
 
         // set service endpoint
@@ -56,9 +61,13 @@ var AbstractPaymentGatewayService = HTTPBaseService.extend({
         }
 
         //adding header values
+        var logHeaders = [];
         if ( !empty(this.requestHeaders) ) {
+            var headerValue;
             for ( var headerID : String in this.requestHeaders ) {
-                svc.addHeader(headerID, this.requestHeaders[headerID]);
+                headerValue = this.requestHeaders[headerID];
+                svc.addHeader(headerID, headerValue);
+                logHeaders.push(headerID + ': ' + (headerID.indexOf('Authorization') > -1 ? '***' : headerValue));
             }
         }
 
@@ -71,7 +80,7 @@ var AbstractPaymentGatewayService = HTTPBaseService.extend({
         require('*/cartridge/scripts/paymentgateway/transaction/Logger').log(params);
 
         // log request url for debugging
-        pgLogger.debug( 'Called service: ' + svc.URL );
+        pgLogger.debug( 'Called service: ' + svc.URL + '\n' + logHeaders.join('\n'));
         return requestData;
     },
 
