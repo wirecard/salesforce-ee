@@ -563,8 +563,8 @@ var scrollAnimate = require('base/components/scrollAnimate');
                 switch (paymentMethodData.paymentMethod) {
                     case 'PG_SEPA' :
                         $.ajax({
-                            url     : 'PaymentGateway-GetPGSummary',
-                            data : {paymentMethod: paymentMethodData.paymentMethod},
+                            url: 'PaymentGateway-GetPGSummary',
+                            data: {paymentMethod: paymentMethodData.paymentMethod},
                             success: disablePlaceOrderButton
                         });
                     break;
