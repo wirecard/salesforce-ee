@@ -79,9 +79,10 @@ function getRefundTransactionType() {
  * @returns {Object} - transaction
  */
 function SEPA(order, args) {
+    var TransactionHelper = require('*/cartridge/scripts/paymentgateway/helper/TransactionHelper');
     // default params
     var params = {
-        paymentMethodID: 'sepadirectdebit',
+        paymentMethodID: TransactionHelper.PAYMENT_METHOD_ID_SEPA_DIRECT_DEBIT,
         'transaction-type': this.getSitePreference('paymentGatewaySEPADebitInitialTransactionType').value,
         'merchant-account-id': this.getSitePreference('paymentGatewaySEPADebitMerchantAccountID')
     };

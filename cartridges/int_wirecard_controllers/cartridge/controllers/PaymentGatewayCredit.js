@@ -228,11 +228,16 @@ exports.Notify = guard.ensure(['post', 'https'], function () {
 
     if (order && order.orderToken === orderToken) {
         // parse response
-        var transactionHelper = require('*/cartridge/scripts/paymentgateway/helper/TransactionHelper');
-        var notifyMessage = parameterMap.getRequestBodyAsString();
-        var notifyData = transactionHelper.parseTransactionResponse(notifyMessage, null);
-        require('*/cartridge/scripts/paymentgateway/transaction/Logger').log(JSON.parse(notifyMessage), 'notify');
 
+        var requestBody = parameterMap.getRequestBodyAsString();
+        var transactionHelper = require('*/cartridge/scripts/paymentgateway/helper/TransactionHelper');
+        var notifyData = transactionHelper.parseTransactionResponse(
+            requestBody, null, transactionHelper.RESPONSE_TYPE_NOTIFY
+        );
+        var rawResponeJson = transactionHelper.getJsonSignedResponseWrapper(requestBody).getJsonResponse();
+        require('*/cartridge/scripts/paymentgateway/transaction/Logger').log(rawResponeJson, 'notify');
+
+        // @todo fingerprint not needed transactionHelper.parseTransactionResponse will check the secret
         var fingerprint;
         var orderHelper = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper');
         if (Object.prototype.hasOwnProperty.call(notifyData, 'customFields')
@@ -250,7 +255,7 @@ exports.Notify = guard.ensure(['post', 'https'], function () {
             if (!customObj) {
                 customObj = CustomObjectMgr.createCustomObject('PaymentGatewayNotification', notifyData.transactionId);
             }
-            customObj.custom.responseText = notifyMessage;
+            customObj.custom.responseText = JSON.stringify(rawResponeJson);
             customObj.custom.transactionData = JSON.stringify(notifyData);
             customObj.custom.transactionType = notifyData.transactionType;
             customObj.custom.requestedAmount = notifyData.requestedAmount.value;

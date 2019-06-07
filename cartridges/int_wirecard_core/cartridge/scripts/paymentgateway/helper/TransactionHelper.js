@@ -10,7 +10,16 @@ var transactionBasePath = '*/cartridge/scripts/paymentgateway/transaction/';
 // service class base path
 var svcBasePath = '*/cartridge/scripts/paymentgateway/services/';
 
+
 var TransactionHelper = {
+    RESPONSE_TYPE_NOTIFY: 1,
+
+    //@todo use this constants instead of hardcoded vars in each payment method
+    PAYMENT_METHOD_ID_SEPA_DIRECT_DEBIT: 'sepadirectdebit',
+    PAYMENT_METHOD_ID_CREDIT_CARD      : 'creditcard',
+    PAYMENT_METHOD_ID_PAYPAL           : 'paypal',
+    PAYMENT_METHOD_ID_SEPA_CREDIT      : 'sepacredit',
+    PAYMENT_METHOD_ID_SOFORT           : 'sofortbanking',
     /**
      * Retrieve payment gateway transaction data from dw.order.Order
      * @param {dw.order.Order}
@@ -362,33 +371,36 @@ var TransactionHelper = {
 
     /**
      * Parse api response from http service call
-     * @param {string} apiResponse - json response
+     *
+     * @param apiResponse
+     * @param paymentMethodID
+     * @param responseType
+     *
      * @returns {Object} - status with {code: ..., description: ... }
      */
-    parseTransactionResponse: function (apiResponse, paymentMethodID) {
+    parseTransactionResponse: function (apiResponse, paymentMethodID, responseType) {
         var result       = {};
         var resultObject = {};
 
         try {
-            if (require('dw/system/Site').getCurrent().getCustomPreferenceValue('paymentGatewaySignResponses')) {
-                const apiResponseWrapper = this.getJsonSignedResponseWrapper(apiResponse);
+            if (responseType === this.RESPONSE_TYPE_NOTIFY) {
+                const apiResponseWrapper = this.getJsonSignedResponseWrapper(apiResponse, paymentMethodID);
 
-                if (!apiResponseWrapper.isValid()) {
-                    throw 'Invalid api response';
-                }
-                if (!apiResponseWrapper.validateSignature() && !apiResponseWrapper.validateFallbackHash()) {
-                    throw 'Failed Signature validation';
+                if (!apiResponseWrapper.validateSignature()) {
+                    throw new Error('Failed Signature validation');
                 }
 
                 resultObject = apiResponseWrapper.getJsonResponse();
 
                 if ('error' in resultObject) {
-                    throw resultObject['error'];
+                    throw new Error(resultObject['error']);
                 }
             } else {
                 resultObject = JSON.parse(apiResponse);
             }
-        } catch (e) {}
+        } catch (e) {
+            pgLogger.error(e + '\n');
+        }
 
         var stringHelper = require('*/cartridge/scripts/paymentgateway/util/StringHelper');
         var tmp;
@@ -453,57 +465,60 @@ var TransactionHelper = {
      * @todo maybe its better in a own file
      *
      * @param {string} apiResponse
+     * @param {string} paymentMethodID
      * @returns {{validateSignature: (function(): boolean), getJsonResponse: (function(): object), jsonResponse: {payment: {}}, isValid: (function(): boolean), algorithmMapper: {"rsa-sha256": string}, validateFallbackHash: (function(): boolean)}}
      */
-    getJsonSignedResponseWrapper: function(apiResponse) {
+    getJsonSignedResponseWrapper: function(apiResponse, paymentMethodID) {
+
+        if (this.getJsonSignedResponseWrapper.prototype.singleton) {
+            return this.getJsonSignedResponseWrapper.prototype.singleton;
+        }
         let responseObject = {
             jsonResponse: { payment: {} },
-            algorithmMapper: {
-                'rsa-sha256': 'SHA256withRSA'
-            },
-            validateSignature: function() {
-                if (!this.isValid()) {
-                    return false;
-                }
-                const SignatureAlgorithm = this.algorithmMapper[this['response-signature-algorithm']];
-                const Signature          = new (require('dw/crypto/Signature'))();
+            paymentMethodID: paymentMethodID,
+            algorithmFactory: {
+                'HmacSHA256': function() {
+                    const Mac = require('dw/crypto/Mac');
 
-                if (!Signature.isDigestAlgorithmSupported(SignatureAlgorithm)) {
-                    return false;
+                    return new Mac(Mac.HMAC_SHA_256);
                 }
-                const CertificateRef = require('dw/crypto/CertificateRef');
-                const Site           = require('dw/system/Site').getCurrent();
-                const Certificate    = new CertificateRef(Site.getCustomPreferenceValue('paymentGatewayCertAlias'));
-
-                return Signature.verifySignature(
-                    this['response-signature-base64'],
-                    this['responsebase64'],
-                    Certificate,
-                    SignatureAlgorithm
-                );
             },
-            validateFallbackHash: function() {
+            getFirstPaymentMethodId: function() {
                 const jsonResponse = this.getJsonResponse();
 
-                if (!'custom-fields' in jsonResponse.payment) {
-                    return false;
+                //if payment methods are available then the other keys must exists
+                if ('payment-methods' in jsonResponse['payment']) {
+                    return jsonResponse['payment']['payment-methods']['payment-method'][0]['name'];
                 }
-                const Site = require('dw/system/Site').getCurrent();
+                return '';
+            },
+            getSecret: function() {
+                //if no payment method id was given we must use the first id
+                if (!paymentMethodID) {
+                    paymentMethodID = responseObject.getFirstPaymentMethodId();
+                }
+                return this.getSecretCustomPreferenceFromPaymentMethodId(paymentMethodID);
+            }.bind(this),
+            validateSignature: function() {
+                if (!this.isValid()) {
+                    throw new Error('invalid api response');
+                }
+                let factoryClass = this.algorithmFactory[this['response-signature-algorithm']];
 
-                //@fixme use a constant for paymentGatewayUrlSalt
-                const customField = jsonResponse.payment['custom-fields'].filter(function(customField) {
-                    return 'paymentGatewayUrlSalt' in customField['custom-field'];
-                }).shift();
+                if ('function' !== typeof factoryClass) {
+                    throw new Error('invalid response signature algorithm');
+                }
+                const Encoding = require('dw/crypto/Encoding');
 
-                return Site.getCustomPreferenceValue('paymentGatewayUrlSalt')
-                    === customField['custom-field']['paymentGatewayUrlSalt'];
+                return Encoding.toBase64(factoryClass().digest(this['response-base64'], this.getSecret()))
+                    === this['response-signature-base64'];
             },
             getJsonResponse: function() {
                 if (!this.isValid() || this.jsonResponse.payment.length || 'error' in this.jsonResponse) {
                     return this.jsonResponse;
                 }
                 try {
-                    this.jsonResponse = JSON.parse(require('dw/util/StringUtils').decodeBase64(this['responsebase64']));
+                    this.jsonResponse = JSON.parse(require('dw/util/StringUtils').decodeBase64(this['response-base64']));
                 } catch (jsonParseSyntaxError) {
                     this.jsonResponse['error'] = jsonParseSyntaxError;
                 }
@@ -512,17 +527,44 @@ var TransactionHelper = {
             isValid: function() {
                 return 'response-signature-base64' in this
                     && 'response-signature-algorithm' in this
-                    && 'responsebase64' in this
+                    && 'response-base64' in this
             }
         };
 
         apiResponse.split('&').forEach(function(keyValueString) {
-            let [key, value] = keyValueString.split('=', 1);
-            this[key] = value;
-        }, responseObject);
+            const [key] = keyValueString.split('=', 1);
+            responseObject[key] = keyValueString.replace(key + '=', '');
+        });
+        this.getJsonSignedResponseWrapper.prototype.singleton = responseObject;
 
         return responseObject;
+    },
+
+    /**
+     * Function for returning
+     *
+     * @param paymentMethodId
+     *
+     * @returns {string}
+     */
+    getSecretCustomPreferenceFromPaymentMethodId : function(paymentMethodId) {
+        const Site = require('dw/system/Site').getCurrent();
+
+        switch (paymentMethodId) {
+            case this.PAYMENT_METHOD_ID_SEPA_DIRECT_DEBIT:
+                return Site.getCustomPreferenceValue('paymentGatewaySEPADebitSecret');
+            case this.PAYMENT_METHOD_ID_CREDIT_CARD:
+                return Site.getCustomPreferenceValue('paymentGatewayCreditCardSecret');
+            case this.PAYMENT_METHOD_ID_PAYPAL:
+                return Site.getCustomPreferenceValue('paymentGatewayPayPalSecret');
+            case this.PAYMENT_METHOD_ID_SEPA_CREDIT:
+                return Site.getCustomPreferenceValue('paymentGatewaySEPACreditSecret');
+            case this.PAYMENT_METHOD_ID_SOFORT:
+                return Site.getCustomPreferenceValue('paymentGatewaySofortSecret');
+            default: throw new Error('No Secret for payment mehtod ID');
+        }
     }
 };
+
 
 module.exports = TransactionHelper;

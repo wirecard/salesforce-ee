@@ -2,6 +2,7 @@
  * Script includes
  */
 var AbstractPaymentGatewayService = require('./AbstractPaymentGatewayService');
+var TransactionHelper             = require('*/cartridge/scripts/paymentgateway/helper/TransactionHelper');
 
 var SEPAService = AbstractPaymentGatewayService.extend({
     init: function (type) {
@@ -9,7 +10,7 @@ var SEPAService = AbstractPaymentGatewayService.extend({
 
         //overwrite the relative URL path in a more generic way without touching the parent class
         this.relativeURLPath = 'engine/rest/' + ('undefined' !== typeof type ? type : 'paymentmethods');
-        this.paymentMethodID = 'sepadirectdebit';
+        this.paymentMethodID = TransactionHelper.PAYMENT_METHOD_ID_SEPA_DIRECT_DEBIT;
     },
 
     /**
