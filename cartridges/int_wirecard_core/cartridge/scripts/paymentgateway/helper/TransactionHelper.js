@@ -74,6 +74,11 @@ var TransactionHelper = {
             ) {
                 canCancel = false;
             } else if (tmpTransaction.parentTransactionId == transactionId
+                && Type.Capture.indexOf(tmpTransaction.transactionType) > -1
+                && tmpTransaction.transactionState === 'success'
+            ) {
+                canCancel = false;
+            } else if (tmpTransaction.parentTransactionId == transactionId
                 && Type.Refund.indexOf(tmpTransaction.transactionType) > -1
                 && tmpTransaction.transactionState === 'success'
             ) {
