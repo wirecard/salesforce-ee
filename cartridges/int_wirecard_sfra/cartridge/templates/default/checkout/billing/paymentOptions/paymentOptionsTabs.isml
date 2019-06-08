@@ -1,4 +1,4 @@
-<isscript>
+<iscomment>
 /**
  * Shop System Plugins:
  * - Terms of Use can be found under:
@@ -6,7 +6,7 @@
  * - License can be found under:
  * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
  */
-</isscript>
+</iscomment>
 <iscontent type="text/html" charset="UTF-8" compact="true"/>
 <isscript>
     var paymentHelper = require('int_wirecard_core/cartridge/scripts/paymentgateway/helper/PaymentHelper');
