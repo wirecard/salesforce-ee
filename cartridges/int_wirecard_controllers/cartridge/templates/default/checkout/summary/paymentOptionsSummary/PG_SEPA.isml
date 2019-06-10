@@ -10,65 +10,70 @@
 <!--- TEMPLATENAME: PG_SEPA.isml --->
 <iscontent compact="true" />
 <isscript>
-    const sitePref    = require('dw/system/Site').getCurrent();
-    const sepaFields  = pdict.CurrentForms.billing.PG_SEPA;
-    const search      = new RegExp('\\$\{(paymentGatewaySEPAMandateName)\}', 'g');
-    const mandateText = sitePref.getCustomPreferenceValue('paymentGatewaySEPAMandateText').replace(search, function(match, capture) {
-    	return sitePref.getCustomPreferenceValue(capture) ? sitePref.getCustomPreferenceValue(capture) : '';
-   	});
-  	const mandateName 		= sitePref.getCustomPreferenceValue('paymentGatewaySEPAMandateName');
-	const mandateZIP  		= sitePref.getCustomPreferenceValue('paymentGatewaySEPAMandateZIP');
-    const mandateStreet	 	= sitePref.getCustomPreferenceValue('paymentGatewaySEPAMandateStreet');
-    const mandateCity 		= sitePref.getCustomPreferenceValue('paymentGatewaySEPAMandateCity');
-    const mandateCountry 	= sitePref.getCustomPreferenceValue('paymentGatewaySEPAMandateCountry');
-    const mandateCreditorID = sitePref.getCustomPreferenceValue('paymentGatewaySEPAMandateCreditorID');
+    var currentSite = require('dw/system/Site').getCurrent();
+    function getCustomSitePref(key) {
+        var value = currentSite.getCustomPreferenceValue(key);
+        return value === null ? '' : value;
+    }
+    var sepaFields  = pdict.CurrentForms.billing.paymentMethods.PG_SEPA;
+    var search      = new RegExp('\\$\{(paymentGatewaySEPAMandateName)\}', 'g');
+    var mandateText = getCustomSitePref('paymentGatewaySEPAMandateText').replace(search, function(match, capture) {
+        return getCustomSitePref(capture) ? getCustomSitePref(capture) : '';
+    });
+    var mandateName = getCustomSitePref('paymentGatewaySEPAMandateName');
+    var mandateZIP = getCustomSitePref('paymentGatewaySEPAMandateZIP');
+    var mandateStreet = getCustomSitePref('paymentGatewaySEPAMandateStreet');
+    var mandateCity = getCustomSitePref('paymentGatewaySEPAMandateCity');
+    var mandateCountry = getCustomSitePref('paymentGatewaySEPAMandateCountry');
+    var mandateCreditorID = getCustomSitePref('paymentGatewaySEPAMandateCreditorID');
 
 </isscript>
 <div class="row saved-payment-information">
-	<h5 class="font-italic col-12">Creditor</h5>
-	<p class="col-5">
-		Creditor ID:
-	</p>
-	<p class="col-7">
-		${mandateCreditorID ? mandateCreditorID : ''}
- 	</p>
- 	<p class="col-5">
-		Creditor Address:
-	</p>
-	<address class="col-7">
-	   ${mandateName ? mandateName : ''}
-	   ${mandateZIP ? mandateZIP : ''}
-	   ${mandateStreet ? mandateStreet : ''}
-	   ${mandateCity ? mandateCity : ''}
-	   ${mandateCountry ? mandateCountry : ''}
-   	</address>
+    <h5 class="font-italic col-12">Creditor</h5>
+    <p class="col-5">
+        ${ Resource.msg('creditor_id_input', 'paymentgateway', null) }
+    </p>
+    <p class="col-7">
+        <isprint value="${ mandateCreditorID }"/>
+    </p>
+    <p class="col-5">
+        ${ Resource.msg('creditor_label_address', 'paymentgateway', null) }:
+    </p>
+    <address class="col-7">
+        <isprint value="${ mandateName }"/>
+        <isprint value="${ mandateZIP }"/>
+        <isprint value="${ mandateStreet }"/>
+        <isprint value="${ mandateCity }"/>
+        <isprint value="${ mandateCountry }"/>
+    </address>
 
-	<h5 class="font-italic col-12">Debtor</h5>
-	<p class="col-5">
-    	Account Owner:
+    <h5 class="font-italic col-12">Debtor</h5>
+    <p class="col-5">
+        ${ Resource.msg('debtor_acc_owner', 'paymentgateway', null) }:
+    </p>
+    <isset value="${ pdict.Basket.getPaymentInstruments('PG_SEPA')[0] }" name="pgInstrument" scope="page"/>
+    <p class="col-7">
+        ${ pgInstrument.custom.paymentGatewaySEPADebtorName }
+    </p>
+    <p class="col-5">
+        ${ Resource.msg('iban', 'paymentgateway', null) }:
     </p>
     <p class="col-7">
-    	${pdict.Basket.getPaymentInstruments('PG_SEPA')[0].custom.paymentGatewaySEPADebtorName}
+        ${ pgInstrument.custom.paymentGatewaySEPAIBAN }
     </p>
-   	<p class="col-5">
-    	IBAN:
-    </p>
-    <p class="col-7">
-    	${pdict.Basket.getPaymentInstruments('PG_SEPA')[0].custom.paymentGatewaySEPAIBAN}
-   	</p>
 
-   	<isif condition="${pdict.payment.custom.paymentGatewaySEPABIC}">
-	<p class="col-5">
-    	BIC:
-    </p>
-    <p class="col-7">
-    	${pdict.Basket.getPaymentInstruments('PG_SEPA')[0].custom.paymentGatewaySEPABIC}
-   	</p>
-   	</isif>
+    <isif condition="${ pgInstrument.custom.paymentGatewaySEPABIC }">
+        <p class="col-5">
+            ${ Resource.msg('bic', 'paymentgateway', null) }:
+        </p>
+        <p class="col-7">
+            ${ pgInstrument.custom.paymentGatewaySEPABIC }
+        </p>
+    </isif>
 
     <p class="col-12">
-    	${mandateText}
-   	</p>
+        ${ mandateText }
+    </p>
 </div>
 <div class="row align-items-center">
     <div class="col-3">
@@ -84,6 +89,6 @@
         </div>
     </div>
     <div class="col-9">
-    	<label class="form-control-label" for="mandate_accept">${sitePref.getCustomPreferenceValue('paymentGatewaySEPAMandateTextAccept')}</label>
+        <label class="form-control-label" for="mandate_accept">${getCustomSitePref('paymentGatewaySEPAMandateTextAccept')}</label>
     </div>
 </div>
