@@ -1,0 +1,47 @@
+/**
+ * Shop System Plugins:
+ * - Terms of Use can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/_TERMS_OF_USE
+ * - License can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
+ */
+/**
+ * Script includes
+ */
+var AbstractPaymentGatewayService = require('./AbstractPaymentGatewayService');
+
+var GiropayService = AbstractPaymentGatewayService.extend({
+    init: function (type) {
+        this._super(type);
+        this.paymentMethodID = 'giropay';
+    },
+
+    /**
+     * Retrieves the base url for Giropay
+     * @returns {String}
+     */
+    getBaseUrl: function() {
+        return this.getSitePreference('paymentGatewayGiropayBaseUrl');
+    },
+
+    /**
+     * Retrieves the http user for Giropay
+     * @returns {String}
+     */
+    getHttpUsername: function() {
+        return this.getSitePreference('paymentGatewayGiropayHttpUser');
+    },
+
+    /**
+     * Retrieves the http password for Giropay
+     * @returns {String}
+     */
+    getHttpPassword: function() {
+        return this.getSitePreference('paymentGatewayGiropayHttpPassword');
+    }
+});
+
+//Export the configured service singleton
+module.exports = function () {
+    return (new GiropayService('paymentmethods')).getService();
+};
