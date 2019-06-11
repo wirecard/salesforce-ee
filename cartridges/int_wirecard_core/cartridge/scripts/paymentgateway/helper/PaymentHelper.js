@@ -4,9 +4,6 @@
  * @var {Object} methodsWithForms - payment gateway methods that come with form fields
  */
 var methodsWithForms = {
-    PG_CREDITCARD: {
-        transactionData: 'text'
-    },
     PG_GIROPAY: {
         bic: 'text'
     },
@@ -14,8 +11,8 @@ var methodsWithForms = {
         bic: 'select'
     },
     PG_SEPA: {
-    	paymentGatewaySEPABIC: 'text',
-    	paymentGatewaySEPAIBAN: 'text',
+        paymentGatewaySEPABIC: 'text',
+        paymentGatewaySEPAIBAN: 'text',
         paymentGatewaySEPADebtorName: 'text'
     }
 };
@@ -41,6 +38,9 @@ var supportedLocalesForSofort = [
 
 module.exports = {
     methodRequestKey: {
+        PG_GIROPAY: {
+            'bank-account': { bic: 'paymentGatewayBIC' }
+        },
         PG_SEPA: {
             'bank-account'  : {iban: 'paymentGatewaySEPAIBAN', bic: 'paymentGatewaySEPABIC'},
             'account-holder': {
@@ -49,26 +49,26 @@ module.exports = {
         }
     },
 
-	getDataForRequest: function(form, methodName) {
-		if (!this.methodRequestKey[methodName]) {
-			return {};
-		}
-		return this.recursiveObjectCreator(this.methodRequestKey[methodName], form);
-	},
+    getDataForRequest: function(form, methodName) {
+        if (!this.methodRequestKey[methodName]) {
+            return {};
+        }
+        return this.recursiveObjectCreator(this.methodRequestKey[methodName], form);
+    },
 
-	recursiveObjectCreator: function(obj, data) {
-		let response = {};
+    recursiveObjectCreator: function(obj, data) {
+        let response = {};
 
-		Object.keys(obj).forEach(function(key) {
-			if ('object' === typeof obj[key]) {
-				response[key] = this.recursiveObjectCreator(obj[key], data);
-			} else if ('undefined' !== typeof data[obj[key]]) {
-				response[key] = data[obj[key]];
-			}
-		}, this);
+        Object.keys(obj).forEach(function(key) {
+            if ('object' === typeof obj[key]) {
+                response[key] = this.recursiveObjectCreator(obj[key], data);
+            } else if ('undefined' !== typeof data[obj[key]]) {
+                response[key] = data[obj[key]];
+            }
+        }, this);
 
-		return response;
-	},
+        return response;
+    },
 
     /**
      * Check if given payment method has form elements
@@ -89,11 +89,11 @@ module.exports = {
         var result = {};
         if (form[methodID]) {
             Object.keys(methodsWithForms[methodID]).forEach(function (k) {
-            	if ('undefined' !== typeof form[methodID][k]) {
-	                // FIXME special handling for dropdowns
-        			result[k] = form[methodID][k].value;
-            	}
-        	});
+                if ('undefined' !== typeof form[methodID][k]) {
+                    // FIXME special handling for dropdowns
+                    result[k] = form[methodID][k].value;
+                }
+            });
         }
         return result;
     },

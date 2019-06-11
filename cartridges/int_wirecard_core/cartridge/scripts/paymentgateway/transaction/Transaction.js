@@ -229,11 +229,11 @@ Transaction.prototype.getPayload = function () {
     if (!result['merchant-account-id']) {
         throw new Error('No merchant-account-id provided!');
     }
-    let customPayload = this.getCustomPayload();
+    var customPayload = this.getCustomPayload();
 
     //WARNING custom payload overwrites result
     Object.keys(customPayload).forEach(function(key) {
-    	return result[key] = customPayload[key];
+        return result[key] = customPayload[key];
     });
     return { payment: result };
 };

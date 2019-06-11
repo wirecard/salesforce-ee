@@ -1,0 +1,34 @@
+<isscript>
+    /**
+    * Shop System Plugins:
+    * - Terms of Use can be found under:
+    * https://github.com/wirecard/salesforce-ee/blob/master/_TERMS_OF_USE
+    * - License can be found under:
+    * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
+    */
+</isscript>
+<!--- TEMPLATENAME: PG_GIROPAY.isml --->
+<isset name="giropayFields" value="${ pdict.forms.billingForm.PG_IDEAL }" scope="page"/>
+
+<fieldset class="payment-form-fields">
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <input type="hidden" class="form-control"
+                       name="${pdict.forms.billingForm.paymentMethod.htmlName}"
+                       value="PG_GIROPAY"
+                >
+                <label class="form-control-label" for="${ giropayFields.bic.htmlName }">${ giropayFields.bic.label }</label>
+                <input type="text"
+                    class="form-control bic"
+                    id="${ giropayFields.bic.htmlName }"
+                    name="${ giropayFields.bic.htmlName }"
+                    aria-describedby="BICInvalidMessage"
+                    data-pattern-mismatch="${Resource.msg('error.message.parse.checkout.billing.bic', 'forms', null)}"
+                    data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
+                />
+                <div class="invalid-feedback" id="bicInvalidMessage"></div>
+            </div>
+        </div>
+    </div>
+</fieldset>
