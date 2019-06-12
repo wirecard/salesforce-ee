@@ -18,6 +18,10 @@ switch (paymentMethodId) {
 		WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentMethods/Giropay'), [:], FailureHandling.STOP_ON_FAILURE)
 
 		break
+	case 'PG_IDEAL':
+		WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentMethods/iDEAL'), [:], FailureHandling.STOP_ON_FAILURE)
+
+		break
     case 'PG_PAYPAL':
         WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentMethods/PayPal'), [:], FailureHandling.STOP_ON_FAILURE)
 
