@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Shop System Plugins:
+  - Terms of Use can be found under:
+  https://github.com/wirecard/salesforce-ee/blob/master/_TERMS_OF_USE
+  - License can be found under:
+  https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
+-->
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <type-extension type-id="SitePreferences">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="paymentGatewayPayPalMerchantAccountID">
+                <display-name xml:lang="x-default">Merchant Account ID (MAID)</display-name>
+                <description xml:lang="x-default">Unique identifier assigned to your merchant account.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>8695f3e4-76e8-414b-96cd-a1e5dafcf20c</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayPayPalSecret">
+                <display-name xml:lang="x-default">Secret Key</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>227dd634-1226-42a8-a598-83e8988e45d9</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayPayPalBaseUrl">
+                <display-name xml:lang="x-default">Wirecard Server Address (URL)</display-name>
+                <description xml:lang="x-default">Wirecard Server Address (URL) (e.g. https://api.wirecard.com).</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>https://api-test.wirecard.com</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayPayPalHttpUser">
+                <display-name xml:lang="x-default">Username</display-name>
+                <description xml:lang="x-default">Username as provided in your Wirecard contract.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>16390-testing</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayPayPalHttpPassword">
+                <display-name xml:lang="x-default">Password</display-name>
+                <description xml:lang="x-default">Password as provided in your Wirecard contract.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>3!3013=D3fD8X7</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayPayPalInitialTransactionType">
+                <display-name xml:lang="x-default">Payment Action</display-name>
+                <description xml:lang="x-default">Select between "Purchase" to capture/invoice your order automatically or "Authorization" to capture/invoice manually.</description>
+                <type>enum-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <value-definitions>
+                    <value-definition>
+                        <display xml:lang="x-default">Authorization</display>
+                        <value>authorization</value>
+                    </value-definition>
+                    <value-definition default="true">
+                        <display xml:lang="x-default">Purchase</display>
+                        <value>debit</value>
+                    </value-definition>
+                </value-definitions>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayPayPalAddDescriptorToRequest">
+                <display-name xml:lang="x-default">Descriptor</display-name>
+                <description xml:lang="x-default">Send text which is displayed on the bank statement issued to your consumer by the financial service provider.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayPayPalSendAdditionalData">
+                <display-name xml:lang="x-default">Send Additional Information</display-name>
+                <description xml:lang="x-default">Additional data will be sent for the purpose of fraud protection. This additional data includes billing/shipping address, shopping basket and descriptor.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayPayPalSendBasketData">
+                <display-name xml:lang="x-default">Shopping basket</display-name>
+                <description xml:lang="x-default">For the purpose of confirmation, payment supports shopping basket display during checkout. To enable this feature, activate Shopping Basket.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="PAYMENTGATEWAY_PAYPAL">
+                <display-name xml:lang="x-default">Wirecard Payment Gateway settings for PayPal</display-name>
+                <attribute attribute-id="paymentGatewayPayPalMerchantAccountID"/>
+                <attribute attribute-id="paymentGatewayPayPalSecret"/>
+                <attribute attribute-id="paymentGatewayPayPalBaseUrl"/>
+                <attribute attribute-id="paymentGatewayPayPalHttpUser"/>
+                <attribute attribute-id="paymentGatewayPayPalHttpPassword"/>
+                <attribute attribute-id="paymentGatewayPayPalAddDescriptorToRequest"/>
+                <attribute attribute-id="paymentGatewayPayPalSendAdditionalData"/>
+                <attribute attribute-id="paymentGatewayPayPalSendBasketData"/>
+                <attribute attribute-id="paymentGatewayPayPalInitialTransactionType"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+</metadata>
