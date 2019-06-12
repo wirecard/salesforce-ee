@@ -14,12 +14,6 @@ var svcBasePath = '*/cartridge/scripts/paymentgateway/services/';
 var TransactionHelper = {
     RESPONSE_TYPE_NOTIFY: 1,
 
-    //@todo use this constants instead of hardcoded vars in each payment method
-    PAYMENT_METHOD_ID_SEPA_DIRECT_DEBIT: 'sepadirectdebit',
-    PAYMENT_METHOD_ID_CREDIT_CARD      : 'creditcard',
-    PAYMENT_METHOD_ID_PAYPAL           : 'paypal',
-    PAYMENT_METHOD_ID_SEPA_CREDIT      : 'sepacredit',
-    PAYMENT_METHOD_ID_SOFORT           : 'sofortbanking',
     /**
      * Retrieve payment gateway transaction data from dw.order.Order
      * @param {dw.order.Order}
@@ -542,29 +536,37 @@ var TransactionHelper = {
 
     /**
      * Function for returning
-     *
-     * @param paymentMethodId
-     *
+     * @param {string} paymentMethodId - used payment method
      * @returns {string}
      */
     getSecretCustomPreferenceFromPaymentMethodId : function(paymentMethodId) {
         const Site = require('dw/system/Site').getCurrent();
+        var paymentHelper = require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper');
+        var secret;
 
         switch (paymentMethodId) {
-            case this.PAYMENT_METHOD_ID_SEPA_DIRECT_DEBIT:
-                return Site.getCustomPreferenceValue('paymentGatewaySEPADebitSecret');
-            case this.PAYMENT_METHOD_ID_CREDIT_CARD:
-                return Site.getCustomPreferenceValue('paymentGatewayCreditCardSecret');
-            case this.PAYMENT_METHOD_ID_PAYPAL:
-                return Site.getCustomPreferenceValue('paymentGatewayPayPalSecret');
-            case this.PAYMENT_METHOD_ID_SEPA_CREDIT:
-                return Site.getCustomPreferenceValue('paymentGatewaySEPACreditSecret');
-            case this.PAYMENT_METHOD_ID_SOFORT:
-                return Site.getCustomPreferenceValue('paymentGatewaySofortSecret');
-            default: throw new Error('No Secret for payment mehtod ID');
+            case paymentHelper.PAYMENT_METHOD_SEPA_DIRECT_DEBIT:
+                secret = Site.getCustomPreferenceValue('paymentGatewaySEPADebitSecret');
+                break;
+            case paymentHelper.PAYMENT_METHOD_CREDIT_CARD:
+                secret = Site.getCustomPreferenceValue('paymentGatewayCreditCardSecret');
+                break;
+            case paymentHelper.PAYMENT_METHOD_GIROPAY:
+                secret = Site.getCustomPreferenceValue('paymentGatewayGiropaySecret');
+                break;
+            case paymentHelper.PAYMENT_METHOD_PAYPAL:
+                secret = Site.getCustomPreferenceValue('paymentGatewayPayPalSecret');
+                break;
+            case paymentHelper.PAYMENT_METHOD_SEPA_CREDIT:
+                secret = Site.getCustomPreferenceValue('paymentGatewaySEPACreditSecret');
+                break;
+            case paymentHelper.PAYMENT_METHOD_SOFORT:
+                secret = Site.getCustomPreferenceValue('paymentGatewaySofortSecret');
+                break;
+            default: throw new Error('No Secret for payment method ID');
         }
+        return secret;
     }
 };
-
 
 module.exports = TransactionHelper;

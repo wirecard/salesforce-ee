@@ -36,7 +36,7 @@ function getRefundTransactionType() {
 function Sofort(order, args) {
     // default params
     var params = {
-        paymentMethodID: 'sofortbanking',
+        paymentMethodID: require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper').PAYMENT_METHOD_SOFORT,
         'transaction-type': Type.DEBIT,
         'merchant-account-id': this.getSitePreference('paymentGatewaySofortMerchantAccountID')
     };

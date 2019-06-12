@@ -8,26 +8,26 @@
     */
 </isscript>
 <!--- TEMPLATENAME: PG_GIROPAY.isml --->
-<isset name="giropayFields" value="${ pdict.forms.billingForm.PG_IDEAL }" scope="page"/>
+<isset name="giropayFields" value="${ pdict.forms.billingForm.PG_GIROPAY }" scope="page"/>
 
 <fieldset class="payment-form-fields">
     <div class="row">
         <div class="col-12">
-            <div class="form-group">
+            <div class="form-group required">
                 <input type="hidden" class="form-control"
                        name="${pdict.forms.billingForm.paymentMethod.htmlName}"
                        value="PG_GIROPAY"
                 >
-                <label class="form-control-label" for="${ giropayFields.bic.htmlName }">${ giropayFields.bic.label }</label>
+                <label class="form-control-label" for="${ giropayFields.paymentGatewayBIC.htmlName }">${ giropayFields.paymentGatewayBIC.label }</label>
                 <input type="text"
                     class="form-control bic"
-                    id="${ giropayFields.bic.htmlName }"
-                    name="${ giropayFields.bic.htmlName }"
+                    id="${ giropayFields.paymentGatewayBIC.htmlName }"
+                    name="${ giropayFields.paymentGatewayBIC.htmlName }"
                     aria-describedby="BICInvalidMessage"
                     data-pattern-mismatch="${Resource.msg('error.message.parse.checkout.billing.bic', 'forms', null)}"
                     data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
                 />
-                <div class="invalid-feedback" id="bicInvalidMessage"></div>
+                <div class="invalid-feedback"></div>
             </div>
         </div>
     </div>

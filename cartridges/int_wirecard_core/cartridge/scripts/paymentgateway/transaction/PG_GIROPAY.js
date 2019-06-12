@@ -37,7 +37,7 @@ function getRefundTransactionType() {
 function Giropay(order, args) {
     // default params
     var params = {
-        paymentMethodID: 'giropay',
+        paymentMethodID: require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper').PAYMENT_METHOD_GIROPAY,
         'transaction-type': Type.DEBIT,
         'merchant-account-id': this.getSitePreference('paymentGatewayGiropayMerchantAccountID')
     };

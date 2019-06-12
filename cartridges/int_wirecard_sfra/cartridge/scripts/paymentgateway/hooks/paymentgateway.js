@@ -45,8 +45,6 @@ function Handle(basket, paymentInformation) {
         removePaymentInstruments(basket);
         basket.createPaymentInstrument(paymentMethod, basket.totalGrossPrice);
     });
-    // FIXME this is for monitoring test behaviour
-    pgLogger.debug('Selected payment method: ' + paymentMethod);
     return { success: true };
 }
 
@@ -83,65 +81,6 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor) { // eslint
 
     return result;
 }
-
-'use strict';
-
-
-/**
- * Creates PaymentInstrument and returns 'success'.
- */
-function processForm(req, paymentForm, viewData) {
-	const success = {
-        error: false,
-        viewData: viewData
-    };
-	if ('undefined' === typeof paymentForm[paymentForm.paymentMethod.value]) {
-	    return success;
-    }
-	const COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
-	const errorFields = COHelpers.validateFields(paymentForm[paymentForm.paymentMethod.value]);
-
-	if (Object.keys(errorFields).length) {
-		return {
-			error: true,
-			fieldErrors: errorFields
-		}
-	}
-
-    let customFormData = PaymentHelper.getFormData(paymentForm, paymentForm.paymentMethod.value);
-
-    viewData.paymentMethod = {
-        value: paymentForm.paymentMethod.value,
-        htmlName: paymentForm.paymentMethod.value
-    };
-    viewData.paymentInformation = { pgFormData : customFormData };
-    viewData.paymentInformation.paymentMethodID = paymentForm.paymentMethod.value;
-
-    return success;
-}
-
-/**
- * Creates PaymentInstrument and returns 'success'.
- */
-function savePaymentInformation(req, currentBasket, billingData) {
-    let paymentInformation = billingData.paymentInformation.pgFormData;
-    let paymentInstrument  = currentBasket.getPaymentInstruments(billingData.paymentInformation.paymentMethodID);
-
-    if (paymentInstrument.empty || 'undefined' === typeof paymentInformation) {
-    	return;
-    }
-
-    Transaction.wrap(function () {
-    	Object.keys(paymentInformation).forEach(function(key) {
-    		paymentInstrument[0].custom[key] = paymentInformation[key];
-    	});
-    });
-}
-
-
-exports.processForm = processForm;
-exports.savePaymentInformation = savePaymentInformation;
-
 
 /*
  * Export handle / authorize

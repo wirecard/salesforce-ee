@@ -38,7 +38,7 @@ function Handle(args) {
     var paymentForm = session.forms.billing.paymentMethods;
     if (paymentMethodId === 'PG_GIROPAY') {
         Transaction.wrap(function () {
-            paymentInstrument.custom.paymentGatewayBIC = paymentForm.PG_GIROPAY.bic.value;
+            paymentInstrument.custom.paymentGatewayBIC = paymentForm.PG_GIROPAY.paymentGatewayBIC.value;
         });
     }
 

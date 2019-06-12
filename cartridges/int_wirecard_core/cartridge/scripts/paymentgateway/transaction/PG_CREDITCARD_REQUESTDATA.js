@@ -179,7 +179,7 @@ CheckoutTransaction.prototype.getPayload = function () {
     var result = {
         request_time_stamp: StringUtils.formatCalendar(calendar, 'yyyyMMddHHmmss'),
         request_id: getRequestID(self.order),
-        payment_method: 'creditcard',
+        payment_method: require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper').PAYMENT_METHOD_CREDIT_CARD,
         transaction_type: getSitePreference('initialTransactionType').value,
         attempt_three_d: self.is3DSecure,
         merchant_account_id: getSitePreference('merchantAccountId'),

@@ -20,7 +20,7 @@
 
 <!--- PG_GIROPAY --->
 <div id="PaymentMethod_PG_GIROPAY" class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='PG_GIROPAY'}">payment-method-expanded</isif>" data-method="PG_GIROPAY">
-    <isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.PG_GIROPAY.bic}" type="input" />
+    <isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.PG_GIROPAY.paymentGatewayBIC}" type="input" />
 </div>
 
 <!--- PG_IDEAL --->

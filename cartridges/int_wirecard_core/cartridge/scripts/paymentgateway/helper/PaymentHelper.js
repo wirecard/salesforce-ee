@@ -5,7 +5,7 @@
  */
 var methodsWithForms = {
     PG_GIROPAY: {
-        bic: 'text'
+        paymentGatewayBIC: 'text'
     },
     PG_IDEAL: {
         bic: 'select'
@@ -71,15 +71,6 @@ module.exports = {
     },
 
     /**
-     * Check if given payment method has form elements
-     * @param {string} methodName - payment method id
-     * @returns {boolean}
-     */
-    hasPaymentForm: function (methodName) {
-        return Object.prototype.hasOwnProperty.call(methodsWithForms, methodName);
-    },
-
-    /**
      * Retrieve form values for given payment method
      * @param {dw.wb.Form} form - checkout billing form
      * @param {string} methodID - payment method id
@@ -140,5 +131,12 @@ module.exports = {
             };
         }
         return result;
-    }
+    },
+
+    PAYMENT_METHOD_SEPA_DIRECT_DEBIT: 'sepadirectdebit',
+    PAYMENT_METHOD_CREDIT_CARD      : 'creditcard',
+    PAYMENT_METHOD_GIROPAY          : 'giropay',
+    PAYMENT_METHOD_PAYPAL           : 'paypal',
+    PAYMENT_METHOD_SEPA_CREDIT      : 'sepacredit',
+    PAYMENT_METHOD_SOFORT           : 'sofortbanking'
 };
