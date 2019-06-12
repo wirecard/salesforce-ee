@@ -554,6 +554,9 @@ var TransactionHelper = {
             case paymentHelper.PAYMENT_METHOD_GIROPAY:
                 secret = Site.getCustomPreferenceValue('paymentGatewayGiropaySecret');
                 break;
+            case paymentHelper.PAYMENT_METHOD_IDEAL:
+                secret = Site.getCustomPreferenceValue('paymentGatewayIdealSecret');
+                break;
             case paymentHelper.PAYMENT_METHOD_PAYPAL:
                 secret = Site.getCustomPreferenceValue('paymentGatewayPayPalSecret');
                 break;
