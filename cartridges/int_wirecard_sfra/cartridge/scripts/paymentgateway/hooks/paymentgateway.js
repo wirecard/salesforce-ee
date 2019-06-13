@@ -12,7 +12,6 @@ var Transaction = require('dw/system/Transaction');
 var pgLogger = require('dw/system/Logger').getLogger('paymentgateway');
 
 var collections = require('*/cartridge/scripts/util/collections');
-var PaymentHelper = require('int_wirecard_core/cartridge/scripts/paymentgateway/helper/PaymentHelper.js');
 
 /**
  * Helper function to remove existing payment instruments from cart

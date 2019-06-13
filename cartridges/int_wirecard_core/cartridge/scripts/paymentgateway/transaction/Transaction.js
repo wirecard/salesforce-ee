@@ -231,9 +231,9 @@ Transaction.prototype.getPayload = function () {
     }
     var customPayload = this.getCustomPayload();
 
-    //WARNING custom payload overwrites result
-    Object.keys(customPayload).forEach(function(key) {
-        return result[key] = customPayload[key];
+    // WARNING custom payload overwrites result
+    Object.keys(customPayload).forEach(function (key) {
+        result[key] = customPayload[key];
     });
     return { payment: result };
 };
@@ -336,12 +336,10 @@ Transaction.prototype.getBackendOperations = function (canCancel) {
  * @abstract
  * @returns {{}}
  */
-Transaction.prototype.getCustomPayload = function() {
+Transaction.prototype.getCustomPayload = function () {
     return {};
 };
 
-Transaction.prototype.getApiEndpointFromTransactionType = function() {
-
-};
+Transaction.prototype.getApiEndpointFromTransactionType = function () {};
 
 module.exports = Transaction;

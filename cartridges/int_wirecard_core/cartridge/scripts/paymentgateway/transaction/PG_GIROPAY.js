@@ -58,7 +58,7 @@ Giropay.prototype = Object.create(Transaction.prototype);
 /**
  * Add bank-account data saved from payment form with orderPaymentInstrument
  */
-Giropay.prototype.getCustomPayload = function() {
+Giropay.prototype.getCustomPayload = function () {
     var paymentHelper = require('int_wirecard_core/cartridge/scripts/paymentgateway/helper/PaymentHelper.js');
     var instruments = this.order.getPaymentInstruments('PG_GIROPAY');
     var result = {};
@@ -66,12 +66,12 @@ Giropay.prototype.getCustomPayload = function() {
     if (!instruments.empty) {
         var customPaymentData = {};
 
-        Object.keys(instruments[0].custom).forEach(function(key) {
+        Object.keys(instruments[0].custom).forEach(function (key) {
             customPaymentData[key] = instruments[0].custom[key];
         });
         result = paymentHelper.getDataForRequest(customPaymentData, 'PG_GIROPAY');
     }
     return result;
-}
+};
 
 module.exports = Giropay;
