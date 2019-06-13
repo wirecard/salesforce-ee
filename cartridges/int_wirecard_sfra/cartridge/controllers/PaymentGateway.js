@@ -84,7 +84,7 @@ server.get(
 /**
  * Cancel redirect from payment gateway
  */
-server.get(
+server.use(
     'Fail',
     server.middleware.https,
     function (req, res, next) {

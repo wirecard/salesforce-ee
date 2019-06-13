@@ -1,5 +1,7 @@
 'use strict';
 
+var paymentHelper = require('int_wirecard_core/cartridge/scripts/paymentgateway/helper/PaymentHelper.js');
+
 /**
  * Create descriptor data object
  * @param {Object} transaction - current transaction
@@ -8,8 +10,9 @@
 function Descriptor(transaction) {
     var order = transaction.order;
     var result = {};
-    if ((transaction.paymentMethodID && transaction.paymentMethodID === 'sofortbanking')
-        || transaction.getSitePreference('addDescriptorToRequest')
+    if ((transaction.paymentMethodID && transaction.paymentMethodID === paymentHelper.PAYMENT_METHOD_SOFORT)
+        || (transaction.paymentMethodID === paymentHelper.PAYMENT_METHOD_PAYPAL && transaction.getSitePreference('addDescriptorToRequest'))
+        || transaction.getSitePreference('sendAdditionalData')
     ) {
         var StringUtils = require('dw/util/StringUtils');
         result.descriptor = StringUtils.format(

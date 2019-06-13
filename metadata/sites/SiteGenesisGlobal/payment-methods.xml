@@ -46,7 +46,7 @@
     </payment-method>
 
     <payment-method method-id="PG_EPS">
-        <name xml:lang="x-default">Wirecard eps</name>
+        <name xml:lang="x-default">Wirecard eps-Überweisung</name>
         <enabled-flag>false</enabled-flag>
         <processor-id>PAYMENTGATEWAY</processor-id>
         <countries>
