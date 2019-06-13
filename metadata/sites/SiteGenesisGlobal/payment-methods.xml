@@ -45,6 +45,19 @@
         </currencies>
     </payment-method>
 
+    <payment-method method-id="PG_EPS">
+        <name xml:lang="x-default">Wirecard eps</name>
+        <enabled-flag>false</enabled-flag>
+        <processor-id>PAYMENTGATEWAY</processor-id>
+        <countries>
+            <country country-code="AT"/>
+            <country country-code="DE"/>
+        </countries>
+        <currencies>
+            <currency>EUR</currency>
+        </currencies>
+    </payment-method>
+
     <payment-method method-id="PG_IDEAL">
         <name xml:lang="x-default">Wirecard iDEAL</name>
         <image>images/payment/paymentgateway/IDEAL_Logo.png</image>
