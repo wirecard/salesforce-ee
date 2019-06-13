@@ -21,7 +21,7 @@ function getCaptureTransactionType() {
     }
     switch (self['transaction-type']) {
         case Type.AUTHORIZATION:
-            type = Type.CAPTURE_AUTHORIZATION;
+            type = Type.DEBIT;
             canPartialCapture = true;
             break;
         default:
