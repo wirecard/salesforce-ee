@@ -71,6 +71,7 @@
 
     <payment-method method-id="PG_GIROPAY">
         <name xml:lang="x-default">Wirecard Giropay</name>
+        <image>images/payment/paymentgateway/giropay.jpg</image>
         <enabled-flag>false</enabled-flag>
         <processor-id>PAYMENTGATEWAY</processor-id>
         <countries>

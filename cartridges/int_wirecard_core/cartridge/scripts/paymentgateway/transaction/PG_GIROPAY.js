@@ -15,26 +15,6 @@ var preferenceMapping = {
 };
 
 /**
- * Get transaction type for refund
- * @returns {string} - transaction type
- */
-function getRefundTransactionType() {
-    var self = this;
-    var type;
-    if (!self['transaction-type']) {
-        throw new Error('transaction-type missing for Giropay Transaction.');
-    }
-    switch (self['transaction-type']) {
-        case Type.DEBIT:
-            type = Type.CREDIT;
-            break;
-        default:
-            throw new Error('unsupported transaction type!');
-    }
-    return { type: type, partialAllowed: true };
-}
-
-/**
  * Constructor.
  * @param {dw.order.Order} order - current order
  * @param {Object} args - additional parameter
@@ -55,8 +35,6 @@ function Giropay(order, args) {
     Transaction.call(this, order, params);
     this.preferenceMapping = preferenceMapping;
 
-    // add methods to retrieve possible succeeding operations
-    this.getRefundTransactionType = getRefundTransactionType;
     return this;
 }
 
