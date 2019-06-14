@@ -32,7 +32,7 @@ function processForm(req, paymentForm, viewFormData) {
             return {
                 error: true,
                 fieldErrors: errorFields
-            }
+            };
         }
 
         var PaymentHelper = require('int_wirecard_core/cartridge/scripts/paymentgateway/helper/PaymentHelper.js');
@@ -49,16 +49,16 @@ function processForm(req, paymentForm, viewFormData) {
 /**
  * Save payment information to payment instrument
  * @param {Object} req - The request object
- * @param {dw.order.Basket} basket - The current basket
+ * @param {dw.order.Basket} currentBasket - The current basket
  * @param {Object} billingData - payment information
  */
 function savePaymentInformation(req, currentBasket, billingData) {
     var paymentInformation = billingData.paymentInformation.pgFormData;
     var paymentInstrument = currentBasket.getPaymentInstruments(billingData.paymentInformation.paymentMethodID);
 
-    if (!paymentInstrument.empty && 'undefined' !== typeof paymentInformation) {
+    if (!paymentInstrument.empty && typeof paymentInformation !== 'undefined') {
         require('dw/system/Transaction').wrap(function () {
-            Object.keys(paymentInformation).forEach(function(key) {
+            Object.keys(paymentInformation).forEach(function (key) {
                 paymentInstrument[0].custom[key] = paymentInformation[key];
             });
         });
