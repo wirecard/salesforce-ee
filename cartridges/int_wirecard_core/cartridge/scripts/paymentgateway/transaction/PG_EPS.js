@@ -4,6 +4,7 @@ var Transaction = require('./Transaction');
 var Type = require('./Type').All;
 
 var preferenceMapping = {
+    addDesc: 'paymentGatewayEpsAddDescriptorToRequest',
     sendAdditionalData: 'paymentGatewayEpsSendAdditionalData'
 };
 
@@ -28,8 +29,6 @@ function Eps(order, args) {
     Transaction.call(this, order, params);
     this.preferenceMapping = preferenceMapping;
 
-    // add methods to retrieve possible succeeding operations
-    // TODO wirecard: confirm post-order operations
     return this;
 }
 

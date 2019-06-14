@@ -60,16 +60,23 @@
                 <min-length>0</min-length>
                 <default-value>20c6a95c-e39b-4e6a-971f-52cfb347d359</default-value>
             </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayEpsAddDescriptorToRequest">
+                <display-name xml:lang="x-default">Descriptor</display-name>
+                <description xml:lang="x-default">Send text which is displayed on the bank statement issued to your consumer by the financial service provider.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
         </custom-attribute-definitions>
         <group-definitions>
             <attribute-group group-id="PAYMENTGATEWAY_EPS">
                 <display-name xml:lang="x-default">Wirecard Payment Gateway settings for eps</display-name>
                 <attribute attribute-id="paymentGatewayEpsMerchantAccountID"/>
                 <attribute attribute-id="paymentGatewayEpsSecret"/>
-                <attribute attribute-id="paymentGatewayEpsBaseUrl"/>
                 <attribute attribute-id="paymentGatewayEpsHttpUser"/>
                 <attribute attribute-id="paymentGatewayEpsHttpPassword"/>
-                <attribute attribute-id="paymentGatewayEpsSecret"/>
+                <attribute attribute-id="paymentGatewayEpsBaseUrl"/>
+                <attribute attribute-id="paymentGatewayEpsAddDescriptorToRequest"/>
                 <attribute attribute-id="paymentGatewayEpsSendAdditionalData"/>
             </attribute-group>
         </group-definitions>
