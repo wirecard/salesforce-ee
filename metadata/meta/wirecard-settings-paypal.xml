@@ -97,9 +97,9 @@
                 <display-name xml:lang="x-default">Wirecard Payment Gateway settings for PayPal</display-name>
                 <attribute attribute-id="paymentGatewayPayPalMerchantAccountID"/>
                 <attribute attribute-id="paymentGatewayPayPalSecret"/>
-                <attribute attribute-id="paymentGatewayPayPalBaseUrl"/>
                 <attribute attribute-id="paymentGatewayPayPalHttpUser"/>
                 <attribute attribute-id="paymentGatewayPayPalHttpPassword"/>
+                <attribute attribute-id="paymentGatewayPayPalBaseUrl"/>
                 <attribute attribute-id="paymentGatewayPayPalAddDescriptorToRequest"/>
                 <attribute attribute-id="paymentGatewayPayPalSendAdditionalData"/>
                 <attribute attribute-id="paymentGatewayPayPalSendBasketData"/>

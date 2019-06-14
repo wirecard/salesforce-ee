@@ -174,6 +174,7 @@ var TransactionHelper = {
             methodName: methodName
         };
         const mappedMethodNames = [
+            'PG_IDEAL',
             'PG_SOFORT',
             'PG_SEPA'
         ];

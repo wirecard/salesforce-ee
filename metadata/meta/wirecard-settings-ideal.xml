@@ -18,14 +18,13 @@
                 <min-length>0</min-length>
                 <default-value>4aeccf39-0d47-47f6-a399-c05c1f2fc819</default-value>
             </attribute-definition>
-            <attribute-definition attribute-id="paymentGatewayIdealBaseUrl">
-                <display-name xml:lang="x-default">Wirecard Server Address (URL)</display-name>
-                <description xml:lang="x-default">Wirecard Server Address (URL) (e.g. https://api.wirecard.com).</description>
+            <attribute-definition attribute-id="paymentGatewayIdealSecret">
+                <display-name xml:lang="x-default">Secret Key</display-name>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
-                <default-value>https://api-test.wirecard.com</default-value>
+                <default-value>7a353766-23b5-4992-ae96-cb4232998954</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayIdealHttpUser">
                 <display-name xml:lang="x-default">Username</display-name>
@@ -45,6 +44,22 @@
                 <min-length>0</min-length>
                 <default-value>3!3013=D3fD8X7</default-value>
             </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayIdealBaseUrl">
+                <display-name xml:lang="x-default">Wirecard Server Address (URL)</display-name>
+                <description xml:lang="x-default">Wirecard Server Address (URL) (e.g. https://api.wirecard.com).</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>https://api-test.wirecard.com</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayIdealAddDescriptorToRequest">
+                <display-name xml:lang="x-default">Descriptor</display-name>
+                <description xml:lang="x-default">Send text which is displayed on the bank statement issued to your consumer by the financial service provider.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayIdealSendAdditionalData">
                 <display-name xml:lang="x-default">Send Additional Information</display-name>
                 <description xml:lang="x-default">Additional data will be sent for the purpose of fraud protection. This additional data includes billing/shipping address, shopping basket and descriptor.</description>
@@ -52,24 +67,16 @@
                 <mandatory-flag>false</mandatory-flag>
                 <default-value>true</default-value>
             </attribute-definition>
-            <attribute-definition attribute-id="paymentGatewayIdealSecret">
-                <display-name xml:lang="x-default">Secret Key</display-name>
-                <type>string</type>
-                <mandatory-flag>false</mandatory-flag>
-                <externally-managed-flag>false</externally-managed-flag>
-                <min-length>0</min-length>
-                <default-value>7a353766-23b5-4992-ae96-cb4232998954</default-value>
-            </attribute-definition>
         </custom-attribute-definitions>
         <group-definitions>
             <attribute-group group-id="PAYMENTGATEWAY_IDEAL">
                 <display-name xml:lang="x-default">Wirecard Payment Gateway settings for iDEAL</display-name>
                 <attribute attribute-id="paymentGatewayIdealMerchantAccountID"/>
                 <attribute attribute-id="paymentGatewayIdealSecret"/>
-                <attribute attribute-id="paymentGatewayIdealBaseUrl"/>
                 <attribute attribute-id="paymentGatewayIdealHttpUser"/>
                 <attribute attribute-id="paymentGatewayIdealHttpPassword"/>
-                <attribute attribute-id="paymentGatewayIdealSecret"/>
+                <attribute attribute-id="paymentGatewayIdealBaseUrl"/>
+                <attribute attribute-id="paymentGatewayIdealAddDescriptorToRequest"/>
                 <attribute attribute-id="paymentGatewayIdealSendAdditionalData"/>
             </attribute-group>
         </group-definitions>
