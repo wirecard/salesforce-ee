@@ -137,6 +137,7 @@ module.exports = {
     PAYMENT_METHOD_CREDIT_CARD      : 'creditcard',
     PAYMENT_METHOD_GIROPAY          : 'giropay',
     PAYMENT_METHOD_PAYPAL           : 'paypal',
+    PAYMENT_METHOD_POI              : 'wiretransfer',
     PAYMENT_METHOD_SEPA_CREDIT      : 'sepacredit',
     PAYMENT_METHOD_SOFORT           : 'sofortbanking'
 };

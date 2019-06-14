@@ -98,6 +98,16 @@
         </currencies>
     </payment-method>
 
+    <payment-method method-id="PG_POI">
+        <name xml:lang="x-default">Wirecard Purchase On Invoice</name>
+        <image>images/payment/paymentgateway/poi.png</image>
+        <enabled-flag>false</enabled-flag>
+        <processor-id>PAYMENTGATEWAY</processor-id>
+        <currencies>
+            <currency>EUR</currency>
+        </currencies>
+    </payment-method>
+
     <payment-method method-id="PG_SEPA">
         <name xml:lang="x-default">Wirecard SEPA Direct Debit</name>
         <image>images/payment/paymentgateway/SEPA.svg</image>

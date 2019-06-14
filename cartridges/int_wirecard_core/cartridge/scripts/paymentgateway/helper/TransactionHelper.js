@@ -557,6 +557,9 @@ var TransactionHelper = {
             case paymentHelper.PAYMENT_METHOD_PAYPAL:
                 secret = Site.getCustomPreferenceValue('paymentGatewayPayPalSecret');
                 break;
+            case paymentHelper.PAYMENT_METHOD_POI:
+                secret = Site.getCustomPreferenceValue('paymentGatewayPoiSecret');
+                break;
             case paymentHelper.PAYMENT_METHOD_SEPA_CREDIT:
                 secret = Site.getCustomPreferenceValue('paymentGatewaySEPACreditSecret');
                 break;

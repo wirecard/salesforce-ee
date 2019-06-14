@@ -170,6 +170,7 @@ exports.HttpAccessOverview = guard.ensure(['get', 'https'], function () {
         { methodName: 'Credit Card', methodID: 'PG_CREDITCARD' },
         { methodName: 'Giropay', methodID: 'PG_GIROPAY' },
         { methodName: 'PayPal', methodID: 'PG_PAYPAL' },
+        { methodName: 'Payment On Invoice', methodID: 'PG_POI' },
         { methodName: 'Sofort.', methodID: 'PG_SOFORT' },
         { methodName: 'SEPA Direct Debit', methodID: 'PG_SEPA' }
     ].forEach(function (p) {
