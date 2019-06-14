@@ -59,7 +59,7 @@ Ideal.prototype = Object.create(Transaction.prototype);
 /**
  * Add bank-account data saved from payment form with orderPaymentInstrument
  */
-Ideal.prototype.getCustomPayload = function() {
+Ideal.prototype.getCustomPayload = function () {
     var paymentHelper = require('int_wirecard_core/cartridge/scripts/paymentgateway/helper/PaymentHelper.js');
     var instruments = this.order.getPaymentInstruments('PG_IDEAL');
     var result = {};
@@ -67,12 +67,12 @@ Ideal.prototype.getCustomPayload = function() {
     if (!instruments.empty) {
         var customPaymentData = {};
 
-        Object.keys(instruments[0].custom).forEach(function(key) {
+        Object.keys(instruments[0].custom).forEach(function (key) {
             customPaymentData[key] = instruments[0].custom[key];
         });
         result = paymentHelper.getDataForRequest(customPaymentData, 'PG_IDEAL');
     }
     return result;
-}
+};
 
 module.exports = Ideal;
