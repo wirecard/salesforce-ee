@@ -17,6 +17,7 @@ var TransactionHelper = {
     //@todo use this constants instead of hardcoded vars in each payment method
     PAYMENT_METHOD_ID_SEPA_DIRECT_DEBIT: 'sepadirectdebit',
     PAYMENT_METHOD_ID_CREDIT_CARD      : 'creditcard',
+    PAYMENT_METHOD_ID_CREDIT_CARD3DS   : 'creditcard3ds',
     PAYMENT_METHOD_ID_PAYPAL           : 'paypal',
     PAYMENT_METHOD_ID_SEPA_CREDIT      : 'sepacredit',
     PAYMENT_METHOD_ID_SOFORT           : 'sofortbanking',
@@ -555,6 +556,8 @@ var TransactionHelper = {
                 return Site.getCustomPreferenceValue('paymentGatewaySEPADebitSecret');
             case this.PAYMENT_METHOD_ID_CREDIT_CARD:
                 return Site.getCustomPreferenceValue('paymentGatewayCreditCardSecret');
+            case this.PAYMENT_METHOD_ID_CREDIT_CARD3DS:
+                return Site.getCustomPreferenceValue('paymentGatewayCreditCardSecret3DS');
             case this.PAYMENT_METHOD_ID_PAYPAL:
                 return Site.getCustomPreferenceValue('paymentGatewayPayPalSecret');
             case this.PAYMENT_METHOD_ID_SEPA_CREDIT:

@@ -16,6 +16,7 @@
 var server = require('server');
 
 var Resource = require('dw/web/Resource');
+var Site = require('dw/system/Site').getCurrent();
 var URLUtils = require('dw/web/URLUtils');
 
 /**
@@ -36,6 +37,20 @@ function getFpFromFormData(formData) {
         fp = formData[fpValueKey];
     }
     return fp;
+}
+
+/**
+ * Helper function to retrieve specific config value
+ * @param {string} key - site preference name
+ * @returns {string}
+ */
+function getSitePreference(key) {
+    var methodKey = key;
+    var result = Site.getCustomPreferenceValue(methodKey);
+    if (!result) {
+        result = '';
+    }
+    return result;
 }
 
 /**
@@ -72,7 +87,7 @@ server.get(
             locale: locale,
             remoteHost: req.remoteAddress,
             customFields: [
-                { name: 'fp', value: orderHelper.getOrderFingerprint(currentBasket, orderNo) }
+                { name: 'fp', value: orderHelper.getOrderFingerprint(currentBasket, orderNo, getSitePreference('paymentGatewayCreditCardSecret')) }
             ]
         };
         // set payment method PG_CREDITCARD
@@ -105,7 +120,6 @@ server.use(
         var order = OrderMgr.getOrder(orderNo);
 
         var result;
-        // TODO verify request integrity (signed-json / xmlsig)
         if (order) {
             result = {
                 error: false,
@@ -116,7 +130,7 @@ server.use(
         } else {
             result = {
                 error: true,
-                errorMessage: '3d-Secure authentication failed!'
+                errorMessage: Resource.msg('error.confirmation.error', 'confirmation', null)
             };
         }
         res.render('paymentgateway/json', { json: result });
@@ -170,7 +184,7 @@ server.post(
 
         var fp = getFpFromFormData(req.form);
         var orderHelper = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper');
-        if (order && fp === orderHelper.getOrderFingerprint(order)) {
+        if (order && fp === orderHelper.getOrderFingerprint(order, null, getSitePreference('paymentGatewayCreditCardSecret'))) {
             // Reset usingMultiShip after successful Order placement
             req.session.privacyCache.set('usingMultiShipping', false);
 
@@ -200,7 +214,7 @@ server.use(
 
         var fp = getFpFromFormData(req.form);
         var orderHelper = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper');
-        if (order && fp === orderHelper.getOrderFingerprint(order)) {
+        if (order && fp === orderHelper.getOrderFingerprint(order, null, getSitePreference('paymentGatewayCreditCardSecret'))) {
             Transaction.wrap(function () {
                 OrderMgr.failOrder(order);
             });
@@ -335,22 +349,16 @@ server.post(
         if (order) {
             // parse response
             var transactionHelper = require('*/cartridge/scripts/paymentgateway/helper/TransactionHelper');
+            var ccTransaction = transactionHelper.getTransaction('PG_CREDITCARD_REQUESTDATA', order);
+            var paymentMethodID = ccTransaction.is3DSecure ? transactionHelper.PAYMENT_METHOD_ID_CREDIT_CARD3DS : transactionHelper.PAYMENT_METHOD_ID_CREDIT_CARD;
+
             var notifyData = transactionHelper.parseTransactionResponse(
-                req.body, null, transactionHelper.RESPONSE_TYPE_NOTIFY
+                req.body, paymentMethodID, transactionHelper.RESPONSE_TYPE_NOTIFY
             );
-            var rawResponeJson = transactionHelper.getJsonSignedResponseWrapper(req.body).getJsonResponse();
+            var rawResponeJson = transactionHelper.getJsonSignedResponseWrapper(req.body, paymentMethodID).getJsonResponse();
             require('*/cartridge/scripts/paymentgateway/transaction/Logger').log(rawResponeJson, 'notify');
 
-            // @todo fingerprint not needed transactionHelper.parseTransactionResponse will check the secret
-            // check fingerprint
-            var fp;
-            var orderHelper = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper');
-            if (Object.prototype.hasOwnProperty.call(notifyData, 'customFields')
-                && Object.prototype.hasOwnProperty.call(notifyData.customFields, 'fp')
-            ) {
-                fp = notifyData.customFields.fp;
-            }
-            if (fp === orderHelper.getOrderFingerprint(order)) {
+            if (Object.prototype.hasOwnProperty.call(notifyData, 'transactionId')) {
                 var CustomObjectMgr = require('dw/object/CustomObjectMgr');
                 // save notification as custom object
                 var customObj = CustomObjectMgr.getCustomObject('PaymentGatewayNotification', notifyData.transactionId);

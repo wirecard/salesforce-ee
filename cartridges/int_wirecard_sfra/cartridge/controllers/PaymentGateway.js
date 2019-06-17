@@ -137,15 +137,7 @@ server.post(
             var rawResponeJson = transactionHelper.getJsonSignedResponseWrapper(req.body).getJsonResponse();
             require('*/cartridge/scripts/paymentgateway/transaction/Logger').log(rawResponeJson, 'notify');
 
-            // @todo fingerprint not needed transactionHelper.parseTransactionResponse will check the secret
-            var fp;
-            var orderHelper = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper');
-            if (Object.prototype.hasOwnProperty.call(notifyData, 'customFields')
-                && Object.prototype.hasOwnProperty.call(notifyData.customFields, 'fp')
-            ) {
-                fp = notifyData.customFields.fp;
-            }
-            if (fp === orderHelper.getOrderFingerprint(order)) {
+            if (Object.prototype.hasOwnProperty.call(notifyData, 'transactionId')) {
                 var CustomObjectMgr = require('dw/object/CustomObjectMgr');
                 Transaction.begin();
                 // save notification as custom object
@@ -205,7 +197,6 @@ server.get(
             if (paymentData.paymentMethodID) {
                 var transactionHelper = require('*/cartridge/scripts/paymentgateway/helper/TransactionHelper');
                 var transaction = transactionHelper.getTransaction(paymentData.paymentMethodID.trim(), order);
-                transaction.setCustomField('fp', orderHelper.getOrderFingerprint(order));
                 result = transaction.getPayload();
             }
         }

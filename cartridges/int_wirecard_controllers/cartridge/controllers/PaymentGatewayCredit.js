@@ -135,10 +135,7 @@ exports.RequestData = guard.ensure(['get', 'https'], function () {
         var params = {
             locale        : locale,
             remoteHost    : request.httpRemoteAddress,
-            redirectRoutes: { success: 'PaymentGateway-Success', termUrl: 'PaymentGateway-Success' },
-            customFields  : [
-                { name: 'fp', value: orderHelper.getOrderFingerprint(order) }
-            ]
+            redirectRoutes: { success: 'PaymentGateway-Success', termUrl: 'PaymentGateway-Success' }
         };
 
         var transaction = new (require('*/cartridge/scripts/paymentgateway/transaction/PG_CREDITCARD_REQUESTDATA'))(order, params);
@@ -235,26 +232,18 @@ exports.Notify = guard.ensure(['post', 'https'], function () {
 
     if (order && order.orderToken === orderToken) {
         // parse response
-
         var requestBody = parameterMap.getRequestBodyAsString();
         var transactionHelper = require('*/cartridge/scripts/paymentgateway/helper/TransactionHelper');
+        var ccTransaction = transactionHelper.getTransaction('PG_CREDITCARD_REQUESTDATA', order);
+        var paymentMethodID = ccTransaction.is3DSecure ? transactionHelper.PAYMENT_METHOD_ID_CREDIT_CARD3DS : transactionHelper.PAYMENT_METHOD_ID_CREDIT_CARD;
+
         var notifyData = transactionHelper.parseTransactionResponse(
-            requestBody, null, transactionHelper.RESPONSE_TYPE_NOTIFY
+            requestBody, paymentMethodID, transactionHelper.RESPONSE_TYPE_NOTIFY
         );
-        var rawResponeJson = transactionHelper.getJsonSignedResponseWrapper(requestBody).getJsonResponse();
+        var rawResponeJson = transactionHelper.getJsonSignedResponseWrapper(requestBody, paymentMethodID).getJsonResponse();
         require('*/cartridge/scripts/paymentgateway/transaction/Logger').log(rawResponeJson, 'notify');
 
-        // @todo fingerprint not needed transactionHelper.parseTransactionResponse will check the secret
-        var fingerprint;
-        var orderHelper = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper');
-        if (Object.prototype.hasOwnProperty.call(notifyData, 'customFields')
-            && Object.prototype.hasOwnProperty.call(notifyData.customFields, 'fp')
-        ) {
-            fingerprint = notifyData.customFields.fp;
-        }
-
-        // FIXME verify signature (xmlsig)
-        if (fingerprint === orderHelper.getOrderFingerprint(order)) {
+        if (Object.prototype.hasOwnProperty.call(notifyData, 'transactionId')) {
             var CustomObjectMgr = require('dw/object/CustomObjectMgr');
             Transaction.begin();
             // save notification as custom object

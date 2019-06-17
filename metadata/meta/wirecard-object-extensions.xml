@@ -59,15 +59,6 @@
                 <mandatory-flag>false</mandatory-flag>
                 <default-value>true</default-value>
             </attribute-definition>
-            <attribute-definition attribute-id="paymentGatewayUrlSalt">
-                <display-name xml:lang="x-default">Url salt</display-name>
-                <description xml:lang="x-default">Salt for calculating url fingerprint sha512 hash. Be careful when change its value: it makes post-order transactions for existing orders impossible!</description>
-                <type>string</type>
-                <mandatory-flag>true</mandatory-flag>
-                <externally-managed-flag>false</externally-managed-flag>
-                <min-length>5</min-length>
-                <default-value>V6iqqFM2m+)neEdp</default-value>
-            </attribute-definition>
             <attribute-definition attribute-id="paymentGatewaySofortMerchantAccountID">
                 <display-name xml:lang="x-default">Merchant Account ID (MAID)</display-name>
                 <description xml:lang="x-default">Unique identifier assigned to your merchant account.</description>
@@ -507,7 +498,6 @@ Type of payment: one-off.]]></default-value>
                 <attribute attribute-id="paymentGatewayNotificationEmail"/>
                 <attribute attribute-id="paymentGatewayDebugMode"/>
                 <attribute attribute-id="paymentGatewayShopName"/>
-                <attribute attribute-id="paymentGatewayUrlSalt"/>
             </attribute-group>
             <attribute-group group-id="PAYMENTGATEWAY_PAYPAL">
                 <display-name xml:lang="x-default">Wirecard Payment Gateway settings for PayPal</display-name>
