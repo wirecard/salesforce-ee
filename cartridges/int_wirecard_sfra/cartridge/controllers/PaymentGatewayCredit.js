@@ -42,7 +42,7 @@ function getFpFromFormData(formData) {
 /**
  * Helper function to retrieve specific config value
  * @param {string} key - site preference name
- * @returns {string}
+ * @returns {string} - site preference value
  */
 function getSitePreference(key) {
     var methodKey = key;

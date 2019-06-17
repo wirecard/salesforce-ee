@@ -131,7 +131,6 @@ exports.RequestData = guard.ensure(['get', 'https'], function () {
         if (/^\w{2}_\w{2}$/.test(request.locale)) {
             locale = request.locale.substr(0, 2);
         }
-        var orderHelper = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper');
         var params = {
             locale        : locale,
             remoteHost    : request.httpRemoteAddress,
