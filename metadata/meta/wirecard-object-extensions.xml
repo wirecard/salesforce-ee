@@ -6,8 +6,6 @@
   - License can be found under:
   https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
 -->
-
-
 <metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
     <type-extension type-id="SitePreferences">
         <custom-attribute-definitions>
