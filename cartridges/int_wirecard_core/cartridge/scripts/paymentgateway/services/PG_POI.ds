@@ -1,0 +1,47 @@
+/**
+ * Shop System Plugins:
+ * - Terms of Use can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/_TERMS_OF_USE
+ * - License can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
+ */
+/**
+ * Script includes
+ */
+var AbstractPaymentGatewayService = require('./AbstractPaymentGatewayService');
+
+var PurchaseOnInvoiceService = AbstractPaymentGatewayService.extend({
+    init: function (type) {
+        this._super(type);
+        this.paymentMethodID = require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper').PAYMENT_METHOD_POI;
+    },
+
+    /**
+     * Retrieves the base url for PurchaseOnInvoice
+     * @returns {String}
+     */
+    getBaseUrl: function() {
+        return this.getSitePreference('paymentGatewayPoiBaseUrl');
+    },
+
+    /**
+     * Retrieves the http user for PurchaseOnInvoice
+     * @returns {String}
+     */
+    getHttpUsername: function() {
+        return this.getSitePreference('paymentGatewayPoiHttpUser');
+    },
+
+    /**
+     * Retrieves the http password for PurchaseOnInvoice
+     * @returns {String}
+     */
+    getHttpPassword: function() {
+        return this.getSitePreference('paymentGatewayPoiHttpPassword');
+    }
+});
+
+//Export the configured service singleton
+module.exports = function () {
+    return (new PurchaseOnInvoiceService('paymentmethods')).getService();
+};

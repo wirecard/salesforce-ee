@@ -4,27 +4,51 @@ var Transaction = require('./Transaction');
 var Type = require('./Type').All;
 
 var preferenceMapping = {
+    addDescriptorToRequest: 'paymentGatewayPoiAddDescriptorToRequest',
     sendAdditionalData: 'paymentGatewayPoiSendAdditionalData'
 };
 
 /**
- * Get transaction type for refund
+ * Get transaction type for capture
  * @returns {string} - transaction type
  */
-function getRefundTransactionType() {
+function getCaptureTransactionType() {
     var self = this;
     var type;
+    var canPartialCapture = false;
+
     if (!self['transaction-type']) {
-        throw new Error('transaction-type missing for Poi Transaction.');
+        throw new Error('transaction-type missing for Purchase On Invoice Transaction.');
     }
     switch (self['transaction-type']) {
-        case Type.DEBIT:
-            type = Type.CREDIT;
+        case Type.AUTHORIZATION:
+            type = Type.CAPTURE_AUTHORIZATION;
+            canPartialCapture = true;
             break;
         default:
             throw new Error('unsupported transaction type!');
     }
-    return { type: type, partialAllowed: true };
+    return { type: type, partialAllowed: canPartialCapture };
+}
+
+/**
+ * Get transaction type for cancellation
+ * @returns {string} - transaction type
+ */
+function getCancelTransactionType() {
+    var self = this;
+    var type;
+    if (!self['transaction-type']) {
+        throw new Error('transaction-type missing for Purchase On Invoice Transaction.');
+    }
+    switch (self['transaction-type']) {
+        case Type.AUTHORIZATION:
+            type = Type.VOID_AUTHORIZATION;
+            break;
+        default:
+            throw new Error('unsupported transaction type!');
+    }
+    return { type: type };
 }
 
 /**
@@ -37,7 +61,7 @@ function Poi(order, args) {
     // default params
     var params = {
         paymentMethodID: require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper').PAYMENT_METHOD_POI,
-        'transaction-type': Type.DEBIT,
+        'transaction-type': Type.AUTHORIZATION,
         'merchant-account-id': this.getSitePreference('paymentGatewayPoiMerchantAccountID')
     };
     if (typeof args === 'object') {
@@ -49,7 +73,8 @@ function Poi(order, args) {
     this.preferenceMapping = preferenceMapping;
 
     // add methods to retrieve possible succeeding operations
-    this.getRefundTransactionType = getRefundTransactionType;
+    this.getCaptureTransactionType = getCaptureTransactionType;
+    this.getCancelTransactionType = getCancelTransactionType;
     return this;
 }
 

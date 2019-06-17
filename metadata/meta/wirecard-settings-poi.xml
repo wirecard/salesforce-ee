@@ -60,6 +60,13 @@
                 <min-length>0</min-length>
                 <default-value>2d96596b-9d10-4c98-ac47-4d56e22fd878</default-value>
             </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayPoiAddDescriptorToRequest">
+                <display-name xml:lang="x-default">Descriptor</display-name>
+                <description xml:lang="x-default">Send text which is displayed on the bank statement issued to your consumer by the financial service provider.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
         </custom-attribute-definitions>
         <group-definitions>
             <attribute-group group-id="PAYMENTGATEWAY_POI">
@@ -69,7 +76,7 @@
                 <attribute attribute-id="paymentGatewayPoiBaseUrl"/>
                 <attribute attribute-id="paymentGatewayPoiHttpUser"/>
                 <attribute attribute-id="paymentGatewayPoiHttpPassword"/>
-                <attribute attribute-id="paymentGatewayPoiSecret"/>
+                <attribute attribute-id="paymentGatewayPoiAddDescriptorToRequest"/>
                 <attribute attribute-id="paymentGatewayPoiSendAdditionalData"/>
             </attribute-group>
         </group-definitions>
