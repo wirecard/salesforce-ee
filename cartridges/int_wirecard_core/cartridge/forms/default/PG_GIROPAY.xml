@@ -9,6 +9,7 @@
 
 <form xmlns="http://www.demandware.com/xml/form/2008-04-19">
 
-    <field formid="bic" label="paymentgateway.bic" type="string" mandatory="true" max-length="12"/>
+    <field formid="paymentGatewayBIC" label="paymentgateway.bic" type="string" mandatory="true" missing-error="error.message.required"
+           parse-error="error.message.parse.checkout.billing.bic" max-length="12"/>
 
 </form>

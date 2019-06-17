@@ -16,9 +16,11 @@ import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import org.openqa.selenium.WebDriver as WebDriver
 import org.openqa.selenium.By as By
 
-WebUI.waitForElementClickable(findTestObject('sitegenesis/homepage/button_Yes'), 5)
+if (WebUI.verifyElementPresent(findTestObject('sitegenesis/homepage/button_Yes'), 5, FailureHandling.OPTIONAL)) {
 
-WebUI.click(findTestObject('sitegenesis/homepage/button_Yes'))
+	WebUI.click(findTestObject('sitegenesis/homepage/button_Yes'))
+
+}
 
 WebUI.verifyElementPresent(findTestObject('sitegenesis/homepage/Searchbox'), 0)
 

@@ -590,11 +590,6 @@ Type of payment: one-off.]]></default-value>
                 <externally-managed-flag>true</externally-managed-flag>
                 <min-length>0</min-length>
             </attribute-definition>
-        </custom-attribute-definitions>
-    </type-extension>
-
-    <type-extension type-id="OrderPaymentInstrument">
-        <custom-attribute-definitions>
             <attribute-definition attribute-id="paymentGatewaySEPADebtorName">
                 <display-name xml:lang="x-default">SEPA debtor name</display-name>
                 <description xml:lang="x-default">debtor name for SEPA</description>
@@ -612,6 +607,12 @@ Type of payment: one-off.]]></default-value>
             <attribute-definition attribute-id="paymentGatewaySEPABIC">
                 <display-name xml:lang="x-default">SEPA BIC</display-name>
                 <description xml:lang="x-default">BIC of the debtor</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayBIC">
+                <display-name xml:lang="x-default">BIC</display-name>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>

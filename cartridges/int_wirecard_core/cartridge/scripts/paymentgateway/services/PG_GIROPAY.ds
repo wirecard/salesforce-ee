@@ -10,38 +10,38 @@
  */
 var AbstractPaymentGatewayService = require('./AbstractPaymentGatewayService');
 
-var SofortService = AbstractPaymentGatewayService.extend({
+var GiropayService = AbstractPaymentGatewayService.extend({
     init: function (type) {
         this._super(type);
-        this.paymentMethodID = require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper').PAYMENT_METHOD_SOFORT;
+        this.paymentMethodID = require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper').PAYMENT_METHOD_GIROPAY;
     },
 
     /**
-     * Retrieves the base url for Sofort.
+     * Retrieves the base url for Giropay
      * @returns {String}
      */
     getBaseUrl: function() {
-        return this.getSitePreference('paymentGatewaySofortBaseUrl');
+        return this.getSitePreference('paymentGatewayGiropayBaseUrl');
     },
 
     /**
-     * Retrieves the http user for Sofort.
+     * Retrieves the http user for Giropay
      * @returns {String}
      */
     getHttpUsername: function() {
-        return this.getSitePreference('paymentGatewaySofortHttpUser');
+        return this.getSitePreference('paymentGatewayGiropayHttpUser');
     },
 
     /**
-     * Retrieves the http password for Sofort.
+     * Retrieves the http password for Giropay
      * @returns {String}
      */
     getHttpPassword: function() {
-        return this.getSitePreference('paymentGatewaySofortHttpPassword');
+        return this.getSitePreference('paymentGatewayGiropayHttpPassword');
     }
 });
 
 //Export the configured service singleton
 module.exports = function () {
-    return (new SofortService('paymentmethods')).getService();
+    return (new GiropayService('paymentmethods')).getService();
 };
