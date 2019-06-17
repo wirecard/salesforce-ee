@@ -6,8 +6,6 @@
   - License can be found under:
   https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
 -->
-
-
 <payment-settings xmlns="http://www.demandware.com/xml/impex/paymentsettings/2009-09-15">
     <payment-method method-id="PG_CREDITCARD">
         <name xml:lang="x-default">Wirecard Credit Card</name>

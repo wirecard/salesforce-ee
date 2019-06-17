@@ -1,4 +1,4 @@
-<isscript>
+<iscomment>
 /**
  * Shop System Plugins:
  * - Terms of Use can be found under:
@@ -6,7 +6,7 @@
  * - License can be found under:
  * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
  */
-</isscript>
+</iscomment>
 <isset name="addressFields" value="${pdict.forms.shippingForm.shippingAddress.addressFields}" scope="page"/>
 <isif condition="${shippingModel.shippingAddress}">
     <isset name="shippingAddress" value="${shippingModel.shippingAddress}" scope="page" />

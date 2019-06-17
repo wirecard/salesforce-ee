@@ -1,3 +1,10 @@
+/**
+ * Shop System Plugins:
+ * - Terms of Use can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/_TERMS_OF_USE
+ * - License can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
+ */
 'use strict';
 
 /* API includes */
@@ -372,10 +379,9 @@ var TransactionHelper = {
     /**
      * Parse api response from http service call
      *
-     * @param apiResponse
-     * @param paymentMethodID
-     * @param responseType
-     *
+     * @param {string} apiResponse - json response
+     * @param {string} paymentMethodID - used payment method
+     * @param {string} responseType
      * @returns {Object} - status with {code: ..., description: ... }
      */
     parseTransactionResponse: function (apiResponse, paymentMethodID, responseType) {
@@ -541,11 +547,9 @@ var TransactionHelper = {
     },
 
     /**
-     * Function for returning
-     *
-     * @param paymentMethodId
-     *
-     * @returns {string}
+     * Function for returning payment method secret
+     * @param {string} paymentMethodId - current payment method
+     * @returns {string} - payment method's secret
      */
     getSecretCustomPreferenceFromPaymentMethodId : function(paymentMethodId) {
         const Site = require('dw/system/Site').getCurrent();
@@ -565,6 +569,5 @@ var TransactionHelper = {
         }
     }
 };
-
 
 module.exports = TransactionHelper;
