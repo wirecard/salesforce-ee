@@ -560,6 +560,9 @@ var TransactionHelper = {
             case paymentHelper.PAYMENT_METHOD_CREDIT_CARD3DS:
                 secret = Site.getCustomPreferenceValue('paymentGatewayCreditCardSecret3DS');
                 break;
+            case paymentHelper.PAYMENT_METHOD_EPS:
+                secret = Site.getCustomPreferenceValue('paymentGatewayEpsSecret');
+                break;
             case paymentHelper.PAYMENT_METHOD_GIROPAY:
                 secret = Site.getCustomPreferenceValue('paymentGatewayGiropaySecret');
                 break;

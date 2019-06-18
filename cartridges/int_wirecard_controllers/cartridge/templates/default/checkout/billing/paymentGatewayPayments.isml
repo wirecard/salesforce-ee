@@ -13,14 +13,23 @@
     .payment-method-options .form-row input { margin-bottom: 0; }
 </style>
 
+<isscript>
+    var attributes = { autocomplete: "off" };
+</isscript>
+
 <!--- PG_CREDITCARD --->
-<div id="PaymentMethod_PG_CREDITCARD" class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='PG_GIROPAY'}">payment-method-expanded</isif>" data-method="PG_CREDITCARD">
+<div id="PaymentMethod_PG_CREDITCARD" class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='PG_CREDITCARD'}">payment-method-expanded</isif>" data-method="PG_CREDITCARD">
     <!--- placeholder as embedded form will be displayed in cosummary --->
+</div>
+
+<!--- PG_EPS --->
+<div id="PaymentMethod_PG_EPS" class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='PG_EPS'}">payment-method-expanded</isif>" data-method="PG_EPS">
+    <isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.PG_EPS.paymentGatewayBIC}" type="input" attributes="${ attributes }"/>
 </div>
 
 <!--- PG_GIROPAY --->
 <div id="PaymentMethod_PG_GIROPAY" class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='PG_GIROPAY'}">payment-method-expanded</isif>" data-method="PG_GIROPAY">
-    <isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.PG_GIROPAY.paymentGatewayBIC}" type="input" />
+    <isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.PG_GIROPAY.paymentGatewayBIC}" type="input" attributes="${ attributes }"/>
 </div>
 
 <!--- PG_IDEAL --->

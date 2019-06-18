@@ -81,13 +81,20 @@ exports.Fail = guard.ensure(['https'], function () {
     var order = OrderMgr.getOrder(orderNo);
 
     if (order && order.orderToken == orderToken) {
+        var eppResponse = require('*/cartridge/scripts/paymentgateway/util/EppResponse').parseBase64(
+            parameterMap.eppresponse,
+            require('dw/web/Resource').msg('confirm.error.technical', 'checkout', null)
+        );
+
         require('dw/system/Transaction').wrap(function () {
             OrderMgr.failOrder(order);
         });
 
         var Status = require('dw/system/Status');
         app.getController('COSummary').Start({
-            PlaceOrderError: new Status(Status.ERROR, 'general.technical.error')
+            PaymentGatewayError: {
+                description: eppResponse.status.message
+            }
         });
         return;
     }
