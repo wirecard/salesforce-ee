@@ -12,7 +12,7 @@ var Type = require('./Type');
 function SEPACredit(order, args) {
     // default params
     var params = {
-        paymentMethodID: 'sepacredit',
+        paymentMethodID: require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper').PAYMENT_METHOD_SEPA_CREDIT,
         'transaction-type': Type.All.CREDIT,
         'merchant-account-id': this.getSitePreference('paymentGatewaySEPACreditMerchantAccountID')
     };

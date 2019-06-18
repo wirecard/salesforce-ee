@@ -13,28 +13,15 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
-switch (paymentMethodId) {
-	case 'PG_GIROPAY':
-		WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentMethods/Giropay'), [:], FailureHandling.STOP_ON_FAILURE)
+WebUI.waitForElementVisible(findTestObject('Payment methods/Giropay/Input sc'), 5)
 
-		break
-    case 'PG_PAYPAL':
-        WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentMethods/PayPal'), [:], FailureHandling.STOP_ON_FAILURE)
+WebUI.setText(findTestObject('Payment methods/Giropay/Input sc'), '10')
 
-        break
-    case 'PG_SOFORT':
-        WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentMethods/Sofort'), [:], FailureHandling.STOP_ON_FAILURE)
+WebUI.setText(findTestObject('Payment methods/Giropay/Input extensionSc'), '4000')
 
-        break
-    case 'PG_CREDITCARD':
-        WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentMethods/Creditcard'), [:], FailureHandling.STOP_ON_FAILURE)
+WebUI.setText(findTestObject('Payment methods/Giropay/Input customerName1'), 'Rainer Zufall')
 
-        break
-    default:
-        break
-}
+WebUI.setText(findTestObject('Payment methods/Giropay/Input customerIBAN'), 'NL13TEST0123456789')
 
-WebUI.waitForElementClickable(findTestObject('sitegenesis/checkout/link proceed to order overview'), 5)
-
-WebUI.click(findTestObject('sitegenesis/checkout/link proceed to order overview'))
+WebUI.click(findTestObject('Payment methods/Giropay/Submit'))
 

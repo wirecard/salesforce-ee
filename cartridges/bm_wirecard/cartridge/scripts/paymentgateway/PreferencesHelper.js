@@ -31,6 +31,13 @@ var PreferencesMapping = {
         sendAdditionalData    : 'paymentGatewayCreditCardSendAdditionalData',
         initialTransactionType: 'paymentGatewayCreditCardInitialTransactionType'
     },
+    PG_GIROPAY: {
+        userName          : 'paymentGatewayGiropayHttpUser',
+        password          : 'paymentGatewayGiropayHttpPassword',
+        baseUrl           : 'paymentGatewayGiropayBaseUrl',
+        merchantAccountID : 'paymentGatewayGiropayMerchantAccountID',
+        sendAdditionalData: 'paymentGatewayGiropaySendAdditionalData'
+    },
     PG_PAYPAL: {
         userName              : 'paymentGatewayPayPalHttpUser',
         password              : 'paymentGatewayPayPalHttpPassword',

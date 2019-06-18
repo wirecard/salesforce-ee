@@ -13,28 +13,7 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
-switch (paymentMethodId) {
-	case 'PG_GIROPAY':
-		WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentMethods/Giropay'), [:], FailureHandling.STOP_ON_FAILURE)
+WebUI.check(findTestObject('sitegenesis/checkout/select payment/Giropay'))
 
-		break
-    case 'PG_PAYPAL':
-        WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentMethods/PayPal'), [:], FailureHandling.STOP_ON_FAILURE)
-
-        break
-    case 'PG_SOFORT':
-        WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentMethods/Sofort'), [:], FailureHandling.STOP_ON_FAILURE)
-
-        break
-    case 'PG_CREDITCARD':
-        WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentMethods/Creditcard'), [:], FailureHandling.STOP_ON_FAILURE)
-
-        break
-    default:
-        break
-}
-
-WebUI.waitForElementClickable(findTestObject('sitegenesis/checkout/link proceed to order overview'), 5)
-
-WebUI.click(findTestObject('sitegenesis/checkout/link proceed to order overview'))
+WebUI.setText(findTestObject('sitegenesis/checkout/giropay/Input bic'), 'GENODETT488')
 
