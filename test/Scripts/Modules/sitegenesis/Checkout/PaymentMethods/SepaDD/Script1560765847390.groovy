@@ -13,31 +13,17 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
-//WebUI.waitForElementClickable(findTestObject('sfra/checkout/Link proceed to order overview'), 2)
-WebUI.delay(5)
+WebUI.waitForElementClickable(findTestObject('sitegenesis/checkout/select payment/SepaDD'), 2)
 
-if ('PG_SEPA' == paymentMethodId) {
-	WebUI.check(findTestObject('checkout/summary/Mandate Accept'))
+WebUI.click(findTestObject('sitegenesis/checkout/select payment/SepaDD'))
+
+WebUI.setText(findTestObject('sitegenesis/checkout/select payment/Sepa/Debtor'), findTestData('sepa_direct_debit').getValue(
+        1, 1))
+
+WebUI.setText(findTestObject('sitegenesis/checkout/select payment/Sepa/Iban'), findTestData('sepa_direct_debit').getValue(
+        2, 1))
+
+if (WebUI.verifyElementPresent(findTestObject('sitegenesis/checkout/select payment/Sepa/Bic'), 1, FailureHandling.OPTIONAL)) {
+    WebUI.setText(findTestObject('sitegenesis/checkout/select payment/Sepa/Bic'), findTestData('sepa_direct_debit').getValue(
+            3, 1))
 }
-
-WebUI.waitForElementClickable(findTestObject('sfra/checkout/Link place order'), 5)
-
-WebUI.click(findTestObject('sfra/checkout/Link place order'))
-
-switch (paymentMethodId) {
-    case 'PG_PAYPAL':
-        WebUI.callTestCase(findTestCase('Modules/Payment methods/PayPal'), [:], FailureHandling.STOP_ON_FAILURE)
-
-        break
-    case 'PG_SOFORT':
-        WebUI.callTestCase(findTestCase('Modules/Payment methods/Sofort'), [:], FailureHandling.STOP_ON_FAILURE)
-
-        break
-    default:
-        break
-}
-
-WebUI.waitForElementPresent(findTestObject('sfra/checkout/Order success message'), 60)
-
-WebUI.verifyElementPresent(findTestObject('sfra/checkout/Order success message'), 5)
-

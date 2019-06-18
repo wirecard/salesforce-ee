@@ -26,6 +26,10 @@ switch (paymentMethodId) {
         WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentMethods/Creditcard'), [:], FailureHandling.STOP_ON_FAILURE)
 
         break
+	case 'PG_SEPA':
+		WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentMethods/SepaDD'), [:], FailureHandling.STOP_ON_FAILURE)
+
+		break
     default:
         break
 }
