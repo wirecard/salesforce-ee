@@ -6,8 +6,6 @@
   - License can be found under:
   https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
 -->
-
-
 <jobs xmlns="http://www.demandware.com/xml/impex/jobs/2015-07-01">
     <job job-id="PaymentGatewayHandleNotifications" priority="0">
         <description>Handles notifications stored with custom objects of type PaymentGatewayNotification</description>
