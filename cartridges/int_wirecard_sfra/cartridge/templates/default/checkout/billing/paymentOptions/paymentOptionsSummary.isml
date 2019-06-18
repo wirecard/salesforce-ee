@@ -1,4 +1,4 @@
-<isscript>
+<iscomment>
 /**
  * Shop System Plugins:
  * - Terms of Use can be found under:
@@ -6,7 +6,7 @@
  * - License can be found under:
  * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
  */
-</isscript>
+</iscomment>
 <div class="payment-details">
     <isloop items="${pdict.order.billing.payment.selectedPaymentInstruments}" var="payment">
         <isif condition="${payment.paymentMethod === 'CREDIT_CARD'}">
