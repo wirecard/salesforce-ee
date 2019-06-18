@@ -234,14 +234,14 @@ server.get(
         );
         var paymentInstrument = null;
         basketModel.billing.payment.selectedPaymentInstruments.forEach(function (p) {
-            if (p.paymentMethod === 'PG_SEPA') {
+            if (p.paymentMethod === paymentMethod) {
                 paymentInstrument = p;
             }
         });
 
         if (paymentInstrument) {
             res.render(
-                'checkout/billing/paymentOptions/paymentOptionsSummary/PG_SEPA',
+                'checkout/billing/paymentOptions/paymentOptionsSummary/' + paymentMethod,
                 {
                     payment: paymentInstrument,
                     forms: { billingForm: server.forms.getForm('billing') }
