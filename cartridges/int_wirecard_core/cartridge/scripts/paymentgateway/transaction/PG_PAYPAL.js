@@ -84,7 +84,7 @@ function getRefundTransactionType() {
 function PayPal(order, args) {
     // default params
     var params = {
-        paymentMethodID: 'paypal',
+        paymentMethodID: require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper').PAYMENT_METHOD_PAYPAL,
         'transaction-type': this.getSitePreference('paymentGatewayPayPalInitialTransactionType').value,
         'merchant-account-id': this.getSitePreference('paymentGatewayPayPalMerchantAccountID')
     };

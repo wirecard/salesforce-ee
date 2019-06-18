@@ -21,7 +21,7 @@ function getCaptureTransactionType() {
     }
     switch (self['transaction-type']) {
         case Type.AUTHORIZATION:
-            type = Type.CAPTURE_AUTHORIZATION;
+            type = Type.DEBIT;
             canPartialCapture = true;
             break;
         default:
@@ -79,10 +79,9 @@ function getRefundTransactionType() {
  * @returns {Object} - transaction
  */
 function SEPA(order, args) {
-    var TransactionHelper = require('*/cartridge/scripts/paymentgateway/helper/TransactionHelper');
     // default params
     var params = {
-        paymentMethodID: TransactionHelper.PAYMENT_METHOD_ID_SEPA_DIRECT_DEBIT,
+        paymentMethodID: require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper').PAYMENT_METHOD_SEPA_DIRECT_DEBIT,
         'transaction-type': this.getSitePreference('paymentGatewaySEPADebitInitialTransactionType').value,
         'merchant-account-id': this.getSitePreference('paymentGatewaySEPADebitMerchantAccountID')
     };

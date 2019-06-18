@@ -14,6 +14,10 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
 switch (paymentMethodId) {
+	case 'PG_GIROPAY':
+		WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentMethods/Giropay'), [:], FailureHandling.STOP_ON_FAILURE)
+
+		break
     case 'PG_PAYPAL':
         WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentMethods/PayPal'), [:], FailureHandling.STOP_ON_FAILURE)
 

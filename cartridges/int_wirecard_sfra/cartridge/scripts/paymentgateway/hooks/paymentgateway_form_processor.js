@@ -23,6 +23,22 @@ function processForm(req, paymentForm, viewFormData) {
     viewData.paymentInformation = {
         paymentMethodID: paymentForm.paymentMethod.value
     };
+    var formFields = paymentForm[paymentForm.paymentMethod.value];
+    if (formFields) {
+        var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
+        var errorFields = COHelpers.validateFields(formFields);
+
+        if (Object.keys(errorFields).length) {
+            return {
+                error: true,
+                fieldErrors: errorFields
+            };
+        }
+
+        var PaymentHelper = require('int_wirecard_core/cartridge/scripts/paymentgateway/helper/PaymentHelper.js');
+        var customFormData = PaymentHelper.getFormData(paymentForm, paymentForm.paymentMethod.value);
+        viewData.paymentInformation.pgFormData = customFormData;
+    }
 
     return {
         error: false,
@@ -31,10 +47,22 @@ function processForm(req, paymentForm, viewFormData) {
 }
 
 /**
- * default hook if no save payment information processor is supported
+ * Save payment information to payment instrument
+ * @param {Object} req - The request object
+ * @param {dw.order.Basket} currentBasket - The current basket
+ * @param {Object} billingData - payment information
  */
-function savePaymentInformation() {
-    return; // eslint-disable-line
+function savePaymentInformation(req, currentBasket, billingData) {
+    var paymentInformation = billingData.paymentInformation.pgFormData;
+    var paymentInstrument = currentBasket.getPaymentInstruments(billingData.paymentInformation.paymentMethodID);
+
+    if (!paymentInstrument.empty && typeof paymentInformation !== 'undefined') {
+        require('dw/system/Transaction').wrap(function () {
+            Object.keys(paymentInformation).forEach(function (key) {
+                paymentInstrument[0].custom[key] = paymentInformation[key];
+            });
+        });
+    }
 }
 
 exports.processForm = processForm;

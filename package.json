@@ -1,6 +1,6 @@
 {
   "name": "int_wirecard_sfra",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Wirecard payment integration for sfcc (sfra)",
   "main": "index.js",
   "scripts": {

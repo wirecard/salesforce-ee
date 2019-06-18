@@ -22,16 +22,23 @@ var Cart = require(controllerCartridge + '/cartridge/scripts/models/CartModel');
 function Handle(args) {
     var cart = Cart.get(args.Basket);
     var paymentMethodId = args.PaymentMethodID;
+    var paymentInstrument;
 
     Transaction.wrap(function () {
         cart.removeExistingPaymentInstruments(paymentMethodId);
-        cart.createPaymentInstrument(paymentMethodId, cart.getNonGiftCertificateAmount());
+        paymentInstrument = cart.createPaymentInstrument(paymentMethodId, cart.getNonGiftCertificateAmount());
     });
 
     if (dw.system.HookMgr.hasHook('app.payment.method.' + paymentMethodId)) {
         return dw.system.HookMgr.callHook('app.payment.method.' + paymentMethodId, 'Handle', {
             Basket: cart,
             Form  : session.forms.billing.paymentMethods
+        });
+    }
+    var paymentForm = session.forms.billing.paymentMethods;
+    if (paymentMethodId === 'PG_GIROPAY') {
+        Transaction.wrap(function () {
+            paymentInstrument.custom.paymentGatewayBIC = paymentForm.PG_GIROPAY.paymentGatewayBIC.value;
         });
     }
 

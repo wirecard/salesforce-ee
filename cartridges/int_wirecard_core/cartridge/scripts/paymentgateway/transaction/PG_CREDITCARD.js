@@ -82,7 +82,7 @@ function getRefundTransactionType() {
 function CreditCard(order, args) {
     // default params
     var params = {
-        paymentMethodID: 'creditcard',
+        paymentMethodID: require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper').PAYMENT_METHOD_CREDIT_CARD,
         'merchant-account-id': this.getSitePreference('merchantAccountId')
     };
     if (typeof args === 'object') {
