@@ -16,6 +16,10 @@ import internal.GlobalVariable as GlobalVariable
 //WebUI.waitForElementClickable(findTestObject('sfra/checkout/Link proceed to order overview'), 2)
 WebUI.delay(5)
 
+if ('PG_SEPA' == paymentMethodId) {
+	WebUI.check(findTestObject('checkout/summary/Mandate Accept'))
+}
+
 WebUI.waitForElementClickable(findTestObject('sfra/checkout/Link place order'), 5)
 
 WebUI.click(findTestObject('sfra/checkout/Link place order'))

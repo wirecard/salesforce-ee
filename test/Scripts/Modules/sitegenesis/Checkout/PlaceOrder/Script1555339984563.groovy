@@ -15,6 +15,10 @@ import internal.GlobalVariable as GlobalVariable
 
 WebUI.waitForElementClickable(findTestObject('sitegenesis/checkout/billing/Button place order'), 5)
 
+if ('PG_SEPA' == paymentMethodId) {
+	WebUI.check(findTestObject('checkout/summary/Mandate Accept'))
+}
+
 WebUI.click(findTestObject('sitegenesis/checkout/billing/Button place order'))
 
 switch (paymentMethodId) {
