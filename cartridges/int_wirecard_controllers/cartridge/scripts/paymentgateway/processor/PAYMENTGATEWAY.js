@@ -42,7 +42,7 @@ function Handle(args) {
         });
     } else if (paymentMethodId === 'PG_IDEAL') {
         Transaction.wrap(function () {
-           paymentInstrument.custom.paymentGatewayBIC = paymentForm.PG_IDEAL.paymentGatewayBIC.value;
+            paymentInstrument.custom.paymentGatewayBIC = paymentForm.PG_IDEAL.paymentGatewayBIC.value;
         });
     }
 
