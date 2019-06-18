@@ -18,6 +18,10 @@ WebUI.waitForElementClickable(findTestObject('sitegenesis/checkout/billing/Butto
 WebUI.click(findTestObject('sitegenesis/checkout/billing/Button place order'))
 
 switch (paymentMethodId) {
+	case 'PG_EPS':
+		WebUI.callTestCase(findTestCase('Modules/Payment methods/Eps'), [:], FailureHandling.STOP_ON_FAILURE)
+	
+		break
 	case 'PG_GIROPAY':
 		WebUI.callTestCase(findTestCase('Modules/Payment methods/Giropay'), [:], FailureHandling.STOP_ON_FAILURE)
 

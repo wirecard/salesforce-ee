@@ -84,11 +84,12 @@ server.get(
 /**
  * Cancel redirect from payment gateway
  */
-server.get(
+server.use(
     'Fail',
     server.middleware.https,
     function (req, res, next) {
         var params = req.querystring;
+        var formData = req.form;
         var orderNo = params.orderNo;
         var orderToken = params.orderSec;
 
@@ -97,13 +98,17 @@ server.get(
         var order = OrderMgr.getOrder(orderNo);
 
         if (order && order.orderToken === orderToken) {
+            var eppResponse = require('*/cartridge/scripts/paymentgateway/util/EppResponse').parseBase64(
+                formData.eppresponse,
+                Resource.msg('error.technical', 'checkout', null)
+            );
             Transaction.wrap(function () {
                 OrderMgr.failOrder(order);
             });
 
             req.session.privacyCache.set(
                 'pgPlaceOrderError',
-                Resource.msg('payment_failed_text', 'paymentgateway', null)
+                eppResponse.status.message
             );
             res.redirect(URLUtils.https('Checkout-Begin', 'stage', 'payment'));
         } else {

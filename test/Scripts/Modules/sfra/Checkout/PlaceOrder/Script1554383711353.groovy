@@ -21,6 +21,10 @@ WebUI.waitForElementClickable(findTestObject('sfra/checkout/Link place order'), 
 WebUI.click(findTestObject('sfra/checkout/Link place order'))
 
 switch (paymentMethodId) {
+	case 'PG_EPS':
+		WebUI.callTestCase(findTestCase('Modules/Payment methods/Eps'), [:], FailureHandling.STOP_ON_FAILURE)
+	
+		break
 	case 'PG_GIROPAY':
 		WebUI.callTestCase(findTestCase('Modules/Payment methods/Giropay'), [:], FailureHandling.STOP_ON_FAILURE)
 

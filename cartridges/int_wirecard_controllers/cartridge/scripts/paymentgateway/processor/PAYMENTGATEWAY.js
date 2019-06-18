@@ -36,9 +36,9 @@ function Handle(args) {
         });
     }
     var paymentForm = session.forms.billing.paymentMethods;
-    if (paymentMethodId === 'PG_GIROPAY') {
+    if (['PG_EPS', 'PG_GIROPAY'].indexOf(paymentMethodId) > -1) {
         Transaction.wrap(function () {
-            paymentInstrument.custom.paymentGatewayBIC = paymentForm.PG_GIROPAY.paymentGatewayBIC.value;
+            paymentInstrument.custom.paymentGatewayBIC = paymentForm[paymentMethodId].paymentGatewayBIC.value;
         });
     }
 

@@ -11,7 +11,8 @@ var Transaction = require('./Transaction');
 var Type = require('./Type').All;
 
 var preferenceMapping = {
-    sendAdditionalData: 'paymentGatewayGiropaySendAdditionalData'
+    addDesc: 'paymentGatewayEpsAddDescriptorToRequest',
+    sendAdditionalData: 'paymentGatewayEpsSendAdditionalData'
 };
 
 /**
@@ -20,12 +21,12 @@ var preferenceMapping = {
  * @param {Object} args - additional parameter
  * @returns {Object} - transaction
  */
-function Giropay(order, args) {
+function Eps(order, args) {
     // default params
     var params = {
-        paymentMethodID: require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper').PAYMENT_METHOD_GIROPAY,
+        paymentMethodID: require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper').PAYMENT_METHOD_EPS,
         'transaction-type': Type.DEBIT,
-        'merchant-account-id': this.getSitePreference('paymentGatewayGiropayMerchantAccountID')
+        'merchant-account-id': this.getSitePreference('paymentGatewayEpsMerchantAccountID')
     };
     if (typeof args === 'object') {
         Object.keys(args).forEach(function (k) {
@@ -38,14 +39,14 @@ function Giropay(order, args) {
     return this;
 }
 
-Giropay.prototype = Object.create(Transaction.prototype);
+Eps.prototype = Object.create(Transaction.prototype);
 
 /**
  * Add bank-account data saved from payment form with orderPaymentInstrument
  */
-Giropay.prototype.getCustomPayload = function () {
+Eps.prototype.getCustomPayload = function () {
     var paymentHelper = require('int_wirecard_core/cartridge/scripts/paymentgateway/helper/PaymentHelper.js');
-    var instruments = this.order.getPaymentInstruments('PG_GIROPAY');
+    var instruments = this.order.getPaymentInstruments('PG_EPS');
     var result = {};
 
     if (!instruments.empty) {
@@ -54,9 +55,9 @@ Giropay.prototype.getCustomPayload = function () {
         Object.keys(instruments[0].custom).forEach(function (key) {
             customPaymentData[key] = instruments[0].custom[key];
         });
-        result = paymentHelper.getDataForRequest(customPaymentData, 'PG_GIROPAY');
+        result = paymentHelper.getDataForRequest(customPaymentData, 'PG_EPS');
     }
     return result;
 };
 
-module.exports = Giropay;
+module.exports = Eps;
