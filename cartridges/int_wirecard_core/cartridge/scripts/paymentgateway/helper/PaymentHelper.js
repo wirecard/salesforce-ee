@@ -21,8 +21,8 @@ var methodsWithForms = {
         bic: 'select'
     },
     PG_SEPA: {
-        paymentGatewaySEPABIC: 'text',
-        paymentGatewaySEPAIBAN: 'text',
+        paymentGatewayBIC: 'text',
+        paymentGatewayIBAN: 'text',
         paymentGatewaySEPADebtorName: 'text'
     }
 };
@@ -55,7 +55,7 @@ module.exports = {
             'bank-account': { bic: 'paymentGatewayBIC' }
         },
         PG_SEPA: {
-            'bank-account'  : {iban: 'paymentGatewaySEPAIBAN', bic: 'paymentGatewaySEPABIC'},
+            'bank-account'  : {iban: 'paymentGatewayIBAN', bic: 'paymentGatewayBIC'},
             'account-holder': {
                 'last-name' : 'paymentGatewaySEPADebtorName'
             }

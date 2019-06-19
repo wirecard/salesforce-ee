@@ -29,16 +29,22 @@ function Handle(args) {
         paymentInstrument = cart.createPaymentInstrument(paymentMethodId, cart.getNonGiftCertificateAmount());
     });
 
-    if (dw.system.HookMgr.hasHook('app.payment.method.' + paymentMethodId)) {
-        return dw.system.HookMgr.callHook('app.payment.method.' + paymentMethodId, 'Handle', {
-            Basket: cart,
-            Form  : session.forms.billing.paymentMethods
-        });
-    }
     var paymentForm = session.forms.billing.paymentMethods;
+    // form validation
+    if (['PG_EPS', 'PG_GIROPAY', 'PG_IDEAL', 'PG_SEPA'].indexOf(paymentMethodId) > -1 && !paymentForm[paymentMethodId].valid) {
+        return { error: true };
+    }
+
+    // save form data with dw.order.OrderPaymentInstrument
     if (['PG_EPS', 'PG_GIROPAY'].indexOf(paymentMethodId) > -1) {
         Transaction.wrap(function () {
             paymentInstrument.custom.paymentGatewayBIC = paymentForm[paymentMethodId].paymentGatewayBIC.value;
+        });
+    } else if (/^PG_SEPA$/.test(paymentMethodId)) {
+        Transaction.wrap(function () {
+            paymentInstrument.custom.paymentGatewayBIC = paymentForm[paymentMethodId].paymentGatewayBIC.value;
+            paymentInstrument.custom.paymentGatewayIBAN = paymentForm[paymentMethodId].paymentGatewayIBAN.value;
+            paymentInstrument.custom.paymentGatewaySEPADebtorName = paymentForm[paymentMethodId].paymentGatewaySEPADebtorName.value;
         });
     }
 

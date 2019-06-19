@@ -16,8 +16,8 @@
 <isscript>
 var attributes = { autocomplete: "off" };
 </isscript>
-<isinputfield formfield="${sepaFields.paymentGatewaySEPAIBAN}" type="input" attributes="${ attributes }"/>
+<isinputfield formfield="${sepaFields.paymentGatewayIBAN}" type="input" attributes="${ attributes }"/>
 
 <isif condition="${ bicVisible === true }">
-	<isinputfield formfield="${sepaFields.paymentGatewaySEPABIC}" type="input" attributes="${ attributes }"/>
+	<isinputfield formfield="${sepaFields.paymentGatewayBIC}" type="input" attributes="${ attributes }"/>
 </isif>
