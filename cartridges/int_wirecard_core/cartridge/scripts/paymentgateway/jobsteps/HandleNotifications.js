@@ -54,6 +54,74 @@ function archiveProcessedNotification(notification, errorMessage) {
 }
 
 /**
+ * Save credit card in customer wallet
+ * @param {dw.object.CustomObject} notification - custom object holding credit card token
+ */
+function saveCustomerPaymentInstrument(notification) {
+    var OrderMgr = require('dw/order/OrderMgr');
+    var order = OrderMgr.getOrder(notification.custom.orderNo);
+
+    if (order) {
+        var customer = order.getCustomer();
+        var orderPaymentInstruments = order.getPaymentInstruments('PG_CREDITCARD');
+        if (orderPaymentInstruments.length === 1 && orderPaymentInstruments[0].custom.paymentGatewaySaveCCToken) {
+            var notificationRaw = JSON.parse(notification.custom.responseText);
+            if (customer.isRegistered()
+                && Object.prototype.hasOwnProperty.call(notificationRaw, 'payment')
+                && Object.prototype.hasOwnProperty.call(notificationRaw.payment, 'card-token')
+            ) {
+                var orderHelper = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper');
+
+                // set new credit card data
+                var billingAddress = order.getBillingAddress();
+                var shippingAddressHash = null;
+                if (order.shipments.length > 0) {
+                    shippingAddressHash = orderHelper.getAddressHash(order.shipments[0].shippingAddress);
+                }
+                var newCCData = {
+                    token: String(notificationRaw.payment['card-token']['token-id']),
+                    masked: String(notificationRaw.payment['card-token']['masked-account-number']),
+                    accountHolder: billingAddress.getFirstName() + ' ' + billingAddress.getLastName(),
+                    billingAddressHash: orderHelper.getAddressHash(billingAddress),
+                    shippingAddressHash: shippingAddressHash,
+                    lastUsed: new Date()
+                };
+                var wallet = customer.getProfile().getWallet();
+                var paymentInstruments = wallet.getPaymentInstruments();
+                // check for duplicate
+                var isDuplicateCard = false;
+                var oldCard;
+                for (var i = 0; i < paymentInstruments.length; i++) {
+                    var card = paymentInstruments[i];
+                    if (card.creditCardToken === newCCData.token) {
+                        isDuplicateCard = true;
+                        oldCard = card;
+                        break;
+                    }
+                }
+                // create new customer payment instrument
+                Transaction.wrap(function () {
+                    var newCC = wallet.createPaymentInstrument('PG_CREDITCARD');
+                    newCC.setCreditCardType('credit'); // default value - if not set, method getCustomerPaymentInstruments in account model will fail
+                    newCC.setCreditCardHolder(newCCData.accountHolder); // default value - if not set, method getCustomerPaymentInstruments in account model will fail
+                    newCC.custom.paymentGatewayMaskedAccountNumber = newCCData.masked;
+                    newCC.custom.paymentGatewayBillingAddressHash = newCCData.billingAddressHash;
+                    newCC.custom.paymentGatewayShippingAddressHash = newCCData.shippingAddressHash;
+                    newCC.custom.paymentGatewayLastUsed = newCCData.lastUsed;
+                    newCC.creditCardToken = newCCData.token;
+                });
+
+                if (isDuplicateCard) {
+                    Transaction.wrap(function () {
+                        wallet.removePaymentInstrument(oldCard);
+                    });
+                }
+            }
+        }
+    }
+}
+
+/**
  * Handles stored notification custom objects
  * @param {Object}
  * @returns {Number}
@@ -73,6 +141,9 @@ exports.execute = function (pdict) {
                     notification.custom.transactionType
                 )
             );
+
+            // save credit card for later use
+            saveCustomerPaymentInstrument(notification);
         } catch (err) {
             errorMessage = err.message;
             pgLogger.error('Error while processing notification for transaction ' + notification.custom.transactionId

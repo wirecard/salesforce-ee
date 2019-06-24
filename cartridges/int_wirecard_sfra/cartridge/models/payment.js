@@ -9,6 +9,7 @@
 'use strict';
 
 var collections = require('*/cartridge/scripts/util/collections');
+var paymentHelper = require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper');
 
 var base = module.superModule;
 
@@ -35,7 +36,6 @@ function getSelectedPaymentInstruments(selectedPaymentInstruments) {
             results.giftCertificateCode = paymentInstrument.giftCertificateCode;
             results.maskedGiftCertificateCode = paymentInstrument.maskedGiftCertificateCode;
         } else if (paymentInstrument.paymentMethod.indexOf('PG_') > -1) {
-            var paymentHelper = require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper');
             var methodData = paymentHelper.getPaymentMethodData(paymentInstrument.paymentMethod);
             results.methodImg = methodData.image;
             results.name = methodData.name;
@@ -43,6 +43,64 @@ function getSelectedPaymentInstruments(selectedPaymentInstruments) {
 
         return results;
     });
+}
+
+/**
+ * Check if PG_CREDITCARD customer paymentInstrument can be used for current Basket
+ * @param {dw.order.Basket} currentBasket - the current basket
+ * @param {dw.customer.CustomerPaymentInstrument} paymentInstrument - saved customer payment instrument
+ * @returns {boolean} - returns true if billing / shipping address of payment instrument match those of current basket
+ */
+function isSavedCCEligibleForCurrentBasket(currentBasket, paymentInstrument) { // eslint-disable-line
+    var orderHelper = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper');
+    var billingAddressHash = orderHelper.getAddressHash(currentBasket.billingAddress);
+    var shippingAddressHash = null;
+    if (currentBasket.shipments.length > 0) {
+        shippingAddressHash = orderHelper.getAddressHash(currentBasket.shipments[0].shippingAddress);
+    }
+
+    return function (basket, paymentInstrument) { // eslint-disable-line
+        var customAttributes = paymentInstrument.raw.custom;
+        var savedBillingAddrHash = Object.prototype.hasOwnProperty.call(customAttributes, 'paymentGatewayBillingAddressHash')
+            ? customAttributes.paymentGatewayBillingAddressHash : '';
+        var savedShippingAddrHash = Object.prototype.hasOwnProperty.call(customAttributes, 'paymentGatewayShippingAddressHash')
+            ? customAttributes.paymentGatewayShippingAddressHash : '';
+        return paymentInstrument.methodID === paymentHelper.PAYMENT_METHOD_CREDIT_CARD
+            && savedBillingAddrHash === billingAddressHash
+            && savedShippingAddrHash === shippingAddressHash;
+    };
+}
+
+/**
+ * Creates an array of objects containing applicable credit cards
+ * @param {dw.customer.Customer} currentCustomer - the current customer
+ * @param {dw.order.Basket} currentBasket - the current basket
+ * @returns {Object} Object with saved PG_CREDITCARD instruments applicable for the current basket.
+ */
+function applicablePaymentGatewayPaymentCards(currentCustomer, currentBasket) {
+    var isOneClickEnabled = require('dw/system/Site').getCurrent().getCustomPreferenceValue('paymentGatewayCreditCardOneClickCheckout');
+    var result = {
+        isEnabled: isOneClickEnabled,
+        paymentInstruments: []
+    };
+    if (isOneClickEnabled && currentCustomer.isRegistered() && currentCustomer.isAuthenticated()) {
+        var paymentInstruments = currentCustomer.profile.wallet.getPaymentInstruments('PG_CREDITCARD');
+        if (paymentInstruments.length > 0) {
+            var iter = paymentInstruments.iterator();
+            while (iter.hasNext()) {
+                var paymentInstr = iter.next();
+                if (isSavedCCEligibleForCurrentBasket(currentBasket, paymentInstr)) {
+                    result.paymentInstruments.push({
+                        UUID: paymentInstr.UUID,
+                        accountHolder: paymentInstr.creditCardHolder,
+                        cardToken: paymentInstr.creditCardToken,
+                        maskedAccountNumber: paymentInstr.custom.paymentGatewayMaskedAccountNumber
+                    });
+                }
+            }
+        }
+    }
+    return result;
 }
 
 /**
@@ -58,6 +116,8 @@ function Payment(currentBasket, currentCustomer, countryCode) {
     var paymentInstruments = currentBasket.paymentInstruments;
     this.selectedPaymentInstruments = paymentInstruments
         ? getSelectedPaymentInstruments(paymentInstruments) : null;
+
+    this.paymentGatewayOneClick = applicablePaymentGatewayPaymentCards(currentCustomer, currentBasket);
 }
 
 Payment.prototype = Object.create(base.prototype);

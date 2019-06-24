@@ -9,11 +9,71 @@
 </iscomment>
 <!--- TEMPLATENAME: PG_CREDITCARD.isml --->
 <isset name="pgCreditCardFields" value="${ pdict.forms.billingForm.PG_CREDITCARD }" scope="page"/>
-<div id="pg-creditcard-form"></div>
+<isscript>
+    var isOneClickEnabled = pdict.order.billing.payment.paymentGatewayOneClick.isEnabled;
+    var savedCreditCards = pdict.order.billing.payment.paymentGatewayOneClick.paymentInstruments;
+</isscript>
+<isif condition="${ isOneClickEnabled }">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <isif condition="${ savedCreditCards.length > 0 }">
+                <a class="nav-link" href="#savedcc" data-toggle="tab" role="tab" id="savedcc-tab">
+                    ${ Resource.msg('vault_use_existing_text', 'paymentgateway', null) }
+                </a>
+            <iselse/>
+                <div class="nav-link">
+                    ${ Resource.msg('vault_use_existing_text', 'paymentgateway', null) }
+                </div>
+            </isif>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#newcc" data-toggle="tab" role="tab" id="newcc-tab">
+                ${ Resource.msg('vault_use_new_text', 'paymentgateway', null) }
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane" id="savedcc" role="tabpanel" aria-labelledby="savedcc-tab">
+            <div class="row leading-lines pg-saved-cards" data-remove-card-url="${ URLUtils.https('PaymentGatewayCredit-RemoveCard') }">
+                <isloop items="${ savedCreditCards }" var="card" status="loopState">
+                    <div class="form-check col-9 start-lines">
+                        <input id="pgCardToken_${ parseInt(loopState.count + 1, 10) }" name="pg_cc_token_copy" type="radio" value="${ card.UUID }" class="form-check-input">
+                        <label class="form-check-label" for="pgCardToken_${ parseInt(loopState.count + 1, 10) }">
+                            <span class="display-name">${ card.maskedAccountNumber }</span>
+                            <span class="text-muted">${ card.accountHolder }</span>
+                        </label>
+                    </div>
+                    <div class="col-3 text-right end-lines">
+                        <a href="#" class="remove-card" data-card-id="${ card.UUID }">${ Resource.msg('vault_delete_card_text', 'paymentgateway', null) }</a>
+                    </div>
+                </isloop>
+            </div>
+        </div>
+        <div class="tab-pane" id="newcc" role="tabpanel" aria-labelledby="newcc-tab">
+            <div id="pg-creditcard-form"></div>
+            <div class="form-group">
+                <label class="form-control-label" for="pg_save_cc_copy">${ Resource.msg('vault_save_text', 'paymentgateway', null) }</label>
+                <input type="checkbox"
+                       class="form-control"
+                       id="pg_save_cc_copy"
+                       name="pg_save_cc_copy"
+                       value="1"
+                       onclick="$('#pg_save_cc').prop('checked', $(this).prop('checked'));"
+                />
+            </div>
+        </div>
+    </div>
+<iselse/>
+    <div id="pg-creditcard-form"></div>
+</isif>
 
 <fieldset class="payment-form-fields">
     <input type="hidden" class="form-control"
         name="${pdict.forms.billingForm.paymentMethod.htmlName}"
         value="PG_CREDITCARD"
     >
+    <div style="display:none">
+        <input type="checkbox" id="pg_save_cc" name="${ pgCreditCardFields.pgSaveCC.htmlName }" value="1"/>
+        <input type="hidden" id="pg_cc_token" name="${ pgCreditCardFields.pgCCToken.htmlName }" value=""/>
+    </div>
 </fieldset>

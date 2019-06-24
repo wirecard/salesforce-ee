@@ -265,15 +265,6 @@ var TransactionHelper = {
     },
 
     /**
-     * Save credit card (seamless) transaction with order
-     * @param {dw.order.Order} order - related order
-     * @param {Object} transactionData - transaction data as json object
-     */
-    saveSeamlessTransactionToOrder: function (order, transactionData) {
-        this.saveTransactionToOrder(order, this.parseSeamlessTransactionData(transactionData));
-    },
-
-    /**
      * Save capture / refund amount
      * @param {dw.order.Order} order - current order
      * @param {Object} transaction - transaction data
@@ -308,66 +299,6 @@ var TransactionHelper = {
         }
         // finally save transaction with order
         this.saveTransactionToOrder(order, transaction, overwrite);
-    },
-
-    /**
-     * Parse transaction data from seamless integration
-     * @param {Object} transactionData - json object
-     * @returns {Object} - status with {code: ..., description: ... }
-     */
-    parseSeamlessTransactionData: function (transactionData) {
-        var result = {};
-        var stringHelper = require('*/cartridge/scripts/paymentgateway/util/StringHelper');
-        var tmp;
-
-        [
-            'status_code_1',
-            'request_id',
-            'merchant_account_id',
-            'transaction_type',
-            'transaction_state',
-            'transaction_id',
-            'completion_time_stamp',
-            'requested_amount',
-            'payment_method',
-            'parent_transaction_id',
-            'custom_fields'
-        ].forEach(function (key) {
-            var resultKey = stringHelper.camelize(key.replace(/_/g, '-'));
-            if (Object.prototype.hasOwnProperty.call(transactionData, key)) {
-                if (key === 'status_code_1') {
-                    if (Object.prototype.hasOwnProperty.call(transactionData, 'status_description_1')
-                        && Object.prototype.hasOwnProperty.call(transactionData, 'status_severity_1')
-                    ) {
-                        result.status = {
-                            code: transactionData.status_code_1,
-                            description: transactionData.status_description_1,
-                            severity: transactionData.status_severity_1
-                        };
-                    }
-                } else if (key === 'completion_time_stamp') {
-                    tmp = transactionData[key].match(/^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/);
-                    var date = new Date();
-                    if (tmp.length === 7) {
-                        date.setFullYear(tmp[1]);
-                        date.setMonth(parseInt(tmp[2], 10) - 1);
-                        date.setDate(tmp[3]);
-                        date.setHours(tmp[4]);
-                        date.setMinutes(tmp[5]);
-                        date.setSeconds(tmp[6]);
-                    }
-                    result[resultKey] = date.getTime();
-                } else if (key === 'requested_amount') {
-                    result[resultKey] = {
-                        value: transactionData[key],
-                        currency: transactionData.requested_amount_currency
-                    };
-                } else {
-                    result[resultKey] = transactionData[key];
-                }
-            }
-        });
-        return result;
     },
 
     /**

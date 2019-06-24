@@ -24,6 +24,19 @@ function handleError(err, cb) {
 }
 
 /**
+ * Bind change event to saved credit card inputs
+ */
+function selectSavedCreditCard() {
+    $('.pg-saved-cards').change(function(e) {
+        e.preventDefault();
+        var pgCreditCardTab = $(this).parents('div[id^=PG_CREDITCARD]');
+        var pgFormFields = pgCreditCardTab.find('.payment-form-fields');
+        var cardID = $(':checked', this).val();
+        pgFormFields.find('#pg_cc_token').val(cardID);
+    });
+}
+
+/**
  * Calls PaymentgatewayCredit-RequestData for retrieving request data to render seamless form
  */
 function getCreditCardRequestData() {
@@ -98,6 +111,7 @@ function submitSeamlessForm(saveTransactionUrl, restoreBasketUrl, cbSuccess, cbE
 }
 
 module.exports = {
+    selectSavedCreditCard: selectSavedCreditCard,
     getCreditCardRequestData: getCreditCardRequestData,
     submitSeamlessForm: submitSeamlessForm
 };

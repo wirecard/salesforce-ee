@@ -20,6 +20,8 @@ function processForm(req, paymentForm, viewFormData) {
         value: paymentForm.paymentMethod.value,
         htmlName: paymentForm.paymentMethod.value
     };
+    var saveCCElementName = paymentForm.PG_CREDITCARD.pgSaveCC.htmlName;
+    viewData.PG_CREDITCARD = { saveCC: !!req.form[saveCCElementName] };
 
     return {
         error: false,
@@ -28,10 +30,20 @@ function processForm(req, paymentForm, viewFormData) {
 }
 
 /**
- * default hook if no save payment information processor is supported
+ * Set saveCCToken property to payment instrument if customer wants to save credit card
+ * @param {Object} req - The request object
+ * @param {dw.order.Basket} currentBasket - The current basket
+ * @param {Object} billingData - payment information
  */
-function savePaymentInformation() {
-    return; // eslint-disable-line
+function savePaymentInformation(req, currentBasket, billingData) {
+    var paymentInstrument = currentBasket.getPaymentInstruments(billingData.paymentMethod.value);
+    // set save-cc value with payment instrument
+    var saveCC = billingData.PG_CREDITCARD.saveCC;
+    if (paymentInstrument.length === 1 && saveCC) {
+        require('dw/system/Transaction').wrap(function () {
+            paymentInstrument[0].custom.paymentGatewaySaveCCToken = true;
+        });
+    }
 }
 
 exports.processForm = processForm;

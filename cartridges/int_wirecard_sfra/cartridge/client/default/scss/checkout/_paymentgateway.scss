@@ -5,6 +5,8 @@
  * - License can be found under:
  * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
  */
+@import "~base/variables";
+
 .pg-payment {
   img {
     &.pg-logo {
@@ -23,6 +25,17 @@
         max-height: 50px;
         max-width: 60px;
         margin: 0 8px 0 0;
+      }
+    }
+  }
+}
+.PG_CREDITCARD-content {
+  .nav-tabs {
+    .nav-item {
+      div {
+        &.nav-link {
+          color: $grey3;
+        }
       }
     }
   }

@@ -152,6 +152,8 @@ base.paymentTabs = function () {
             paymentOptionTab.addClass('active');
             if (methodID === 'PG_CREDITCARD') {
                 paymentgateway.getCreditCardRequestData();
+                // de-activate cc tabs
+                $('.PG_CREDITCARD-content').find('.nav-tabs').find('.nav-item a').removeClass('active');
             }
         }
         const form   = $('form[name=dwfrm_billing]');
@@ -171,6 +173,9 @@ base.paymentTabs = function () {
         }
     }
 };
+
+// bind payment gateway cc handler for saved cards
+base.selectPaymentGatewayCreditCard = paymentgateway.selectSavedCreditCard;
 
 base.handleCreditCardNumber = function () {
     if ($('.cardNumber').length === 1) {
