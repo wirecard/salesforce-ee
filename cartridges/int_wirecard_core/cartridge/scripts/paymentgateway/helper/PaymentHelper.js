@@ -146,6 +146,32 @@ module.exports = {
         return result;
     },
 
+    /**
+     * Check if PG_CREDITCARD customer paymentInstrument can be used for current Basket
+     * @param {dw.order.Basket} currentBasket - the current basket
+     * @param {dw.customer.CustomerPaymentInstrument} paymentInstrument - saved customer payment instrument
+     * @returns {boolean} - returns true if billing / shipping address of payment instrument match those of current basket
+     */
+    isSavedCCEligibleForCurrentBasket: function (currentBasket) {
+        var orderHelper = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper');
+        var billingAddressHash = orderHelper.getAddressHash(currentBasket.billingAddress);
+        var shippingAddressHash = null;
+        if (currentBasket.shipments.length > 0) {
+            shippingAddressHash = orderHelper.getAddressHash(currentBasket.shipments[0].shippingAddress);
+        }
+
+        return function (paymentInstrument) {
+            var customAttributes = paymentInstrument.custom;
+            var savedBillingAddrHash = Object.prototype.hasOwnProperty.call(customAttributes, 'paymentGatewayBillingAddressHash')
+                ? customAttributes.paymentGatewayBillingAddressHash : '';
+            var savedShippingAddrHash = Object.prototype.hasOwnProperty.call(customAttributes, 'paymentGatewayShippingAddressHash')
+                ? customAttributes.paymentGatewayShippingAddressHash : '';
+            return paymentInstrument.paymentMethod === 'PG_CREDITCARD'
+                && savedBillingAddrHash === billingAddressHash
+                && savedShippingAddrHash === shippingAddressHash;
+        };
+    },
+
     PAYMENT_METHOD_SEPA_DIRECT_DEBIT: 'sepadirectdebit',
     PAYMENT_METHOD_CREDIT_CARD      : 'creditcard',
     PAYMENT_METHOD_EPS              : 'eps',

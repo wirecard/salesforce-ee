@@ -46,32 +46,6 @@ function getSelectedPaymentInstruments(selectedPaymentInstruments) {
 }
 
 /**
- * Check if PG_CREDITCARD customer paymentInstrument can be used for current Basket
- * @param {dw.order.Basket} currentBasket - the current basket
- * @param {dw.customer.CustomerPaymentInstrument} paymentInstrument - saved customer payment instrument
- * @returns {boolean} - returns true if billing / shipping address of payment instrument match those of current basket
- */
-function isSavedCCEligibleForCurrentBasket(currentBasket, paymentInstrument) { // eslint-disable-line
-    var orderHelper = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper');
-    var billingAddressHash = orderHelper.getAddressHash(currentBasket.billingAddress);
-    var shippingAddressHash = null;
-    if (currentBasket.shipments.length > 0) {
-        shippingAddressHash = orderHelper.getAddressHash(currentBasket.shipments[0].shippingAddress);
-    }
-
-    return function (basket, paymentInstrument) { // eslint-disable-line
-        var customAttributes = paymentInstrument.raw.custom;
-        var savedBillingAddrHash = Object.prototype.hasOwnProperty.call(customAttributes, 'paymentGatewayBillingAddressHash')
-            ? customAttributes.paymentGatewayBillingAddressHash : '';
-        var savedShippingAddrHash = Object.prototype.hasOwnProperty.call(customAttributes, 'paymentGatewayShippingAddressHash')
-            ? customAttributes.paymentGatewayShippingAddressHash : '';
-        return paymentInstrument.methodID === paymentHelper.PAYMENT_METHOD_CREDIT_CARD
-            && savedBillingAddrHash === billingAddressHash
-            && savedShippingAddrHash === shippingAddressHash;
-    };
-}
-
-/**
  * Creates an array of objects containing applicable credit cards
  * @param {dw.customer.Customer} currentCustomer - the current customer
  * @param {dw.order.Basket} currentBasket - the current basket
@@ -86,10 +60,11 @@ function applicablePaymentGatewayPaymentCards(currentCustomer, currentBasket) {
     if (isOneClickEnabled && currentCustomer.isRegistered() && currentCustomer.isAuthenticated()) {
         var paymentInstruments = currentCustomer.profile.wallet.getPaymentInstruments('PG_CREDITCARD');
         if (paymentInstruments.length > 0) {
+            var isEligible = paymentHelper.isSavedCCEligibleForCurrentBasket(currentBasket);
             var iter = paymentInstruments.iterator();
             while (iter.hasNext()) {
                 var paymentInstr = iter.next();
-                if (isSavedCCEligibleForCurrentBasket(currentBasket, paymentInstr)) {
+                if (isEligible(paymentInstr)) {
                     result.paymentInstruments.push({
                         UUID: paymentInstr.UUID,
                         accountHolder: paymentInstr.creditCardHolder,
