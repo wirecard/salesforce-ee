@@ -53,7 +53,7 @@ function getPayment(wallet) {
     if (wallet) {
         var paymentInstruments = wallet.paymentInstruments;
         var paymentInstrument;
-        for (var i = 0; i < paymentInstruments.length; i++) {
+        for (var i = 0; i < paymentInstruments.length; i += 1) {
             var card = paymentInstruments[i];
             if (card.raw.paymentMethod !== 'PG_CREDITCARD') {
                 paymentInstrument = card;

@@ -87,7 +87,7 @@ function saveCustomerPaymentInstrument(notification) {
                     lastUsed: new Date()
                 };
                 var wallet = customer.getProfile().getWallet();
-                var paymentInstruments = wallet.getPaymentInstruments();
+                var paymentInstruments = wallet.getPaymentInstruments('PG_CREDITCARD');
                 // check for duplicate
                 var isDuplicateCard = false;
                 var oldCard;

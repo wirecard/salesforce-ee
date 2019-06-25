@@ -1,0 +1,24 @@
+<iscomment>
+/**
+ * Shop System Plugins:
+ * - Terms of Use can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/_TERMS_OF_USE
+ * - License can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
+ */
+</iscomment>
+<div class="row leading-lines pg-saved-cards" data-remove-card-url="${ URLUtils.https('PaymentGatewayCredit-RemoveCard').toString() }">
+    <isloop items="${ savedCreditCards }" var="card" status="loopState">
+        <div class="form-check col-9 start-lines">
+            <input id="pgCardToken_${ parseInt(loopState.count + 1, 10) }" name="pg_cc_token_copy" type="radio" value="${ card.UUID }" class="form-check-input">
+            <label class="form-check-label" for="pgCardToken_${ parseInt(loopState.count + 1, 10) }">
+                <span class="display-name">${ card.maskedAccountNumber }</span>
+                <span class="text-muted">${ card.accountHolder }</span>
+            </label>
+        </div>
+        <div class="col-3 text-right end-lines">
+            <a href="#" class="remove-card" data-id="${ card.UUID }">${ Resource.msg('vault_delete_card_text', 'paymentgateway', null) }</a>
+        </div>
+    </isloop>
+    <input type="hidden" id="pg_cc_csrf" name="${ pdict.csrf.tokenName }" value="${ pdict.csrf.token }"/>
+</div>

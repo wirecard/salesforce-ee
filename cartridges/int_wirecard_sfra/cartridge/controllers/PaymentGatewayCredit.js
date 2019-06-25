@@ -18,6 +18,9 @@ var server = require('server');
 var Resource = require('dw/web/Resource');
 var URLUtils = require('dw/web/URLUtils');
 
+var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
+var userLoggedIn = require('*/cartridge/scripts/middleware/userLoggedIn');
+
 /**
  * Helper function to fetch fingerprint value from form data
  * @param {dw.util.List} formData - as provided by req.form
@@ -375,5 +378,36 @@ server.post(
     }
 );
 
+/**
+ * Delete saved payment instrument from customer wallet
+ */
+server.get(
+    'RemoveCard',
+    server.middleware.https,
+    csrfProtection.validateAjaxRequest,
+    userLoggedIn.validateLoggedInAjax,
+    function (req, res, next) {
+        var cardUUID = req.querystring.cardId;
+
+        var CustomerMgr = require('dw/customer/CustomerMgr');
+        var customer = CustomerMgr.getCustomerByCustomerNumber(
+            req.currentCustomer.profile.customerNo
+        );
+        var wallet = customer.getProfile().getWallet();
+        var paymentInstruments = wallet.getPaymentInstruments('PG_CREDITCARD');
+        var array = require('*/cartridge/scripts/util/array');
+        var Transaction = require('dw/system/Transaction');
+
+        var cardToDelete = array.find(paymentInstruments, function (item) {
+            return cardUUID === item.UUID;
+        });
+        Transaction.wrap(function () {
+            wallet.removePaymentInstrument(cardToDelete);
+        });
+
+        res.render('paymentgateway/empty');
+        return next();
+    }
+);
 
 module.exports = server.exports();

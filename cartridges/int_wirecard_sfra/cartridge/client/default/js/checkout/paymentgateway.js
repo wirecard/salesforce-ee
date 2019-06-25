@@ -27,12 +27,38 @@ function handleError(err, cb) {
  * Bind change event to saved credit card inputs
  */
 function selectSavedCreditCard() {
-    $('.pg-saved-cards').change(function(e) {
+    $('.pg-saved-cards').change(function (e) {
         e.preventDefault();
         var pgCreditCardTab = $(this).parents('div[id^=PG_CREDITCARD]');
         var pgFormFields = pgCreditCardTab.find('.payment-form-fields');
         var cardID = $(':checked', this).val();
         pgFormFields.find('#pg_cc_token').val(cardID);
+    });
+}
+
+/**
+ * Bind click event to saved card / delete card
+ */
+function removeSavedCC() {
+    $('.remove-card', '.pg-saved-cards').click(function (e) {
+        e.preventDefault();
+        var $this = $(this);
+        var pgCardList = $this.parents('div.pg-saved-cards');
+        var csrfInput = pgCardList.find('#pg_cc_csrf');
+        var url = pgCardList.data('removeCardUrl') + '?cardId=' + $this.data('id')
+            + '&' + csrfInput.attr('name') + '=' + csrfInput.val();
+        $.ajax({
+            url: url,
+            method: 'get',
+            success: function () {
+                var parent = $this.parent();
+                parent.prev('.start-lines').remove();
+                parent.remove();
+            },
+            error: function (err) {
+                console.error(err);
+            }
+        });
     });
 }
 
@@ -111,6 +137,7 @@ function submitSeamlessForm(saveTransactionUrl, restoreBasketUrl, cbSuccess, cbE
 }
 
 module.exports = {
+    removeSavedCC: removeSavedCC,
     selectSavedCreditCard: selectSavedCreditCard,
     getCreditCardRequestData: getCreditCardRequestData,
     submitSeamlessForm: submitSeamlessForm

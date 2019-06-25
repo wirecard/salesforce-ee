@@ -34,20 +34,7 @@
     </ul>
     <div class="tab-content">
         <div class="tab-pane" id="savedcc" role="tabpanel" aria-labelledby="savedcc-tab">
-            <div class="row leading-lines pg-saved-cards" data-remove-card-url="${ URLUtils.https('PaymentGatewayCredit-RemoveCard') }">
-                <isloop items="${ savedCreditCards }" var="card" status="loopState">
-                    <div class="form-check col-9 start-lines">
-                        <input id="pgCardToken_${ parseInt(loopState.count + 1, 10) }" name="pg_cc_token_copy" type="radio" value="${ card.UUID }" class="form-check-input">
-                        <label class="form-check-label" for="pgCardToken_${ parseInt(loopState.count + 1, 10) }">
-                            <span class="display-name">${ card.maskedAccountNumber }</span>
-                            <span class="text-muted">${ card.accountHolder }</span>
-                        </label>
-                    </div>
-                    <div class="col-3 text-right end-lines">
-                        <a href="#" class="remove-card" data-card-id="${ card.UUID }">${ Resource.msg('vault_delete_card_text', 'paymentgateway', null) }</a>
-                    </div>
-                </isloop>
-            </div>
+            <isinclude template="checkout/billing/paymentOptions/paymentGatewayPaymentContent/savedCreditCards"/>
         </div>
         <div class="tab-pane" id="newcc" role="tabpanel" aria-labelledby="newcc-tab">
             <div id="pg-creditcard-form"></div>
