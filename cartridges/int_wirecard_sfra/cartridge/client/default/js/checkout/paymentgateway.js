@@ -5,7 +5,7 @@
  * - License can be found under:
  * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
  */
-/* globals WirecardPaymentPage, paymentGatewayConfig */
+/* globals WirecardPaymentPage */
 'use strict';
 
 /**
@@ -27,8 +27,9 @@ function handleError(err, cb) {
  * Calls PaymentgatewayCredit-RequestData for retrieving request data to render seamless form
  */
 function getCreditCardRequestData() {
+    var url = $('#pg-creditcard-form').data('requestDataUrl');
     $.ajax({
-        url: paymentGatewayConfig.getRequestDataUrl,
+        url: url,
         method: 'get',
         complete: function (msg) {
             WirecardPaymentPage.seamlessRenderForm({

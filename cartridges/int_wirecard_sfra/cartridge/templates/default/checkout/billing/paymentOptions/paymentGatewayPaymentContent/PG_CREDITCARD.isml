@@ -9,11 +9,15 @@
 </iscomment>
 <!--- TEMPLATENAME: PG_CREDITCARD.isml --->
 <isset name="pgCreditCardFields" value="${ pdict.forms.billingForm.PG_CREDITCARD }" scope="page"/>
-<div id="pg-creditcard-form"></div>
+<div id="pg-creditcard-form" data-request-data-url="${ URLUtils.https('PaymentGatewayCredit-RequestData').toString() }"></div>
 
 <fieldset class="payment-form-fields">
     <input type="hidden" class="form-control"
         name="${pdict.forms.billingForm.paymentMethod.htmlName}"
         value="PG_CREDITCARD"
     >
+    <div style="display:none">
+        <input type="checkbox" id="pg_save_cc" name="${ pgCreditCardFields.pgSaveCC.htmlName }" value="1"/>
+        <input type="hidden" id="pg_cc_token" name="${ pgCreditCardFields.pgCCToken.htmlName }" value=""/>
+    </div>
 </fieldset>

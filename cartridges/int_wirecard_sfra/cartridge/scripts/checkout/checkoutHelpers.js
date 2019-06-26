@@ -110,7 +110,12 @@ function handlePayments(order, orderNumber) {
                     }
 
                     if (authorizationResult.error) {
-                        Transaction.wrap(function () { OrderMgr.failOrder(order); });
+                        Transaction.wrap(function () { OrderMgr.failOrder(order, true); });
+                        // unset reserved orderNo for current basket
+                        var currentBasket = BasketMgr.getCurrentBasket();
+                        Transaction.wrap(function () { // eslint-disable-line
+                            delete currentBasket.custom.paymentGatewayReservedOrderNo; // eslint-disable-line
+                        });
                         result.error = true;
                         result.errorMessage = authorizationResult.errorMessage;
                         if (Object.prototype.hasOwnProperty.call(authorizationResult, 'errorStage')) {
