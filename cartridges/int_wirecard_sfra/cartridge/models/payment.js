@@ -48,10 +48,9 @@ function getSelectedPaymentInstruments(selectedPaymentInstruments) {
 /**
  * Creates an array of objects containing applicable credit cards
  * @param {dw.customer.Customer} currentCustomer - the current customer
- * @param {dw.order.Basket} currentBasket - the current basket
  * @returns {Object} Object with saved PG_CREDITCARD instruments applicable for the current basket.
  */
-function applicablePaymentGatewayPaymentCards(currentCustomer, currentBasket) {
+function applicablePaymentGatewayPaymentCards(currentCustomer) {
     var isOneClickEnabled = require('dw/system/Site').getCurrent().getCustomPreferenceValue('paymentGatewayCreditCardOneClickCheckout');
     var result = {
         isEnabled: isOneClickEnabled,
@@ -60,18 +59,15 @@ function applicablePaymentGatewayPaymentCards(currentCustomer, currentBasket) {
     if (isOneClickEnabled && currentCustomer.isRegistered() && currentCustomer.isAuthenticated()) {
         var paymentInstruments = currentCustomer.profile.wallet.getPaymentInstruments('PG_CREDITCARD');
         if (paymentInstruments.length > 0) {
-            var isEligible = paymentHelper.isSavedCCEligibleForCurrentBasket(currentBasket);
             var iter = paymentInstruments.iterator();
             while (iter.hasNext()) {
                 var paymentInstr = iter.next();
-                if (isEligible(paymentInstr)) {
-                    result.paymentInstruments.push({
-                        UUID: paymentInstr.UUID,
-                        accountHolder: paymentInstr.creditCardHolder,
-                        cardToken: paymentInstr.creditCardToken,
-                        maskedAccountNumber: paymentInstr.custom.paymentGatewayMaskedAccountNumber
-                    });
-                }
+                result.paymentInstruments.push({
+                    UUID: paymentInstr.UUID,
+                    accountHolder: paymentInstr.creditCardHolder,
+                    cardToken: paymentInstr.creditCardToken,
+                    maskedAccountNumber: paymentInstr.custom.paymentGatewayMaskedAccountNumber
+                });
             }
         }
     }

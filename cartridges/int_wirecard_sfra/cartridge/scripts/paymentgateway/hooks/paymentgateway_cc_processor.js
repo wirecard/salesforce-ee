@@ -8,10 +8,12 @@
 'use strict';
 
 /* API Includes */
+var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
 
 var collections = require('*/cartridge/scripts/util/collections');
 var orderHelper = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper');
+var paymentHelper = require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper');
 
 /**
  * Helper function to remove existing payment instruments from cart
@@ -62,7 +64,6 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor) { // eslint
 
     try {
         if (paymentInstrument.custom.paymentGatewayFingerPrint !== orderHelper.getOrderFingerprint(order)) {
-            var Resource = require('dw/web/Resource');
             throw new Error(Resource.msg('basket.integrity.failed', 'paymentgateway', 'Order integrity check failed!'));
         }
 
@@ -70,8 +71,33 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor) { // eslint
             paymentInstrument.paymentTransaction.setTransactionID(orderNumber);
             paymentInstrument.paymentTransaction.setPaymentProcessor(paymentProcessor);
         });
-        result.saveTransactionURL = URLUtils.https('PaymentGatewayCredit-SaveTransaction', 'orderNo', orderNumber).toString();
-        result.restoreBasketURL = URLUtils.https('PaymentGatewayCredit-RestoreBasket', 'orderNo', orderNumber).toString();
+
+        // use saved credit card
+        if (paymentInstrument.creditCardToken) {
+            var CustomerMgr = require('dw/customer/CustomerMgr');
+            var customer = CustomerMgr.getCustomerByCustomerNumber(
+                order.customerNo
+            );
+            var wallet = customer.getProfile().getWallet();
+            var paymentInstruments = wallet.getPaymentInstruments('PG_CREDITCARD');
+            var array = require('*/cartridge/scripts/util/array');
+            var savedCard = array.find(paymentInstruments, function (item) {
+                return paymentInstrument.creditCardToken === item.creditCardToken;
+            });
+            // check if card still exists && if selected saved credit card is eligible for current basket
+            if (!savedCard || !paymentHelper.isSavedCCEligibleForCurrentLineItemCtnr(order, savedCard)) {
+                throw new Error(Resource.msg('vault_error_card_not_available', 'paymentgateway', null));
+            }
+            var redirectPayment = require('*/cartridge/scripts/paymentgateway/RedirectPayment');
+            var response = redirectPayment.callService('PG_CREDITCARD', order, paymentInstrument);
+            if (!response || !response.status || (!/^(201|200)/.test(response.status.code))) {
+                return { error: true, errorMessage: 'N/A' };
+                // FIXME use meaningful error message
+            }
+        } else {
+            result.saveTransactionURL = URLUtils.https('PaymentGatewayCredit-SaveTransaction', 'orderNo', orderNumber).toString();
+            result.restoreBasketURL = URLUtils.https('PaymentGatewayCredit-RestoreBasket', 'orderNo', orderNumber).toString();
+        }
     } catch (err) {
         result = { error: true, errorMessage: err.message, errorStage: { stage: 'payment', step: 'PG_CREDITCARD' } };
     }

@@ -176,6 +176,7 @@ base.paymentTabs = function () {
 
 // bind payment gateway cc handler for saved cards
 base.selectPaymentGatewayCreditCard = paymentgateway.selectSavedCreditCard;
+base.resetPaymentGatewayCard = paymentgateway.resetCardForm;
 base.removeSavedPaymentGatewayCreditCard = paymentgateway.removeSavedCC;
 
 base.handleCreditCardNumber = function () {

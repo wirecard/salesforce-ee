@@ -379,11 +379,39 @@ server.post(
 );
 
 /**
+ * Get available credit cards for current basket
+ * @param {string} localeId - request locale
+ * @param {boolean} usingMultiShipping - is multi-shipping basket
+ * @returns {Array} - list with available cards
+ */
+function getAvailableCreditCards(localeId, usingMultiShipping) {
+    var result = [];
+    var BasketMgr = require('dw/order/BasketMgr');
+    var currentBasket = BasketMgr.getCurrentBasket();
+    if (currentBasket) {
+        var Locale = require('dw/util/Locale');
+        var currentLocale = Locale.getLocale(localeId);
+        var OrderModel = require('*/cartridge/models/order');
+        var basketModel = new OrderModel(
+            currentBasket,
+            {
+                usingMultiShipping: usingMultiShipping,
+                countryCode: currentLocale.country,
+                containerView: 'basket'
+            }
+        );
+        result = basketModel.billing.payment.paymentGatewayOneClick.paymentInstruments;
+    }
+    return result;
+}
+
+/**
  * Delete saved payment instrument from customer wallet
  */
 server.get(
     'RemoveCard',
     server.middleware.https,
+    csrfProtection.generateToken,
     csrfProtection.validateAjaxRequest,
     userLoggedIn.validateLoggedInAjax,
     function (req, res, next) {
@@ -405,7 +433,12 @@ server.get(
             wallet.removePaymentInstrument(cardToDelete);
         });
 
-        res.render('paymentgateway/empty');
+        res.render(
+            'checkout/billing/paymentOptions/paymentGatewayPaymentContent/savedCreditCards',
+            {
+                savedCreditCards: getAvailableCreditCards(req.locale.id, req.session.privacyCache.get('usingMultiShipping'))
+            }
+        );
         return next();
     }
 );

@@ -128,7 +128,7 @@
                 <display-name xml:lang="x-default">Enable One-click checkout</display-name>
                 <type>boolean</type>
                 <mandatory-flag>false</mandatory-flag>
-                <default-value>true</default-value>
+                <default-value>false</default-value>
             </attribute-definition>
         </custom-attribute-definitions>
         <group-definitions>

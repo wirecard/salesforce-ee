@@ -83,6 +83,7 @@ function CreditCard(order, args) {
     // default params
     var params = {
         paymentMethodID: require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper').PAYMENT_METHOD_CREDIT_CARD,
+        'transaction-type': this.getSitePreference('paymentGatewayCreditCardInitialTransactionType').value,
         'merchant-account-id': this.getSitePreference('merchantAccountId')
     };
     if (typeof args === 'object') {
@@ -90,16 +91,34 @@ function CreditCard(order, args) {
             params[k] = args[k];
         });
     }
-    var transaction = new Transaction(order, params);
-    transaction.preferenceMapping = preferenceMapping;
+    Transaction.call(this, order, params);
+    this.preferenceMapping = preferenceMapping;
 
     // add methods to retrieve possible succeeding operations
-    transaction.getCancelTransactionType = getCancelTransactionType;
-    transaction.getCaptureTransactionType = getCaptureTransactionType;
-    transaction.getRefundTransactionType = getRefundTransactionType;
-    return transaction;
+    this.getCancelTransactionType = getCancelTransactionType;
+    this.getCaptureTransactionType = getCaptureTransactionType;
+    this.getRefundTransactionType = getRefundTransactionType;
+    return this;
 }
 
 CreditCard.prototype = Object.create(Transaction.prototype);
+
+/**
+ * Add ccToken from orderPaymentInstrument
+ */
+CreditCard.prototype.getCustomPayload = function () {
+    var instruments = this.order.getPaymentInstruments('PG_CREDITCARD');
+    var result = {};
+
+    if (instruments.length === 1 && instruments[0].creditCardToken) {
+        result = {
+            'card-token': {
+                'token-id': instruments[0].creditCardToken,
+                'masked-account-number': instruments[0].creditCardNumber
+            }
+        };
+    }
+    return result;
+};
 
 module.exports = CreditCard;

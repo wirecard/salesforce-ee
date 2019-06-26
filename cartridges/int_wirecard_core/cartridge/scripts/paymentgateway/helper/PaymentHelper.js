@@ -147,29 +147,27 @@ module.exports = {
     },
 
     /**
-     * Check if PG_CREDITCARD customer paymentInstrument can be used for current Basket
-     * @param {dw.order.Basket} currentBasket - the current basket
-     * @param {dw.customer.CustomerPaymentInstrument} paymentInstrument - saved customer payment instrument
-     * @returns {boolean} - returns true if billing / shipping address of payment instrument match those of current basket
+     * Check if PG_CREDITCARD customer paymentInstrument can be used for current lineItemCtnr
+     * @param {dw.order.LineItemCtnr} lineItemContainer - the current basket / order
+     * @param {dw.customer.CustomerPaymentInstrument} customerPaymentInstrument - the saved credit card
+     * @returns {boolean} - returns true if billing / shipping address of payment instrument match those of current lineItemCtnr
      */
-    isSavedCCEligibleForCurrentBasket: function (currentBasket) {
+    isSavedCCEligibleForCurrentLineItemCtnr: function (lineItemContainer, customerPaymentInstrument) {
         var orderHelper = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper');
-        var billingAddressHash = orderHelper.getAddressHash(currentBasket.billingAddress);
+        var billingAddressHash = orderHelper.getAddressHash(lineItemContainer.billingAddress);
         var shippingAddressHash = null;
-        if (currentBasket.shipments.length > 0) {
-            shippingAddressHash = orderHelper.getAddressHash(currentBasket.shipments[0].shippingAddress);
+        if (lineItemContainer.shipments.length > 0) {
+            shippingAddressHash = orderHelper.getAddressHash(lineItemContainer.shipments[0].shippingAddress);
         }
 
-        return function (paymentInstrument) {
-            var customAttributes = paymentInstrument.custom;
-            var savedBillingAddrHash = Object.prototype.hasOwnProperty.call(customAttributes, 'paymentGatewayBillingAddressHash')
-                ? customAttributes.paymentGatewayBillingAddressHash : '';
-            var savedShippingAddrHash = Object.prototype.hasOwnProperty.call(customAttributes, 'paymentGatewayShippingAddressHash')
-                ? customAttributes.paymentGatewayShippingAddressHash : '';
-            return paymentInstrument.paymentMethod === 'PG_CREDITCARD'
-                && savedBillingAddrHash === billingAddressHash
-                && savedShippingAddrHash === shippingAddressHash;
-        };
+        var customAttributes = customerPaymentInstrument.custom;
+        var savedBillingAddrHash = Object.prototype.hasOwnProperty.call(customAttributes, 'paymentGatewayBillingAddressHash')
+            ? customAttributes.paymentGatewayBillingAddressHash : '';
+        var savedShippingAddrHash = Object.prototype.hasOwnProperty.call(customAttributes, 'paymentGatewayShippingAddressHash')
+            ? customAttributes.paymentGatewayShippingAddressHash : '';
+        return customerPaymentInstrument.paymentMethod === 'PG_CREDITCARD'
+            && savedBillingAddrHash === billingAddressHash
+            && savedShippingAddrHash === shippingAddressHash;
     },
 
     PAYMENT_METHOD_SEPA_DIRECT_DEBIT: 'sepadirectdebit',

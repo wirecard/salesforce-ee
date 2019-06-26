@@ -21,7 +21,11 @@ function processForm(req, paymentForm, viewFormData) {
         htmlName: paymentForm.paymentMethod.value
     };
     var saveCCElementName = paymentForm.PG_CREDITCARD.pgSaveCC.htmlName;
-    viewData.PG_CREDITCARD = { saveCC: !!req.form[saveCCElementName] };
+    var ccTokenElementName = paymentForm.PG_CREDITCARD.pgCCToken.htmlName;
+    viewData.PG_CREDITCARD = {
+        saveCC: !!req.form[saveCCElementName],
+        cardId: req.form[ccTokenElementName]
+    };
 
     return {
         error: false,
@@ -36,13 +40,35 @@ function processForm(req, paymentForm, viewFormData) {
  * @param {Object} billingData - payment information
  */
 function savePaymentInformation(req, currentBasket, billingData) {
-    var paymentInstrument = currentBasket.getPaymentInstruments(billingData.paymentMethod.value);
+    var paymentInstrument = currentBasket.getPaymentInstruments('PG_CREDITCARD');
     // set save-cc value with payment instrument
     var saveCC = billingData.PG_CREDITCARD.saveCC;
-    if (paymentInstrument.length === 1 && saveCC) {
-        require('dw/system/Transaction').wrap(function () {
-            paymentInstrument[0].custom.paymentGatewaySaveCCToken = true;
-        });
+    // save token with payment instrument
+    var cardId = billingData.PG_CREDITCARD.cardId;
+
+    if (paymentInstrument.length === 1) {
+        if (saveCC) {
+            require('dw/system/Transaction').wrap(function () {
+                paymentInstrument[0].custom.paymentGatewaySaveCCToken = true;
+            });
+        } else if (cardId) {
+            var CustomerMgr = require('dw/customer/CustomerMgr');
+            var customer = CustomerMgr.getCustomerByCustomerNumber(
+                req.currentCustomer.profile.customerNo
+            );
+            var wallet = customer.getProfile().getWallet();
+            var paymentInstruments = wallet.getPaymentInstruments('PG_CREDITCARD');
+            var array = require('*/cartridge/scripts/util/array');
+            var savedCard = array.find(paymentInstruments, function (item) {
+                return cardId === item.UUID;
+            });
+            if (savedCard) {
+                require('dw/system/Transaction').wrap(function () {
+                    paymentInstrument[0].creditCardNumber = savedCard.custom.paymentGatewayMaskedAccountNumber;
+                    paymentInstrument[0].creditCardToken = savedCard.creditCardToken;
+                });
+            }
+        }
     }
 }
 

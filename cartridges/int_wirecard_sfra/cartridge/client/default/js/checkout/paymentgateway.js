@@ -37,6 +37,23 @@ function selectSavedCreditCard() {
 }
 
 /**
+ * Handle credit card tab selection: reset other tab content
+ */
+function resetCardForm() {
+    $('#savedcc-tab').on('shown.bs.tab', function () {
+        $('#pg_save_cc').prop('checked', false);
+        $('#pg_save_cc_copy').prop('checked', false);
+    });
+    $('#newcc-tab').on('shown.bs.tab', function () {
+        var pgCardList = $('.pg-saved-cards');
+        pgCardList.find('input[name=pg_cc_token_copy]:checked').prop('checked', false);
+        var pgCreditCardTab = $('div[id^=PG_CREDITCARD]');
+        var pgFormFields = pgCreditCardTab.find('.payment-form-fields');
+        pgFormFields.find('#pg_cc_token').val('');
+    });
+}
+
+/**
  * Bind click event to saved card / delete card
  */
 function removeSavedCC() {
@@ -50,10 +67,9 @@ function removeSavedCC() {
         $.ajax({
             url: url,
             method: 'get',
-            success: function () {
-                var parent = $this.parent();
-                parent.prev('.start-lines').remove();
-                parent.remove();
+            success: function (responseText) {
+                pgCardList.empty().html(responseText);
+                removeSavedCC(); // re-init
             },
             error: function (err) {
                 console.error(err);
@@ -138,6 +154,7 @@ function submitSeamlessForm(saveTransactionUrl, restoreBasketUrl, cbSuccess, cbE
 
 module.exports = {
     removeSavedCC: removeSavedCC,
+    resetCardForm: resetCardForm,
     selectSavedCreditCard: selectSavedCreditCard,
     getCreditCardRequestData: getCreditCardRequestData,
     submitSeamlessForm: submitSeamlessForm
