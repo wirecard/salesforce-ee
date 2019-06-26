@@ -13,7 +13,7 @@
     var isOneClickEnabled = pdict.order.billing.payment.paymentGatewayOneClick.isEnabled;
     var savedCreditCards = pdict.order.billing.payment.paymentGatewayOneClick.paymentInstruments;
 </isscript>
-<isif condition="${ isOneClickEnabled }">
+<isif condition="${ isOneClickEnabled && savedCreditCards.length > 0 }">
     <ul class="nav nav-tabs">
         <li class="nav-item">
             <isif condition="${ savedCreditCards.length > 0 }">

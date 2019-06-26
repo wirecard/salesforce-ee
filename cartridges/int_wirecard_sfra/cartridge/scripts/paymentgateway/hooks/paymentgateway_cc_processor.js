@@ -91,7 +91,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor) { // eslint
             var redirectPayment = require('*/cartridge/scripts/paymentgateway/RedirectPayment');
             var response = redirectPayment.callService('PG_CREDITCARD', order, paymentInstrument);
             if (!response || !response.status || (!/^(201|200)/.test(response.status.code))) {
-                return { error: true, errorMessage: 'N/A' };
+                throw new Error(Resource.msg('order_error', 'paymentgateway', null));
                 // FIXME use meaningful error message
             }
         } else {
