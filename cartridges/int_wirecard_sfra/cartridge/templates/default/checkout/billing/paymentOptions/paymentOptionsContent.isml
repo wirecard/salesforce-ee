@@ -15,8 +15,6 @@
     <isinclude template="checkout/billing/paymentOptions/paymentGatewayPaymentContent" />
 </isloop>
 
-<isinclude template="checkout/billing/paymentOptions/paymentGatewayConfig" />
-
 <isscript>
     var selectedPaymentInstruments = pdict.order.billing.payment.selectedPaymentInstruments;
     var selectedPaymentInstrument = selectedPaymentInstruments && selectedPaymentInstruments.length ? selectedPaymentInstruments[0] : null;
