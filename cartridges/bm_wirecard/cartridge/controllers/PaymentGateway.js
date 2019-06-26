@@ -172,7 +172,8 @@ exports.HttpAccessOverview = guard.ensure(['get', 'https'], function () {
         { methodName: 'Giropay', methodID: 'PG_GIROPAY' },
         { methodName: 'PayPal', methodID: 'PG_PAYPAL' },
         { methodName: 'Sofort.', methodID: 'PG_SOFORT' },
-        { methodName: 'SEPA Direct Debit', methodID: 'PG_SEPA' }
+        { methodName: 'SEPA Direct Debit', methodID: 'PG_SEPA' },
+        { methodName: 'Alipay Cross-border', methodID: 'PG_ALIPAY' }
     ].forEach(function (p) {
         preferences = preferenceHelper.getPreferenceForMethodID(p.methodID);
         if (Object.prototype.hasOwnProperty.call(preferences, 'userName')) {

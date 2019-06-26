@@ -547,6 +547,64 @@ Type of payment: one-off.]]></default-value>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
             </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayAlipayMerchantAccountID">
+                <display-name xml:lang="x-default">Alipay Cross-Border MAID</display-name>
+                <description xml:lang="x-default">Unique identifier assigned to your merchant account.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>47cd4edf-b13c-4298-9344-53119ab8b9df</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayAlipayBaseUrl">
+                <display-name xml:lang="x-default">Wirecard Server Address (URL)</display-name>
+                <description xml:lang="x-default">Wirecard Server Address (URL) (e.g. https://api.wirecard.com).</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>https://api-test.wirecard.com</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayAlipayHttpUser">
+                <display-name xml:lang="x-default">Username</display-name>
+                <description xml:lang="x-default">Username as provided in your Wirecard contract.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>16390-testing</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayAlipayHttpPassword">
+                <display-name xml:lang="x-default">Password</display-name>
+                <description xml:lang="x-default">Password as provided in your Wirecard contract.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>3!3013=D3fD8X7</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayAlipaySecret">
+                <display-name xml:lang="x-default">Secret Key</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>5caf2ed9-5f79-4e65-98cb-0b70d6f569aa</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayAlipaySendAdditionalData">
+                <display-name xml:lang="x-default">Send Additional Information</display-name>
+                <description xml:lang="x-default">Additional data will be sent for the purpose of fraud protection. This additional data includes billing/shipping address, shopping basket and descriptor.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayAlipayAddDescriptorToRequest">
+                <display-name xml:lang="x-default">Descriptor</display-name>
+                <description xml:lang="x-default">Send text which is displayed on the bank statement issued to your consumer by the financial service provider.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
         </custom-attribute-definitions>
         <group-definitions>
             <attribute-group group-id="PAYMENTGATEWAY">
@@ -632,6 +690,16 @@ Type of payment: one-off.]]></default-value>
                 <attribute attribute-id="paymentGatewayCreditCardSendAdditionalData"/>
                 <attribute attribute-id="paymentGatewayCreditCardInitialTransactionType"/>
                 <attribute attribute-id="paymentGatewayCreditCardConversionRates"/>
+            </attribute-group>
+            <attribute-group group-id="PAYMENTGATEWAY_ALIPAY">
+                <display-name xml:lang="x-default">Wirecard Payment Gateway settings for Alipay Cross Boarder</display-name>
+                <attribute attribute-id="paymentGatewayAlipayMerchantAccountID"/>
+                <attribute attribute-id="paymentGatewayAlipaySecret"/>
+                <attribute attribute-id="paymentGatewayAlipayHttpUser"/>
+                <attribute attribute-id="paymentGatewayAlipayHttpPassword"/>
+                <attribute attribute-id="paymentGatewayAlipayBaseUrl"/>
+                <attribute attribute-id="paymentGatewayAlipayAddDescriptorToRequest"/>
+                <attribute attribute-id="paymentGatewayAlipaySendAdditionalData"/>
             </attribute-group>
         </group-definitions>
     </type-extension>

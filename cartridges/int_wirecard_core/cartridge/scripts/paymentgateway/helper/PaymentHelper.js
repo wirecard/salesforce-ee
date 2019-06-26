@@ -152,5 +152,6 @@ module.exports = {
     PAYMENT_METHOD_GIROPAY          : 'giropay',
     PAYMENT_METHOD_PAYPAL           : 'paypal',
     PAYMENT_METHOD_SEPA_CREDIT      : 'sepacredit',
-    PAYMENT_METHOD_SOFORT           : 'sofortbanking'
+    PAYMENT_METHOD_SOFORT           : 'sofortbanking',
+    PAYMENT_METHOD_ALIPAY           : 'alipay-xborder'
 };

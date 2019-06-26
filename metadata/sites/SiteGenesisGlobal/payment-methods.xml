@@ -118,4 +118,10 @@
         <processor-id>PAYMENTGATEWAY</processor-id>
     </payment-method>
 
+    <payment-method method-id="PG_ALIPAY">
+        <name xml:lang="x-default">Wirecard Alipay</name>
+        <image>images/payment/paymentgateway/Alipay_Crossboarder_Use.png</image>
+        <enabled-flag>false</enabled-flag>
+        <processor-id>PAYMENTGATEWAY</processor-id>
+    </payment-method>
 </payment-settings>
