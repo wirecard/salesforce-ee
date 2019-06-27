@@ -6,7 +6,6 @@
   - License can be found under:
   https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
 -->
-
 <form xmlns="http://www.demandware.com/xml/form/2008-04-19">
 
     <field formid="shippingAddressUseAsBillingAddress" label="profile.billingSameAsShipping" type="boolean"
@@ -23,6 +22,7 @@
     <field formid="subscribe" type="boolean" checked="false" default-value="false" mandatory="false" />
 
     <!--  wirecard payment method forms -->
+    <include formid="PG_EPS" name="PG_EPS"/>
     <include formid="PG_GIROPAY" name="PG_GIROPAY"/>
     <include formid="PG_IDEAL" name="PG_IDEAL"/>
     <include formid="PG_SEPA" name="PG_SEPA"/>

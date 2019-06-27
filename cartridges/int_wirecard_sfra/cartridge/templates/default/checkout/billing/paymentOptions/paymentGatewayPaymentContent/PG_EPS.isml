@@ -1,0 +1,35 @@
+<isscript>
+    /**
+    * Shop System Plugins:
+    * - Terms of Use can be found under:
+    * https://github.com/wirecard/salesforce-ee/blob/master/_TERMS_OF_USE
+    * - License can be found under:
+    * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
+    */
+</isscript>
+<!--- TEMPLATENAME: PG_EPS.isml --->
+<isset name="epsFields" value="${ pdict.forms.billingForm.PG_EPS }" scope="page"/>
+
+<fieldset class="payment-form-fields">
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group required">
+                <input type="hidden" class="form-control"
+                       name="${pdict.forms.billingForm.paymentMethod.htmlName}"
+                       value="PG_EPS"
+                >
+                <label class="form-control-label" for="${ epsFields.paymentGatewayBIC.htmlName }">${ epsFields.paymentGatewayBIC.label }</label>
+                <input type="text"
+                       class="form-control bic"
+                       id="${ epsFields.paymentGatewayBIC.htmlName }"
+                       name="${ epsFields.paymentGatewayBIC.htmlName }"
+                       autocomplete="off"
+                       aria-describedby="BICInvalidMessage"
+                       data-pattern-mismatch="${Resource.msg('error.message.parse.checkout.billing.bic', 'forms', null)}"
+                       data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
+                />
+                <div class="invalid-feedback"></div>
+            </div>
+        </div>
+    </div>
+</fieldset>
