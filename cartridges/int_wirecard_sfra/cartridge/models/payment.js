@@ -40,6 +40,11 @@ function getSelectedPaymentInstruments(selectedPaymentInstruments) {
             results.methodImg = methodData.image;
             results.name = methodData.name;
         }
+        if (/PG_SEPA/.test(paymentInstrument.paymentMethod)) {
+            results.SEPADebtorName = paymentInstrument.custom.paymentGatewaySEPADebtorName;
+            results.SEPAIBAN = paymentInstrument.custom.paymentGatewaySEPAIBAN;
+            results.SEPABIC = paymentInstrument.custom.paymentGatewaySEPABIC;
+        }
 
         return results;
     });

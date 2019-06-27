@@ -224,10 +224,34 @@ server.get(
     server.middleware.https,
     function (req, res, next) {
         var paymentMethod = req.querystring.paymentMethod;
-        var instruments = require('dw/order/BasketMgr').getCurrentBasket().getPaymentInstruments(paymentMethod);
 
-        if (!instruments.empty && paymentMethod === 'PG_SEPA') {
-            res.render('checkout/billing/paymentOptions/paymentOptionsSummary/' + req.querystring.paymentMethod, { payment: instruments[0] });
+        var OrderModel = require('*/cartridge/models/order');
+        var OrderMgr = require('dw/order/BasketMgr');
+        var Locale = require('dw/util/Locale');
+
+        var currentBasket = OrderMgr.getCurrentBasket();
+        var currentLocale = Locale.getLocale(req.locale.id);
+        var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
+
+        var basketModel = new OrderModel(
+            currentBasket,
+            { usingMultiShipping: usingMultiShipping, countryCode: currentLocale.country, containerView: 'basket' }
+        );
+        var paymentInstrument = null;
+        basketModel.billing.payment.selectedPaymentInstruments.forEach(function (p) {
+            if (p.paymentMethod === paymentMethod) {
+                paymentInstrument = p;
+            }
+        });
+
+        if (paymentInstrument) {
+            res.render(
+                'checkout/billing/paymentOptions/paymentOptionsSummary/' + paymentMethod,
+                {
+                    payment: paymentInstrument,
+                    forms: { billingForm: server.forms.getForm('billing') }
+                }
+            );
         } else {
             res.render('paymentgateway/empty');
         }
