@@ -12,7 +12,6 @@
 <isscript>
 	var address = pdict.order.billing.billingAddress.address;
     var bicVisible = require('dw/system/Site').getCurrent().getCustomPreferenceValue('paymentGatewaySEPAShowBICInCheckout');
-    var bicRequired = sepaFields.paymentGatewayBIC.mandatory ? 'required' : '';
 </isscript>
 <fieldset class="pg-sepa-form payment-form-fields">
 
@@ -20,13 +19,13 @@
         <div class="col-12">
             <div class="form-group required ${sepaFields.paymentGatewaySEPADebtorName.htmlName}">
                 <label class="form-control-label" for="debtorName">${sepaFields.paymentGatewaySEPADebtorName.label}</label>
-                <input  type="text"
-                        class="form-control debtorName"
-                        id="debtorName"
-                        name="${sepaFields.paymentGatewaySEPADebtorName.htmlName}"
-                        value="${address.firstName} ${address.lastName}"
-                        data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
-                        aria-describedby="debtorNameInvalidMessage"
+                <input type="text"
+                       class="form-control debtorName"
+                       id="debtorName"
+                       name="${sepaFields.paymentGatewaySEPADebtorName.htmlName}"
+                       value="${address.firstName} ${address.lastName}"
+                       data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
+                       aria-describedby="debtorNameInvalidMessage"
                 />
                 <div class="invalid-feedback" id="debtorNameInvalidMessage"></div>
             </div>
@@ -66,7 +65,6 @@
                 <div class="invalid-feedback" id="bicInvalidMessage"></div>
             </div>
         </div>
-    </div>
     </isif>
 
     <input type="hidden" class="form-control"

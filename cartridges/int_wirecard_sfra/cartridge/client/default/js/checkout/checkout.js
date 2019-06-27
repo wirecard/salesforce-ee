@@ -588,47 +588,40 @@ var scrollAnimate = require('base/components/scrollAnimate');
     };
 }(jQuery));
 
+/**
+ * In case placeOrder stage is rendered via a full page reload,
+ * enable / disable the place order buttons if the checkbox "#mandate_accept" is checked or not
+ */
+baseCheckout.checkMandate = function () {
+    $(document).on('change', '#mandate_accept', function() {
+        var submitButton = $('button[value=place-order][name=submit][class*=place-order]');
+        if (submitButton) {
+            if ($(this).prop('checked')) {
+                submitButton.prop('disabled', false);
+            } else {
+                submitButton.prop('disabled', true);
+            }
+        }
+    });
+},
 
-var exports = {
-    initialize: function () {
-        $('#checkout-main').checkout();
-    },
-
-    updateCheckoutView: function () {
-        $('body').on('checkout:updateCheckoutView', function (e, data) {
-            shippingHelpers.methods.updateMultiShipInformation(data.order);
-            summaryHelpers.updateTotals(data.order.totals);
-            data.order.shipping.forEach(function (shipping) {
-                shippingHelpers.methods.updateShippingInformation(
-                    shipping,
-                    data.order,
-                    data.customer,
-                    data.options
-                );
-            });
-            billingHelpers.methods.updateBillingInformation(
-                data.order,
-                data.customer,
-                data.options
-            );
-            billingHelpers.methods.updatePaymentInformation(data.order, data.options);
-            summaryHelpers.updateOrderProductSummaryInformation(data.order, data.options);
-        });
-    },
-
-    disableButton: function () {
-        $('body').on('checkout:disableButton', function (e, button) {
-            $(button).prop('disabled', true);
-        });
-    },
-
-    enableButton: function () {
-        $('body').on('checkout:enableButton', function (e, button) {
-            $(button).prop('disabled', false);
-        });
+/**
+ * In case placeOrder stage is rendered via a full page reload,
+ * the place order buttons needs to be disabled when PG_SEPA is the selected payment method
+ */
+baseCheckout.initSEPADD = function () {
+    var activeTabId = $('.tab-pane.active').attr('id');
+    var paymentInfoSelector = '#dwfrm_billing .' + activeTabId + ' .payment-form-fields';
+    var paymentMethodInput = $(paymentInfoSelector).find('input[name$=paymentMethod]');
+    var stage = $('#checkout-main').attr('data-checkout-stage');
+    var submitButton = $('button[value=place-order][name=submit][class*=place-order]');
+    if (stage === 'placeOrder'
+        && submitButton.length === 1
+        && paymentMethodInput.length === 1
+        && paymentMethodInput.val() === 'PG_SEPA'
+    ) {
+        submitButton.prop('disabled', true);
     }
-
-
 };
 
 [billingHelpers, shippingHelpers, addressHelpers].forEach(function (library) {

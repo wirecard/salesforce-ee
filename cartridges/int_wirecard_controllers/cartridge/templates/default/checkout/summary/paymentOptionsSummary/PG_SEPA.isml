@@ -29,7 +29,7 @@
 
 </isscript>
 <div class="row saved-payment-information">
-    <h5 class="font-italic col-12">Creditor</h5>
+    <h5 class="font-italic col-12">${ Resource.msg('creditor', 'paymentgateway', null) }</h5>
     <p class="col-5">
         ${ Resource.msg('creditor_id_input', 'paymentgateway', null) }
     </p>
@@ -47,7 +47,7 @@
         <isprint value="${ mandateCountry }"/>
     </address>
 
-    <h5 class="font-italic col-12">Debtor</h5>
+    <h5 class="font-italic col-12">${ Resource.msg('debtor', 'paymentgateway', null) }</h5>
     <p class="col-5">
         ${ Resource.msg('debtor_acc_owner', 'paymentgateway', null) }:
     </p>
@@ -78,12 +78,12 @@
 <div class="row align-items-center">
     <div class="col-3">
         <div class="form-group required ${sepaFields.paymentGatewaySEPAMandateAccept.htmlName}">
-            <input  type="checkbox"
-                    class="form-control iban"
-                    id="mandate_accept"
-                    name="${sepaFields.paymentGatewaySEPAMandateAccept.htmlName}"
-                    aria-describedby="mandateAcceptInvalidMessage"
-                    data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
+            <input type="checkbox"
+                   class="form-control iban"
+                   id="mandate_accept"
+                   name="${sepaFields.paymentGatewaySEPAMandateAccept.htmlName}"
+                   aria-describedby="mandateAcceptInvalidMessage"
+                   data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
             />
             <div class="invalid-feedback" id="mandateAcceptInvalidMessage"></div>
         </div>
