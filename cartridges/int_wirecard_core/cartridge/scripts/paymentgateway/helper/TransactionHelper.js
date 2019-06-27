@@ -181,6 +181,7 @@ var TransactionHelper = {
             methodName: methodName
         };
         const mappedMethodNames = [
+            'PG_POI',
             'PG_SOFORT',
             'PG_SEPA'
         ];
@@ -228,6 +229,7 @@ var TransactionHelper = {
         }
         var ArrayList = require('dw/util/ArrayList');
         var Transaction = require('dw/system/Transaction');
+        var paymentHelper = require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper');
 
         var allPaymentTransactions = new ArrayList();
         var savedTransactions = order.custom.paymentGatewayTransactions;
@@ -246,6 +248,7 @@ var TransactionHelper = {
                 }
             } else if (!transaction.parentTransactionId
                 && newTransaction.parentTransactionId == transaction.transactionId
+                && [paymentHelper.PAYMENT_METHOD_POI].indexOf(transaction.paymentMethodId) === -1
             ) {
                 // replace initial transaction with notification response
                 allPaymentTransactions.push(JSON.stringify(newTransaction));

@@ -9,26 +9,23 @@ var preferenceMapping = {
 };
 
 /**
- * Get transaction type for capture
+ * Get transaction type for refund
  * @returns {string} - transaction type
  */
-function getCaptureTransactionType() {
+function getRefundTransactionType() {
     var self = this;
     var type;
-    var canPartialCapture = false;
-
     if (!self['transaction-type']) {
         throw new Error('transaction-type missing for Purchase On Invoice Transaction.');
     }
     switch (self['transaction-type']) {
-        case Type.AUTHORIZATION:
-            type = Type.CAPTURE_AUTHORIZATION;
-            canPartialCapture = true;
+        case Type.DEPOSIT:
+            type = Type.REFUND;
             break;
         default:
             throw new Error('unsupported transaction type!');
     }
-    return { type: type, partialAllowed: canPartialCapture };
+    return { type: type, partialAllowed: true };
 }
 
 /**
@@ -73,7 +70,7 @@ function Poi(order, args) {
     this.preferenceMapping = preferenceMapping;
 
     // add methods to retrieve possible succeeding operations
-    this.getCaptureTransactionType = getCaptureTransactionType;
+    this.getRefundTransactionType = getRefundTransactionType;
     this.getCancelTransactionType = getCancelTransactionType;
     return this;
 }

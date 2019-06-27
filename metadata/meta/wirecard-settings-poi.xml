@@ -16,7 +16,7 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
-                <default-value>105ab3e8-d16b-4fa0-9f1f-18dd9b390c94</default-value>
+                <default-value>dcd72c94-25df-4794-8197-daf029c82d65</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayPoiBaseUrl">
                 <display-name xml:lang="x-default">Wirecard Server Address (URL)</display-name>
@@ -34,7 +34,7 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
-                <default-value>70000-APITEST-AP</default-value>
+                <default-value>16390-testing</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayPoiHttpPassword">
                 <display-name xml:lang="x-default">Password</display-name>
@@ -43,7 +43,7 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
-                <default-value>qD2wzQ_hrc!8</default-value>
+                <default-value>3!3013=D3fD8X7</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayPoiSendAdditionalData">
                 <display-name xml:lang="x-default">Send Additional Information</display-name>
@@ -58,7 +58,7 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
-                <default-value>2d96596b-9d10-4c98-ac47-4d56e22fd878</default-value>
+                <default-value>cbdf53d2-b9ff-4355-80d5-8836342ac336</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayPoiAddDescriptorToRequest">
                 <display-name xml:lang="x-default">Descriptor</display-name>
