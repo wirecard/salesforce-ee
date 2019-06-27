@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Shop System Plugins:
+  - Terms of Use can be found under:
+  https://github.com/wirecard/salesforce-ee/blob/master/_TERMS_OF_USE
+  - License can be found under:
+  https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
+-->
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <type-extension type-id="SitePreferences">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="paymentGatewayPayolutionInvoiceMerchantAccountID">
+                <display-name xml:lang="x-default">Merchant Account ID (MAID) - EUR</display-name>
+                <description xml:lang="x-default">Unique identifier assigned to your merchant account.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>2048677d-57f4-44b0-8d67-9014c6631d5f</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayPayolutionInvoiceMerchantAccountIDCHF">
+                <display-name xml:lang="x-default">Merchant Account ID (MAID) - CHF</display-name>
+                <description xml:lang="x-default">Unique identifier assigned to your merchant account.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>2048677d-57f4-44b0-8d67-9014c6631d5f</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayPayolutionInvoiceBaseUrl">
+                <display-name xml:lang="x-default">Wirecard Server Address (URL) - EUR</display-name>
+                <description xml:lang="x-default">Wirecard Server Address (URL) (e.g. https://api.wirecard.com).</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>https://api-test.wirecard.com</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayPayolutionInvoiceBaseUrlCHF">
+                <display-name xml:lang="x-default">Wirecard Server Address (URL) - CHF</display-name>
+                <description xml:lang="x-default">Wirecard Server Address (URL) (e.g. https://api.wirecard.com).</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>https://api-test.wirecard.com</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayPayolutionInvoiceHttpUser">
+                <display-name xml:lang="x-default">Username - EUR</display-name>
+                <description xml:lang="x-default">Username as provided in your Wirecard contract.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>16390-testing</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayPayolutionInvoiceHttpUserCHF">
+                <display-name xml:lang="x-default">Username - CHF</display-name>
+                <description xml:lang="x-default">Username as provided in your Wirecard contract.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>16390-testing</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayPayolutionInvoiceHttpPassword">
+                <display-name xml:lang="x-default">Password - EUR</display-name>
+                <description xml:lang="x-default">Password as provided in your Wirecard contract.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>3!3013=D3fD8X7</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayPayolutionInvoiceHttpPasswordCHF">
+                <display-name xml:lang="x-default">Password - CHF</display-name>
+                <description xml:lang="x-default">Password as provided in your Wirecard contract.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>3!3013=D3fD8X7</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayPayolutionInvoiceSendAdditionalData">
+                <display-name xml:lang="x-default">Send Additional Information</display-name>
+                <description xml:lang="x-default">Additional data will be sent for the purpose of fraud protection. This additional data includes billing/shipping address, shopping basket and descriptor.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayPayolutionInvoiceSecret">
+                <display-name xml:lang="x-default">Secret Key - EUR</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>74bd2f0c-6d1b-4e9a-b278-abc34b83ab9f</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayPayolutionInvoiceSecret">
+                <display-name xml:lang="x-default">Secret Key - EUR</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>74bd2f0c-6d1b-4e9a-b278-abc34b83ab9f</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayPayolutionInvoiceMerchantName">
+                <display-name xml:lang="x-default">MerchantID (mID) from payolution</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value></default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayPayolutionInvoiceAddDescriptorToRequest">
+                <display-name xml:lang="x-default">Descriptor</display-name>
+                <description xml:lang="x-default">Send text which is displayed on the bank statement issued to your consumer by the financial service provider.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayPayolutionInvoiceBillingSameAsShipping">
+                <display-name xml:lang="x-default">Billing and shipping address must be identical</display-name>
+                <description xml:lang="x-default">If activated, payment method Guaranteed Invoice by payolution is only displayed if billing/shipping address are identical.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayPayolutionInvoiceAllowedShippingCountries">
+                <display-name xml:lang="x-default">Allowed shipping countries</display-name>
+                <description xml:lang="x-default">Payment method Guaranteed Invoice is only displayed if the consumer's shipping country is one of the countries selected here.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <default-value>CH,DE</default-value>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="PAYMENTGATEWAY_PAYOLUTION_INVOICE">
+                <display-name xml:lang="x-default">Wirecard Payment Gateway settings for Guaranteed Invoice by payolution</display-name>
+                <attribute attribute-id="paymentGatewayPayolutionInvoiceMerchantAccountID"/>
+                <attribute attribute-id="paymentGatewayPayolutionInvoiceSecret"/>
+                <attribute attribute-id="paymentGatewayPayolutionInvoiceHttpUser"/>
+                <attribute attribute-id="paymentGatewayPayolutionInvoiceHttpPassword"/>
+                <attribute attribute-id="paymentGatewayPayolutionInvoiceBaseUrl"/>
+                <attribute attribute-id="paymentGatewayPayolutionInvoiceMerchantAccountIDCHF"/>
+                <attribute attribute-id="paymentGatewayPayolutionInvoiceSecretCHF"/>
+                <attribute attribute-id="paymentGatewayPayolutionInvoiceHttpUserCHF"/>
+                <attribute attribute-id="paymentGatewayPayolutionInvoiceHttpPasswordCHF"/>
+                <attribute attribute-id="paymentGatewayPayolutionInvoiceBaseUrlCHF"/>
+                <attribute attribute-id="paymentGatewayPayolutionInvoiceAddDescriptorToRequest"/>
+                <attribute attribute-id="paymentGatewayPayolutionInvoiceSendAdditionalData"/>
+                <attribute attribute-id="paymentGatewayPayolutionInvoiceBillingSameAsShipping"/>
+                <attribute attribute-id="paymentGatewayPayolutionInvoiceAllowedShippingCountries"/>
+                <attribute attribute-id="paymentGatewayPayolutionInvoiceMerchantName"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+</metadata>

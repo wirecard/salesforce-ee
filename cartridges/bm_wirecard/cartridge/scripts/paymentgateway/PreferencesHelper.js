@@ -54,6 +54,20 @@ var PreferencesMapping = {
         sendBasketData        : 'paymentGatewayPayPalSendBasketData',
         initialTransactionType: 'paymentGatewayPayPalInitialTransactionType'
     },
+    PG_PAYOLUTION_INVOICE_EUR: {
+        userName            : 'paymentGatewayPayolutionInvoiceHttpUser',
+        password            : 'paymentGatewayPayolutionInvoiceHttpPassword',
+        baseUrl             : 'paymentGatewayPayolutionInvoiceBaseUrl',
+        merchantAccountID   : 'paymentGatewayPayolutionInvoiceMerchantAccountID',
+        sendAdditionalData  : 'paymentGatewayPayolutionInvoiceSendAdditionalData'
+    },
+    PG_PAYOLUTION_INVOICE_CHF: {
+        userName            : 'paymentGatewayPayolutionInvoiceHttpUserCHF',
+        password            : 'paymentGatewayPayolutionInvoiceHttpPasswordCHF',
+        baseUrl             : 'paymentGatewayPayolutionInvoiceBaseUrl',
+        merchantAccountID   : 'paymentGatewayPayolutionInvoiceMerchantAccountIDCHF',
+        sendAdditionalData  : 'paymentGatewayPayolutionInvoiceSendAdditionalData'
+    },
     PG_SOFORT: {
         userName          : 'paymentGatewaySofortHttpUser',
         password          : 'paymentGatewaySofortHttpPassword',
@@ -78,7 +92,9 @@ var PreferencesMapping = {
 
 var sensitiveFields = [
     'password',
-    'secret'
+    'passwordCHF',
+    'secret',
+    'secretCHF'
 ];
 
 /**
