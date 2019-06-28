@@ -181,6 +181,7 @@ var TransactionHelper = {
             methodName: methodName
         };
         const mappedMethodNames = [
+            'PG_PAYOLUTION_INVOICE',
             'PG_SOFORT',
             'PG_SEPA'
         ];
@@ -228,6 +229,7 @@ var TransactionHelper = {
         }
         var ArrayList = require('dw/util/ArrayList');
         var Transaction = require('dw/system/Transaction');
+        var paymentHelper = require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper');
 
         var allPaymentTransactions = new ArrayList();
         var savedTransactions = order.custom.paymentGatewayTransactions;
@@ -246,6 +248,7 @@ var TransactionHelper = {
                 }
             } else if (!transaction.parentTransactionId
                 && newTransaction.parentTransactionId == transaction.transactionId
+                && [paymentHelper.PAYMENT_METHOD_PAYOLUTION_INV].indexOf(transaction.paymentMethodId) === -1
             ) {
                 // replace initial transaction with notification response
                 allPaymentTransactions.push(JSON.stringify(newTransaction));
@@ -492,12 +495,22 @@ var TransactionHelper = {
                 }
                 return '';
             },
+            getCurrencyCode: function() {
+                const jsonResponse = this.getJsonResponse();
+
+                // fetch currency code
+                if ('requested-amount' in jsonResponse['payment']) {
+                    return jsonResponse['payment']['requested-amount']['currency'];
+                }
+                // FIXME hardcoded default
+                return 'EUR';
+            },
             getSecret: function() {
                 //if no payment method id was given we must use the first id
                 if (!paymentMethodID) {
                     paymentMethodID = responseObject.getFirstPaymentMethodId();
                 }
-                return this.getSecretCustomPreferenceFromPaymentMethodId(paymentMethodID);
+                return this.getSecretCustomPreferenceFromPaymentMethodId(paymentMethodID, responseObject.getCurrencyCode());
             }.bind(this),
             validateSignature: function() {
                 if (!this.isValid()) {
@@ -543,9 +556,10 @@ var TransactionHelper = {
     /**
      * Function for returning payment method secret
      * @param {string} paymentMethodId - current payment method
+     * @param {string} currencyCode - used currency
      * @returns {string} - payment method's secret
      */
-    getSecretCustomPreferenceFromPaymentMethodId : function(paymentMethodId) {
+    getSecretCustomPreferenceFromPaymentMethodId : function(paymentMethodId, currencyCode) {
         const Site = require('dw/system/Site').getCurrent();
         var paymentHelper = require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper');
         var secret;
@@ -565,6 +579,13 @@ var TransactionHelper = {
                 break;
             case paymentHelper.PAYMENT_METHOD_PAYPAL:
                 secret = Site.getCustomPreferenceValue('paymentGatewayPayPalSecret');
+                break;
+            case paymentHelper.PAYMENT_METHOD_PAYOLUTION_INV:
+                if (currencyCode === 'CHF') {
+                    secret = Site.getCustomPreferenceValue('paymentGatewayPayolutionInvoiceSecretCHF');
+                } else {
+                    secret = Site.getCustomPreferenceValue('paymentGatewayPayolutionInvoiceSecret');
+                }
                 break;
             case paymentHelper.PAYMENT_METHOD_SEPA_CREDIT:
                 secret = Site.getCustomPreferenceValue('paymentGatewaySEPACreditSecret');

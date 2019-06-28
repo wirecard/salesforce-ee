@@ -27,6 +27,28 @@ exports.getPaymentGatewayOrderPayment = function (order) {
 };
 
 /**
+ * Calculate hash for given address
+ * @param {dw.order.OrderAddress}
+ * @returns {string}
+ */
+exports.getAddressHash = function (address) {
+    var Bytes = require('dw/util/Bytes');
+    var MessageDigest = require('dw/crypto/MessageDigest');
+    var md = new MessageDigest(MessageDigest.DIGEST_SHA_256);
+
+    var hashParams = [];
+    hashParams.push(address.getLastName());
+    hashParams.push(address.getFirstName());
+    hashParams.push(address.getAddress1());
+    hashParams.push(address.getPostalCode());
+    hashParams.push(address.getCity());
+    hashParams.push(address.countryCode.value);
+
+    var digest = md.digestBytes(new Bytes(hashParams.join('').trim()));
+    return require('dw/crypto/Encoding').toHex(digest);
+};
+
+/**
  * Calculate fingerprint with order parameters and merchant secret
  * @param {dw.order.Order}
  * @returns {string}
