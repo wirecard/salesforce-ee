@@ -45,6 +45,13 @@ var PreferencesMapping = {
         merchantAccountID : 'paymentGatewayGiropayMerchantAccountID',
         sendAdditionalData: 'paymentGatewayGiropaySendAdditionalData'
     },
+    PG_IDEAL: {
+        userName          : 'paymentGatewayIdealHttpUser',
+        password          : 'paymentGatewayIdealHttpPassword',
+        baseUrl           : 'paymentGatewayIdealBaseUrl',
+        merchantAccountID : 'paymentGatewayIdealMerchantAccountID',
+        sendAdditionalData: 'paymentGatewayIdealSendAdditionalData'
+    },
     PG_PAYPAL: {
         userName              : 'paymentGatewayPayPalHttpUser',
         password              : 'paymentGatewayPayPalHttpPassword',

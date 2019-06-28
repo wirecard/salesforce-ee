@@ -9,42 +9,16 @@
 <metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
     <type-extension type-id="SitePreferences">
         <custom-attribute-definitions>
-            <attribute-definition attribute-id="paymentGatewayGiropayMerchantAccountID">
+            <attribute-definition attribute-id="paymentGatewaySofortMerchantAccountID">
                 <display-name xml:lang="x-default">Merchant Account ID (MAID)</display-name>
                 <description xml:lang="x-default">Unique identifier assigned to your merchant account.</description>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
-                <default-value>9b4b0e5f-1bc8-422e-be42-d0bad2eadabc</default-value>
+                <default-value>6c0e7efd-ee58-40f7-9bbd-5e7337a052cd</default-value>
             </attribute-definition>
-            <attribute-definition attribute-id="paymentGatewayGiropaySecret">
-                <display-name xml:lang="x-default">Secret Key</display-name>
-                <type>string</type>
-                <mandatory-flag>false</mandatory-flag>
-                <externally-managed-flag>false</externally-managed-flag>
-                <min-length>0</min-length>
-                <default-value>0c8c6f3a-1534-4fa1-99d9-d1c644d43709</default-value>
-            </attribute-definition>
-            <attribute-definition attribute-id="paymentGatewayGiropayHttpUser">
-                <display-name xml:lang="x-default">Username</display-name>
-                <description xml:lang="x-default">Username as provided in your Wirecard contract.</description>
-                <type>string</type>
-                <mandatory-flag>false</mandatory-flag>
-                <externally-managed-flag>false</externally-managed-flag>
-                <min-length>0</min-length>
-                <default-value>16390-testing</default-value>
-            </attribute-definition>
-            <attribute-definition attribute-id="paymentGatewayGiropayHttpPassword">
-                <display-name xml:lang="x-default">Password</display-name>
-                <description xml:lang="x-default">Password as provided in your Wirecard contract.</description>
-                <type>string</type>
-                <mandatory-flag>false</mandatory-flag>
-                <externally-managed-flag>false</externally-managed-flag>
-                <min-length>0</min-length>
-                <default-value>3!3013=D3fD8X7</default-value>
-            </attribute-definition>
-            <attribute-definition attribute-id="paymentGatewayGiropayBaseUrl">
+            <attribute-definition attribute-id="paymentGatewaySofortBaseUrl">
                 <display-name xml:lang="x-default">Wirecard Server Address (URL)</display-name>
                 <description xml:lang="x-default">Wirecard Server Address (URL) (e.g. https://api.wirecard.com).</description>
                 <type>string</type>
@@ -53,31 +27,50 @@
                 <min-length>0</min-length>
                 <default-value>https://api-test.wirecard.com</default-value>
             </attribute-definition>
-            <attribute-definition attribute-id="paymentGatewayGiropayAddDescriptorToRequest">
-                <display-name xml:lang="x-default">Descriptor</display-name>
-                <description xml:lang="x-default">Send text which is displayed on the bank statement issued to your consumer by the financial service provider.</description>
-                <type>boolean</type>
+            <attribute-definition attribute-id="paymentGatewaySofortHttpUser">
+                <display-name xml:lang="x-default">Username</display-name>
+                <description xml:lang="x-default">Username as provided in your Wirecard contract.</description>
+                <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
-                <default-value>true</default-value>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>16390-testing</default-value>
             </attribute-definition>
-            <attribute-definition attribute-id="paymentGatewayGiropaySendAdditionalData">
+            <attribute-definition attribute-id="paymentGatewaySofortHttpPassword">
+                <display-name xml:lang="x-default">Password</display-name>
+                <description xml:lang="x-default">Password as provided in your Wirecard contract.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>3!3013=D3fD8X7</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewaySofortSendAdditionalData">
                 <display-name xml:lang="x-default">Send Additional Information</display-name>
                 <description xml:lang="x-default">Additional data will be sent for the purpose of fraud protection. This additional data includes billing/shipping address, shopping basket and descriptor.</description>
                 <type>boolean</type>
                 <mandatory-flag>false</mandatory-flag>
                 <default-value>true</default-value>
             </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewaySofortSecret">
+                <display-name xml:lang="x-default">Secret Key</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>58764ab3-5c56-450e-b747-7237a24e92a7</default-value>
+            </attribute-definition>
         </custom-attribute-definitions>
         <group-definitions>
-            <attribute-group group-id="PAYMENTGATEWAY_GIROPAY">
-                <display-name xml:lang="x-default">Wirecard Payment Gateway settings for Giropay</display-name>
-                <attribute attribute-id="paymentGatewayGiropayMerchantAccountID"/>
-                <attribute attribute-id="paymentGatewayGiropaySecret"/>
-                <attribute attribute-id="paymentGatewayGiropayBaseUrl"/>
-                <attribute attribute-id="paymentGatewayGiropayHttpUser"/>
-                <attribute attribute-id="paymentGatewayGiropayHttpPassword"/>
-                <attribute attribute-id="paymentGatewayGiropayAddDescriptorToRequest"/>
-                <attribute attribute-id="paymentGatewayGiropaySendAdditionalData"/>
+            <attribute-group group-id="PAYMENTGATEWAY_SOFORT">
+                <display-name xml:lang="x-default">Wirecard Payment Gateway settings for Sofort.</display-name>
+                <attribute attribute-id="paymentGatewaySofortMerchantAccountID"/>
+                <attribute attribute-id="paymentGatewaySofortSecret"/>
+                <attribute attribute-id="paymentGatewaySofortBaseUrl"/>
+                <attribute attribute-id="paymentGatewaySofortHttpUser"/>
+                <attribute attribute-id="paymentGatewaySofortHttpPassword"/>
+                <attribute attribute-id="paymentGatewaySofortSecret"/>
+                <attribute attribute-id="paymentGatewaySofortSendAdditionalData"/>
             </attribute-group>
         </group-definitions>
     </type-extension>

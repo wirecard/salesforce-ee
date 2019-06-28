@@ -18,7 +18,7 @@ var methodsWithForms = {
         paymentGatewayBIC: 'text'
     },
     PG_IDEAL: {
-        bic: 'select'
+        paymentGatewayBIC: 'select'
     },
     PG_SEPA: {
         paymentGatewayBIC: 'text',
@@ -52,6 +52,9 @@ module.exports = {
             'bank-account': { bic: 'paymentGatewayBIC' }
         },
         PG_GIROPAY: {
+            'bank-account': { bic: 'paymentGatewayBIC' }
+        },
+        PG_IDEAL: {
             'bank-account': { bic: 'paymentGatewayBIC' }
         },
         PG_SEPA: {
@@ -150,6 +153,7 @@ module.exports = {
     PAYMENT_METHOD_CREDIT_CARD      : 'creditcard',
     PAYMENT_METHOD_EPS              : 'eps',
     PAYMENT_METHOD_GIROPAY          : 'giropay',
+    PAYMENT_METHOD_IDEAL            : 'ideal',
     PAYMENT_METHOD_PAYPAL           : 'paypal',
     PAYMENT_METHOD_SEPA_CREDIT      : 'sepacredit',
     PAYMENT_METHOD_SOFORT           : 'sofortbanking'

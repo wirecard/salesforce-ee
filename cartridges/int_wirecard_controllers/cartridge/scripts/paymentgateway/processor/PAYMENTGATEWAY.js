@@ -46,6 +46,10 @@ function Handle(args) {
             paymentInstrument.custom.paymentGatewayIBAN = paymentForm[paymentMethodId].paymentGatewayIBAN.value;
             paymentInstrument.custom.paymentGatewaySEPADebtorName = paymentForm[paymentMethodId].paymentGatewaySEPADebtorName.value;
         });
+    } else if (paymentMethodId === 'PG_IDEAL') {
+        Transaction.wrap(function () {
+            paymentInstrument.custom.paymentGatewayBIC = paymentForm.PG_IDEAL.paymentGatewayBIC.value;
+        });
     }
 
     return { success: true };
@@ -55,9 +59,6 @@ function Handle(args) {
  * Authorize Wirecard Payment.
  */
 function Authorize(args) {
-    // FIXME use more generic way to extract form data already in this step
-//    var formData = app.getForm('billing');
-    var formData = {};
     var order = args.Order;
 
     var orderHelper = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper');
@@ -68,7 +69,7 @@ function Authorize(args) {
     try {
         // handles all wirecard payments except credit card (seamless integration)
         var redirectPayment = require('*/cartridge/scripts/paymentgateway/RedirectPayment');
-        responseData = redirectPayment.callService(paymentData.paymentMethodID, order, paymentInstrument, formData);
+        responseData = redirectPayment.callService(paymentData.paymentMethodID, order, paymentInstrument);
     } catch (err) {
         pgLogger.error('Exception while processing the API-Call: ' + err.fileName + ': ' + err.message + '\n' + err.stack);
         return { error: true, errorMessage: err.message };

@@ -34,7 +34,7 @@
 
 <!--- PG_IDEAL --->
 <div id="PaymentMethod_PG_IDEAL" class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='PG_IDEAL'}">payment-method-expanded</isif>" data-method="PG_IDEAL">
-    <isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.PG_IDEAL.bic}" type="select" />
+    <isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.PG_IDEAL.paymentGatewayBIC}" type="select" />
 </div>
 
 <!--- PG_SOFORT --->
