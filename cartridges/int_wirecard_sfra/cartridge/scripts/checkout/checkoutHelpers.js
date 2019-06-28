@@ -15,7 +15,45 @@ var Resource = require('dw/web/Resource');
 var HookMgr = require('dw/system/HookMgr');
 var OrderMgr = require('dw/order/OrderMgr');
 var PaymentMgr = require('dw/order/PaymentMgr');
+var Site = require('dw/system/Site').getCurrent();
 var Transaction = require('dw/system/Transaction');
+
+/**
+ * Validates payment: checks min age for PG_PAYOLUTION
+ * @param {Object} req - The local instance of the request object
+ * @param {dw.order.Basket} currentBasket - The current basket
+ * @returns {Object} an object that has error information
+ */
+function validatePayment(req, currentBasket) {
+    var result = base.validatePayment.call(null, req, currentBasket);
+    if (!result.error) {
+        var invalid = false;
+        var errorMessage;
+        var paymentInstruments = currentBasket.paymentInstruments;
+        var orderHelper = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper');
+        var billingAddressHash = orderHelper.getAddressHash(currentBasket.billingAddress);
+        var shippingAddressHash = orderHelper.getAddressHash(currentBasket.defaultShipment.shippingAddress);
+
+        for (var i = 0; i < paymentInstruments.length; i++) {
+            var paymentInstrument = paymentInstruments[i];
+            var paymentMethod = paymentInstrument.getPaymentMethod();
+            if (['PG_PAYOLUTION_INVOICE'].indexOf(paymentMethod) > -1
+                && Site.getCustomPreferenceValue('paymentGatewayPayolutionInvoiceBillingSameAsShipping')
+                && billingAddressHash !== shippingAddressHash
+            ) {
+                // shipping is not the same as billing address
+                invalid = true;
+                errorMessage = Resource.msg('text_need_same_address_notice', 'paymentgateway', null);
+            }
+            if (invalid) {
+                break; // there is an invalid payment instrument
+            }
+        }
+        result.error = invalid;
+        result.errorMessage = errorMessage;
+    }
+    return result;
+}
 
 /**
  * Validate credit card form fields
@@ -147,7 +185,7 @@ module.exports = {
     validateFields: base.validateFields,
     validateShippingForm: base.validateShippingForm,
     validateBillingForm: base.validateBillingForm,
-    validatePayment: base.validatePayment,
+    validatePayment: validatePayment,
     validateCreditCard: validateCreditCard,
     calculatePaymentTransaction: base.calculatePaymentTransaction,
     recalculateBasket: base.recalculateBasket,

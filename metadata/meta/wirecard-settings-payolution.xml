@@ -96,8 +96,8 @@
                 <min-length>0</min-length>
                 <default-value>74bd2f0c-6d1b-4e9a-b278-abc34b83ab9f</default-value>
             </attribute-definition>
-            <attribute-definition attribute-id="paymentGatewayPayolutionInvoiceSecret">
-                <display-name xml:lang="x-default">Secret Key - EUR</display-name>
+            <attribute-definition attribute-id="paymentGatewayPayolutionInvoiceSecretCHF">
+                <display-name xml:lang="x-default">Secret Key - CHF</display-name>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>

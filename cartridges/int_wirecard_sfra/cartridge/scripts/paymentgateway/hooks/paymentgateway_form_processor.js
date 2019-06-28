@@ -40,7 +40,6 @@ function processForm(req, paymentForm, viewFormData) {
 
         var PaymentHelper = require('int_wirecard_core/cartridge/scripts/paymentgateway/helper/PaymentHelper.js');
         var customFormData = PaymentHelper.getFormData(paymentForm, paymentMethodID);
-        viewData.paymentInformation.pgFormData = customFormData;
 
         // additional check for payolution form
         if (['PG_PAYOLUTION_INVOICE'].indexOf(paymentMethodID) > -1) {
@@ -53,17 +52,19 @@ function processForm(req, paymentForm, viewFormData) {
             var dobYearField = formFields.dob_year;
             var normalizedMonth = customFormData.dob_month - 1;
             var dob = new Date(customFormData.dob_year, normalizedMonth, customFormData.dob_day);
-            if (dob.getDate() !== customFormData.dob_day 
-        		|| dob.getMonth() !== normalizedMonth
-            	|| dob.getFullYear() !== customFormData.dob_year
-        	) {
-            	errorFields[dobYearField.htmlName] = Resource.msg('error.date.invalid', 'forms', null);
+            if (dob.getDate() !== customFormData.dob_day
+                || dob.getMonth() !== normalizedMonth
+                || dob.getFullYear() !== customFormData.dob_year
+            ) {
+                errorFields[dobYearField.htmlName] = Resource.msg('error.date.invalid', 'forms', null);
             } else {
-	            var min18Date = new Date();
-	            var currentYear = min18Date.getFullYear();
-	            if (min18Date.setFullYear(currentYear - 18) < dob.getTime()) {
-	                errorFields[dobYearField.htmlName] = Resource.msg('text_min_age_notice', 'paymentgateway', null);
-	            }
+                var min18Date = new Date();
+                var currentYear = min18Date.getFullYear();
+                if (min18Date.setFullYear(currentYear - 18) < dob.getTime()) {
+                    errorFields[dobYearField.htmlName] = Resource.msg('text_min_age_notice', 'paymentgateway', null);
+                } else {
+                    customFormData.paymentGatewayDateOfBirth = dob;
+                }
             }
         }
         if (Object.keys(errorFields).length) {
@@ -72,6 +73,7 @@ function processForm(req, paymentForm, viewFormData) {
                 fieldErrors: errorFields
             };
         }
+        viewData.paymentInformation.pgFormData = customFormData;
     }
 
     return {
