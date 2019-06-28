@@ -1,9 +1,19 @@
+/**
+ * Shop System Plugins:
+ * - Terms of Use can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/_TERMS_OF_USE
+ * - License can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
+ */
 'use strict';
 
 /**
  * @var {Object} methodsWithForms - payment gateway methods that come with form fields
  */
 var methodsWithForms = {
+    PG_EPS: {
+        paymentGatewayBIC: 'text'
+    },
     PG_GIROPAY: {
         paymentGatewayBIC: 'text'
     },
@@ -11,8 +21,8 @@ var methodsWithForms = {
         paymentGatewayBIC: 'select'
     },
     PG_SEPA: {
-        paymentGatewaySEPABIC: 'text',
-        paymentGatewaySEPAIBAN: 'text',
+        paymentGatewayBIC: 'text',
+        paymentGatewayIBAN: 'text',
         paymentGatewaySEPADebtorName: 'text'
     }
 };
@@ -38,6 +48,9 @@ var supportedLocalesForSofort = [
 
 module.exports = {
     methodRequestKey: {
+        PG_EPS: {
+            'bank-account': { bic: 'paymentGatewayBIC' }
+        },
         PG_GIROPAY: {
             'bank-account': { bic: 'paymentGatewayBIC' }
         },
@@ -45,7 +58,7 @@ module.exports = {
             'bank-account': { bic: 'paymentGatewayBIC' }
         },
         PG_SEPA: {
-            'bank-account'  : {iban: 'paymentGatewaySEPAIBAN', bic: 'paymentGatewaySEPABIC'},
+            'bank-account'  : {iban: 'paymentGatewayIBAN', bic: 'paymentGatewayBIC'},
             'account-holder': {
                 'last-name' : 'paymentGatewaySEPADebtorName'
             }
@@ -138,6 +151,7 @@ module.exports = {
 
     PAYMENT_METHOD_SEPA_DIRECT_DEBIT: 'sepadirectdebit',
     PAYMENT_METHOD_CREDIT_CARD      : 'creditcard',
+    PAYMENT_METHOD_EPS              : 'eps',
     PAYMENT_METHOD_GIROPAY          : 'giropay',
     PAYMENT_METHOD_IDEAL            : 'ideal',
     PAYMENT_METHOD_PAYPAL           : 'paypal',

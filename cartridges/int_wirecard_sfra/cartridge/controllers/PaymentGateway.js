@@ -84,11 +84,12 @@ server.get(
 /**
  * Cancel redirect from payment gateway
  */
-server.get(
+server.use(
     'Fail',
     server.middleware.https,
     function (req, res, next) {
         var params = req.querystring;
+        var formData = req.form;
         var orderNo = params.orderNo;
         var orderToken = params.orderSec;
 
@@ -97,13 +98,17 @@ server.get(
         var order = OrderMgr.getOrder(orderNo);
 
         if (order && order.orderToken === orderToken) {
+            var eppResponse = require('*/cartridge/scripts/paymentgateway/util/EppResponse').parseBase64(
+                formData.eppresponse,
+                Resource.msg('error.technical', 'checkout', null)
+            );
             Transaction.wrap(function () {
                 OrderMgr.failOrder(order);
             });
 
             req.session.privacyCache.set(
                 'pgPlaceOrderError',
-                Resource.msg('payment_failed_text', 'paymentgateway', null)
+                eppResponse.status.message
             );
             res.redirect(URLUtils.https('Checkout-Begin', 'stage', 'payment'));
         } else {
@@ -219,10 +224,34 @@ server.get(
     server.middleware.https,
     function (req, res, next) {
         var paymentMethod = req.querystring.paymentMethod;
-        var instruments = require('dw/order/BasketMgr').getCurrentBasket().getPaymentInstruments(paymentMethod);
 
-        if (!instruments.empty && paymentMethod === 'PG_SEPA') {
-            res.render('checkout/billing/paymentOptions/paymentOptionsSummary/' + req.querystring.paymentMethod, { payment: instruments[0] });
+        var OrderModel = require('*/cartridge/models/order');
+        var OrderMgr = require('dw/order/BasketMgr');
+        var Locale = require('dw/util/Locale');
+
+        var currentBasket = OrderMgr.getCurrentBasket();
+        var currentLocale = Locale.getLocale(req.locale.id);
+        var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
+
+        var basketModel = new OrderModel(
+            currentBasket,
+            { usingMultiShipping: usingMultiShipping, countryCode: currentLocale.country, containerView: 'basket' }
+        );
+        var paymentInstrument = null;
+        basketModel.billing.payment.selectedPaymentInstruments.forEach(function (p) {
+            if (p.paymentMethod === paymentMethod) {
+                paymentInstrument = p;
+            }
+        });
+
+        if (paymentInstrument) {
+            res.render(
+                'checkout/billing/paymentOptions/paymentOptionsSummary/' + paymentMethod,
+                {
+                    payment: paymentInstrument,
+                    forms: { billingForm: server.forms.getForm('billing') }
+                }
+            );
         } else {
             res.render('paymentgateway/empty');
         }

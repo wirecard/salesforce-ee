@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>Iban</name>
+   <tag></tag>
+   <elementGuidId>e4f2630e-6456-45b9-a763-9e129ca36f19</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//div[@id='PaymentMethod_PG_SEPA']//input[contains(@name,'paymentGatewayIBAN')]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//div[@id='PaymentMethod_PG_SEPA']//input[contains(@name,'paymentGatewayIBAN')]</value>
+   </webElementProperties>
+</WebElementEntity>
