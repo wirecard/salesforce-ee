@@ -76,7 +76,6 @@
                 <attribute attribute-id="paymentGatewayGiropayBaseUrl"/>
                 <attribute attribute-id="paymentGatewayGiropayHttpUser"/>
                 <attribute attribute-id="paymentGatewayGiropayHttpPassword"/>
-                <attribute attribute-id="paymentGatewayGiropaySecret"/>
                 <attribute attribute-id="paymentGatewayGiropayAddDescriptorToRequest"/>
                 <attribute attribute-id="paymentGatewayGiropaySendAdditionalData"/>
             </attribute-group>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Shop System Plugins:
+  - Terms of Use can be found under:
+  https://github.com/wirecard/salesforce-ee/blob/master/_TERMS_OF_USE
+  - License can be found under:
+  https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
+-->
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <type-extension type-id="SitePreferences">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="paymentGatewaySofortMerchantAccountID">
+                <display-name xml:lang="x-default">Merchant Account ID (MAID)</display-name>
+                <description xml:lang="x-default">Unique identifier assigned to your merchant account.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>6c0e7efd-ee58-40f7-9bbd-5e7337a052cd</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewaySofortBaseUrl">
+                <display-name xml:lang="x-default">Wirecard Server Address (URL)</display-name>
+                <description xml:lang="x-default">Wirecard Server Address (URL) (e.g. https://api.wirecard.com).</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>https://api-test.wirecard.com</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewaySofortHttpUser">
+                <display-name xml:lang="x-default">Username</display-name>
+                <description xml:lang="x-default">Username as provided in your Wirecard contract.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>16390-testing</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewaySofortHttpPassword">
+                <display-name xml:lang="x-default">Password</display-name>
+                <description xml:lang="x-default">Password as provided in your Wirecard contract.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>3!3013=D3fD8X7</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewaySofortSendAdditionalData">
+                <display-name xml:lang="x-default">Send Additional Information</display-name>
+                <description xml:lang="x-default">Additional data will be sent for the purpose of fraud protection. This additional data includes billing/shipping address, shopping basket and descriptor.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewaySofortSecret">
+                <display-name xml:lang="x-default">Secret Key</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>58764ab3-5c56-450e-b747-7237a24e92a7</default-value>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="PAYMENTGATEWAY_SOFORT">
+                <display-name xml:lang="x-default">Wirecard Payment Gateway settings for Sofort.</display-name>
+                <attribute attribute-id="paymentGatewaySofortMerchantAccountID"/>
+                <attribute attribute-id="paymentGatewaySofortSecret"/>
+                <attribute attribute-id="paymentGatewaySofortBaseUrl"/>
+                <attribute attribute-id="paymentGatewaySofortHttpUser"/>
+                <attribute attribute-id="paymentGatewaySofortHttpPassword"/>
+                <attribute attribute-id="paymentGatewaySofortSecret"/>
+                <attribute attribute-id="paymentGatewaySofortSendAdditionalData"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+</metadata>
