@@ -48,14 +48,16 @@ function getCreditCardRequestData() {
  */
 function createPayolutionLink() {
     var payolutionContent = $('div[id=PG_PAYOLUTION_INVOICE-content');
-    var acceptTermsInput = payolutionContent.find('input[name$=acceptTerms]');
-    var acceptTermsLabel = payolutionContent.find('label[for$=acceptTerms]');
-    var link = $('<a/>', {
-        href: acceptTermsInput.data('consentUrl'),
-        target: '_blank'
-    }).text(acceptTermsInput.data('linkPlaceholder'));
-    var acceptTermsLabelHtml = acceptTermsLabel.text().replace(/%link%/, link.prop('outerHTML'));
-    acceptTermsLabel.html(acceptTermsLabelHtml);
+    if (payolutionContent.length === 1) {
+        var acceptTermsInput = payolutionContent.find('input[name$=acceptTerms]');
+        var acceptTermsLabel = payolutionContent.find('label[for$=acceptTerms]');
+        var link = $('<a/>', {
+            href: acceptTermsInput.data('consentUrl'),
+            target: '_blank'
+        }).text(acceptTermsInput.data('linkPlaceholder'));
+        var acceptTermsLabelHtml = acceptTermsLabel.text().replace(/%link%/, link.prop('outerHTML'));
+        acceptTermsLabel.html(acceptTermsLabelHtml);
+    }
 }
 
 /**

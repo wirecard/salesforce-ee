@@ -197,3 +197,13 @@ exports.GetPGSummary = guard.ensure(['get', 'https'], function () {
         response.render('checkout/billing/paymentOptions/paymentOptionsSummary/PG_SEPA', { payment:  payment[0]});
     }
 });
+
+/**
+ * Template include for displaying checkout errors
+ */
+exports.GetCheckoutErrors = guard.ensure(['include'], function () {
+    var paymentGatewayErrors = JSON.parse(session.privacy.paymentGatewayErrors);
+    delete session.privacy.paymentGatewayErrors;
+    var ISML = require('dw/template/ISML');
+    ISML.renderTemplate('checkout/paymentGatewayError', { errors: paymentGatewayErrors });
+});

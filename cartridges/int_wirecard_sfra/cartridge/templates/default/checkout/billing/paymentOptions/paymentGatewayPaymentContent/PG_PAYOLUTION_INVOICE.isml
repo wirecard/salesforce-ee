@@ -1,11 +1,11 @@
 <iscomment>
-    /**
-    * Shop System Plugins:
-    * - Terms of Use can be found under:
-    * https://github.com/wirecard/salesforce-ee/blob/master/_TERMS_OF_USE
-    * - License can be found under:
-    * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
-    */
+/**
+ * Shop System Plugins:
+ * - Terms of Use can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/_TERMS_OF_USE
+ * - License can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
+ */
 </iscomment>
 <!--- TEMPLATENAME: PG_PAYOLUTION_INVOICE.isml --->
 <isset name="payolutionFields" value="${ pdict.forms.billingForm.PG_PAYOLUTION_INVOICE }" scope="page"/>
@@ -74,14 +74,14 @@
                     // FIXME hardcoded link in template
                     var consentLinkUrl = 'https://payment.payolution.com/payolution-payment/infoport/dataprivacyconsent?mId=' + mID;
                 </isscript>
-                <label class="form-control-label" for="${ payolutionFields.acceptTerms.htmlName }">${ Resource.msg('payolution.consent.label', 'paymentgateway', 'payolution.consent.label') }</label>
+                <label class="form-control-label" for="${ payolutionFields.acceptTerms.htmlName }">${ Resource.msg('payolution.consent.label', 'forms', 'payolution.consent.label') }</label>
                 <input type="checkbox"
                        class="form-control"
                        id="${ payolutionFields.acceptTerms.htmlName }"
                        name="${ payolutionFields.acceptTerms.htmlName }"
                        value="1"
                        data-consent-url="${ consentLinkUrl }"
-                       data-link-placeholder="${ Resource.msg('payolution.consent.link_placeholder', 'paymentgateway', null) }"
+                       data-link-placeholder="${ Resource.msg('payolution.consent.link_placeholder', 'forms', null) }"
                 />
                 <div class="invalid-feedback"></div>
             </div>

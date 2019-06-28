@@ -249,7 +249,6 @@ var TransactionHelper = {
                 }
             } else if (!transaction.parentTransactionId
                 && newTransaction.parentTransactionId == transaction.transactionId
-                && [paymentHelper.PAYMENT_METHOD_PAYOLUTION_INV].indexOf(transaction.paymentMethodId) === -1
             ) {
                 // replace initial transaction with notification response
                 allPaymentTransactions.push(JSON.stringify(newTransaction));

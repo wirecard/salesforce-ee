@@ -10,7 +10,7 @@
 
     <field
         formid="acceptTerms"
-        label="paymentgateway.acceptTerms"
+        label="payolution.consent.label"
         type="boolean"
         missing-error="error.message.required"
         value-error="error.message.required"/>
