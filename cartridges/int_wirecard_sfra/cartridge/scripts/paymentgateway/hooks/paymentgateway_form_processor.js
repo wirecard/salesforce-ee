@@ -7,6 +7,8 @@
  */
 'use strict';
 
+var Resource = require('dw/web/Resource');
+
 /**
  * Paymentgateway form handling
  * @param {Object} req - The request object
@@ -16,14 +18,15 @@
  */
 function processForm(req, paymentForm, viewFormData) {
     var viewData = viewFormData;
+    var paymentMethodID = paymentForm.paymentMethod.value;
     viewData.paymentMethod = {
-        value: paymentForm.paymentMethod.value,
-        htmlName: paymentForm.paymentMethod.value
+        value: paymentMethodID,
+        htmlName: paymentMethodID
     };
     viewData.paymentInformation = {
-        paymentMethodID: paymentForm.paymentMethod.value
+        paymentMethodID: paymentMethodID
     };
-    var formFields = paymentForm[paymentForm.paymentMethod.value];
+    var formFields = paymentForm[paymentMethodID];
     if (formFields) {
         var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
         var errorFields = COHelpers.validateFields(formFields);
@@ -36,8 +39,39 @@ function processForm(req, paymentForm, viewFormData) {
         }
 
         var PaymentHelper = require('int_wirecard_core/cartridge/scripts/paymentgateway/helper/PaymentHelper.js');
-        var customFormData = PaymentHelper.getFormData(paymentForm, paymentForm.paymentMethod.value);
+        var customFormData = PaymentHelper.getFormData(paymentForm, paymentMethodID);
         viewData.paymentInformation.pgFormData = customFormData;
+
+        // additional check for payolution form
+        if (['PG_PAYOLUTION_INVOICE'].indexOf(paymentMethodID) > -1) {
+            // accept consent check
+            var acceptTermsField = formFields.acceptTerms;
+            if (!req.form[acceptTermsField.htmlName]) {
+                errorFields[acceptTermsField.htmlName] = Resource.msg('error.message.required', 'forms', null);
+            }
+            // min-age check
+            var dobYearField = formFields.dob_year;
+            var normalizedMonth = customFormData.dob_month - 1;
+            var dob = new Date(customFormData.dob_year, normalizedMonth, customFormData.dob_day);
+            if (dob.getDate() !== customFormData.dob_day 
+        		|| dob.getMonth() !== normalizedMonth
+            	|| dob.getFullYear() !== customFormData.dob_year
+        	) {
+            	errorFields[dobYearField.htmlName] = Resource.msg('error.date.invalid', 'forms', null);
+            } else {
+	            var min18Date = new Date();
+	            var currentYear = min18Date.getFullYear();
+	            if (min18Date.setFullYear(currentYear - 18) < dob.getTime()) {
+	                errorFields[dobYearField.htmlName] = Resource.msg('text_min_age_notice', 'paymentgateway', null);
+	            }
+            }
+        }
+        if (Object.keys(errorFields).length) {
+            return {
+                error: true,
+                fieldErrors: errorFields
+            };
+        }
     }
 
     return {
@@ -54,12 +88,17 @@ function processForm(req, paymentForm, viewFormData) {
  */
 function savePaymentInformation(req, currentBasket, billingData) {
     var paymentInformation = billingData.paymentInformation.pgFormData;
-    var paymentInstrument = currentBasket.getPaymentInstruments(billingData.paymentInformation.paymentMethodID);
+    var paymentMethodID = billingData.paymentInformation.paymentMethodID;
+    var paymentInstrument = currentBasket.getPaymentInstruments(paymentMethodID);
+    var paymentHelper = require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper');
+    var saveField = paymentHelper.getFormFieldToSave();
 
     if (!paymentInstrument.empty && typeof paymentInformation !== 'undefined') {
         require('dw/system/Transaction').wrap(function () {
             Object.keys(paymentInformation).forEach(function (key) {
-                paymentInstrument[0].custom[key] = paymentInformation[key];
+                if (saveField(key)) {
+                    paymentInstrument[0].custom[key] = paymentInformation[key];
+                }
             });
         });
     }

@@ -20,6 +20,12 @@ var methodsWithForms = {
     PG_IDEAL: {
         bic: 'select'
     },
+    PG_PAYOLUTION_INVOICE: {
+        acceptTerms: 'text',
+        dob_day: 'text',
+        dob_month: 'text',
+        dob_year: 'text'
+    },
     PG_SEPA: {
         paymentGatewaySEPABIC: 'text',
         paymentGatewaySEPAIBAN: 'text',
@@ -103,6 +109,21 @@ module.exports = {
     },
 
     /**
+     * Check if value from form field has to be saved with payment instrument
+     * @returns {Object}
+     */
+    getFormFieldToSave: function () {
+        var fields = [].concat(Object.keys(methodsWithForms.PG_PAYOLUTION_INVOICE));
+        /**
+         * @param {string} fieldName - form field name
+         * @returns {boolean}
+         */
+        return function (fieldName) {
+            return fields.indexOf(fieldName) === -1;
+        }
+    },
+
+    /**
      * Retrieve image for given payment method
      * @param {string} methodID - payment method id
      * @returns {string|dw.web.URL}
@@ -151,6 +172,7 @@ module.exports = {
     PAYMENT_METHOD_EPS              : 'eps',
     PAYMENT_METHOD_GIROPAY          : 'giropay',
     PAYMENT_METHOD_PAYPAL           : 'paypal',
+    PAYMENT_METHOD_PAYOLUTION_INV   : 'payolution-inv',
     PAYMENT_METHOD_SEPA_CREDIT      : 'sepacredit',
     PAYMENT_METHOD_SOFORT           : 'sofortbanking'
 };

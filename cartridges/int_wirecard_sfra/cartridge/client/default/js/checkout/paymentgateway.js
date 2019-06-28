@@ -44,6 +44,21 @@ function getCreditCardRequestData() {
 }
 
 /**
+ * Replace consent link for payolution
+ */
+function createPayolutionLink() {
+    var payolutionContent = $('div[id=PG_PAYOLUTION_INVOICE-content');
+    var acceptTermsInput = payolutionContent.find('input[name$=acceptTerms]');
+    var acceptTermsLabel = payolutionContent.find('label[for$=acceptTerms]');
+    var link = $('<a/>', {
+        href: acceptTermsInput.data('consentUrl'),
+        target: '_blank'
+    }).text(acceptTermsInput.data('linkPlaceholder'));
+    var acceptTermsLabelHtml = acceptTermsLabel.text().replace(/%link%/, link.prop('outerHTML'));
+    acceptTermsLabel.html(acceptTermsLabelHtml);
+}
+
+/**
  * Submit seamless form and subsequently save transaction data with order
  * @param {string} saveTransactionUrl - payment gateway url which saves transaction data to order
  * @param {string} restoreBasketUrl - url for restoring the basket in case of an error
@@ -98,6 +113,7 @@ function submitSeamlessForm(saveTransactionUrl, restoreBasketUrl, cbSuccess, cbE
 }
 
 module.exports = {
+    createPayolutionLink: createPayolutionLink,
     getCreditCardRequestData: getCreditCardRequestData,
     submitSeamlessForm: submitSeamlessForm
 };
