@@ -12,7 +12,6 @@
 <isscript>
 	var address = pdict.order.billing.billingAddress.address;
     var bicVisible = require('dw/system/Site').getCurrent().getCustomPreferenceValue('paymentGatewaySEPAShowBICInCheckout');
-    var bicRequired = sepaFields.paymentGatewaySEPABIC.mandatory ? 'required' : '';
 </isscript>
 <fieldset class="pg-sepa-form payment-form-fields">
 
@@ -20,13 +19,13 @@
         <div class="col-12">
             <div class="form-group required ${sepaFields.paymentGatewaySEPADebtorName.htmlName}">
                 <label class="form-control-label" for="debtorName">${sepaFields.paymentGatewaySEPADebtorName.label}</label>
-                <input  type="text"
-                        class="form-control debtorName"
-                        id="debtorName"
-                        name="${sepaFields.paymentGatewaySEPADebtorName.htmlName}"
-                        value="${address.firstName} ${address.lastName}"
-                        data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
-                        aria-describedby="debtorNameInvalidMessage"
+                <input type="text"
+                       class="form-control debtorName"
+                       id="debtorName"
+                       name="${sepaFields.paymentGatewaySEPADebtorName.htmlName}"
+                       value="${address.firstName} ${address.lastName}"
+                       data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
+                       aria-describedby="debtorNameInvalidMessage"
                 />
                 <div class="invalid-feedback" id="debtorNameInvalidMessage"></div>
             </div>
@@ -35,12 +34,12 @@
 
     <div class="row">
         <div class="col-12">
-            <div class="form-group ${bicRequired} ${sepaFields.paymentGatewaySEPAIBAN.htmlName}">
-                <label class="form-control-label" for="iban">${sepaFields.paymentGatewaySEPAIBAN.label}</label>
+            <div class="form-group required ${sepaFields.paymentGatewayIBAN.htmlName}">
+                <label class="form-control-label" for="${sepaFields.paymentGatewayIBAN.htmlName}">${sepaFields.paymentGatewayIBAN.label}</label>
                 <input  type="text"
                         class="form-control iban"
-                        id="iban"
-                        name="${sepaFields.paymentGatewaySEPAIBAN.htmlName}"
+                        id="${sepaFields.paymentGatewayIBAN.htmlName}"
+                        name="${sepaFields.paymentGatewayIBAN.htmlName}"
                         aria-describedby="ibanInvalidMessage"
                         data-pattern-mismatch="${Resource.msg('error.message.parse.checkout.billing.iban', 'forms', null)}"
                         data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
@@ -53,20 +52,18 @@
     <isif condition="${ bicVisible === true }">
     <div class="row">
         <div class="col-12">
-            <div class="form-group ${bicRequired} ${sepaFields.paymentGatewaySEPABIC.htmlName}">
-                <label class="form-control-label" for="bic">${sepaFields.paymentGatewaySEPABIC.label}</label>
+            <div class="form-group ${sepaFields.paymentGatewayBIC.htmlName}">
+                <label class="form-control-label" for="${sepaFields.paymentGatewayBIC.htmlName}">${sepaFields.paymentGatewayBIC.label}</label>
                 <input  type="text"
                         class="form-control bic"
-                        id="bic"
-                        name="${sepaFields.paymentGatewaySEPABIC.htmlName}"
+                        id="${sepaFields.paymentGatewayBIC.htmlName}"
+                        name="${sepaFields.paymentGatewayBIC.htmlName}"
                         aria-describedby="bicInvalidMessage"
                         data-pattern-mismatch="${Resource.msg('error.message.parse.checkout.billing.bic', 'forms', null)}"
-                        data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
                 />
                 <div class="invalid-feedback" id="bicInvalidMessage"></div>
             </div>
         </div>
-    </div>
     </isif>
 
     <input type="hidden" class="form-control"

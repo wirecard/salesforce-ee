@@ -51,12 +51,13 @@ exports.getAddressHash = function (address) {
 /**
  * Calculate fingerprint with order parameters and merchant secret
  * @param {dw.order.Order}
+ * @param {string} orderNo - reserved order no
+ * @param {string} secret - payment specific secret
  * @returns {string}
  */
-exports.getOrderFingerprint = function (order, orderNo) {
+exports.getOrderFingerprint = function (order, orderNo, secret) {
     var Mac = require('dw/crypto/Mac');
     var Site = require('dw/system/Site').getCurrent();
-    var secret = Site.getCustomPreferenceValue('paymentGatewayUrlSalt');
     var hashParams = [];
 
     if (orderNo) {

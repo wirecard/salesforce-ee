@@ -21,7 +21,7 @@
             </isif>
             <isprint value="${ pgData.name }"/>
 
-            <isif condition="${payment.paymentMethod === 'PG_SEPA'}">
+            <isif condition="${payment.paymentMethod === 'PG_SEPA' && !pdict.order.orderNumber }">
                 <isinclude template="checkout/billing/paymentOptions/paymentOptionsSummary/PG_SEPA" />
             </isif>
         </isif>

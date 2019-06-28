@@ -156,6 +156,10 @@ function CheckoutTransaction() {
         throw new Error('Current basket / order is required for creating request data transaction!');
     }
 
+    var OrderEntity = require('./entity/Order');
+    var amount = OrderEntity.getFixedContainerTotalAmount(self.order);
+    self.is3DSecure = getIs3DSecure(amount);
+
     this.preferenceMapping = preferenceMapping;
     return this;
 }
@@ -167,10 +171,6 @@ function CheckoutTransaction() {
  */
 CheckoutTransaction.prototype.getPayload = function () {
     var self = this;
-
-    var OrderEntity = require('./entity/Order');
-    var amount = OrderEntity.getFixedContainerTotalAmount(self.order);
-    self.is3DSecure = getIs3DSecure(amount);
 
     var Calendar = require('dw/util/Calendar');
     var StringUtils = require('dw/util/StringUtils');

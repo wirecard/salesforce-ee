@@ -182,6 +182,7 @@ var TransactionHelper = {
         };
         const mappedMethodNames = [
             'PG_PAYOLUTION_INVOICE',
+            'PG_IDEAL',
             'PG_SOFORT',
             'PG_SEPA'
         ];
@@ -571,11 +572,17 @@ var TransactionHelper = {
             case paymentHelper.PAYMENT_METHOD_CREDIT_CARD:
                 secret = Site.getCustomPreferenceValue('paymentGatewayCreditCardSecret');
                 break;
+            case paymentHelper.PAYMENT_METHOD_CREDIT_CARD3DS:
+                secret = Site.getCustomPreferenceValue('paymentGatewayCreditCardSecret3DS');
+                break;
             case paymentHelper.PAYMENT_METHOD_EPS:
                 secret = Site.getCustomPreferenceValue('paymentGatewayEpsSecret');
                 break;
             case paymentHelper.PAYMENT_METHOD_GIROPAY:
                 secret = Site.getCustomPreferenceValue('paymentGatewayGiropaySecret');
+                break;
+            case paymentHelper.PAYMENT_METHOD_IDEAL:
+                secret = Site.getCustomPreferenceValue('paymentGatewayIdealSecret');
                 break;
             case paymentHelper.PAYMENT_METHOD_PAYPAL:
                 secret = Site.getCustomPreferenceValue('paymentGatewayPayPalSecret');

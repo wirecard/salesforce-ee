@@ -17,12 +17,8 @@ import org.openqa.selenium.WebDriver as WebDriver
 import org.openqa.selenium.By as By
 
 if (WebUI.verifyElementPresent(findTestObject('sitegenesis/homepage/button_Yes'), 5, FailureHandling.OPTIONAL)) {
-
-	WebUI.click(findTestObject('sitegenesis/homepage/button_Yes'))
-
+    WebUI.click(findTestObject('sitegenesis/homepage/button_Yes'))
 }
 
-WebUI.verifyElementPresent(findTestObject('sitegenesis/homepage/Searchbox'), 0)
-
-WebUI.verifyElementPresent(findTestObject('sitegenesis/homepage/Search'), 0)
+WebUI.verifyElementVisible(findTestObject('sitegenesis/homepage/Searchbox'), FailureHandling.STOP_ON_FAILURE)
 

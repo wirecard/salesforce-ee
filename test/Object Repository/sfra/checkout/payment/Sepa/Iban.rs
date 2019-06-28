@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id = 'iban']</value>
+         <value>//div[contains(@class, 'PG_SEPA-content')]//input[contains(@id, 'paymentGatewayIBAN')]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,8 +15,8 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>id</name>
+      <name>xpath</name>
       <type>Main</type>
-      <value>iban</value>
+      <value>//div[contains(@class, 'PG_SEPA-content')]//input[contains(@id, 'paymentGatewayIBAN')]</value>
    </webElementProperties>
 </WebElementEntity>

@@ -18,7 +18,7 @@ var methodsWithForms = {
         paymentGatewayBIC: 'text'
     },
     PG_IDEAL: {
-        bic: 'select'
+        paymentGatewayBIC: 'select'
     },
     PG_PAYOLUTION_INVOICE: {
         acceptTerms: 'text',
@@ -27,8 +27,8 @@ var methodsWithForms = {
         dob_year: 'text'
     },
     PG_SEPA: {
-        paymentGatewaySEPABIC: 'text',
-        paymentGatewaySEPAIBAN: 'text',
+        paymentGatewayBIC: 'text',
+        paymentGatewayIBAN: 'text',
         paymentGatewaySEPADebtorName: 'text'
     }
 };
@@ -60,8 +60,11 @@ module.exports = {
         PG_GIROPAY: {
             'bank-account': { bic: 'paymentGatewayBIC' }
         },
+        PG_IDEAL: {
+            'bank-account': { bic: 'paymentGatewayBIC' }
+        },
         PG_SEPA: {
-            'bank-account'  : {iban: 'paymentGatewaySEPAIBAN', bic: 'paymentGatewaySEPABIC'},
+            'bank-account'  : {iban: 'paymentGatewayIBAN', bic: 'paymentGatewayBIC'},
             'account-holder': {
                 'last-name' : 'paymentGatewaySEPADebtorName'
             }
@@ -169,8 +172,10 @@ module.exports = {
 
     PAYMENT_METHOD_SEPA_DIRECT_DEBIT: 'sepadirectdebit',
     PAYMENT_METHOD_CREDIT_CARD      : 'creditcard',
+    PAYMENT_METHOD_CREDIT_CARD3DS   : 'creditcard3ds',
     PAYMENT_METHOD_EPS              : 'eps',
     PAYMENT_METHOD_GIROPAY          : 'giropay',
+    PAYMENT_METHOD_IDEAL            : 'ideal',
     PAYMENT_METHOD_PAYPAL           : 'paypal',
     PAYMENT_METHOD_PAYOLUTION_INV   : 'payolution-inv',
     PAYMENT_METHOD_SEPA_CREDIT      : 'sepacredit',

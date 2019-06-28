@@ -10,19 +10,23 @@
 <!--- TEMPLATENAME: PG_IDEAL.isml --->
 <isset name="idealFields" value="${ pdict.forms.billingForm.PG_IDEAL }" scope="page"/>
 
-<fieldset class="pg-ideal-form">
+<fieldset class="payment-form-fields">
     <div class="row">
         <div class="col-12">
+            <input type="hidden" class="form-control"
+               name="${pdict.forms.billingForm.paymentMethod.htmlName}"
+               value="PG_IDEAL"
+            >
             <div class="form-group
-            <isif condition=${ idealFields.bic.mandatory === true }>required</isif>
-            ${ idealFields.bic.htmlName }">
-                <label class="form-control-label" for="ideal_bic">${ Resource.msg('paymentpaygate.bic', 'forms', null) }</label>
-                <select class="form-control custom-select" id="ideal_bic" <isprint value=${ idealFields.bic.attributes} encoding="off"/>>
-                    <isloop items=${ idealFields.bic.options } var="bic">
+            <isif condition=${ idealFields.paymentGatewayBIC.mandatory === true }>required</isif>
+            ${ idealFields.paymentGatewayBIC.htmlName }">
+                <label class="form-control-label" for="ideal_bic">${ Resource.msg('paymentgateway.bic', 'forms', null) }</label>
+                <select class="form-control custom-select" id="ideal_bic" <isprint value=${ idealFields.paymentGatewayBIC.attributes} encoding="off"/>>
+                    <isloop items=${ idealFields.paymentGatewayBIC.options } var="bic">
                         <option id="${ bic.id }" value="${ bic.htmlValue }"
                         <isif condition="${ pdict.order.billing.payment.selectedPaymentInstruments
                                 && pdict.order.billing.payment.selectedPaymentInstruments.length > 0
-                                && bic.id == pdict.order.billing.payment.selectedPaymentInstruments[0].bic }">
+                                && bic.id == pdict.order.billing.payment.selectedPaymentInstruments[0].paymentGatewayBIC }">
                             selected
                         </isif> >
                         ${ bic.label }
