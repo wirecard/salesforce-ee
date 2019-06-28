@@ -151,6 +151,7 @@ module.exports = {
 
     PAYMENT_METHOD_SEPA_DIRECT_DEBIT: 'sepadirectdebit',
     PAYMENT_METHOD_CREDIT_CARD      : 'creditcard',
+    PAYMENT_METHOD_CREDIT_CARD3DS   : 'creditcard3ds',
     PAYMENT_METHOD_EPS              : 'eps',
     PAYMENT_METHOD_GIROPAY          : 'giropay',
     PAYMENT_METHOD_IDEAL            : 'ideal',

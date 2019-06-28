@@ -50,15 +50,6 @@
                 <min-length>0</min-length>
                 <default-value>shop-systems-support@wirecard.com</default-value>
             </attribute-definition>
-            <attribute-definition attribute-id="paymentGatewayUrlSalt">
-                <display-name xml:lang="x-default">Url salt</display-name>
-                <description xml:lang="x-default">Salt for calculating url fingerprint sha512 hash. Be careful when change its value: it makes post-order transactions for existing orders impossible!</description>
-                <type>string</type>
-                <mandatory-flag>true</mandatory-flag>
-                <externally-managed-flag>false</externally-managed-flag>
-                <min-length>5</min-length>
-                <default-value>V6iqqFM2m+)neEdp</default-value>
-            </attribute-definition>
         </custom-attribute-definitions>
         <group-definitions>
             <attribute-group group-id="PAYMENTGATEWAY">
@@ -68,7 +59,6 @@
                 <attribute attribute-id="paymentGatewayNotificationEmail"/>
                 <attribute attribute-id="paymentGatewayDebugMode"/>
                 <attribute attribute-id="paymentGatewayShopName"/>
-                <attribute attribute-id="paymentGatewayUrlSalt"/>
             </attribute-group>
         </group-definitions>
     </type-extension>

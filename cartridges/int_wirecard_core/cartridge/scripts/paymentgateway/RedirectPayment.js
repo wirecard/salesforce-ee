@@ -32,8 +32,6 @@
         if (transaction && paymentService) {
             var errorMessage = ['Error while payment authorization [' + methodName + '] : '];
 
-            var orderHelper = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper');
-            transaction.setCustomField('fp', orderHelper.getOrderFingerprint(order));
             paymentService.call(transaction.getPayload());
             result = paymentService.getResponse();
 
