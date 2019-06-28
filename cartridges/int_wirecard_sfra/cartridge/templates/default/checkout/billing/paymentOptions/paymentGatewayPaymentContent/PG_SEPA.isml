@@ -52,7 +52,7 @@
     <isif condition="${ bicVisible === true }">
     <div class="row">
         <div class="col-12">
-            <div class="form-group ${bicRequired} ${sepaFields.paymentGatewayBIC.htmlName}">
+            <div class="form-group ${sepaFields.paymentGatewayBIC.htmlName}">
                 <label class="form-control-label" for="${sepaFields.paymentGatewayBIC.htmlName}">${sepaFields.paymentGatewayBIC.label}</label>
                 <input  type="text"
                         class="form-control bic"
@@ -60,7 +60,6 @@
                         name="${sepaFields.paymentGatewayBIC.htmlName}"
                         aria-describedby="bicInvalidMessage"
                         data-pattern-mismatch="${Resource.msg('error.message.parse.checkout.billing.bic', 'forms', null)}"
-                        data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
                 />
                 <div class="invalid-feedback" id="bicInvalidMessage"></div>
             </div>
