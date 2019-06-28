@@ -116,6 +116,9 @@
         <image>images/payment/paymentgateway/SEPA.svg</image>
         <enabled-flag>false</enabled-flag>
         <processor-id>PAYMENTGATEWAY</processor-id>
+        <currencies>
+            <currency>EUR</currency>
+        </currencies>
     </payment-method>
 
 </payment-settings>

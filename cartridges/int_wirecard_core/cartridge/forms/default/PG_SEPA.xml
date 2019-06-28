@@ -17,7 +17,7 @@
             type="string"/>
 
     <field
-            formid="paymentGatewaySEPABIC"
+            formid="paymentGatewayBIC"
             label="paymentgateway.sepa.label.bic"
             regexp="(^[A-Z]{6}[A-Z0-9]{2,5}$)"
             min-length="8"
@@ -28,7 +28,7 @@
             type="string"/>
 
     <field
-            formid="paymentGatewaySEPAIBAN"
+            formid="paymentGatewayIBAN"
             label="paymentgateway.sepa.label.iban"
             mandatory="true"
             regexp="(^[A-Z]{2}[0-9]{2}[A-Z0-9]{11,28}$)"

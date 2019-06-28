@@ -34,15 +34,15 @@
 
     <div class="row">
         <div class="col-12">
-            <div class="form-group required ${sepaFields.paymentGatewaySEPAIBAN.htmlName}">
-                <label class="form-control-label" for="iban">${sepaFields.paymentGatewaySEPAIBAN.label}</label>
-                <input type="text"
-                       class="form-control iban"
-                       id="iban"
-                       name="${sepaFields.paymentGatewaySEPAIBAN.htmlName}"
-                       aria-describedby="ibanInvalidMessage"
-                       data-pattern-mismatch="${Resource.msg('error.message.parse.checkout.billing.iban', 'forms', null)}"
-                       data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
+            <div class="form-group required ${sepaFields.paymentGatewayIBAN.htmlName}">
+                <label class="form-control-label" for="${sepaFields.paymentGatewayIBAN.htmlName}">${sepaFields.paymentGatewayIBAN.label}</label>
+                <input  type="text"
+                        class="form-control iban"
+                        id="${sepaFields.paymentGatewayIBAN.htmlName}"
+                        name="${sepaFields.paymentGatewayIBAN.htmlName}"
+                        aria-describedby="ibanInvalidMessage"
+                        data-pattern-mismatch="${Resource.msg('error.message.parse.checkout.billing.iban', 'forms', null)}"
+                        data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
                 />
                 <div class="invalid-feedback" id="ibanInvalidMessage"></div>
             </div>
@@ -50,20 +50,18 @@
     </div>
 
     <isif condition="${ bicVisible === true }">
-        <div class="row">
-            <div class="col-12">
-                <div class="form-group ${sepaFields.paymentGatewaySEPABIC.htmlName}">
-                    <label class="form-control-label" for="bic">${sepaFields.paymentGatewaySEPABIC.label}</label>
-                    <input type="text"
-                           class="form-control bic"
-                           id="bic"
-                           name="${sepaFields.paymentGatewaySEPABIC.htmlName}"
-                           aria-describedby="bicInvalidMessage"
-                           data-pattern-mismatch="${Resource.msg('error.message.parse.checkout.billing.bic', 'forms', null)}"
-                           data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
-                    />
-                    <div class="invalid-feedback" id="bicInvalidMessage"></div>
-                </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group ${sepaFields.paymentGatewayBIC.htmlName}">
+                <label class="form-control-label" for="${sepaFields.paymentGatewayBIC.htmlName}">${sepaFields.paymentGatewayBIC.label}</label>
+                <input  type="text"
+                        class="form-control bic"
+                        id="${sepaFields.paymentGatewayBIC.htmlName}"
+                        name="${sepaFields.paymentGatewayBIC.htmlName}"
+                        aria-describedby="bicInvalidMessage"
+                        data-pattern-mismatch="${Resource.msg('error.message.parse.checkout.billing.bic', 'forms', null)}"
+                />
+                <div class="invalid-feedback" id="bicInvalidMessage"></div>
             </div>
         </div>
     </isif>

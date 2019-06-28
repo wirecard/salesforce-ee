@@ -60,20 +60,20 @@
     </p>
     <p class="col-7">
         ${ payment.SEPAIBAN }
-       </p>
+    </p>
 
-       <isif condition="${ payment.SEPABIC }">
+    <isif condition="${ payment.SEPABIC }">
         <p class="col-5">
             ${ Resource.msg('bic', 'paymentgateway', null) }:
         </p>
         <p class="col-7">
             ${ payment.SEPABIC }
         </p>
-       </isif>
+    </isif>
 
     <p class="col-12">
         ${ mandateText }
-       </p>
+    </p>
 </div>
 <div class="row align-items-center">
     <div class="col-3">

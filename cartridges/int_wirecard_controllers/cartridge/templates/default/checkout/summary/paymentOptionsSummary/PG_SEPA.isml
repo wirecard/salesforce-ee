@@ -59,15 +59,15 @@
         ${ Resource.msg('iban', 'paymentgateway', null) }:
     </p>
     <p class="col-7">
-        ${ pgInstrument.custom.paymentGatewaySEPAIBAN }
+        ${ pgInstrument.custom.paymentGatewayIBAN }
     </p>
 
-    <isif condition="${ pgInstrument.custom.paymentGatewaySEPABIC }">
+    <isif condition="${ pgInstrument.custom.paymentGatewayBIC }">
         <p class="col-5">
             ${ Resource.msg('bic', 'paymentgateway', null) }:
         </p>
         <p class="col-7">
-            ${ pgInstrument.custom.paymentGatewaySEPABIC }
+            ${ pgInstrument.custom.paymentGatewayBIC }
         </p>
     </isif>
 

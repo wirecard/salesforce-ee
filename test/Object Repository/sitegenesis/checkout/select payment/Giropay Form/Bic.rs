@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>Input bic</name>
+   <name>Bic</name>
    <tag></tag>
-   <elementGuidId>f20501e5-8c45-4ee4-bcae-c7f0e32b8f36</elementGuidId>
+   <elementGuidId>82a257f9-4244-4f16-a2a8-d3ff68ba693d</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//div[@id='PaymentMethod_PG_EPS']//input[contains(@name,'paymentGatewayBIC')]</value>
+         <value>//div[@id='PaymentMethod_PG_GIROPAY']//input[contains(@name,'paymentGatewayBIC')]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,6 +17,6 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//div[@id='PaymentMethod_PG_EPS']//input[contains(@name,'paymentGatewayBIC')]</value>
+      <value>//div[@id='PaymentMethod_PG_GIROPAY']//input[contains(@name,'paymentGatewayBIC')]</value>
    </webElementProperties>
 </WebElementEntity>
