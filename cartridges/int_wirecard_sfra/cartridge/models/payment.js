@@ -63,7 +63,7 @@ function checkPaymentGatewayMethodsAvailable(paymentMethods, currentBasket) {
     var shippingAddress = currentBasket.defaultShipment.shippingAddress;
     if (paymentMethods) {
         paymentMethods.forEach(function (method) {
-            if (['PG_PAYOLUTION_INVOICE'].indexOf(method.ID) > -1) {
+            if (shippingAddress && ['PG_PAYOLUTION_INVOICE'].indexOf(method.ID) > -1) {
                 var allowedShippingCountries = Site.getCustomPreferenceValue('paymentGatewayPayolutionInvoiceAllowedShippingCountries');
                 if (!allowedShippingCountries || allowedShippingCountries.split(',').indexOf(shippingAddress.countryCode.value.toUpperCase())) {
                     result.push(method);

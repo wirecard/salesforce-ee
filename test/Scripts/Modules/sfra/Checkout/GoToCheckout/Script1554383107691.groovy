@@ -21,6 +21,19 @@ WebUI.click(findTestObject('sfra/checkout/Minicart link'))
 
 WebUI.delay(5)
 
+switch (paymentMethodId) {
+    case 'PG_PAYOLUTION_INVOICE':
+        WebUI.waitForElementVisible(findTestObject('sfra/checkout/cart/Select quantity'), 2)
+
+        WebUI.selectOptionByIndex(findTestObject('sfra/checkout/cart/Select quantity'), 2, FailureHandling.STOP_ON_FAILURE)
+
+        WebUI.delay(2)
+
+        break
+    default:
+        break
+}
+
 WebUI.waitForElementClickable(findTestObject('sfra/checkout/Link checkout'), 30)
 
 WebUI.click(findTestObject('sfra/checkout/Link checkout'))

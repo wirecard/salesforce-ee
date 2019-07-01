@@ -23,7 +23,7 @@
                 <select class="form-control custom-select" id="dob_year"
                         name="${ payolutionFields.dob_year.htmlName }" required autocomplete="pm-year">
                     <isloop items=${ payolutionFields.dob_year.options } var="year">
-                        <option id="${ year.id }" value="${ year.htmlValue }">
+                        <option id="${ year.id }" value="${ year.value }">
                         ${year.label}
                         </option>
                     </isloop>
@@ -37,7 +37,7 @@
                 <select class="form-control custom-select" id="dob_month"
                         name="${ payolutionFields.dob_month.htmlName }" required>
                     <isloop items=${ payolutionFields.dob_month.options } var="month">
-                        <option id="${ month.id }" value="${ month.htmlValue }">
+                        <option id="${ month.id }" value="${ month.value }">
                         ${month.label}
                         </option>
                     </isloop>
@@ -51,7 +51,7 @@
                 <select class="form-control custom-select" id="dob_day"
                         name="${ payolutionFields.dob_day.htmlName }" required autocomplete="pm-day">
                     <isloop items=${payolutionFields.dob_day.options} var="day">
-                        <option id="${day.id}" value="${day.htmlValue}">
+                        <option id="${ day.id }" value="${ day.value }">
                         ${day.label}
                         </option>
                     </isloop>
