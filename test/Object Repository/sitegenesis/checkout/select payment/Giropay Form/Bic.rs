@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>Input bic</name>
+   <name>Bic</name>
    <tag></tag>
    <elementGuidId>82a257f9-4244-4f16-a2a8-d3ff68ba693d</elementGuidId>
    <selectorCollection>

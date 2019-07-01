@@ -8,6 +8,7 @@
 'use strict';
 
 /* API Includes */
+var Site = require('dw/system/Site').getCurrent();
 var Transaction = require('dw/system/Transaction');
 
 var collections = require('*/cartridge/scripts/util/collections');
@@ -31,12 +32,26 @@ function removePaymentInstruments(basket) {
 }
 
 /**
+ * Helper function to retrieve specific config value
+ * @param {string} key - site preference name
+ * @returns {string} - site preference value
+ */
+function getSitePreference(key) {
+    var methodKey = key;
+    var result = Site.getCustomPreferenceValue(methodKey);
+    if (!result) {
+        result = '';
+    }
+    return result;
+}
+
+/**
  * Handle method for creating the payment instrument of a wirecard payment method.
  * @param {dw.order.Basket} basket - current basket
  * @returns {Object} - result
  */
 function Handle(basket) {
-    var fp = orderHelper.getOrderFingerprint(basket, basket.custom.paymentGatewayReservedOrderNo);
+    var fp = orderHelper.getOrderFingerprint(basket, basket.custom.paymentGatewayReservedOrderNo, getSitePreference('paymentGatewayCreditCardSecret'));
 
     Transaction.wrap(function () {
         removePaymentInstruments(basket);
@@ -61,7 +76,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor) { // eslint
     var order = OrderMgr.getOrder(orderNumber);
 
     try {
-        if (paymentInstrument.custom.paymentGatewayFingerPrint !== orderHelper.getOrderFingerprint(order)) {
+        if (paymentInstrument.custom.paymentGatewayFingerPrint !== orderHelper.getOrderFingerprint(order, null, getSitePreference('paymentGatewayCreditCardSecret'))) {
             var Resource = require('dw/web/Resource');
             throw new Error(Resource.msg('basket.integrity.failed', 'paymentgateway', 'Order integrity check failed!'));
         }

@@ -15,5 +15,5 @@ import internal.GlobalVariable as GlobalVariable
 
 WebUI.check(findTestObject('sitegenesis/checkout/select payment/Eps'))
 
-WebUI.setText(findTestObject('sitegenesis/checkout/eps/Input bic'), 'BWFBATW1XXX')
+WebUI.setText(findTestObject('sitegenesis/checkout/select payment/Eps Form/Bic'), 'BWFBATW1XXX')
 

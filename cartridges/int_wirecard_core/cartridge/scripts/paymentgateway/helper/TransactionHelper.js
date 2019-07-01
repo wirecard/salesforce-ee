@@ -181,6 +181,7 @@ var TransactionHelper = {
             methodName: methodName
         };
         const mappedMethodNames = [
+            'PG_IDEAL',
             'PG_POI',
             'PG_SOFORT',
             'PG_SEPA'
@@ -248,7 +249,7 @@ var TransactionHelper = {
                 }
             } else if (!transaction.parentTransactionId
                 && newTransaction.parentTransactionId == transaction.transactionId
-                && [paymentHelper.PAYMENT_METHOD_POI].indexOf(transaction.paymentMethodId) === -1
+//                && [paymentHelper.PAYMENT_METHOD_POI].indexOf(transaction.paymentMethodId) === -1
             ) {
                 // replace initial transaction with notification response
                 allPaymentTransactions.push(JSON.stringify(newTransaction));
@@ -560,11 +561,17 @@ var TransactionHelper = {
             case paymentHelper.PAYMENT_METHOD_CREDIT_CARD:
                 secret = Site.getCustomPreferenceValue('paymentGatewayCreditCardSecret');
                 break;
+            case paymentHelper.PAYMENT_METHOD_CREDIT_CARD3DS:
+                secret = Site.getCustomPreferenceValue('paymentGatewayCreditCardSecret3DS');
+                break;
             case paymentHelper.PAYMENT_METHOD_EPS:
                 secret = Site.getCustomPreferenceValue('paymentGatewayEpsSecret');
                 break;
             case paymentHelper.PAYMENT_METHOD_GIROPAY:
                 secret = Site.getCustomPreferenceValue('paymentGatewayGiropaySecret');
+                break;
+            case paymentHelper.PAYMENT_METHOD_IDEAL:
+                secret = Site.getCustomPreferenceValue('paymentGatewayIdealSecret');
                 break;
             case paymentHelper.PAYMENT_METHOD_PAYPAL:
                 secret = Site.getCustomPreferenceValue('paymentGatewayPayPalSecret');

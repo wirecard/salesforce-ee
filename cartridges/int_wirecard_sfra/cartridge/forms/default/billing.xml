@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+  Shop System Plugins:
+  - Terms of Use can be found under:
+  https://github.com/wirecard/salesforce-ee/blob/master/_TERMS_OF_USE
+  - License can be found under:
+  https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
+-->
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19">
+
+    <field formid="shippingAddressUseAsBillingAddress" label="profile.billingSameAsShipping" type="boolean"
+           binding="shippingAddressUseAsBillingAddress" checked="true" />
+
+    <include formid="addressFields" name="address"/>
+
+    <include formid="contactInfoFields" name="contactInfo"/>
+
+    <field formid="paymentMethod" type="string" mandatory="true" />
+
+    <include formid="creditCardFields" name="creditCard"/>
+
+    <field formid="subscribe" type="boolean" checked="false" default-value="false" mandatory="false" />
+
+    <!--  wirecard payment method forms -->
+    <include formid="PG_CREDITCARD" name="PG_CREDITCARD"/>
+    <include formid="PG_EPS" name="PG_EPS"/>
+    <include formid="PG_GIROPAY" name="PG_GIROPAY"/>
+    <include formid="PG_IDEAL" name="PG_IDEAL"/>
+    <include formid="PG_SEPA" name="PG_SEPA"/>
+
+</form>
