@@ -10,7 +10,8 @@
 <!--- TEMPLATENAME: PG_SEPA.isml --->
 <isset name="sepaFields" value="${ pdict.forms.billingForm.PG_SEPA }" scope="page"/>
 <isscript>
-	var address = pdict.order.billing.billingAddress.address;
+    var address = pdict.order.billing.billingAddress.address;
+    var debtorValue = address ? address.firstName + ' ' + address.lastName : '';
     var bicVisible = require('dw/system/Site').getCurrent().getCustomPreferenceValue('paymentGatewaySEPAShowBICInCheckout');
 </isscript>
 <fieldset class="pg-sepa-form payment-form-fields">
@@ -23,7 +24,7 @@
                        class="form-control debtorName"
                        id="debtorName"
                        name="${sepaFields.paymentGatewaySEPADebtorName.htmlName}"
-                       value="${address.firstName} ${address.lastName}"
+                       value="${ debtorValue }"
                        data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
                        aria-describedby="debtorNameInvalidMessage"
                 />
@@ -36,13 +37,13 @@
         <div class="col-12">
             <div class="form-group required ${sepaFields.paymentGatewayIBAN.htmlName}">
                 <label class="form-control-label" for="${sepaFields.paymentGatewayIBAN.htmlName}">${sepaFields.paymentGatewayIBAN.label}</label>
-                <input  type="text"
-                        class="form-control iban"
-                        id="${sepaFields.paymentGatewayIBAN.htmlName}"
-                        name="${sepaFields.paymentGatewayIBAN.htmlName}"
-                        aria-describedby="ibanInvalidMessage"
-                        data-pattern-mismatch="${Resource.msg('error.message.parse.checkout.billing.iban', 'forms', null)}"
-                        data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
+                <input type="text"
+                       class="form-control iban"
+                       id="${sepaFields.paymentGatewayIBAN.htmlName}"
+                       name="${sepaFields.paymentGatewayIBAN.htmlName}"
+                       aria-describedby="ibanInvalidMessage"
+                       data-pattern-mismatch="${Resource.msg('error.message.parse.checkout.billing.iban', 'forms', null)}"
+                       data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
                 />
                 <div class="invalid-feedback" id="ibanInvalidMessage"></div>
             </div>
@@ -50,18 +51,20 @@
     </div>
 
     <isif condition="${ bicVisible === true }">
-    <div class="row">
-        <div class="col-12">
-            <div class="form-group ${sepaFields.paymentGatewayBIC.htmlName}">
-                <label class="form-control-label" for="${sepaFields.paymentGatewayBIC.htmlName}">${sepaFields.paymentGatewayBIC.label}</label>
-                <input  type="text"
-                        class="form-control bic"
-                        id="${sepaFields.paymentGatewayBIC.htmlName}"
-                        name="${sepaFields.paymentGatewayBIC.htmlName}"
-                        aria-describedby="bicInvalidMessage"
-                        data-pattern-mismatch="${Resource.msg('error.message.parse.checkout.billing.bic', 'forms', null)}"
-                />
-                <div class="invalid-feedback" id="bicInvalidMessage"></div>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group ${sepaFields.paymentGatewayBIC.htmlName}">
+                    <label class="form-control-label" for="${sepaFields.paymentGatewayBIC.htmlName}">${sepaFields.paymentGatewayBIC.label}</label>
+                    <input type="text"
+                           class="form-control bic"
+                           id="${sepaFields.paymentGatewayBIC.htmlName}"
+                           name="${sepaFields.paymentGatewayBIC.htmlName}"
+                           aria-describedby="bicInvalidMessage"
+                           data-pattern-mismatch="${Resource.msg('error.message.parse.checkout.billing.bic', 'forms', null)}"
+                           data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
+                    />
+                    <div class="invalid-feedback" id="bicInvalidMessage"></div>
+                </div>
             </div>
         </div>
     </isif>
