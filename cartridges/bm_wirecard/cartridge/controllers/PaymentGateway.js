@@ -16,6 +16,7 @@
 var app = require('~/cartridge/scripts/app');
 var guard = require('~/cartridge/scripts/guard');
 
+var Resource = require('dw/web/Resource');
 var StringUtils = require('dw/util/StringUtils');
 var URLUtils = require('dw/web/URLUtils');
 var Logger = require('dw/system/Logger').getLogger('paymentgateway');
@@ -110,7 +111,6 @@ exports.ExecuteOperation = guard.ensure(['post', 'https'], function () {
     var amount = Number(parameterMap.amount.value);
 
     var Type = require('*/cartridge/scripts/paymentgateway/transaction/Type');
-    var Resource = require('dw/web/Resource');
     var OrderMgr = require('dw/order/OrderMgr');
     var order = OrderMgr.getOrder(orderNo);
 
@@ -167,13 +167,13 @@ exports.HttpAccessOverview = guard.ensure(['get', 'https'], function () {
     var preferences;
 
     [
-        { methodName: 'Credit Card', methodID: 'PG_CREDITCARD' },
-        { methodName: 'eps', methodID: 'PG_EPS' },
-        { methodName: 'Giropay', methodID: 'PG_GIROPAY' },
-        { methodName: 'iDEAL', methodID: 'PG_IDEAL' },
-        { methodName: 'PayPal', methodID: 'PG_PAYPAL' },
-        { methodName: 'Sofort.', methodID: 'PG_SOFORT' },
-        { methodName: 'SEPA Direct Debit', methodID: 'PG_SEPA' }
+        { methodName: Resource.msg('creditcard', 'paymentgateway', null), methodID: 'PG_CREDITCARD' },
+        { methodName: Resource.msg('eps', 'paymentgateway', null), methodID: 'PG_EPS' },
+        { methodName: Resource.msg('giropay', 'paymentgateway', null), methodID: 'PG_GIROPAY' },
+        { methodName: Resource.msg('ideal', 'paymentgateway', null), methodID: 'PG_IDEAL' },
+        { methodName: Resource.msg('paypal', 'paymentgateway', null), methodID: 'PG_PAYPAL' },
+        { methodName: Resource.msg('sofortbanking', 'paymentgateway', null), methodID: 'PG_SOFORT' },
+        { methodName: Resource.msg('sepadd', 'paymentgateway', null), methodID: 'PG_SEPA' }
     ].forEach(function (p) {
         preferences = preferenceHelper.getPreferenceForMethodID(p.methodID);
         if (Object.prototype.hasOwnProperty.call(preferences, 'userName')) {
@@ -298,7 +298,6 @@ exports.SupportFormPost = guard.ensure(['post', 'https'], function () {
 
     var HashMap = require('dw/util/HashMap');
     var Mail = require('dw/net/Mail');
-    var Resource = require('dw/web/Resource');
     var Site = require('dw/system/Site').getCurrent();
     var Status = require('dw/system/Status');
     var Template = require('dw/util/Template');
