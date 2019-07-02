@@ -44,6 +44,11 @@ function getSelectedPaymentInstruments(selectedPaymentInstruments) {
             results.SEPADebtorName = paymentInstrument.custom.paymentGatewaySEPADebtorName;
             results.SEPAIBAN = paymentInstrument.custom.paymentGatewayIBAN;
             results.SEPABIC = paymentInstrument.custom.paymentGatewayBIC;
+        } else if (/^PG_POI$/.test(paymentInstrument.paymentMethod)) {
+            results.merchantBank = {
+                iban: paymentInstrument.custom.paymentGatewayIBAN,
+                bic: paymentInstrument.custom.paymentGatewayBIC
+            };
         }
 
         return results;

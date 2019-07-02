@@ -57,6 +57,17 @@
                 paymentTransaction.setPaymentProcessor(paymentProcessor);
                 paymentTransaction.setTransactionID(order.getOrderNo());
             });
+            // save merchant bank account
+            if (['PG_POI'].indexOf(methodName) > -1
+                && Object.prototype.hasOwnProperty.call(result, 'merchantBankAccount')
+                && Object.prototype.hasOwnProperty.call(result.merchantBankAccount, 'iban')
+                && Object.prototype.hasOwnProperty.call(result.merchantBankAccount, 'bic')
+            ) {
+                Transaction.wrap(function () {
+                    paymentInstrument.custom.paymentGatewayIBAN = result.merchantBankAccount.iban;
+                    paymentInstrument.custom.paymentGatewayBIC = result.merchantBankAccount.bic;
+                });
+            }
         } else {
             pgLogger.error('Error while payment authorization - no transaction / service class for ' + methodName);
             throw new Error('Error while payment authorization!');

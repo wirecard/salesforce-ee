@@ -418,6 +418,7 @@ var TransactionHelper = {
             'transaction-id',
             'completion-time-stamp',
             'requested-amount',
+            'merchant-bank-account',
             'payment-methods',
             'parent-transaction-id',
             'custom-fields'
