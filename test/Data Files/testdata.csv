@@ -4,5 +4,6 @@ PG_EPS,false
 PG_GIROPAY,false
 PG_IDEAL,false
 PG_PAYPAL,false
+PG_POI,false
 PG_SOFORT,false
 PG_SEPA,false
