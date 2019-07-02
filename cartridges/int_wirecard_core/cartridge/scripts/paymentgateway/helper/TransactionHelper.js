@@ -249,7 +249,7 @@ var TransactionHelper = {
                 }
             } else if (!transaction.parentTransactionId
                 && newTransaction.parentTransactionId == transaction.transactionId
-//                && [paymentHelper.PAYMENT_METHOD_POI].indexOf(transaction.paymentMethodId) === -1
+                && [paymentHelper.PAYMENT_METHOD_POI].indexOf(transaction.paymentMethodId) === -1
             ) {
                 // replace initial transaction with notification response
                 allPaymentTransactions.push(JSON.stringify(newTransaction));
