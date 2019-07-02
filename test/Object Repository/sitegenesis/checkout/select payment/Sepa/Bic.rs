@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id = 'dwfrm_billing_paymentMethods_PG__SEPA_paymentGatewaySEPABIC']</value>
+         <value>//div[@id='PaymentMethod_PG_SEPA']//input[contains(@name,'paymentGatewayBIC')]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,8 +15,8 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>id</name>
+      <name>xpath</name>
       <type>Main</type>
-      <value>dwfrm_billing_paymentMethods_PG__SEPA_paymentGatewaySEPABIC</value>
+      <value>//div[@id='PaymentMethod_PG_SEPA']//input[contains(@name,'paymentGatewayBIC')]</value>
    </webElementProperties>
 </WebElementEntity>

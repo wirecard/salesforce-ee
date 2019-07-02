@@ -30,6 +30,10 @@ switch (paymentMethodId) {
 		WebUI.callTestCase(findTestCase('Modules/Payment methods/Giropay'), [:], FailureHandling.STOP_ON_FAILURE)
 
 		break
+	case 'PG_IDEAL':
+		WebUI.callTestCase(findTestCase('Modules/Payment methods/iDEAL'), [:], FailureHandling.STOP_ON_FAILURE)
+
+		break
     case 'PG_PAYPAL':
         WebUI.callTestCase(findTestCase('Modules/Payment methods/PayPal'), [:], FailureHandling.STOP_ON_FAILURE)
 

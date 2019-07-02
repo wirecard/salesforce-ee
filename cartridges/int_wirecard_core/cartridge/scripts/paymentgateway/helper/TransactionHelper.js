@@ -181,6 +181,7 @@ var TransactionHelper = {
             methodName: methodName
         };
         const mappedMethodNames = [
+            'PG_IDEAL',
             'PG_SOFORT',
             'PG_SEPA'
         ];
@@ -546,7 +547,7 @@ var TransactionHelper = {
      * @returns {string} - payment method's secret
      */
     getSecretCustomPreferenceFromPaymentMethodId : function(paymentMethodId) {
-        const Site = require('dw/system/Site').getCurrent();
+        var Site = require('dw/system/Site').getCurrent();
         var paymentHelper = require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper');
         var secret;
 
@@ -557,11 +558,17 @@ var TransactionHelper = {
             case paymentHelper.PAYMENT_METHOD_CREDIT_CARD:
                 secret = Site.getCustomPreferenceValue('paymentGatewayCreditCardSecret');
                 break;
+            case paymentHelper.PAYMENT_METHOD_CREDIT_CARD3DS:
+                secret = Site.getCustomPreferenceValue('paymentGatewayCreditCardSecret3DS');
+                break;
             case paymentHelper.PAYMENT_METHOD_EPS:
                 secret = Site.getCustomPreferenceValue('paymentGatewayEpsSecret');
                 break;
             case paymentHelper.PAYMENT_METHOD_GIROPAY:
                 secret = Site.getCustomPreferenceValue('paymentGatewayGiropaySecret');
+                break;
+            case paymentHelper.PAYMENT_METHOD_IDEAL:
+                secret = Site.getCustomPreferenceValue('paymentGatewayIdealSecret');
                 break;
             case paymentHelper.PAYMENT_METHOD_PAYPAL:
                 secret = Site.getCustomPreferenceValue('paymentGatewayPayPalSecret');

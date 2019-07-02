@@ -62,6 +62,9 @@
         <image>images/payment/paymentgateway/IDEAL_Logo.png</image>
         <enabled-flag>false</enabled-flag>
         <processor-id>PAYMENTGATEWAY</processor-id>
+        <countries>
+            <country country-code="NL"/>
+        </countries>
         <currencies>
             <currency>EUR</currency>
         </currencies>
@@ -116,6 +119,9 @@
         <image>images/payment/paymentgateway/SEPA.svg</image>
         <enabled-flag>false</enabled-flag>
         <processor-id>PAYMENTGATEWAY</processor-id>
+        <currencies>
+            <currency>EUR</currency>
+        </currencies>
     </payment-method>
 
 </payment-settings>
