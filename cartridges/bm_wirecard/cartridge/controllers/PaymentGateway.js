@@ -172,6 +172,7 @@ exports.HttpAccessOverview = guard.ensure(['get', 'https'], function () {
         { methodName: Resource.msg('giropay', 'paymentgateway', null), methodID: 'PG_GIROPAY' },
         { methodName: Resource.msg('ideal', 'paymentgateway', null), methodID: 'PG_IDEAL' },
         { methodName: Resource.msg('paypal', 'paymentgateway', null), methodID: 'PG_PAYPAL' },
+        { methodName: Resource.msg('pia', 'paymentgateway', null), methodID: 'PG_PIA' },
         { methodName: Resource.msg('sofortbanking', 'paymentgateway', null), methodID: 'PG_SOFORT' },
         { methodName: Resource.msg('sepadd', 'paymentgateway', null), methodID: 'PG_SEPA' }
     ].forEach(function (p) {
