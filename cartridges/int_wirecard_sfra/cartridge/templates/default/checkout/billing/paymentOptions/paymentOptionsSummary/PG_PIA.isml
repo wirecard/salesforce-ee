@@ -15,7 +15,7 @@
         </tr>
         <tr>
             <td>${ Resource.msg('amount', 'paymentgateway', null) }</td>
-            <td>${ pdict.order.totals.grandTotal } paymentInstrument.amount!!</td>
+            <td>${ payment.amountFormatted }</td>
         </tr>
         <tr>
             <td>${ Resource.msg('iban', 'paymentgateway', null) }</td>

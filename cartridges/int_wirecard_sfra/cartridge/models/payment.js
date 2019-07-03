@@ -9,6 +9,7 @@
 'use strict';
 
 var collections = require('*/cartridge/scripts/util/collections');
+var formatMoney = require('dw/util/StringUtils').formatMoney;
 
 var base = module.superModule;
 
@@ -22,8 +23,10 @@ function getSelectedPaymentInstruments(selectedPaymentInstruments) {
     return collections.map(selectedPaymentInstruments, function (paymentInstrument) {
         var results = {
             paymentMethod: paymentInstrument.paymentMethod,
-            amount: paymentInstrument.paymentTransaction.amount.value
+            amount: paymentInstrument.paymentTransaction.amount.value,
+            amountFormatted: formatMoney(paymentInstrument.paymentTransaction.amount)
         };
+
         if (paymentInstrument.paymentMethod === 'CREDIT_CARD') {
             results.lastFour = paymentInstrument.creditCardNumberLastDigits;
             results.owner = paymentInstrument.creditCardHolder;
