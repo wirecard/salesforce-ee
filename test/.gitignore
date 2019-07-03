@@ -4,6 +4,9 @@
 # configurations
 .classpath
 
+# bin directory
+bin/*
+
 # TempTestcase
 bin/lib/TempTestCase*.class
 Libs/TempTest*.groovy
