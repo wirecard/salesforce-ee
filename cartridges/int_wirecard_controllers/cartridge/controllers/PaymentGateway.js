@@ -90,7 +90,6 @@ exports.Fail = guard.ensure(['https'], function () {
             OrderMgr.failOrder(order);
         });
 
-        var Status = require('dw/system/Status');
         app.getController('COSummary').Start({
             PaymentGatewayError: {
                 description: eppResponse.status.message
@@ -116,9 +115,9 @@ exports.Notify = guard.ensure(['post', 'https'], function () {
 
     if (order && order.orderToken === orderToken) {
         // parse response
-        var requestBody       = parameterMap.getRequestBodyAsString();
+        var requestBody = parameterMap.getRequestBodyAsString();
         var transactionHelper = require('*/cartridge/scripts/paymentgateway/helper/TransactionHelper');
-        var notifyData        = transactionHelper.parseTransactionResponse(
+        var notifyData = transactionHelper.parseTransactionResponse(
             requestBody, null, transactionHelper.RESPONSE_TYPE_NOTIFY
         );
         var rawResponeJson = transactionHelper.getJsonSignedResponseWrapper(requestBody).getJsonResponse();

@@ -45,12 +45,12 @@ function getSelectedPaymentInstruments(selectedPaymentInstruments) {
             results.SEPAIBAN = paymentInstrument.custom.paymentGatewayIBAN;
             results.SEPABIC = paymentInstrument.custom.paymentGatewayBIC;
         } else if (/^PG_(POI|PIA)$/.test(paymentInstrument.paymentMethod)) {
-             results.merchantBank = {
-                 iban: paymentInstrument.custom.paymentGatewayIBAN,
-                 bic: paymentInstrument.custom.paymentGatewayBIC,
-                 ptrid: paymentInstrument.custom.paymentGatewayReferenceId
-             };
-         }
+            results.merchantBank = {
+                iban: paymentInstrument.custom.paymentGatewayIBAN,
+                bic: paymentInstrument.custom.paymentGatewayBIC,
+                ptrid: paymentInstrument.custom.paymentGatewayReferenceId
+            };
+        }
 
         return results;
     });
