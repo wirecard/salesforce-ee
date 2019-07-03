@@ -40,6 +40,9 @@
 <!--- PG_SOFORT --->
 <div id="PaymentMethod_PG_SOFORT" class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='PG_SOFORT'}">payment-method-expanded</isif>" data-method="PG_SOFORT"></div>
 
+<!--- PG_PIA --->
+<div id="PaymentMethod_PG_PIA" class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='PG_PIA'}">payment-method-expanded</isif>" data-method="PG_PIA"></div>
+
 <!--- PG_PAYPAL --->
 <div id="PaymentMethod_PG_PAYPAL" class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='PG_PAYPAL'}">payment-method-expanded</isif>" data-method="PG_PAYPAL"></div>
 

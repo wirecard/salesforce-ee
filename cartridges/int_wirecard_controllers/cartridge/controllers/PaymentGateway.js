@@ -190,10 +190,3 @@ exports.Debug = guard.ensure(['get', 'https'], function () {
     response.writer.println(result);
 });
 
-exports.GetPGSummary = guard.ensure(['get', 'https'], function () {
-    const payment = require('dw/order/BasketMgr').getCurrentBasket().getPaymentInstruments('PG_SEPA');
-
-    if (!payment.empty) {
-        response.render('checkout/billing/paymentOptions/paymentOptionsSummary/PG_SEPA', { payment:  payment[0]});
-    }
-});
