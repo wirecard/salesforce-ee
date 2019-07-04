@@ -236,7 +236,6 @@ Transaction.prototype.getPayload = function () {
     if (!result['merchant-account-id']) {
         throw new Error('No merchant-account-id provided!');
     }
-    var customPayload = this.getCustomPayload();
 
     function mergeCustomPayload(data, customData) {
         Object.keys(customData).forEach(function (key) {

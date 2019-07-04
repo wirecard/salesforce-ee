@@ -34,7 +34,7 @@ function validatePayment(req, currentBasket) {
         var billingAddressHash = orderHelper.getAddressHash(currentBasket.billingAddress);
         var shippingAddressHash = orderHelper.getAddressHash(currentBasket.defaultShipment.shippingAddress);
 
-        for (var i = 0; i < paymentInstruments.length; i++) {
+        for (var i = 0; i < paymentInstruments.length; i += 1) {
             var paymentInstrument = paymentInstruments[i];
             var paymentMethod = paymentInstrument.getPaymentMethod();
             if (['PG_PAYOLUTION_INVOICE'].indexOf(paymentMethod) > -1

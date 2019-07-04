@@ -23,9 +23,9 @@ var app = require(controllerCartridge + '/cartridge/scripts/app');
  * holds form ids for payment methods to reset if not selected
  */
 var resetPaymentForms = {
-    PG_GIROPAY: 'PG_GIROPAY',
-    PG_IDEAL  : 'PG_IDEAL',
-    PG_SEPA   : 'PG_SEPA',
+    PG_GIROPAY           : 'PG_GIROPAY',
+    PG_IDEAL             : 'PG_IDEAL',
+    PG_SEPA              : 'PG_SEPA',
     PG_PAYOLUTION_INVOICE: 'PG_PAYOLUTION_INVOICE'
 };
 
@@ -122,7 +122,7 @@ function validatePayolutionInvoice(paymentMethodId, lineItemCtnr) {
     }
 
     return {
-        errors: paymentGatewayErrors,
+        errors     : paymentGatewayErrors,
         dateOfBirth: dateOfBirth
     };
 }

@@ -10,10 +10,21 @@
 var Transaction = require('./Transaction');
 var Type = require('./Type').All;
 
+var stringHelper = require('*/cartridge/scripts/paymentgateway/util/StringHelper');
+
 var preferenceMapping = {
     addDesc: 'paymentGatewayPayolutionInvoiceAddDescriptorToRequest',
     sendAdditionalData: 'paymentGatewayPayolutionInvoiceSendAdditionalData'
 };
+
+/**
+ * Prepend "0" to date values
+ * @param {string} str - date value (e.g. month, day)
+ * @returns {string} - string with prepended "0"
+ */
+function prependLeadingZero(str) {
+    return stringHelper.padLeft(str, 2, '0');
+}
 
 /**
  * Get transaction type for cancellation
@@ -98,12 +109,6 @@ Payolution.prototype.getCustomPayload = function () {
     var result = {};
 
     if (!instruments.empty) {
-        /* script includes */
-        var stringHelper = require('*/cartridge/scripts/paymentgateway/util/StringHelper');
-        function prependLeadingZero(str) {
-            return stringHelper.padLeft(str, 2, '0');
-        }
-
         var dob = instruments[0].custom.paymentGatewayDateOfBirth;
         var dobString = [
             dob.getFullYear(),

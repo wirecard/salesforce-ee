@@ -62,18 +62,18 @@ var PreferencesMapping = {
         initialTransactionType: 'paymentGatewayPayPalInitialTransactionType'
     },
     PG_PAYOLUTION_INVOICE_EUR: {
-        userName            : 'paymentGatewayPayolutionInvoiceHttpUser',
-        password            : 'paymentGatewayPayolutionInvoiceHttpPassword',
-        baseUrl             : 'paymentGatewayPayolutionInvoiceBaseUrl',
-        merchantAccountID   : 'paymentGatewayPayolutionInvoiceMerchantAccountID',
-        sendAdditionalData  : 'paymentGatewayPayolutionInvoiceSendAdditionalData'
+        userName          : 'paymentGatewayPayolutionInvoiceHttpUser',
+        password          : 'paymentGatewayPayolutionInvoiceHttpPassword',
+        baseUrl           : 'paymentGatewayPayolutionInvoiceBaseUrl',
+        merchantAccountID : 'paymentGatewayPayolutionInvoiceMerchantAccountID',
+        sendAdditionalData: 'paymentGatewayPayolutionInvoiceSendAdditionalData'
     },
     PG_PAYOLUTION_INVOICE_CHF: {
-        userName            : 'paymentGatewayPayolutionInvoiceHttpUserCHF',
-        password            : 'paymentGatewayPayolutionInvoiceHttpPasswordCHF',
-        baseUrl             : 'paymentGatewayPayolutionInvoiceBaseUrl',
-        merchantAccountID   : 'paymentGatewayPayolutionInvoiceMerchantAccountIDCHF',
-        sendAdditionalData  : 'paymentGatewayPayolutionInvoiceSendAdditionalData'
+        userName          : 'paymentGatewayPayolutionInvoiceHttpUserCHF',
+        password          : 'paymentGatewayPayolutionInvoiceHttpPasswordCHF',
+        baseUrl           : 'paymentGatewayPayolutionInvoiceBaseUrl',
+        merchantAccountID : 'paymentGatewayPayolutionInvoiceMerchantAccountIDCHF',
+        sendAdditionalData: 'paymentGatewayPayolutionInvoiceSendAdditionalData'
     },
     PG_SOFORT: {
         userName          : 'paymentGatewaySofortHttpUser',

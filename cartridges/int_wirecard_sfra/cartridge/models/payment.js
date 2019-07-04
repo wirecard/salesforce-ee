@@ -55,6 +55,7 @@ function getSelectedPaymentInstruments(selectedPaymentInstruments) {
  * Creates an array of objects containing applicable payment methods
  * @param {dw.util.ArrayList<dw.order.dw.order.PaymentMethod>} paymentMethods - An ArrayList of
  *      applicable payment methods that the user could use for the current basket.
+ * @param {dw.order.Basket} currentBasket - current basket
  * @returns {Array} of object that contain information about the applicable payment methods for the
  *      current cart
  */
