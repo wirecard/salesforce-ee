@@ -13,26 +13,26 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
-WebUI.waitForElementClickable(findTestObject('sitegenesis/checkout/Minicart link'), 3)
+WebUI.waitForElementClickable(findTestObject('sitegenesis/checkout/Minicart link'), 10)
 
 WebUI.click(findTestObject('sitegenesis/checkout/Minicart link'))
 
 switch (paymentMethodId) {
 	case 'PG_PAYOLUTION_INVOICE':
-		WebUI.waitForElementVisible(findTestObject('sitegenesis/checkout/cart/Input quantity'), 2)
-	
+		WebUI.waitForElementVisible(findTestObject('sitegenesis/checkout/cart/Input quantity'), 10)
+
 		WebUI.setText(findTestObject('sitegenesis/checkout/cart/Input quantity'), '3')
-		
+
 		WebUI.click(findTestObject('sitegenesis/checkout/cart/Button update cart'))
-		
+
 		WebUI.delay(2)
-	
+
 		break
 	default:
 		break
 }
 
-WebUI.waitForElementClickable(findTestObject('sitegenesis/checkout/Link checkout'), 3)
+WebUI.waitForElementClickable(findTestObject('sitegenesis/checkout/Link checkout'), 10)
 
 WebUI.click(findTestObject('sitegenesis/checkout/Link checkout'))
 

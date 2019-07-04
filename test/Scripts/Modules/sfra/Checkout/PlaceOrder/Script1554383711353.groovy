@@ -20,7 +20,7 @@ if ('PG_SEPA' == paymentMethodId) {
 	WebUI.check(findTestObject('checkout/summary/Mandate Accept'))
 }
 
-WebUI.waitForElementClickable(findTestObject('sfra/checkout/Link place order'), 5)
+WebUI.waitForElementClickable(findTestObject('sfra/checkout/Link place order'), 10)
 
 WebUI.click(findTestObject('sfra/checkout/Link place order'))
 
@@ -51,5 +51,5 @@ switch (paymentMethodId) {
 
 WebUI.waitForElementPresent(findTestObject('sfra/checkout/Order success message'), 60)
 
-WebUI.verifyElementPresent(findTestObject('sfra/checkout/Order success message'), 5)
+WebUI.verifyElementPresent(findTestObject('sfra/checkout/Order success message'), 10)
 

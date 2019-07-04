@@ -33,7 +33,7 @@ WebUI.waitForElementVisible(findTestObject('sfra/checkout/shipping/Shipping stat
 
 WebUI.selectOptionByValue(findTestObject('sfra/checkout/shipping/Shipping state'), state, false)
 
-WebUI.waitForElementClickable(findTestObject('sfra/checkout/Link Proceed to payment'), 6)
+WebUI.waitForElementClickable(findTestObject('sfra/checkout/Link Proceed to payment'), 10)
 
 WebUI.click(findTestObject('sfra/checkout/Link Proceed to payment'))
 

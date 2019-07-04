@@ -15,32 +15,32 @@ import internal.GlobalVariable as GlobalVariable
 
 WebUI.delay(10)
 
-WebUI.switchToFrame(findTestObject('Payment methods/Creditcard/embedded/Iframe'), 2)
+WebUI.switchToFrame(findTestObject('Payment methods/Creditcard/embedded/Iframe'), 10)
 
-WebUI.waitForElementVisible(findTestObject('Payment methods/Creditcard/embedded/Input firstName'), 2)
+WebUI.waitForElementVisible(findTestObject('Payment methods/Creditcard/embedded/Input firstName'), 10)
 
 WebUI.setText(findTestObject('Payment methods/Creditcard/embedded/Input firstName'), findTestData('creditcard').getValue(
         1, 1))
 
-WebUI.waitForElementVisible(findTestObject('Payment methods/Creditcard/embedded/Input lastName'), 2)
+WebUI.waitForElementVisible(findTestObject('Payment methods/Creditcard/embedded/Input lastName'), 10)
 
 WebUI.setText(findTestObject('Payment methods/Creditcard/embedded/Input lastName'), findTestData('creditcard').getValue(
         2, 1))
 
-WebUI.waitForElementVisible(findTestObject('Payment methods/Creditcard/embedded/Input ccNo'), 2)
+WebUI.waitForElementVisible(findTestObject('Payment methods/Creditcard/embedded/Input ccNo'), 10)
 
 WebUI.setText(findTestObject('Payment methods/Creditcard/embedded/Input ccNo'), findTestData('creditcard').getValue(3, 1))
 
-WebUI.waitForElementVisible(findTestObject('Payment methods/Creditcard/embedded/Input cvc'), 2)
+WebUI.waitForElementVisible(findTestObject('Payment methods/Creditcard/embedded/Input cvc'), 10)
 
 WebUI.setText(findTestObject('Payment methods/Creditcard/embedded/Input cvc'), findTestData('creditcard').getValue(4, 1))
 
-WebUI.waitForElementVisible(findTestObject('Payment methods/Creditcard/embedded/Select expiryMonth'), 2)
+WebUI.waitForElementVisible(findTestObject('Payment methods/Creditcard/embedded/Select expiryMonth'), 10)
 
 WebUI.selectOptionByValue(findTestObject('Payment methods/Creditcard/embedded/Select expiryMonth'), findTestData('creditcard').getValue(
         5, 1), false)
 
-WebUI.waitForElementVisible(findTestObject('Payment methods/Creditcard/embedded/Select expiryYear'), 2)
+WebUI.waitForElementVisible(findTestObject('Payment methods/Creditcard/embedded/Select expiryYear'), 10)
 
 WebUI.selectOptionByValue(findTestObject('Payment methods/Creditcard/embedded/Select expiryYear'), findTestData('creditcard').getValue(
         6, 1), false)
