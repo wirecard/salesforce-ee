@@ -22,9 +22,9 @@
             <isprint value="${ pgData.name }"/>
 
             <isif condition="${ payment.paymentMethod === 'PG_SEPA' && !pdict.order.orderNumber }">
-                <isinclude template="checkout/billing/paymentOptions/paymentOptionsSummary/PG_SEPA" />
-            <iselseif condition="${ payment.paymentMethod === 'PG_POI' && pdict.order.orderNumber }"/>
-                <isinclude template="checkout/billing/paymentOptions/paymentOptionsSummary/PG_POI" />
+                <isinclude template="checkout/billing/paymentOptions/paymentOptionsSummary/PG_SEPA"/>
+            <iselseif condition="${ /^PG_(POI|PIA)$/.test(payment.paymentMethod) && pdict.order.orderNumber }"/>
+                <isinclude template="${ 'checkout/billing/paymentOptions/paymentOptionsSummary/' + payment.paymentMethod }"/>
             </isif>
         </isif>
     </isloop>

@@ -58,7 +58,7 @@
                 paymentTransaction.setTransactionID(order.getOrderNo());
             });
             // save merchant bank account
-            if (['PG_POI'].indexOf(methodName) > -1
+            if (/^PG_(PIA|POI)$/.test(methodName)
                 && Object.prototype.hasOwnProperty.call(result, 'merchantBankAccount')
                 && Object.prototype.hasOwnProperty.call(result.merchantBankAccount, 'iban')
                 && Object.prototype.hasOwnProperty.call(result.merchantBankAccount, 'bic')
@@ -66,6 +66,12 @@
                 Transaction.wrap(function () {
                     paymentInstrument.custom.paymentGatewayIBAN = result.merchantBankAccount.iban;
                     paymentInstrument.custom.paymentGatewayBIC = result.merchantBankAccount.bic;
+                });
+            }
+            // save provider reference id
+            if (Object.prototype.hasOwnProperty.call(result, 'providerTransactionReferenceId')) {
+                Transaction.wrap(function () {
+                    paymentInstrument.custom.paymentGatewayReferenceId = result.providerTransactionReferenceId;
                 });
             }
         } else {
