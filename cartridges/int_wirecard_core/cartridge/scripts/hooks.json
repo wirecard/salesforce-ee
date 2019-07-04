@@ -1,0 +1,8 @@
+{
+  "hooks": [
+    {
+      "name": "int.wirecard.order",
+      "script": "./paymentgateway/hooks/validateOrder"
+    }
+  ]
+}

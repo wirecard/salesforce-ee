@@ -64,6 +64,7 @@ function checkPaymentGatewayMethodsAvailable(paymentMethods, currentBasket) {
     if (paymentMethods) {
         paymentMethods.forEach(function (method) {
             if (shippingAddress && ['PG_PAYOLUTION_INVOICE'].indexOf(method.ID) > -1) {
+                // FIXME check for digital goods / gift certificates (will be available with a future sfra release)
                 var allowedShippingCountries = Site.getCustomPreferenceValue('paymentGatewayPayolutionInvoiceAllowedShippingCountries');
                 if (!allowedShippingCountries || allowedShippingCountries.split(',').indexOf(shippingAddress.countryCode.value.toUpperCase())) {
                     result.push(method);
