@@ -54,7 +54,7 @@ switch (paymentMethodId) {
 
 WebUI.delay(2)
 
-WebUI.waitForElementClickable(findTestObject('sfra/checkout/Link proceed to order overview'), 5)
+WebUI.waitForElementClickable(findTestObject('sfra/checkout/Link proceed to order overview'), 10)
 
 WebUI.click(findTestObject('sfra/checkout/Link proceed to order overview'))
 

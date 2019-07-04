@@ -17,7 +17,7 @@ WebUI.setText(findTestObject('sfra/homepage/Searchbox'), productId)
 
 WebUI.delay(3)
 
-WebUI.waitForElementClickable(findTestObject('sfra/product page/Link to Product'), 5)
+WebUI.waitForElementClickable(findTestObject('sfra/product page/Link to Product'), 10)
 
 WebUI.click(findTestObject('sfra/product page/Link to Product'))
 

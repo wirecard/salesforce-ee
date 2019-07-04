@@ -50,7 +50,7 @@ switch (paymentMethodId) {
         break
 }
 
-WebUI.waitForElementClickable(findTestObject('sitegenesis/checkout/link proceed to order overview'), 5)
+WebUI.waitForElementClickable(findTestObject('sitegenesis/checkout/link proceed to order overview'), 10)
 
 WebUI.click(findTestObject('sitegenesis/checkout/link proceed to order overview'))
 

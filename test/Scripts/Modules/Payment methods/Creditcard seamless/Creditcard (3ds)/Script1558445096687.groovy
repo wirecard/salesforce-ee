@@ -13,27 +13,27 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
-WebUI.waitForElementVisible(findTestObject('Payment methods/Creditcard/seamless/Input Firstname'), 2)
+WebUI.waitForElementVisible(findTestObject('Payment methods/Creditcard/seamless/Input Firstname'), 10)
 
 WebUI.setText(findTestObject('Payment methods/Creditcard/seamless/Input Firstname'), findTestData('creditcard').getValue(1, 2))
 
-WebUI.waitForElementVisible(findTestObject('Payment methods/Creditcard/seamless/Input lastname'), 2)
+WebUI.waitForElementVisible(findTestObject('Payment methods/Creditcard/seamless/Input lastname'), 10)
 
 WebUI.setText(findTestObject('Payment methods/Creditcard/seamless/Input lastname'), findTestData('creditcard').getValue(2, 2))
 
-WebUI.waitForElementVisible(findTestObject('Payment methods/Creditcard/seamless/Input ccno'), 2)
+WebUI.waitForElementVisible(findTestObject('Payment methods/Creditcard/seamless/Input ccno'), 10)
 
 WebUI.setText(findTestObject('Payment methods/Creditcard/seamless/Input ccno'), findTestData('creditcard').getValue(3, 2))
 
-WebUI.waitForElementVisible(findTestObject('Payment methods/Creditcard/seamless/Input cvc'), 2)
+WebUI.waitForElementVisible(findTestObject('Payment methods/Creditcard/seamless/Input cvc'), 10)
 
 WebUI.setText(findTestObject('Payment methods/Creditcard/seamless/Input cvc'), findTestData('creditcard').getValue(4, 2))
 
-WebUI.waitForElementVisible(findTestObject('Payment methods/Creditcard/seamless/Select expiryMonth'), 2)
+WebUI.waitForElementVisible(findTestObject('Payment methods/Creditcard/seamless/Select expiryMonth'), 10)
 
 WebUI.setText(findTestObject('Payment methods/Creditcard/seamless/Select expiryMonth'), findTestData('creditcard').getValue(5, 2))
 
-WebUI.waitForElementVisible(findTestObject('Payment methods/Creditcard/seamless/Select expiryYear'), 2)
+WebUI.waitForElementVisible(findTestObject('Payment methods/Creditcard/seamless/Select expiryYear'), 10)
 
 WebUI.setText(findTestObject('Payment methods/Creditcard/seamless/Select expiryYear'), findTestData('creditcard').getValue(6, 2))
 

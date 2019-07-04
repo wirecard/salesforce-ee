@@ -15,7 +15,7 @@ import internal.GlobalVariable as GlobalVariable
 
 WebUI.delay(5)
 
-WebUI.waitForElementVisible(findTestObject('Payment methods/Giropay/Input sc'), 5)
+WebUI.waitForElementVisible(findTestObject('Payment methods/Giropay/Input sc'), 10)
 
 WebUI.setText(findTestObject('Payment methods/Giropay/Input sc'), '10')
 

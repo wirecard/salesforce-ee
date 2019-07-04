@@ -13,11 +13,11 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
-WebUI.waitForElementClickable(findTestObject('sfra/checkout/payment/Select iDEAL'), 2)
+WebUI.waitForElementClickable(findTestObject('sfra/checkout/payment/Select iDEAL'), 10)
 
 WebUI.click(findTestObject('sfra/checkout/payment/Select iDEAL'))
 
-WebUI.waitForElementVisible(findTestObject('sfra/checkout/payment/iDEAL/Select bic'), 0)
+WebUI.waitForElementVisible(findTestObject('sfra/checkout/payment/iDEAL/Select bic'), 10)
 
 WebUI.selectOptionByValue(findTestObject('sfra/checkout/payment/iDEAL/Select bic'), 'INGBNL2A', false)
 
