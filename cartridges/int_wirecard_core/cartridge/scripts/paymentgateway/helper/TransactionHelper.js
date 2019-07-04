@@ -182,7 +182,6 @@ var TransactionHelper = {
         };
         const mappedMethodNames = [
             'PG_IDEAL',
-            'PG_POI',
             'PG_SOFORT',
             'PG_SEPA'
         ];
