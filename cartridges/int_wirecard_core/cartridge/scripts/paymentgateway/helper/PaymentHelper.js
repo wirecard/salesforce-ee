@@ -20,6 +20,11 @@ var methodsWithForms = {
     PG_IDEAL: {
         paymentGatewayBIC: 'select'
     },
+    PG_RATEPAY_INVOICE: {
+        dob_day: 'text',
+        dob_month: 'text',
+        dob_year: 'text'
+    },
     PG_SEPA: {
         paymentGatewayBIC: 'text',
         paymentGatewayIBAN: 'text',
@@ -156,6 +161,7 @@ module.exports = {
     PAYMENT_METHOD_GIROPAY          : 'giropay',
     PAYMENT_METHOD_IDEAL            : 'ideal',
     PAYMENT_METHOD_PAYPAL           : 'paypal',
+    PAYMENT_METHOD_RATEPAY          : 'ratepay-invoice',
     PAYMENT_METHOD_SEPA_CREDIT      : 'sepacredit',
     PAYMENT_METHOD_SOFORT           : 'sofortbanking'
 };

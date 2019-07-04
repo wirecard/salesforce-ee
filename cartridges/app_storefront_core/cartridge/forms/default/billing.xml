@@ -70,6 +70,9 @@
         <!-- fields for PG_SEPA -->
         <include formid="PG_SEPA" name="PG_SEPA"/>
 
+        <!-- fields for PG_RATEPAY_INVOICE -->
+        <include formid="PG_RATEPAY_INVOICE" name="PG_RATEPAY_INVOICE"/>
+
     </group>
     <field formid="couponCode" label="billingcoupon.couponenter" type="string" mandatory="false" missing-error="billingcoupon.couponinvalid" value-error="billingcoupon.couponinvalid" />
 
