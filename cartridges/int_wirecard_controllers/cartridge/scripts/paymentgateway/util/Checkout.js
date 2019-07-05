@@ -160,11 +160,11 @@ function validatePaymentInstruments(currentBasket, paymentInstruments) {
         if (/^PG_(PAYOLUTION|RATEPAY)_INVOICE$/.test(paymentInstrument.paymentMethod)) {
             var isValid = validatePayment(paymentInstrument.paymentMethod, currentBasket);
             if (isValid.errors.length === 0) {
-                continue;
+                continue; // eslint-disable-line no-continue
             }
         } else {
             // Continues if method is applicable.
-            continue;
+            continue; // eslint-disable-line no-continue
         }
         // Collects invalid payment instruments.
         invalidPaymentInstruments.add(paymentInstrument);
@@ -174,13 +174,12 @@ function validatePaymentInstruments(currentBasket, paymentInstruments) {
     if (invalidPaymentInstruments.size()) {
         return {
             InvalidPaymentInstruments: invalidPaymentInstruments,
-            ValidPaymentInstruments: validPaymentInstruments
-        };
-    } else {
-        return {
-            ValidPaymentInstruments: validPaymentInstruments
+            ValidPaymentInstruments  : validPaymentInstruments
         };
     }
+    return {
+        ValidPaymentInstruments: validPaymentInstruments
+    };
 }
 
 exports.removePaymentInstrumentsFromBasket = removePaymentInstrumentsFromBasket;
