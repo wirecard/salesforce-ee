@@ -117,6 +117,29 @@ module.exports = {
     },
 
     /**
+     * Check if value from form field has to be saved with payment instrument
+     * @param {string} method - payment method id
+     * @returns {Object}
+     */
+    getFormFieldToSave: function (methodID) {
+        var fields = [];
+        if (Object.prototype.hasOwnProperty.call(methodsWithForms, methodID)) {
+            fields = [].concat(Object.keys(methodsWithForms[methodID]));
+        }
+        if (/^PG_(PAYOLUTION|RATEPAY)_INVOICE$/.test(methodID)) {
+            fields = ['paymentGatewayDateOfBirth'];
+        }
+
+        /**
+         * @param {string} fieldName - form field name
+         * @returns {boolean}
+         */
+        return function (fieldName) {
+            return fields.indexOf(fieldName) > -1;
+        }
+    },
+
+    /**
      * Retrieve image for given payment method
      * @param {string} method - payment method
      * @returns {string|dw.web.URL}

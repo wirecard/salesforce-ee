@@ -26,6 +26,7 @@
     <include formid="PG_GIROPAY" name="PG_GIROPAY"/>
     <include formid="PG_IDEAL" name="PG_IDEAL"/>
     <include formid="PG_PAYOLUTION_INVOICE" name="PG_PAYOLUTION_INVOICE"/>
+    <include formid="PG_RATEPAY_INVOICE" name="PG_RATEPAY_INVOICE"/>
     <include formid="PG_SEPA" name="PG_SEPA"/>
 
 </form>

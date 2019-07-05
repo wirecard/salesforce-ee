@@ -42,12 +42,14 @@ function processForm(req, paymentForm, viewFormData) {
         var customFormData = PaymentHelper.getFormData(paymentForm, paymentMethodID);
 
         // additional check for payolution form
-        if (['PG_PAYOLUTION_INVOICE'].indexOf(paymentMethodID) > -1) {
+        if (/^PG_PAYOLUTION_INVOICE$/.test(paymentMethodID)) {
             // accept consent check
             var acceptTermsField = formFields.acceptTerms;
             if (!req.form[acceptTermsField.htmlName]) {
                 errorFields[acceptTermsField.htmlName] = Resource.msg('error.message.required', 'forms', null);
             }
+        }
+        if (/^PG_(PAYOLUTION|RATEPAY)_INVOICE$/.test(paymentMethodID)) {
             // min-age check
             var dobYearField = formFields.dob_year;
             var normalizedMonth = customFormData.dob_month - 1;
@@ -93,7 +95,7 @@ function savePaymentInformation(req, currentBasket, billingData) {
     var paymentMethodID = billingData.paymentInformation.paymentMethodID;
     var paymentInstrument = currentBasket.getPaymentInstruments(paymentMethodID);
     var paymentHelper = require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper');
-    var saveField = paymentHelper.getFormFieldToSave();
+    var saveField = paymentHelper.getFormFieldToSave(paymentMethodID);
 
     if (!paymentInstrument.empty && typeof paymentInformation !== 'undefined') {
         require('dw/system/Transaction').wrap(function () {

@@ -74,7 +74,7 @@
                 <mandatory-flag>false</mandatory-flag>
                 <default-value>true</default-value>
             </attribute-definition>
-            <attribute-definition attribute-id="paymentGatewayPayolutionInvoiceAllowedShippingCountries">
+            <attribute-definition attribute-id="paymentGatewayRatepayInvoiceAllowedShippingCountries">
                 <display-name xml:lang="x-default">Allowed shipping countries</display-name>
                 <description xml:lang="x-default">Payment method Guaranteed Invoice by Wirecard is only displayed if the consumer's shipping country is one of the countries selected here.</description>
                 <type>string</type>
