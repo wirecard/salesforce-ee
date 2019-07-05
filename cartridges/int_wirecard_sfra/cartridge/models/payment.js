@@ -8,6 +8,7 @@
 /* eslint-disable max-len */
 'use strict';
 
+var Site = require('dw/system/Site').current;
 var collections = require('*/cartridge/scripts/util/collections');
 
 var base = module.superModule;
@@ -51,6 +52,33 @@ function getSelectedPaymentInstruments(selectedPaymentInstruments) {
 }
 
 /**
+ * Creates an array of objects containing applicable payment methods
+ * @param {dw.util.ArrayList<dw.order.dw.order.PaymentMethod>} paymentMethods - An ArrayList of
+ *      applicable payment methods that the user could use for the current basket.
+ * @param {dw.order.Basket} currentBasket - current basket
+ * @returns {Array} of object that contain information about the applicable payment methods for the
+ *      current cart
+ */
+function checkPaymentGatewayMethodsAvailable(paymentMethods, currentBasket) {
+    var result = [];
+    var shippingAddress = currentBasket.defaultShipment.shippingAddress;
+    if (paymentMethods) {
+        paymentMethods.forEach(function (method) {
+            if (shippingAddress && ['PG_PAYOLUTION_INVOICE'].indexOf(method.ID) > -1) {
+                // FIXME check for digital goods / gift certificates (will be available with a future sfra release)
+                var allowedShippingCountries = Site.getCustomPreferenceValue('paymentGatewayPayolutionInvoiceAllowedShippingCountries');
+                if (!allowedShippingCountries || allowedShippingCountries.split(',').indexOf(shippingAddress.countryCode.value.toUpperCase())) {
+                    result.push(method);
+                }
+            } else {
+                result.push(method);
+            }
+        });
+    }
+    return result;
+}
+
+/**
  * Payment class that represents payment information for the current basket
  * @param {dw.order.Basket} currentBasket - the target Basket object
  * @param {dw.customer.Customer} currentCustomer - the associated Customer object
@@ -63,6 +91,8 @@ function Payment(currentBasket, currentCustomer, countryCode) {
     var paymentInstruments = currentBasket.paymentInstruments;
     this.selectedPaymentInstruments = paymentInstruments
         ? getSelectedPaymentInstruments(paymentInstruments) : null;
+
+    this.applicablePaymentMethods = checkPaymentGatewayMethodsAvailable(this.applicablePaymentMethods, currentBasket);
 }
 
 Payment.prototype = Object.create(base.prototype);

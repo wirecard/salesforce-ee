@@ -172,7 +172,9 @@ exports.HttpAccessOverview = guard.ensure(['get', 'https'], function () {
         { methodName: Resource.msg('giropay', 'paymentgateway', null), methodID: 'PG_GIROPAY' },
         { methodName: Resource.msg('ideal', 'paymentgateway', null), methodID: 'PG_IDEAL' },
         { methodName: Resource.msg('paypal', 'paymentgateway', null), methodID: 'PG_PAYPAL' },
-        { methodName: Resource.msg('heading_title_ratepayinvoice', 'paymentgateway', null), methodID: 'PG_RATEPAY_INVOICE' },
+        { methodName: Resource.msg('payolution_invoice_chf', 'paymentgateway', null), methodID: 'PG_PAYOLUTION_INVOICE_CHF' },
+        { methodName: Resource.msg('payolution_invoice_eur', 'paymentgateway', null), methodID: 'PG_PAYOLUTION_INVOICE_EUR' },
+        { methodName: Resource.msg('ratepayinvoice', 'paymentgateway', null), methodID: 'PG_RATEPAY_INVOICE' },
         { methodName: Resource.msg('sofortbanking', 'paymentgateway', null), methodID: 'PG_SOFORT' },
         { methodName: Resource.msg('sepadd', 'paymentgateway', null), methodID: 'PG_SEPA' }
     ].forEach(function (p) {

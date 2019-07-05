@@ -362,13 +362,14 @@ server.replace(
         // Re-validates existing payment instruments
         var validPayment = COHelpers.validatePayment(req, currentBasket);
         if (validPayment.error) {
+            var errorMessage = validPayment.errorMessage || Resource.msg('error.payment.not.valid', 'checkout', null);
             res.json({
                 error: true,
                 errorStage: {
                     stage: 'payment',
                     step: 'paymentInstrument'
                 },
-                errorMessage: Resource.msg('error.payment.not.valid', 'checkout', null)
+                errorMessage: errorMessage
             });
             return next();
         }

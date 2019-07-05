@@ -21,7 +21,7 @@ WebUI.callTestCase(findTestCase('Modules/sitegenesis/Products/AddToCart-Product1
             1, 1), ('quantity') : findTestData('product_testdata').getValue(2, 1), ('color') : findTestData('product_testdata').getValue(
             3, 1)], FailureHandling.STOP_ON_FAILURE)
 
-WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/GoToCheckout'), [:], FailureHandling.STOP_ON_FAILURE)
+WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/GoToCheckout'), [('paymentMethodId') : paymentMethodId], FailureHandling.STOP_ON_FAILURE)
 
 if (login == 'false') {
     WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/CheckoutGuest'), [:], FailureHandling.STOP_ON_FAILURE)
@@ -36,10 +36,10 @@ if (login == 'false') {
 
 WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/SelectShipping'), [:], FailureHandling.STOP_ON_FAILURE)
 
-WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/Billing/Set email address'), [('email') : email, ('login') : login],
+WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/Billing/Set email address'), [('email') : email, ('login') : login], 
     FailureHandling.STOP_ON_FAILURE)
 
-WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentSelect'), [('paymentMethodId') : paymentMethodId],
+WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentSelect'), [('paymentMethodId') : paymentMethodId], 
     FailureHandling.STOP_ON_FAILURE)
 
 WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PlaceOrder'), [('paymentMethodId') : paymentMethodId], FailureHandling.STOP_ON_FAILURE)

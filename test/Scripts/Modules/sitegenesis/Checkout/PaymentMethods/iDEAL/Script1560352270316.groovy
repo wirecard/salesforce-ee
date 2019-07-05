@@ -15,5 +15,5 @@ import internal.GlobalVariable as GlobalVariable
 
 WebUI.check(findTestObject('sitegenesis/checkout/select payment/iDEAL'))
 
-WebUI.selectOptionByValue(findTestObject('sitegenesis/checkout/ideal/Select bic'), 'INGBNL2A', false)
+WebUI.selectOptionByValue(findTestObject('sitegenesis/checkout/select payment/iDEAL Form/Select bic'), 'INGBNL2A', false)
 

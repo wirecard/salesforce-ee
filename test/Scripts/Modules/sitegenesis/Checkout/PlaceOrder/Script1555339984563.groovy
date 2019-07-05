@@ -13,7 +13,7 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
-WebUI.waitForElementClickable(findTestObject('sitegenesis/checkout/billing/Button place order'), 5)
+WebUI.waitForElementClickable(findTestObject('sitegenesis/checkout/billing/Button place order'), 10)
 
 if ('PG_SEPA' == paymentMethodId) {
 	WebUI.check(findTestObject('checkout/summary/Mandate Accept'))
@@ -52,5 +52,5 @@ switch (paymentMethodId) {
 
 WebUI.waitForElementPresent(findTestObject('sitegenesis/checkout/Order success(orderNo)'), 20)
 
-WebUI.verifyElementPresent(findTestObject('sitegenesis/checkout/Order success(orderNo)'), 3)
+WebUI.verifyElementPresent(findTestObject('sitegenesis/checkout/Order success(orderNo)'), 10)
 

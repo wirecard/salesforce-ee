@@ -177,5 +177,6 @@ base.handleCreditCardNumber = function () {
         cleave.handleCreditCardNumber('.cardNumber', '#cardType');
     }
 };
+base.createPayolutionLink = paymentgateway.createPayolutionLink;
 
 module.exports = base;

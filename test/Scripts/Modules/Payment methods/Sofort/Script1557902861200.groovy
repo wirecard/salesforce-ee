@@ -15,15 +15,25 @@ import internal.GlobalVariable as GlobalVariable
 
 WebUI.delay(10)
 
-WebUI.waitForElementVisible(findTestObject('Payment methods/Sofort/Select Country'), 60)
+if (WebUI.verifyElementPresent(findTestObject('Payment methods/Sofort/Select Country'), 30, FailureHandling.OPTIONAL)) {
 
-WebUI.selectOptionByValue(findTestObject('Payment methods/Sofort/Select Country'), 'DE', false)
+	WebUI.selectOptionByValue(findTestObject('Payment methods/Sofort/Select Country'), 'DE', false)
 
-WebUI.setText(findTestObject('Payment methods/Sofort/Bank code search'), '88888888')
+}
 
-WebUI.click(findTestObject('Payment methods/Sofort/Continue Select Account'))
+if (WebUI.verifyElementPresent(findTestObject('Payment methods/Sofort/Bank code search'), 10, FailureHandling.OPTIONAL)) {
 
-WebUI.waitForElementPresent(findTestObject('Payment methods/Sofort/Login (name)'), 2)
+	WebUI.setText(findTestObject('Payment methods/Sofort/Bank code search'), '88888888')
+
+}
+
+if (WebUI.verifyElementPresent(findTestObject('Payment methods/Sofort/Continue Select Account'), 10, FailureHandling.OPTIONAL)) {
+	
+	WebUI.click(findTestObject('Payment methods/Sofort/Continue Select Account'))
+	
+}
+
+WebUI.waitForElementPresent(findTestObject('Payment methods/Sofort/Login (name)'), 10)
 
 WebUI.setText(findTestObject('Payment methods/Sofort/Login (name)'), '23213213213')
 
@@ -31,17 +41,17 @@ WebUI.setText(findTestObject('Payment methods/Sofort/Login (password)'), '331321
 
 WebUI.click(findTestObject('Payment methods/Sofort/Continue Select Account'))
 
-WebUI.waitForElementPresent(findTestObject('Payment methods/Sofort/Select Account-1'), 2)
+WebUI.waitForElementPresent(findTestObject('Payment methods/Sofort/Select Account-1'), 10)
 
 WebUI.click(findTestObject('Payment methods/Sofort/Select Account-1'))
 
 WebUI.delay(3)
 
-WebUI.waitForElementClickable(findTestObject('Payment methods/Sofort/Continue Select Account'), 5)
+WebUI.waitForElementClickable(findTestObject('Payment methods/Sofort/Continue Select Account'), 10)
 
 WebUI.click(findTestObject('Payment methods/Sofort/Continue Select Account'))
 
-WebUI.waitForElementPresent(findTestObject('Payment methods/Sofort/Tan'), 2)
+WebUI.waitForElementPresent(findTestObject('Payment methods/Sofort/Tan'), 10)
 
 WebUI.setText(findTestObject('Payment methods/Sofort/Tan'), '12345')
 

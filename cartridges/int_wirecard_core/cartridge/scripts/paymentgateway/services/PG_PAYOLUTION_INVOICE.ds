@@ -1,0 +1,138 @@
+/**
+ * Shop System Plugins:
+ * - Terms of Use can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/_TERMS_OF_USE
+ * - License can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
+ */
+/**
+ * API includes
+ */
+var pgLogger = require('dw/system/Logger').getLogger('paymentgateway', 'paymentgateway');
+/**
+ * Script includes
+ */
+var AbstractPaymentGatewayService = require('./AbstractPaymentGatewayService');
+
+var PayolutionService = AbstractPaymentGatewayService.extend({
+    init: function (type) {
+        this._super(type);
+        this.paymentMethodID = require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper').PAYMENT_METHOD_PAYOLUTION_INV;
+    },
+
+    /**
+     * Retrieves the base url for Payolution Invoice
+     * @param {String} currencyCode - currency used for transaction
+     * @returns {String}
+     */
+    getBaseUrl: function(currencyCode) {
+        var result;
+        switch (currencyCode) {
+            case 'CHF':
+                result = this.getSitePreference('paymentGatewayPayolutionInvoiceBaseUrlCHF');
+                break;
+            default:
+                result = this.getSitePreference('paymentGatewayPayolutionInvoiceBaseUrl');
+                break;
+        }
+        return result;
+    },
+
+    /**
+     * Retrieves the http user for Payolution Invoice
+     * @param {String} currencyCode - currency used for transaction
+     * @returns {String}
+     */
+    getHttpUsername: function(currencyCode) {
+        var result;
+        switch (currencyCode) {
+            case 'CHF':
+                result = this.getSitePreference('paymentGatewayPayolutionInvoiceHttpUserCHF');
+                break;
+            default:
+                result = this.getSitePreference('paymentGatewayPayolutionInvoiceHttpUser');
+                break;
+        }
+        return result;
+    },
+
+    /**
+     * Retrieves the http password for Payolution Invoice
+     * @param {String} currencyCode - currency used for transaction
+     * @returns {String}
+     */
+    getHttpPassword: function(currencyCode) {
+        var result;
+        switch (currencyCode) {
+            case 'CHF':
+                result = this.getSitePreference('paymentGatewayPayolutionInvoiceHttpPasswordCHF');
+                break;
+            default:
+                result = this.getSitePreference('paymentGatewayPayolutionInvoiceHttpPassword');
+                break;
+        }
+        return result;
+    },
+
+    /**
+     * Retrieves the auth header hash.
+     * @param {String} currencyCode - currency used for transaction
+     * @returns {String}
+     */
+    getAuthorizationHash: function(currencyCode) {
+        var Encoding = require('dw/crypto/Encoding');
+        var Bytes = require('dw/util/Bytes');
+        var username = this.getHttpUsername(currencyCode);
+        var password = this.getHttpPassword(currencyCode);
+        var bytes = new Bytes(username + ':' + password, this.encoding);
+        return Encoding.toBase64(bytes);
+    },
+
+    /**
+     * Prepare the request i.e. create request body as json
+     * @param {dw.svc.HTTPService}    svc       The service itself
+     * @param {dw.util.Map}           params    Map of key value pairs that have to be added as parameters to the call
+     * @return String The string that has to be sent to the service
+     */
+    createRequest: function (svc, params) {
+        var currencyCode = params.payment['requested-amount'].currency;
+
+        var url = this.getBaseUrl(currencyCode);
+        //sets the service call endpoint
+        if ( !empty(this.relativeURLPath) ) {
+            svc.URL = [ url.replace(/\/$/, ''), this.relativeURLPath ].join('/');
+        } else {
+            svc.URL = url.replace(/\/$/, '');
+        }
+        var self = this;
+
+        // use Auth header for currencyCode
+        this.requestHeaders.Authorization = 'Basic ' + this.getAuthorizationHash(currencyCode);
+
+        //adding header values
+        var logHeaders = [];
+        var headerValue;
+        for (var headerID : String in this.requestHeaders) {
+            headerValue = this.requestHeaders[headerID];
+            svc.addHeader(headerID, headerValue);
+            logHeaders.push(headerID + ': ' + (headerID.indexOf('Authorization') > -1 ? '***' : headerValue));
+        }
+
+        //setting the authentication mechanism
+        svc.setAuthentication(this.authentication);
+
+        //setting request method
+        svc.setRequestMethod(this.requestMethod);
+        var requestData = JSON.stringify(params);
+        require('*/cartridge/scripts/paymentgateway/transaction/Logger').log(params);
+
+        // log request url for debugging
+        pgLogger.debug( 'Called service: ' + svc.URL + '\n' + logHeaders.join('\n'));
+        return requestData;
+    }
+});
+
+//Export the configured service singleton
+module.exports = function () {
+    return (new PayolutionService('paymentmethods')).getService();
+};
