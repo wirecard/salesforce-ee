@@ -26,7 +26,8 @@ var resetPaymentForms = {
     PG_GIROPAY           : 'PG_GIROPAY',
     PG_IDEAL             : 'PG_IDEAL',
     PG_SEPA              : 'PG_SEPA',
-    PG_PAYOLUTION_INVOICE: 'PG_PAYOLUTION_INVOICE'
+    PG_PAYOLUTION_INVOICE: 'PG_PAYOLUTION_INVOICE',
+    PG_RATEPAY_INVOICE   : 'PG_RATEPAY_INVOICE'
 };
 
 // default payment methods

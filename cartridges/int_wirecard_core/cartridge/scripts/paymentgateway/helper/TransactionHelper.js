@@ -249,7 +249,7 @@ var TransactionHelper = {
                 }
             } else if (!transaction.parentTransactionId
                 && newTransaction.parentTransactionId == transaction.transactionId
-                && [paymentHelper.PAYMENT_METHOD_PAYOLUTION_INV].indexOf(transaction.paymentMethodId) === -1
+                && /^PG_(PAYOLUTION|RATEPAY)_INVOICE$/.test(transaction.paymentMethodId)
             ) {
                 // replace initial transaction with notification response
                 allPaymentTransactions.push(JSON.stringify(newTransaction));
@@ -586,6 +586,9 @@ var TransactionHelper = {
                 break;
             case paymentHelper.PAYMENT_METHOD_PAYPAL:
                 secret = Site.getCustomPreferenceValue('paymentGatewayPayPalSecret');
+                break;
+            case paymentHelper.PAYMENT_METHOD_RATEPAY:
+                secret = Site.getCustomPreferenceValue('paymentGatewayRatepayInvoiceSecret');
                 break;
             case paymentHelper.PAYMENT_METHOD_PAYOLUTION_INV:
                 if (currencyCode === 'CHF') {
