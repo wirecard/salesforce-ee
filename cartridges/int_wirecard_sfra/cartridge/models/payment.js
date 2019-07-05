@@ -63,17 +63,23 @@ function checkPaymentGatewayMethodsAvailable(paymentMethods, currentBasket) {
     var result = [];
     var shippingAddress = currentBasket.defaultShipment.shippingAddress;
     if (paymentMethods) {
-        paymentMethods.forEach(function (method) {
-            if (shippingAddress && ['PG_PAYOLUTION_INVOICE'].indexOf(method.ID) > -1) {
+        if (shippingAddress) {
+            paymentMethods.forEach(function (method) {
                 // FIXME check for digital goods / gift certificates (will be available with a future sfra release)
-                var allowedShippingCountries = Site.getCustomPreferenceValue('paymentGatewayPayolutionInvoiceAllowedShippingCountries');
-                if (!allowedShippingCountries || allowedShippingCountries.split(',').indexOf(shippingAddress.countryCode.value.toUpperCase())) {
+                var allowedShippingCountries;
+                var shippingCountryCode = shippingAddress.countryCode.value.toUpperCase();
+                if (/^PG_PAYOLUTION_INVOICE$/.test(method.ID)) {
+                    allowedShippingCountries = Site.getCustomPreferenceValue('paymentGatewayPayolutionInvoiceAllowedShippingCountries');
+                    if (!allowedShippingCountries || allowedShippingCountries.split(',').indexOf(shippingCountryCode) > -1) {
+                        result.push(method);
+                    }
+                } else {
                     result.push(method);
                 }
-            } else {
-                result.push(method);
-            }
-        });
+            });
+        } else {
+            result = paymentMethods;
+        }
     }
     return result;
 }
