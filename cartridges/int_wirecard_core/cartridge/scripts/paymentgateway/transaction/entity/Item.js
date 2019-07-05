@@ -7,6 +7,8 @@
  */
 'use strict';
 
+var paymentHelper = require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper.js');
+
 /**
  * Wrapper function for creating order item object
  * @param {Object} itemData - data of lineitem of different types
@@ -34,13 +36,13 @@ function Item(itemData, paymentMethod) {
         }
     });
 
-    if (/paypal/.test(paymentMethod) && itemData['tax-amount'] > 0) {
+    if ([paymentHelper.PAYMENT_METHOD_PAYPAL].indexOf(paymentMethod) > -1 && itemData['tax-amount'] > 0) {
         item['tax-amount'] = {
             currency: itemData.currency,
             value: Number(itemData['tax-amount']).toFixed(2)
         };
-    } else if (/ratepay/.test(paymentMethod)) {
-        item['tax-rate'] = itemData.taxRate;
+    } else if ([paymentHelper.PAYMENT_METHOD_RATEPAY].indexOf(paymentMethod) > -1) {
+        item['tax-rate'] = Number(itemData['tax-rate']) * 100;
     }
     return item;
 }

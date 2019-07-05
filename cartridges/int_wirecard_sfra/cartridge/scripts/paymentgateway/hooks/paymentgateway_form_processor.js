@@ -38,8 +38,8 @@ function processForm(req, paymentForm, viewFormData) {
             };
         }
 
-        var PaymentHelper = require('int_wirecard_core/cartridge/scripts/paymentgateway/helper/PaymentHelper.js');
-        var customFormData = PaymentHelper.getFormData(paymentForm, paymentMethodID);
+        var paymentHelper = require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper.js');
+        var customFormData = paymentHelper.getFormData(paymentForm, paymentMethodID);
 
         // additional check for payolution form
         if (/^PG_PAYOLUTION_INVOICE$/.test(paymentMethodID)) {
