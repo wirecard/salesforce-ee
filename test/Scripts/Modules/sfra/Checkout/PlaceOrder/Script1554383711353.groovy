@@ -17,7 +17,7 @@ import internal.GlobalVariable as GlobalVariable
 WebUI.delay(5)
 
 if ('PG_SEPA' == paymentMethodId) {
-	WebUI.check(findTestObject('checkout/summary/Mandate Accept'))
+    WebUI.check(findTestObject('checkout/summary/Mandate Accept'))
 }
 
 WebUI.waitForElementClickable(findTestObject('sfra/checkout/Link place order'), 5)
@@ -25,20 +25,24 @@ WebUI.waitForElementClickable(findTestObject('sfra/checkout/Link place order'), 
 WebUI.click(findTestObject('sfra/checkout/Link place order'))
 
 switch (paymentMethodId) {
-	case 'PG_EPS':
-		WebUI.callTestCase(findTestCase('Modules/Payment methods/Eps'), [:], FailureHandling.STOP_ON_FAILURE)
-	
-		break
-	case 'PG_GIROPAY':
-		WebUI.callTestCase(findTestCase('Modules/Payment methods/Giropay'), [:], FailureHandling.STOP_ON_FAILURE)
+    case 'PG_EPS':
+        WebUI.callTestCase(findTestCase('Modules/Payment methods/Eps'), [:], FailureHandling.STOP_ON_FAILURE)
 
-		break
+        break
+    case 'PG_GIROPAY':
+        WebUI.callTestCase(findTestCase('Modules/Payment methods/Giropay'), [:], FailureHandling.STOP_ON_FAILURE)
+
+        break
     case 'PG_PAYPAL':
         WebUI.callTestCase(findTestCase('Modules/Payment methods/PayPal'), [:], FailureHandling.STOP_ON_FAILURE)
 
         break
     case 'PG_SOFORT':
         WebUI.callTestCase(findTestCase('Modules/Payment methods/Sofort'), [:], FailureHandling.STOP_ON_FAILURE)
+
+        break
+    case 'PG_ALIPAY':
+        WebUI.callTestCase(findTestCase('Modules/Payment methods/Alipay'), [:], FailureHandling.STOP_ON_FAILURE)
 
         break
     default:
@@ -48,4 +52,6 @@ switch (paymentMethodId) {
 WebUI.waitForElementPresent(findTestObject('sfra/checkout/Order success message'), 60)
 
 WebUI.verifyElementPresent(findTestObject('sfra/checkout/Order success message'), 5)
+
+WebUI.acceptAlert()
 

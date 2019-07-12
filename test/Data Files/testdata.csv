@@ -1,7 +1,2 @@
 paymentMethodId,login
-PG_CREDITCARD,false
-PG_EPS,false
-PG_GIROPAY,false
-PG_PAYPAL,false
-PG_SOFORT,false
-PG_SEPA,false
+PG_ALIPAY,false
