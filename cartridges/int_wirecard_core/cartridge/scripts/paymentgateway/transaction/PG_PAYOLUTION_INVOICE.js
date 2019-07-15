@@ -27,6 +27,29 @@ function prependLeadingZero(str) {
 }
 
 /**
+ * Get transaction type for capture
+ * @returns {string} - transaction type
+ */
+function getCaptureTransactionType() {
+    var self = this;
+    var type;
+    var canPartialCapture = false;
+
+    if (!self['transaction-type']) {
+        throw new Error('transaction-type missing for Payolution Invoice Transaction.');
+    }
+    switch (self['transaction-type']) {
+        case Type.AUTHORIZATION:
+            type = Type.CAPTURE_AUTHORIZATION;
+            canPartialCapture = true;
+            break;
+        default:
+            throw new Error('unsupported transaction type!');
+    }
+    return { type: type, partialAllowed: canPartialCapture };
+}
+
+/**
  * Get transaction type for cancellation
  * @returns {string} - transaction type
  */
@@ -39,6 +62,7 @@ function getCancelTransactionType() {
     switch (self['transaction-type']) {
         case Type.AUTHORIZATION:
             type = Type.VOID_AUTHORIZATION;
+
             break;
         default:
             throw new Error('unsupported transaction type!');
@@ -57,8 +81,8 @@ function getRefundTransactionType() {
         throw new Error('transaction-type missing for Payolution Invoice Transaction.');
     }
     switch (self['transaction-type']) {
-        case Type.DEPOSIT:
-            type = Type.REFUND;
+        case Type.CAPTURE_AUTHORIZATION:
+            type = Type.REFUND_CAPTURE;
             break;
         default:
             throw new Error('unsupported transaction type!');
@@ -96,6 +120,7 @@ function Payolution(order, args) {
     // add methods to retrieve possible succeeding operations
     this.getCancelTransactionType = getCancelTransactionType;
     this.getRefundTransactionType = getRefundTransactionType;
+    this.getCaptureTransactionType = getCaptureTransactionType;
     return this;
 }
 
@@ -120,6 +145,17 @@ Payolution.prototype.getCustomPayload = function () {
         };
     }
     return result;
+};
+
+Payolution.prototype.getApiEndpointFromTransactionType = function() {
+    switch(this['transaction-type']) {
+        case Type.VOID_AUTHORIZATION :
+        case Type.CAPTURE_AUTHORIZATION :
+        case Type.REFUND_CAPTURE :
+			return 'payments';
+        default :
+            return 'paymentmethods';
+    }
 };
 
 module.exports = Payolution;

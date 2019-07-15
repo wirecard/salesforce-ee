@@ -133,6 +133,6 @@ var PayolutionService = AbstractPaymentGatewayService.extend({
 });
 
 //Export the configured service singleton
-module.exports = function () {
-    return (new PayolutionService('paymentmethods')).getService();
+module.exports = function (type) {
+    return (new PayolutionService(type)).getService();
 };
