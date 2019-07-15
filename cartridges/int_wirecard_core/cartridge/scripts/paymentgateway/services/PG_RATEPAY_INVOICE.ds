@@ -21,7 +21,7 @@ var RatepayService = AbstractPaymentGatewayService.extend({
      * @returns {String}
      */
     getBaseUrl: function() {
-        return this.getSitePreference('paymentGatewayRatepayBaseUrl');
+        return this.getSitePreference('paymentGatewayRatepayInvoiceBaseUrl');
     },
 
     /**
@@ -29,7 +29,7 @@ var RatepayService = AbstractPaymentGatewayService.extend({
      * @returns {String}
      */
     getHttpUsername: function() {
-        return this.getSitePreference('paymentGatewayRatepayHttpUser');
+        return this.getSitePreference('paymentGatewayRatepayInvoiceHttpUser');
     },
 
     /**
@@ -37,7 +37,7 @@ var RatepayService = AbstractPaymentGatewayService.extend({
      * @returns {String}
      */
     getHttpPassword: function() {
-        return this.getSitePreference('paymentGatewayRatepayHttpPassword');
+        return this.getSitePreference('paymentGatewayRatepayInvoiceHttpPassword');
     }
 });
 

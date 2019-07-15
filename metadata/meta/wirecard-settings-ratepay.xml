@@ -16,7 +16,7 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
-                <default-value>fa02d1d4-f518-4e22-b42b-2abab5867a84</default-value>
+                <default-value>7d7edecb-b008-4f05-9103-308c81cf2ea2</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayRatepayInvoiceBaseUrl">
                 <display-name xml:lang="x-default">Wirecard Server Address (URL)</display-name>
