@@ -48,10 +48,11 @@ switch (paymentMethodId) {
     default:
         break
 }
+//Workaround for Alipay payment password can't be set 
+if ('PG_ALIPAY' != paymentMethodId) {
+	WebUI.waitForElementPresent(findTestObject('sfra/checkout/Order success message'), 60)
 
-WebUI.waitForElementPresent(findTestObject('sfra/checkout/Order success message'), 60)
-
-WebUI.verifyElementPresent(findTestObject('sfra/checkout/Order success message'), 5)
-
+	WebUI.verifyElementPresent(findTestObject('sfra/checkout/Order success message'), 5)
+}
 WebUI.acceptAlert()
 
