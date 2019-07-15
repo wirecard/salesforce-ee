@@ -572,6 +572,9 @@ var TransactionHelper = {
             case paymentHelper.PAYMENT_METHOD_SOFORT:
                 secret = Site.getCustomPreferenceValue('paymentGatewaySofortSecret');
                 break;
+            case paymentHelper.PAYMENT_METHOD_ALIPAY:
+                secret = Site.getCustomPreferenceValue('paymentGatewayAlipaySecret');
+                break;
             default: throw new Error('No Secret for payment method ID');
         }
         return secret;

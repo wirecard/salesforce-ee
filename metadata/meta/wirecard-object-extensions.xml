@@ -589,7 +589,7 @@ Type of payment: one-off.]]></default-value>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
-                <default-value>5caf2ed9-5f79-4e65-98cb-0b70d6f569aa</default-value>
+                <default-value>94fe4f40-16c5-4019-9c6c-bc33ec858b1d</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayAlipaySendAdditionalData">
                 <display-name xml:lang="x-default">Send Additional Information</display-name>
