@@ -38,6 +38,10 @@ switch (paymentMethodId) {
 		WebUI.callTestCase(findTestCase('Modules/sfra/PaymentMethods/Payolution Invoice'), [:], FailureHandling.STOP_ON_FAILURE)
 
 		break
+	case 'PG_RATEPAY_INVOICE':
+		WebUI.callTestCase(findTestCase('Modules/sfra/PaymentMethods/Ratepay Invoice'), [:], FailureHandling.STOP_ON_FAILURE)
+
+		break
     case 'PG_CREDITCARD':
         WebUI.callTestCase(findTestCase('Modules/sfra/PaymentMethods/CreditCard'), [:], FailureHandling.STOP_ON_FAILURE)
 
