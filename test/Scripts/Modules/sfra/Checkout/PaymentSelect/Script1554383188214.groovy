@@ -34,8 +34,8 @@ switch (paymentMethodId) {
         WebUI.callTestCase(findTestCase('Modules/sfra/PaymentMethods/Sofort'), [:], FailureHandling.STOP_ON_FAILURE)
 
         break
-	case 'PG_PIA':
-		WebUI.callTestCase(findTestCase('Modules/sfra/PaymentMethods/Payment In Advance'), [:], FailureHandling.STOP_ON_FAILURE)
+	case 'PG_POI':
+		WebUI.callTestCase(findTestCase('Modules/sfra/PaymentMethods/Payment on invoice'), [:], FailureHandling.STOP_ON_FAILURE)
 
 		break
     case 'PG_CREDITCARD':
@@ -54,7 +54,7 @@ switch (paymentMethodId) {
 
 WebUI.delay(2)
 
-WebUI.waitForElementClickable(findTestObject('sfra/checkout/Link proceed to order overview'), 5)
+WebUI.waitForElementClickable(findTestObject('sfra/checkout/Link proceed to order overview'), 10)
 
 WebUI.click(findTestObject('sfra/checkout/Link proceed to order overview'))
 

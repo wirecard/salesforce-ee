@@ -248,7 +248,7 @@ var TransactionHelper = {
                 }
             } else if (!transaction.parentTransactionId
                 && newTransaction.parentTransactionId == transaction.transactionId
-                && [paymentHelper.PAYMENT_METHOD_PIA].indexOf(transaction.paymentMethodId) === -1
+                && [paymentHelper.PAYMENT_METHOD_POI].indexOf(transaction.paymentMethodId) === -1
             ) {
                 // replace initial transaction with notification response
                 allPaymentTransactions.push(JSON.stringify(newTransaction));
@@ -577,8 +577,8 @@ var TransactionHelper = {
             case paymentHelper.PAYMENT_METHOD_PAYPAL:
                 secret = Site.getCustomPreferenceValue('paymentGatewayPayPalSecret');
                 break;
-            case paymentHelper.PAYMENT_METHOD_PIA:
-                secret = Site.getCustomPreferenceValue('paymentGatewayPiaSecret');
+            case paymentHelper.PAYMENT_METHOD_POI:
+                secret = Site.getCustomPreferenceValue('paymentGatewayPoiSecret');
                 break;
             case paymentHelper.PAYMENT_METHOD_SEPA_CREDIT:
                 secret = Site.getCustomPreferenceValue('paymentGatewaySEPACreditSecret');

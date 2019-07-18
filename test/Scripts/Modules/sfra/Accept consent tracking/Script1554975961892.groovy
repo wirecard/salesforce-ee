@@ -18,7 +18,7 @@ import org.openqa.selenium.By as By
 
 WebUI.delay(5)
 
-WebUI.waitForElementClickable(findTestObject('sfra/homepage/button_Yes'), 5)
+WebUI.waitForElementClickable(findTestObject('sfra/homepage/button_Yes'), 10)
 
 WebUI.click(findTestObject('sfra/homepage/button_Yes'))
 

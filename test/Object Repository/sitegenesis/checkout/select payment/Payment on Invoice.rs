@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>Payment In Advance</name>
+   <name>Payment on Invoice</name>
    <tag></tag>
-   <elementGuidId>9b1ebaaa-b635-4e00-93a3-ba627ba881d5</elementGuidId>
+   <elementGuidId>0deeae6b-a1e0-4a16-95b5-3854caa3dda9</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//div[contains(@class,'payment-method-options')]//input[@value='PG_PIA']</value>
+         <value>//div[contains(@class,'payment-method-options')]//input[@value='PG_POI']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,6 +17,6 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//div[contains(@class,'payment-method-options')]//input[@value='PG_PIA']</value>
+      <value>//div[contains(@class,'payment-method-options')]//input[@value='PG_POI']</value>
    </webElementProperties>
 </WebElementEntity>

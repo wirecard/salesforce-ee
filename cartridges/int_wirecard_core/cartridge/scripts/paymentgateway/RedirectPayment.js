@@ -58,7 +58,7 @@
                 paymentTransaction.setTransactionID(order.getOrderNo());
             });
             // save merchant bank account
-            if (['PG_PIA'].indexOf(methodName) > -1
+            if (/^PG_(PIA|POI)$/.test(methodName)
                 && Object.prototype.hasOwnProperty.call(result, 'merchantBankAccount')
                 && Object.prototype.hasOwnProperty.call(result.merchantBankAccount, 'iban')
                 && Object.prototype.hasOwnProperty.call(result.merchantBankAccount, 'bic')

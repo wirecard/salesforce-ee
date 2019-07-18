@@ -34,8 +34,8 @@ switch (paymentMethodId) {
         WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentMethods/Sofort'), [:], FailureHandling.STOP_ON_FAILURE)
 
         break
-	case 'PG_PIA':
-		WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentMethods/Payment In Advance'), [:], FailureHandling.STOP_ON_FAILURE)
+	case 'PG_POI':
+		WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentMethods/Payment on Invoice'), [:], FailureHandling.STOP_ON_FAILURE)
 
 		break
     case 'PG_CREDITCARD':
@@ -50,7 +50,7 @@ switch (paymentMethodId) {
         break
 }
 
-WebUI.waitForElementClickable(findTestObject('sitegenesis/checkout/link proceed to order overview'), 5)
+WebUI.waitForElementClickable(findTestObject('sitegenesis/checkout/link proceed to order overview'), 10)
 
 WebUI.click(findTestObject('sitegenesis/checkout/link proceed to order overview'))
 

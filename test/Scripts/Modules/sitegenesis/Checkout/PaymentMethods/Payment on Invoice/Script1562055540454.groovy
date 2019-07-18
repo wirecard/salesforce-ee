@@ -13,10 +13,4 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
-WebUI.waitForElementClickable(findTestObject('sfra/checkout/payment/Select eps'), 10)
-
-WebUI.click(findTestObject('sfra/checkout/payment/Select eps'))
-
-WebUI.waitForElementVisible(findTestObject('sfra/checkout/payment/eps/Input bic'), 10)
-
-WebUI.setText(findTestObject('sfra/checkout/payment/eps/Input bic'), 'BWFBATW1XXX')
+WebUI.check(findTestObject('sitegenesis/checkout/select payment/Payment on Invoice'))

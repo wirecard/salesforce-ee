@@ -15,25 +15,25 @@ import internal.GlobalVariable as GlobalVariable
 
 WebUI.delay(5)
 
-WebUI.waitForElementVisible(findTestObject('Payment methods/Eps/Login button'), 5)
+WebUI.waitForElementVisible(findTestObject('Payment methods/Eps/Login button'), 10)
 
 WebUI.click(findTestObject('Payment methods/Eps/Login button'))
 
-WebUI.waitForElementVisible(findTestObject('Payment methods/Eps/Confirm button'), 3)
+WebUI.waitForElementVisible(findTestObject('Payment methods/Eps/Confirm button'), 10)
 
 WebUI.click(findTestObject('Payment methods/Eps/Confirm button'))
 
-WebUI.waitForElementVisible(findTestObject('Payment methods/Eps/Confirm single transaction'), 3)
+WebUI.waitForElementVisible(findTestObject('Payment methods/Eps/Confirm single transaction'), 10)
 
 WebUI.click(findTestObject('Payment methods/Eps/Confirm single transaction'))
 
-WebUI.waitForElementVisible(findTestObject('Payment methods/Eps/Input cardTan'), 3)
+WebUI.waitForElementVisible(findTestObject('Payment methods/Eps/Input cardTan'), 10)
 
 WebUI.setText(findTestObject('Payment methods/Eps/Input cardTan'), '12345')
 
 WebUI.click(findTestObject('Payment methods/Eps/Ok button'))
 
-WebUI.waitForElementVisible(findTestObject('Payment methods/Eps/BackToShop button'), 3)
+WebUI.waitForElementVisible(findTestObject('Payment methods/Eps/BackToShop button'), 10)
 
 WebUI.click(findTestObject('Payment methods/Eps/BackToShop button'))
 
