@@ -115,9 +115,9 @@ exports.Notify = guard.ensure(['post', 'https'], function () {
 
     if (order && order.orderToken === orderToken) {
         // parse response
-        var requestBody = parameterMap.getRequestBodyAsString();
+        var requestBody       = parameterMap.getRequestBodyAsString();
         var transactionHelper = require('*/cartridge/scripts/paymentgateway/helper/TransactionHelper');
-        var notifyData = transactionHelper.parseTransactionResponse(
+        var notifyData        = transactionHelper.parseTransactionResponse(
             requestBody, null, transactionHelper.RESPONSE_TYPE_NOTIFY
         );
         var rawResponeJson = transactionHelper.getJsonSignedResponseWrapper(requestBody).getJsonResponse();
@@ -189,3 +189,20 @@ exports.Debug = guard.ensure(['get', 'https'], function () {
     response.writer.println(result);
 });
 
+exports.GetPGSummary = guard.ensure(['get', 'https'], function () {
+    const payment = require('dw/order/BasketMgr').getCurrentBasket().getPaymentInstruments('PG_SEPA');
+
+    if (!payment.empty) {
+        response.render('checkout/billing/paymentOptions/paymentOptionsSummary/PG_SEPA', { payment:  payment[0]});
+    }
+});
+
+/**
+ * Template include for displaying checkout errors
+ */
+exports.GetCheckoutErrors = guard.ensure(['include'], function () {
+    var paymentGatewayErrors = JSON.parse(session.privacy.paymentGatewayErrors);
+    delete session.privacy.paymentGatewayErrors;
+    var ISML = require('dw/template/ISML');
+    ISML.renderTemplate('checkout/paymentGatewayError', { errors: paymentGatewayErrors });
+});

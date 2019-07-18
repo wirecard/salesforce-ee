@@ -15,6 +15,7 @@ var Transaction = require('dw/system/Transaction');
 var pgLogger = require('dw/system/Logger').getLogger('paymentgateway');
 
 var Cart = require(controllerCartridge + '/cartridge/scripts/models/CartModel');
+var validatePayolution = require('*/cartridge/scripts/paymentgateway/util/Checkout').validatePayolutionInvoice;
 
 /**
  * Creates PaymentInstrument and returns 'success'.
@@ -34,6 +35,18 @@ function Handle(args) {
     if (['PG_EPS', 'PG_GIROPAY', 'PG_IDEAL', 'PG_SEPA'].indexOf(paymentMethodId) > -1 && !paymentForm[paymentMethodId].valid) {
         return { error: true };
     }
+    // validate payolution date-of-birth / accept consent
+    var paymentGatewayErrors = [];
+    var dateOfBirth;
+    if (/^PG_PAYOLUTION_INVOICE$/.test(paymentMethodId)) {
+        var validPayolution = validatePayolution(paymentMethodId, args.Basket);
+        paymentGatewayErrors = validPayolution.errors;
+        dateOfBirth = validPayolution.dateOfBirth;
+    }
+    if (paymentGatewayErrors.length > 0) {
+        session.privacy.paymentGatewayErrors = JSON.stringify(paymentGatewayErrors);
+        return { error: true };
+    }
 
     // save form data with dw.order.OrderPaymentInstrument
     if (['PG_EPS', 'PG_GIROPAY'].indexOf(paymentMethodId) > -1) {
@@ -46,7 +59,11 @@ function Handle(args) {
             paymentInstrument.custom.paymentGatewayIBAN = paymentForm[paymentMethodId].paymentGatewayIBAN.value;
             paymentInstrument.custom.paymentGatewaySEPADebtorName = paymentForm[paymentMethodId].paymentGatewaySEPADebtorName.value;
         });
-    } else if (paymentMethodId === 'PG_IDEAL') {
+    } else if (/^PG_PAYOLUTION_INVOICE$/.test(paymentMethodId)) {
+        Transaction.wrap(function () {
+            paymentInstrument.custom.paymentGatewayDateOfBirth = dateOfBirth;
+        });
+    } else if (/^PG_IDEAL$/.test(paymentMethodId)) {
         Transaction.wrap(function () {
             paymentInstrument.custom.paymentGatewayBIC = paymentForm.PG_IDEAL.paymentGatewayBIC.value;
         });
@@ -65,6 +82,16 @@ function Authorize(args) {
     var paymentData = orderHelper.getPaymentGatewayOrderPayment(order);
     var paymentInstrument = paymentData.paymentInstrument;
     var responseData;
+
+    // re-validate payolution
+    var paymentGatewayErrors = [];
+    if (/^PG_PAYOLUTION_INVOICE$/.test(paymentData.paymentMethodID)) {
+        var validPayolution = validatePayolution(paymentData.paymentMethodID, order);
+        paymentGatewayErrors = validPayolution.errors;
+    }
+    if (paymentGatewayErrors.length > 0) {
+        return { error: true, errorMessage: paymentGatewayErrors.join('\n') };
+    }
 
     try {
         // handles all wirecard payments except credit card (seamless integration)

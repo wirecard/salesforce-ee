@@ -46,6 +46,11 @@
 <!--- PG_PAYPAL --->
 <div id="PaymentMethod_PG_PAYPAL" class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='PG_PAYPAL'}">payment-method-expanded</isif>" data-method="PG_PAYPAL"></div>
 
+<!--- PG_PAYOLUTION_INVOICE --->
+<div id="PG_PAYOLUTION_INVOICE" class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='PG_PAYOLUTION_INVOICE'}">payment-method-expanded</isif>" data-method="PG_PAYOLUTION_INVOICE">
+    <isinclude template="checkout/billing/paymentGatewayPayments/PG_PAYOLUTION_INVOICE" />
+</div>
+
 <!--- PG_POI --->
 <div id="PaymentMethod_PG_POI" class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='PG_POI'}">payment-method-expanded</isif>" data-method="PG_POI"></div>
 

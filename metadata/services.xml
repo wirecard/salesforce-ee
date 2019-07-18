@@ -15,7 +15,7 @@
     </service-credential>
 
     <service-profile service-profile-id="wirecard.paymentgateway.profile">
-        <timeout-millis>5000</timeout-millis>
+        <timeout-millis>10000</timeout-millis>
         <rate-limit-enabled>true</rate-limit-enabled>
         <rate-limit-calls>10</rate-limit-calls>
         <rate-limit-millis>10000</rate-limit-millis>

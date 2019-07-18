@@ -81,6 +81,7 @@ Type.Capture = [
 Type.Refund = [
     Type.All.CREDIT,
     Type.All.PENDING_CREDIT,
+    Type.All.REFUND,
     Type.All.REFUND_CAPTURE,
     Type.All.REFUND_DEBIT,
     Type.All.REFUND_PURCHASE,

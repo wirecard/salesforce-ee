@@ -236,12 +236,19 @@ Transaction.prototype.getPayload = function () {
     if (!result['merchant-account-id']) {
         throw new Error('No merchant-account-id provided!');
     }
-    var customPayload = this.getCustomPayload();
 
-    // WARNING custom payload overwrites result
-    Object.keys(customPayload).forEach(function (key) {
-        result[key] = customPayload[key];
-    });
+    function mergeCustomPayload(data, customData) {
+        Object.keys(customData).forEach(function (key) {
+            if (!(Object.prototype.hasOwnProperty.call(data, key))) {
+                data[key] = customData[key];
+            } else {
+                mergeCustomPayload(data[key], customData[key]);
+            }
+        });
+        return data;
+    }
+    result = mergeCustomPayload(result, this.getCustomPayload());
+
     return { payment: result };
 };
 

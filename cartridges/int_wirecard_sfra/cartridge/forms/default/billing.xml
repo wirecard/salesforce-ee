@@ -22,10 +22,10 @@
     <field formid="subscribe" type="boolean" checked="false" default-value="false" mandatory="false" />
 
     <!--  wirecard payment method forms -->
-    <include formid="PG_CREDITCARD" name="PG_CREDITCARD"/>
     <include formid="PG_EPS" name="PG_EPS"/>
     <include formid="PG_GIROPAY" name="PG_GIROPAY"/>
     <include formid="PG_IDEAL" name="PG_IDEAL"/>
+    <include formid="PG_PAYOLUTION_INVOICE" name="PG_PAYOLUTION_INVOICE"/>
     <include formid="PG_SEPA" name="PG_SEPA"/>
 
 </form>

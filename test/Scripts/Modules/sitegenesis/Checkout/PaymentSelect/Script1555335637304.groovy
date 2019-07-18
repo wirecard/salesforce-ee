@@ -16,7 +16,7 @@ import internal.GlobalVariable as GlobalVariable
 switch (paymentMethodId) {
 	case 'PG_EPS':
 		WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentMethods/Eps'), [:], FailureHandling.STOP_ON_FAILURE)
-	
+
 		break
 	case 'PG_GIROPAY':
 		WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentMethods/Giropay'), [:], FailureHandling.STOP_ON_FAILURE)
@@ -36,6 +36,10 @@ switch (paymentMethodId) {
         break
 	case 'PG_POI':
 		WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentMethods/Payment on Invoice'), [:], FailureHandling.STOP_ON_FAILURE)
+
+		break
+	case 'PG_PAYOLUTION_INVOICE':
+		WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentMethods/Payolution Invoice'), [:], FailureHandling.STOP_ON_FAILURE)
 
 		break
     case 'PG_CREDITCARD':

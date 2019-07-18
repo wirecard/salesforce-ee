@@ -94,7 +94,8 @@
                 <externally-managed-flag>false</externally-managed-flag>
             </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayIBAN">
-                <display-name xml:lang="x-default">IBAN</display-name>
+                <display-name xml:lang="x-default">SEPA IBAN</display-name>
+                <description xml:lang="x-default">IBAN of the debtor</description>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
@@ -102,6 +103,12 @@
             <attribute-definition attribute-id="paymentGatewayBIC">
                 <display-name xml:lang="x-default">BIC</display-name>
                 <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayDateOfBirth">
+                <display-name xml:lang="x-default">Date of Birth</display-name>
+                <type>date</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
             </attribute-definition>

@@ -3,6 +3,7 @@ PG_CREDITCARD,false
 PG_EPS,false
 PG_GIROPAY,false
 PG_IDEAL,false
+PG_PAYOLUTION_INVOICE,false
 PG_PAYPAL,false
 PG_POI,false
 PG_SOFORT,false
