@@ -26,6 +26,11 @@ var methodsWithForms = {
         dob_month: 'text',
         dob_year: 'text'
     },
+    PG_RATEPAY_INVOICE: {
+        dob_day: 'text',
+        dob_month: 'text',
+        dob_year: 'text'
+    },
     PG_SEPA: {
         paymentGatewayBIC: 'text',
         paymentGatewayIBAN: 'text',
@@ -113,16 +118,24 @@ module.exports = {
 
     /**
      * Check if value from form field has to be saved with payment instrument
+     * @param {string} method - payment method id
      * @returns {Object}
      */
-    getFormFieldToSave: function () {
-        var fields = [].concat(Object.keys(methodsWithForms.PG_PAYOLUTION_INVOICE));
+    getFormFieldToSave: function (methodID) {
+        var fields = [];
+        if (Object.prototype.hasOwnProperty.call(methodsWithForms, methodID)) {
+            fields = [].concat(Object.keys(methodsWithForms[methodID]));
+        }
+        if (/^PG_(PAYOLUTION|RATEPAY)_INVOICE$/.test(methodID)) {
+            fields = ['paymentGatewayDateOfBirth'];
+        }
+
         /**
          * @param {string} fieldName - form field name
          * @returns {boolean}
          */
         return function (fieldName) {
-            return fields.indexOf(fieldName) === -1;
+            return fields.indexOf(fieldName) > -1;
         }
     },
 
@@ -184,6 +197,7 @@ module.exports = {
     PAYMENT_METHOD_PAYPAL           : 'paypal',
     PAYMENT_METHOD_PAYOLUTION_INV   : 'payolution-inv',
     PAYMENT_METHOD_POI              : 'wiretransfer',
+    PAYMENT_METHOD_RATEPAY          : 'ratepay-invoice',
     PAYMENT_METHOD_SEPA_CREDIT      : 'sepacredit',
     PAYMENT_METHOD_SOFORT           : 'sofortbanking'
 };

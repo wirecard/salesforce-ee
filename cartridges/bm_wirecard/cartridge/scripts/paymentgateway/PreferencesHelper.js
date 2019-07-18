@@ -75,6 +75,13 @@ var PreferencesMapping = {
         merchantAccountID : 'paymentGatewayPayolutionInvoiceMerchantAccountIDCHF',
         sendAdditionalData: 'paymentGatewayPayolutionInvoiceSendAdditionalData'
     },
+    PG_RATEPAY_INVOICE: {
+        userName          : 'paymentGatewayRatepayInvoiceHttpUser',
+        password          : 'paymentGatewayRatepayInvoiceHttpPassword',
+        baseUrl           : 'paymentGatewayRatepayInvoiceBaseUrl',
+        merchantAccountID : 'paymentGatewayRatepayInvoiceMerchantAccountID',
+        sendAdditionalData: 'paymentGatewayRatepayInvoiceSendAdditionalData'
+    },
     PG_POI: {
         userName          : 'paymentGatewayPoiHttpUser',
         password          : 'paymentGatewayPoiHttpPassword',

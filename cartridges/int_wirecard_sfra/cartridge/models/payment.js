@@ -82,6 +82,11 @@ function checkPaymentGatewayMethodsAvailable(paymentMethods, currentBasket) {
                     if (!allowedShippingCountries || allowedShippingCountries.split(',').indexOf(shippingCountryCode) > -1) {
                         result.push(method);
                     }
+                } else if (/^PG_RATEPAY_INVOICE$/.test(method.ID)) {
+                    allowedShippingCountries = Site.getCustomPreferenceValue('paymentGatewayRatepayInvoiceAllowedShippingCountries');
+                    if (!allowedShippingCountries || allowedShippingCountries.split(',').indexOf(shippingCountryCode) > -1) {
+                        result.push(method);
+                    }
                 } else {
                     result.push(method);
                 }

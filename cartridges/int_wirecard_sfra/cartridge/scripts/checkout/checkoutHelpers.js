@@ -37,8 +37,15 @@ function validatePayment(req, currentBasket) {
         for (var i = 0; i < paymentInstruments.length; i += 1) {
             var paymentInstrument = paymentInstruments[i];
             var paymentMethod = paymentInstrument.getPaymentMethod();
-            if (['PG_PAYOLUTION_INVOICE'].indexOf(paymentMethod) > -1
+            if (/^PG_PAYOLUTION_INVOICE$/.test(paymentMethod)
                 && Site.getCustomPreferenceValue('paymentGatewayPayolutionInvoiceBillingSameAsShipping')
+                && billingAddressHash !== shippingAddressHash
+            ) {
+                // shipping is not the same as billing address
+                invalid = true;
+                errorMessage = Resource.msg('text_need_same_address_notice', 'paymentgateway', null);
+            } else if (/^PG_RATEPAY_INVOICE$/.test(paymentMethod)
+                && Site.getCustomPreferenceValue('paymentGatewayRatepayInvoiceBillingSameAsShipping')
                 && billingAddressHash !== shippingAddressHash
             ) {
                 // shipping is not the same as billing address

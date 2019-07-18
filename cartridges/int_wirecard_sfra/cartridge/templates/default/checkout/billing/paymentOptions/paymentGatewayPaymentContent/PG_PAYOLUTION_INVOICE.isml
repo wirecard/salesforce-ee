@@ -21,7 +21,7 @@
             <div class="form-group required">
                 <label class="form-control-label checkout-hidden" for="dob_year"></label>
                 <select class="form-control custom-select" id="dob_year"
-                        name="${ payolutionFields.dob_year.htmlName }" required autocomplete="pm-year">
+                        name="${ payolutionFields.dob_year.htmlName }" required>
                     <isloop items=${ payolutionFields.dob_year.options } var="year">
                         <option id="${ year.id }" value="${ year.value }">
                         ${year.label}
@@ -49,7 +49,7 @@
             <div class="form-group required">
                 <label class="form-control-label checkout-hidden" for="dob_day"></label>
                 <select class="form-control custom-select" id="dob_day"
-                        name="${ payolutionFields.dob_day.htmlName }" required autocomplete="pm-day">
+                        name="${ payolutionFields.dob_day.htmlName }" required>
                     <isloop items=${payolutionFields.dob_day.options} var="day">
                         <option id="${ day.id }" value="${ day.value }">
                         ${day.label}

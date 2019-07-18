@@ -16,7 +16,7 @@ function getLineItems(transaction) {
     var plisIterator = plis.iterator();
     while (plisIterator.hasNext()) {
         var pli = plisIterator.next();
-        var vatRate = pli.getTaxRate() * 100;
+        var vatRate = pli.getTaxRate();
         var qty = pli.quantity.value;
 
         var itemData = {

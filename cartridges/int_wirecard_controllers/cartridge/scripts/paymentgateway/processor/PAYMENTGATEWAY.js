@@ -15,7 +15,7 @@ var Transaction = require('dw/system/Transaction');
 var pgLogger = require('dw/system/Logger').getLogger('paymentgateway');
 
 var Cart = require(controllerCartridge + '/cartridge/scripts/models/CartModel');
-var validatePayolution = require('*/cartridge/scripts/paymentgateway/util/Checkout').validatePayolutionInvoice;
+var validatePayment = require('*/cartridge/scripts/paymentgateway/util/Checkout').validatePayment;
 
 /**
  * Creates PaymentInstrument and returns 'success'.
@@ -36,15 +36,11 @@ function Handle(args) {
         return { error: true };
     }
     // validate payolution date-of-birth / accept consent
-    var paymentGatewayErrors = [];
-    var dateOfBirth;
-    if (/^PG_PAYOLUTION_INVOICE$/.test(paymentMethodId)) {
-        var validPayolution = validatePayolution(paymentMethodId, args.Basket);
-        paymentGatewayErrors = validPayolution.errors;
-        dateOfBirth = validPayolution.dateOfBirth;
-    }
+    var isValidPayment = validatePayment(paymentMethodId, args.Basket);
+    var paymentGatewayErrors = isValidPayment.errors;
+    var dateOfBirth = isValidPayment.dateOfBirth;
+
     if (paymentGatewayErrors.length > 0) {
-        session.privacy.paymentGatewayErrors = JSON.stringify(paymentGatewayErrors);
         return { error: true };
     }
 
@@ -59,7 +55,7 @@ function Handle(args) {
             paymentInstrument.custom.paymentGatewayIBAN = paymentForm[paymentMethodId].paymentGatewayIBAN.value;
             paymentInstrument.custom.paymentGatewaySEPADebtorName = paymentForm[paymentMethodId].paymentGatewaySEPADebtorName.value;
         });
-    } else if (/^PG_PAYOLUTION_INVOICE$/.test(paymentMethodId)) {
+    } else if (/^PG_(PAYOLUTION|RATEPAY)_INVOICE$/.test(paymentMethodId)) {
         Transaction.wrap(function () {
             paymentInstrument.custom.paymentGatewayDateOfBirth = dateOfBirth;
         });
@@ -82,16 +78,6 @@ function Authorize(args) {
     var paymentData = orderHelper.getPaymentGatewayOrderPayment(order);
     var paymentInstrument = paymentData.paymentInstrument;
     var responseData;
-
-    // re-validate payolution
-    var paymentGatewayErrors = [];
-    if (/^PG_PAYOLUTION_INVOICE$/.test(paymentData.paymentMethodID)) {
-        var validPayolution = validatePayolution(paymentData.paymentMethodID, order);
-        paymentGatewayErrors = validPayolution.errors;
-    }
-    if (paymentGatewayErrors.length > 0) {
-        return { error: true, errorMessage: paymentGatewayErrors.join('\n') };
-    }
 
     try {
         // handles all wirecard payments except credit card (seamless integration)

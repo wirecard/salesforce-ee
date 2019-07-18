@@ -13,8 +13,8 @@ var Type = require('./Type').All;
 var stringHelper = require('*/cartridge/scripts/paymentgateway/util/StringHelper');
 
 var preferenceMapping = {
-    addDesc: 'paymentGatewayPayolutionInvoiceAddDescriptorToRequest',
-    sendAdditionalData: 'paymentGatewayPayolutionInvoiceSendAdditionalData'
+    addDesc: 'paymentGatewayRatepayInvoiceAddDescriptorToRequest',
+    sendAdditionalData: 'paymentGatewayRatepayInvoiceSendAdditionalData'
 };
 
 /**
@@ -57,12 +57,11 @@ function getCancelTransactionType() {
     var self = this;
     var type;
     if (!self['transaction-type']) {
-        throw new Error('transaction-type missing for Payolution Invoice Transaction.');
+        throw new Error('transaction-type missing for Ratepay Invoice Transaction.');
     }
     switch (self['transaction-type']) {
         case Type.AUTHORIZATION:
             type = Type.VOID_AUTHORIZATION;
-
             break;
         default:
             throw new Error('unsupported transaction type!');
@@ -78,7 +77,7 @@ function getRefundTransactionType() {
     var self = this;
     var type;
     if (!self['transaction-type']) {
-        throw new Error('transaction-type missing for Payolution Invoice Transaction.');
+        throw new Error('transaction-type missing for Ratepay Invoice Transaction.');
     }
     switch (self['transaction-type']) {
         case Type.CAPTURE_AUTHORIZATION:
@@ -96,18 +95,13 @@ function getRefundTransactionType() {
  * @param {Object} args - additional parameter
  * @returns {Object} - transaction
  */
-function Payolution(order, args) {
+function Ratepay(order, args) {
     // default params
     var params = {
-        paymentMethodID: require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper').PAYMENT_METHOD_PAYOLUTION_INV,
-        'transaction-type': Type.AUTHORIZATION
+        paymentMethodID: require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper').PAYMENT_METHOD_RATEPAY,
+        'transaction-type': Type.AUTHORIZATION,
+        'merchant-account-id': this.getSitePreference('paymentGatewayRatepayInvoiceMerchantAccountID')
     };
-    // use different merchant for CHF
-    if (order.getCurrencyCode() === 'CHF') {
-        params['merchant-account-id'] = this.getSitePreference('paymentGatewayPayolutionInvoiceMerchantAccountIDCHF');
-    } else {
-        params['merchant-account-id'] = this.getSitePreference('paymentGatewayPayolutionInvoiceMerchantAccountID');
-    }
     if (typeof args === 'object') {
         Object.keys(args).forEach(function (k) {
             params[k] = args[k];
@@ -124,13 +118,13 @@ function Payolution(order, args) {
     return this;
 }
 
-Payolution.prototype = Object.create(Transaction.prototype);
+Ratepay.prototype = Object.create(Transaction.prototype);
 
 /**
  * Add date-of-birth saved with orderPaymentInstrument
  */
-Payolution.prototype.getCustomPayload = function () {
-    var instruments = this.order.getPaymentInstruments('PG_PAYOLUTION_INVOICE');
+Ratepay.prototype.getCustomPayload = function () {
+    var instruments = this.order.getPaymentInstruments('PG_RATEPAY_INVOICE');
     var result = {};
 
     if (!instruments.empty) {
@@ -147,15 +141,24 @@ Payolution.prototype.getCustomPayload = function () {
     return result;
 };
 
-Payolution.prototype.getApiEndpointFromTransactionType = function() {
+Ratepay.prototype.getApiEndpointFromTransactionType = function() {
     switch(this['transaction-type']) {
         case Type.VOID_AUTHORIZATION :
         case Type.CAPTURE_AUTHORIZATION :
         case Type.REFUND_CAPTURE :
-			return 'payments';
+            return 'payments';
         default :
             return 'paymentmethods';
     }
 };
 
-module.exports = Payolution;
+/**
+ * must send full payload for ratepay
+ * @returns {boolean}
+ */
+Ratepay.prototype.hasReducedPayload = function () {
+    return false;
+};
+
+
+module.exports = Ratepay;
