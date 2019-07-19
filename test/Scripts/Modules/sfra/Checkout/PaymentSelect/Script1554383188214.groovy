@@ -56,6 +56,10 @@ switch (paymentMethodId) {
         WebUI.callTestCase(findTestCase('Modules/sfra/PaymentMethods/SepaDD'), [:], FailureHandling.STOP_ON_FAILURE)
 
         break
+	case 'PG_ALIPAY':
+		WebUI.callTestCase(findTestCase('Modules/sfra/PaymentMethods/Alipay'), [:], FailureHandling.STOP_ON_FAILURE)
+
+		break
     default:
         break
 }

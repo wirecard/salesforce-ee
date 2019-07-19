@@ -9,3 +9,4 @@ PG_PAYPAL,false
 PG_POI,false
 PG_SOFORT,false
 PG_SEPA,false
+PG_ALIPAY,false

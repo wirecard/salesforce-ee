@@ -108,6 +108,13 @@ var PreferencesMapping = {
         baseUrl           : 'paymentGatewaySEPADebitBaseUrl',
         merchantAccountID : 'paymentGatewaySEPADebitMerchantAccountID',
         sendAdditionalData: 'paymentGatewaySEPASendAdditionalData'
+    },
+    PG_ALIPAY: {
+        userName          : 'paymentGatewayAlipayHttpUser',
+        password          : 'paymentGatewayAlipayHttpPassword',
+        baseUrl           : 'paymentGatewayAlipayBaseUrl',
+        merchantAccountID : 'paymentGatewayAlipayMerchantAccountID',
+        sendAdditionalData: 'paymentGatewayAlipaySendAdditionalData'
     }
 };
 

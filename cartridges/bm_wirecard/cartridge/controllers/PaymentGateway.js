@@ -177,7 +177,8 @@ exports.HttpAccessOverview = guard.ensure(['get', 'https'], function () {
         { methodName: Resource.msg('payolution_invoice_eur', 'paymentgateway', null), methodID: 'PG_PAYOLUTION_INVOICE_EUR' },
         { methodName: Resource.msg('ratepayinvoice', 'paymentgateway', null), methodID: 'PG_RATEPAY_INVOICE' },
         { methodName: Resource.msg('sofortbanking', 'paymentgateway', null), methodID: 'PG_SOFORT' },
-        { methodName: Resource.msg('sepadd', 'paymentgateway', null), methodID: 'PG_SEPA' }
+        { methodName: Resource.msg('sepadd', 'paymentgateway', null), methodID: 'PG_SEPA' },
+        { methodName: Resource.msg('alipay', 'paymentgateway', null), methodID: 'PG_ALIPAY' }
     ].forEach(function (p) {
         preferences = preferenceHelper.getPreferenceForMethodID(p.methodID);
         if (Object.prototype.hasOwnProperty.call(preferences, 'userName')) {

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>Alipay</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>46c09fc6-30b3-45fd-8df5-960fe335d6a7</testCaseGuid>
+   <variable>
+      <defaultValue>findTestData('payment_methods').getValue(1, 2)</defaultValue>
+      <description></description>
+      <id>743f1610-5c8a-4d8b-84d1-8ae26d0a3d86</id>
+      <masked>false</masked>
+      <name>email</name>
+   </variable>
+   <variable>
+      <defaultValue>findTestData('payment_methods').getValue(2, 2)</defaultValue>
+      <description></description>
+      <id>7fad3d57-0539-48eb-a148-079682da3d87</id>
+      <masked>false</masked>
+      <name>password</name>
+   </variable>
+   <variable>
+      <defaultValue>findTestData('payment_methods').getValue(3, 2)</defaultValue>
+      <description></description>
+      <id>9042ac7e-e8de-4acd-b25e-82a3fb60c1d4</id>
+      <masked>false</masked>
+      <name>captcha</name>
+   </variable>
+   <variable>
+      <defaultValue>findTestData('payment_methods').getValue(4, 2)</defaultValue>
+      <description></description>
+      <id>ee716134-cc9c-4f01-83b8-e8532d3baea6</id>
+      <masked>false</masked>
+      <name>payment_password</name>
+   </variable>
+</TestCaseEntity>
