@@ -197,6 +197,7 @@ module.exports = {
     PAYMENT_METHOD_PAYPAL           : 'paypal',
     PAYMENT_METHOD_PAYOLUTION_INV   : 'payolution-inv',
     PAYMENT_METHOD_POI              : 'wiretransfer',
+    PAYMENT_METHOD_PIA              : 'wiretransfer',
     PAYMENT_METHOD_RATEPAY          : 'ratepay-invoice',
     PAYMENT_METHOD_SEPA_CREDIT      : 'sepacredit',
     PAYMENT_METHOD_SOFORT           : 'sofortbanking',

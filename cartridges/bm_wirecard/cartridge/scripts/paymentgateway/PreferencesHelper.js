@@ -89,6 +89,13 @@ var PreferencesMapping = {
         merchantAccountID : 'paymentGatewayPoiMerchantAccountID',
         sendAdditionalData: 'paymentGatewayPoiSendAdditionalData'
     },
+    PG_PIA: {
+        userName          : 'paymentGatewayPiaHttpUser',
+        password          : 'paymentGatewayPiaHttpPassword',
+        baseUrl           : 'paymentGatewayPiaBaseUrl',
+        merchantAccountID : 'paymentGatewayPiaMerchantAccountID',
+        sendAdditionalData: 'paymentGatewayPiaSendAdditionalData'
+    },
     PG_SOFORT: {
         userName          : 'paymentGatewaySofortHttpUser',
         password          : 'paymentGatewaySofortHttpPassword',

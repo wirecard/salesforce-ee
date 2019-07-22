@@ -166,6 +166,16 @@
         </currencies>
     </payment-method>
 
+    <payment-method method-id="PG_PIA">
+        <name xml:lang="x-default">Wirecard Payment In Advance</name>
+        <image>images/payment/paymentgateway/pia.png</image>
+        <enabled-flag>false</enabled-flag>
+        <processor-id>PAYMENTGATEWAY</processor-id>
+        <currencies>
+            <currency>EUR</currency>
+        </currencies>
+    </payment-method>
+
     <payment-method method-id="PG_SEPA">
         <name xml:lang="x-default">Wirecard SEPA Direct Debit</name>
         <image>images/payment/paymentgateway/SEPA.svg</image>
