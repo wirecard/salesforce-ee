@@ -58,5 +58,4 @@ if ('PG_ALIPAY' != paymentMethodId) {
 
 	WebUI.verifyElementPresent(findTestObject('sfra/checkout/Order success message'), 10)
 }
-WebUI.acceptAlert()
 

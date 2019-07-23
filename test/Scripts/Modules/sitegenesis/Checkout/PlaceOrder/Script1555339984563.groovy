@@ -22,6 +22,10 @@ if ('PG_SEPA' == paymentMethodId) {
 WebUI.click(findTestObject('sitegenesis/checkout/billing/Button place order'))
 
 switch (paymentMethodId) {
+	case 'PG_ALIPAY':
+		WebUI.callTestCase(findTestCase('Modules/Payment methods/Alipay'), [:], FailureHandling.STOP_ON_FAILURE)
+
+		break
 	case 'PG_EPS':
 		WebUI.callTestCase(findTestCase('Modules/Payment methods/Eps'), [:], FailureHandling.STOP_ON_FAILURE)
 	
