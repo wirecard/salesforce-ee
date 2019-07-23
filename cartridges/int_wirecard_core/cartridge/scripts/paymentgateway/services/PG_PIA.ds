@@ -17,7 +17,7 @@ var PaymentInAdvanceService = AbstractPaymentGatewayService.extend({
     },
 
     /**
-     * Retrieves the base url for Purchase on advance
+     * Retrieves the base url for Purchase in advance
      * @returns {String}
      */
     getBaseUrl: function() {
@@ -25,7 +25,7 @@ var PaymentInAdvanceService = AbstractPaymentGatewayService.extend({
     },
 
     /**
-     * Retrieves the http user for Purchase on advance
+     * Retrieves the http user for Purchase in advance
      * @returns {String}
      */
     getHttpUsername: function() {
@@ -33,7 +33,7 @@ var PaymentInAdvanceService = AbstractPaymentGatewayService.extend({
     },
 
     /**
-     * Retrieves the http password for Purchase on advance
+     * Retrieves the http password for Purchase in advance
      * @returns {String}
      */
     getHttpPassword: function() {

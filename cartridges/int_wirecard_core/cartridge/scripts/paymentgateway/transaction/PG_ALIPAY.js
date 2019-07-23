@@ -1,3 +1,10 @@
+/**
+ * Shop System Plugins:
+ * - Terms of Use can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/_TERMS_OF_USE
+ * - License can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
+ */
 'use strict';
 
 var Transaction = require('./Transaction');
@@ -16,7 +23,7 @@ function getRefundTransactionType() {
     var self = this;
     var type;
     if (!self['transaction-type']) {
-        throw new Error('transaction-type missing for SEPA Transaction.');
+        throw new Error('transaction-type missing for Alipay Transaction.');
     }
     switch (self['transaction-type']) {
         case Type.DEBIT:
@@ -47,7 +54,7 @@ function ALIPAY(order, args) {
             params[k] = args[k];
         });
     }
-    //call the parent constructor
+    // call the parent constructor
     Transaction.call(this, order, params);
 
     this.preferenceMapping = preferenceMapping;

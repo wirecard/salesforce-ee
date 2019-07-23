@@ -36,7 +36,7 @@ function getCaptureTransactionType() {
     var canPartialCapture = false;
 
     if (!self['transaction-type']) {
-        throw new Error('transaction-type missing for Payolution Invoice Transaction.');
+        throw new Error('transaction-type missing for Ratepay Invoice Transaction.');
     }
     switch (self['transaction-type']) {
         case Type.AUTHORIZATION:
@@ -141,8 +141,8 @@ Ratepay.prototype.getCustomPayload = function () {
     return result;
 };
 
-Ratepay.prototype.getApiEndpointFromTransactionType = function() {
-    switch(this['transaction-type']) {
+Ratepay.prototype.getApiEndpointFromTransactionType = function () {
+    switch (this['transaction-type']) {
         case Type.VOID_AUTHORIZATION :
         case Type.CAPTURE_AUTHORIZATION :
         case Type.REFUND_CAPTURE :

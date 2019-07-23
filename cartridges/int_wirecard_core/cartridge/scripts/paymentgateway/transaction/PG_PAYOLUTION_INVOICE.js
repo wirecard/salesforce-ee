@@ -147,12 +147,12 @@ Payolution.prototype.getCustomPayload = function () {
     return result;
 };
 
-Payolution.prototype.getApiEndpointFromTransactionType = function() {
-    switch(this['transaction-type']) {
+Payolution.prototype.getApiEndpointFromTransactionType = function () {
+    switch (this['transaction-type']) {
         case Type.VOID_AUTHORIZATION :
         case Type.CAPTURE_AUTHORIZATION :
         case Type.REFUND_CAPTURE :
-			return 'payments';
+            return 'payments';
         default :
             return 'paymentmethods';
     }
