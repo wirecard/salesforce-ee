@@ -229,6 +229,7 @@ var TransactionHelper = {
         }
         var ArrayList = require('dw/util/ArrayList');
         var Transaction = require('dw/system/Transaction');
+        var paymentHelper = require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper');
 
         var allPaymentTransactions = new ArrayList();
         var savedTransactions = order.custom.paymentGatewayTransactions;
@@ -247,6 +248,7 @@ var TransactionHelper = {
                 }
             } else if (!transaction.parentTransactionId
                 && newTransaction.parentTransactionId == transaction.transactionId
+                && [paymentHelper.PAYMENT_METHOD_PIA].indexOf(transaction.paymentMethodId) === -1
             ) {
                 // replace initial transaction with notification response
                 allPaymentTransactions.push(JSON.stringify(newTransaction));
@@ -415,6 +417,8 @@ var TransactionHelper = {
             'transaction-id',
             'completion-time-stamp',
             'requested-amount',
+            'merchant-bank-account',
+            'provider-transaction-reference-id',
             'payment-methods',
             'parent-transaction-id',
             'custom-fields'
@@ -547,7 +551,7 @@ var TransactionHelper = {
      * @returns {string} - payment method's secret
      */
     getSecretCustomPreferenceFromPaymentMethodId : function(paymentMethodId) {
-        var Site = require('dw/system/Site').getCurrent();
+        const Site = require('dw/system/Site').getCurrent();
         var paymentHelper = require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper');
         var secret;
 
@@ -572,6 +576,9 @@ var TransactionHelper = {
                 break;
             case paymentHelper.PAYMENT_METHOD_PAYPAL:
                 secret = Site.getCustomPreferenceValue('paymentGatewayPayPalSecret');
+                break;
+            case paymentHelper.PAYMENT_METHOD_PIA:
+                secret = Site.getCustomPreferenceValue('paymentGatewayPiaSecret');
                 break;
             case paymentHelper.PAYMENT_METHOD_SEPA_CREDIT:
                 secret = Site.getCustomPreferenceValue('paymentGatewaySEPACreditSecret');

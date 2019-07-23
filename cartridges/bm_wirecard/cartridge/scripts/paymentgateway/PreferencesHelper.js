@@ -61,6 +61,13 @@ var PreferencesMapping = {
         sendBasketData        : 'paymentGatewayPayPalSendBasketData',
         initialTransactionType: 'paymentGatewayPayPalInitialTransactionType'
     },
+    PG_PIA: {
+        userName          : 'paymentGatewayPiaHttpUser',
+        password          : 'paymentGatewayPiaHttpPassword',
+        baseUrl           : 'paymentGatewayPiaBaseUrl',
+        merchantAccountID : 'paymentGatewayPiaMerchantAccountID',
+        sendAdditionalData: 'paymentGatewayPiaSendAdditionalData'
+    },
     PG_SOFORT: {
         userName          : 'paymentGatewaySofortHttpUser',
         password          : 'paymentGatewaySofortHttpPassword',

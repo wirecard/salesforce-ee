@@ -159,8 +159,8 @@
                     </div>
                     <isloop items="${couponLineItem.priceAdjustments}" var="Promo" status="loopstate">
                         <div class="discount clearfix <isif condition="${loopstate.first}"> first <iselseif condition="${loopstate.last}"> last</isif>">
-                        <span class="label"><isprint value="${Promo.lineItemText}"/></span>
-                        <span class="value">(<isprint value="${Promo.price}"/>)</span>
+                            <span class="label"><isprint value="${Promo.lineItemText}"/></span>
+                            <span class="value">(<isprint value="${Promo.price}"/>)</span>
                         </div>
                     </isloop>
                 </td>
