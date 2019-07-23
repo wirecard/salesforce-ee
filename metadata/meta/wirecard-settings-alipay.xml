@@ -10,7 +10,7 @@
     <type-extension type-id="SitePreferences">
         <custom-attribute-definitions>
             <attribute-definition attribute-id="paymentGatewayAlipayMerchantAccountID">
-                <display-name xml:lang="x-default">Alipay Cross-Border MAID</display-name>
+                <display-name xml:lang="x-default">Merchant Account ID (MAID)</display-name>
                 <description xml:lang="x-default">Unique identifier assigned to your merchant account.</description>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
