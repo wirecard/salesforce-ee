@@ -155,6 +155,9 @@ function initCreditCardList(cart) {
             applicableCreditCards = profile.validateWalletPaymentInstruments(countryCode, paymentAmount.getValue()).ValidPaymentInstruments;
         }
     }
+    // check if basket contains digital goods
+    var applyDigitalGoodsFilter = require('*/cartridge/scripts/paymentgateway/util/Checkout').applyDigitalGoodsFilter;
+    applyDigitalGoodsFilter(cart.object, applicablePaymentMethods);
 
     return {
         ApplicablePaymentMethods: applicablePaymentMethods,

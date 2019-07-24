@@ -13,6 +13,7 @@ var Resource = require('dw/web/Resource');
 var Site = require('dw/system/Site').current;
 var Transaction = require('dw/system/Transaction');
 var PaymentInstrument = require('dw/order/PaymentInstrument');
+var PaymentMgr = require('dw/order/PaymentMgr');
 
 /* Script includes */
 var packageJson = require('int_wirecard_controllers/package.json');
@@ -144,6 +145,27 @@ function validatePayment(paymentMethodId, lineItemCtnr) {
 }
 
 /**
+ * Filter applicable payment methods if line item container contains digital goods
+ * @param {dw.order.LineItemContainer} lineItemCtnr - current line item container
+ * @param {dw.util.List} applicablePaymentMethods - list with applicable payment methods for current line item container
+ * @returns {boolean}
+ */
+function filterPaymentMethodsForDigitalGoods(lineItemCtnr, applicablePaymentMethods) {
+    var hasDigitalProducts = HookMgr.callHook('int.wirecard.order', 'hasDigitalProducts', lineItemCtnr);
+
+    var payolutionMethod = PaymentMgr.getPaymentMethod('PG_PAYOLUTION_INVOICE');
+    var payolutionMethodIndex = payolutionMethod ? applicablePaymentMethods.lastIndexOf(payolutionMethod) : -1;
+    if (payolutionMethodIndex > -1 && hasDigitalProducts) {
+        applicablePaymentMethods.removeAt(payolutionMethodIndex);
+    }
+    var ratepayMethod = PaymentMgr.getPaymentMethod('PG_RATEPAY_INVOICE');
+    var ratepayMethodIndex = ratepayMethod ? applicablePaymentMethods.lastIndexOf(ratepayMethod) : -1;
+    if (ratepayMethodIndex > -1 && hasDigitalProducts) {
+        applicablePaymentMethods.removeAt(ratepayMethodIndex);
+    }
+}
+
+/**
  * Validates payment instruments in COBilling-validatePayment.
  * @param {dw.order.LineItemContainer} lineItemCtnr - current basket / order
  * @param {dw.util.ArrayList} paymentInstruments - list with current basket's payment instruments
@@ -183,6 +205,7 @@ function validatePaymentInstruments(currentBasket, paymentInstruments) {
     };
 }
 
+exports.applyDigitalGoodsFilter = filterPaymentMethodsForDigitalGoods;
 exports.removePaymentInstrumentsFromBasket = removePaymentInstrumentsFromBasket;
 exports.validatePaymentInstruments = validatePaymentInstruments;
 exports.validatePayment = validatePayment;
