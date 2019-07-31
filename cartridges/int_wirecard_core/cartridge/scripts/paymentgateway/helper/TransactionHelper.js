@@ -248,8 +248,7 @@ var TransactionHelper = {
                 }
             } else if (!transaction.parentTransactionId
                 && newTransaction.parentTransactionId == transaction.transactionId
-                && /^PG_(PAYOLUTION|RATEPAY)_INVOICE$/.test(transaction.paymentMethodId)
-                && 'PG_POI' !== transaction.paymentMethodId
+                && !(/^PG_((PAYOLUTION|RATEPAY)_INVOICE|POI)$/.test(transaction.paymentMethodId))
             ) {
                 // replace initial transaction with notification response
                 allPaymentTransactions.push(JSON.stringify(newTransaction));
