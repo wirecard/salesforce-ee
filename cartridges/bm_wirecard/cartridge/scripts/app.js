@@ -79,10 +79,10 @@ exports.getView = function (viewName, parameters) {
 exports.getForm = function (formReference) {
     var formInstance, FormModel;
 
-    FormModel = require('~/cartridge/scripts/models/FormModel');
+    FormModel = require('*/cartridge/scripts/models/FormModel');
     formInstance = null;
     if (typeof formReference === 'string') {
-        formInstance = require('~/cartridge/scripts/object').resolve(session.forms, formReference);
+        formInstance = require('*/cartridge/scripts/object').resolve(session.forms, formReference);
     } else if (typeof formReference === 'object') {
         formInstance = formReference;
     }
@@ -94,5 +94,5 @@ exports.getForm = function (formReference) {
  * Returns the controller with the given name.
  */
 exports.getController = function (controllerName) {
-    return require('~/cartridge/controllers/' + controllerName);
+    return require('*/cartridge/controllers/' + controllerName);
 };

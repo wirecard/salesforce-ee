@@ -230,7 +230,6 @@ var TransactionHelper = {
         }
         var ArrayList = require('dw/util/ArrayList');
         var Transaction = require('dw/system/Transaction');
-        var paymentHelper = require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper');
 
         var allPaymentTransactions = new ArrayList();
         var savedTransactions = order.custom.paymentGatewayTransactions;
@@ -305,7 +304,7 @@ var TransactionHelper = {
                 });
             }
             if (transaction.transactionType != Type.All.CHECK_PAYER_RESPONSE) {
-                var orderState = require('~/cartridge/scripts/paymentgateway/helper/OrderHelper').getPaymentGatewayOrderStateFromTransactionType(order, transaction);
+                var orderState = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper').getPaymentGatewayOrderStateFromTransactionType(order, transaction);
                 Transaction.wrap(function () {
                     order.custom.paymentGatewayOrderState = orderState;
                 });

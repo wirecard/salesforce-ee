@@ -66,6 +66,35 @@ var GetTransaction = HTTPBaseService.extend({
         var Bytes = require('dw/util/Bytes');
         var bytes = new Bytes(userName + ':' + password, this.encoding);
         return Encoding.toBase64(bytes);
+    },
+
+    /**
+     * Filter log messages
+     * @param {String} msg - unfiltered response / request parameters
+     * @returns {String} - filtered response / request parameters
+     */
+    filterLogMessage: function (msg) {
+        return msg;
+    },
+
+    /**
+     * Retrieve request log message
+     * @param {Object} request - request object
+     * @returns {String} - transactionID and merchantID of requested transaction
+     */
+    getRequestLogMessage: function (request) {
+        return require('dw/util/StringUtils').format('Requesting transaction data for transactionID {0} / merchantID {1}',
+            request.get('transactionID'), request.get('merchantAccountID'));
+    },
+
+    /**
+     * Retrieve response log message
+     * @param {Object} response - response object
+     * @returns {String} - status excerpt of response xml
+     */
+    getResponseLogMessage: function (response) {
+        var responseStatus = require('*/cartridge/scripts/paymentgateway/util/EppResponse').parseXML(response.text);
+        return JSON.stringify(responseStatus);
     }
 });
 

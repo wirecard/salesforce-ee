@@ -106,7 +106,7 @@ Transaction.prototype.setCustomField = function (name, value) {
  * @returns {string}
  */
 Transaction.prototype.getPaymentMethodID = function (order) {
-    var orderHelper = require('~/cartridge/scripts/paymentgateway/helper/OrderHelper');
+    var orderHelper = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper');
     var paymentData = orderHelper.getPaymentGatewayOrderPayment(order);
     // this.paymentInstrument = paymentData.paymentInstrument;
     var paymentMethodID = paymentData.paymentMethodID;

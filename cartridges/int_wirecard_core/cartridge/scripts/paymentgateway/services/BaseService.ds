@@ -8,7 +8,7 @@
 /**
  * Base Recommendation Service Call Back
  */
-var Class = require('~/cartridge/scripts/object-handling/libInheritance').Class;
+var Class = require('*/cartridge/scripts/object-handling/libInheritance').Class;
 var Site = require('dw/system/Site');
 
 /**

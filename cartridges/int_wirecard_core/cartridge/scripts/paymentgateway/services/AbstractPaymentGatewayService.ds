@@ -84,7 +84,6 @@ var AbstractPaymentGatewayService = HTTPBaseService.extend({
         //setting request method
         svc.setRequestMethod(this.requestMethod);
         var requestData = JSON.stringify(params);
-        require('*/cartridge/scripts/paymentgateway/transaction/Logger').log(params);
 
         // log request url for debugging
         pgLogger.debug( 'Called service: ' + svc.URL + '\n' + logHeaders.join('\n'));
@@ -104,7 +103,6 @@ var AbstractPaymentGatewayService = HTTPBaseService.extend({
         if ([200, 201].indexOf(httpClient.getStatusCode()) > -1) {
             var transactionHelper = require('*/cartridge/scripts/paymentgateway/helper/TransactionHelper');
             result = transactionHelper.parseTransactionResponse(httpClient.text, self.paymentMethodID);
-            require('*/cartridge/scripts/paymentgateway/transaction/Logger').log(result, 'response');
         }
         return result;
     },
@@ -149,6 +147,35 @@ var AbstractPaymentGatewayService = HTTPBaseService.extend({
             result = '';
         }
         return result;
+    },
+
+    /**
+     * Filter log messages
+     * @param {String} msg - already filtered request / response data
+     * @returns {String} - filtered log message
+     */
+    filterLogMessage: function (msg) {
+        return msg;
+    },
+
+    /**
+     * Retrieve request log message
+     * @param {String} request - request json string
+     * @returns {String} - request json string
+     */
+    getRequestLogMessage: function (request) {
+        var data = JSON.parse(request);
+        return require('*/cartridge/scripts/paymentgateway/transaction/Logger').createLogMessage(data);
+    },
+
+    /**
+     * Retrieve response log message
+     * @param {Object} response - response object
+     * @returns {String} - response json string
+     */
+    getResponseLogMessage: function (response) {
+        var data = JSON.parse(response.text);
+        return require('*/cartridge/scripts/paymentgateway/transaction/Logger').createLogMessage(data);
     }
 });
 

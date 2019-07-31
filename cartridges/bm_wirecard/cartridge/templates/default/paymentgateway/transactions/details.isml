@@ -27,7 +27,8 @@
     function copyXML() {
         var params = {
             transactionId: "${ Transaction.transactionId }",
-            paymentMethodID: "${ Transaction.paymentMethodID }"
+            paymentMethodID: "${ Transaction.paymentMethodID }",
+            currency: "${ Transaction.amount.currencyCode }"
         };
         new Ajax.Request("${URLUtils.url('PaymentGateway-GetTransactionXML')}", {
             parameters: params,

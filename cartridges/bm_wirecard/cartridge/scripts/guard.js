@@ -22,7 +22,7 @@
  * // allow only GET requests via HTTPS for logged in users
  * exports.Show = require('~/guard').ensure(['get','https','loggedIn'],show);
  */
-var browsing = require('~/cartridge/scripts/util/Browsing');
+var browsing = require('*/cartridge/scripts/util/Browsing');
 var LOGGER   = dw.system.Logger.getLogger('guard');
 
 /**
@@ -103,7 +103,7 @@ function ensure (filters, action, params) {
         var error;
         var filtersPassed = true;
         var errors = [];
-        params = require('~/cartridge/scripts/object').extend(params,args);
+        params = require('*/cartridge/scripts/object').extend(params,args);
 
         for (var i = 0; i < filters.length; i++) {
             LOGGER.debug('Ensuring guard "{0}"...',filters[i]);
