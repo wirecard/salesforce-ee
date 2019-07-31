@@ -52,6 +52,9 @@ var EppResponse = {
                     }
                 }
             }
+            xmlStream.close();
+            reader.close();
+
             if (!(Object.prototype.hasOwnProperty.call(result, 'status'))
                 || !(Object.prototype.hasOwnProperty.call(result.status, 'message'))
             ) {
@@ -64,8 +67,6 @@ var EppResponse = {
                 message: generalErrorMsg || err.message
             };
         }
-        xmlStream.close();
-        reader.close();
 
         return result;
     }
