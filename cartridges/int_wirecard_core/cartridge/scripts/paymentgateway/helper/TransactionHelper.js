@@ -230,7 +230,6 @@ var TransactionHelper = {
         }
         var ArrayList = require('dw/util/ArrayList');
         var Transaction = require('dw/system/Transaction');
-        var paymentHelper = require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper');
 
         var allPaymentTransactions = new ArrayList();
         var savedTransactions = order.custom.paymentGatewayTransactions;
@@ -249,8 +248,7 @@ var TransactionHelper = {
                 }
             } else if (!transaction.parentTransactionId
                 && newTransaction.parentTransactionId == transaction.transactionId
-                && /^PG_(PAYOLUTION|RATEPAY)_INVOICE$/.test(transaction.paymentMethodId)
-                && 'PG_POI' !== transaction.paymentMethodId
+                && !(/^PG_((PAYOLUTION|RATEPAY)_INVOICE|POI)$/.test(transaction.paymentMethodId))
             ) {
                 // replace initial transaction with notification response
                 allPaymentTransactions.push(JSON.stringify(newTransaction));
@@ -305,7 +303,7 @@ var TransactionHelper = {
                 });
             }
             if (transaction.transactionType != Type.All.CHECK_PAYER_RESPONSE) {
-                var orderState = require('~/cartridge/scripts/paymentgateway/helper/OrderHelper').getPaymentGatewayOrderStateFromTransactionType(order, transaction);
+                var orderState = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper').getPaymentGatewayOrderStateFromTransactionType(order, transaction);
                 Transaction.wrap(function () {
                     order.custom.paymentGatewayOrderState = orderState;
                 });

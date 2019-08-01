@@ -13,8 +13,8 @@
  */
 
 /* Script Modules */
-var app = require('~/cartridge/scripts/app');
-var guard = require('~/cartridge/scripts/guard');
+var app = require('*/cartridge/scripts/app');
+var guard = require('*/cartridge/scripts/guard');
 
 var Resource = require('dw/web/Resource');
 var StringUtils = require('dw/util/StringUtils');
@@ -237,8 +237,12 @@ exports.GetTransactionXML = guard.ensure(['post', 'https'], function () {
     var parameterMap = request.httpParameterMap;
     var transactionId = parameterMap.transactionId.value;
     var paymentMethodID = parameterMap.paymentMethodID.value;
+    var currency = parameterMap.currency.value;
 
     var preferenceHelper = require('*/cartridge/scripts/paymentgateway/PreferencesHelper');
+    if (/^PG_PAYOLUTION_INVOICE$/.test(paymentMethodID)) {
+        paymentMethodID += '_' + currency.toUpperCase();
+    }
     var preferences = preferenceHelper.getPreferenceForMethodID(paymentMethodID);
     var data = '<?xml version="1.0" encoding="UTF-8"?>'
           + '<payment xmlns="http://www.elastic-payments.com/schema/payment">'
