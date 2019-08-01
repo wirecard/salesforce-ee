@@ -9,42 +9,10 @@
 <form xmlns="http://www.demandware.com/xml/form/2008-04-19">
 
     <field formid="dob_day" label="resource.day" type="integer" mandatory="true"
-           missing-error="error.message.required">
-        <options>
-            <option label="resource.day" value=""/>
-            <option label="01" value="01"/>
-            <option label="02" value="02"/>
-            <option label="03" value="03"/>
-            <option label="04" value="04"/>
-            <option label="05" value="05"/>
-            <option label="06" value="06"/>
-            <option label="07" value="07"/>
-            <option label="08" value="08"/>
-            <option label="09" value="09"/>
-            <option label="10" value="10"/>
-            <option label="11" value="11"/>
-            <option label="12" value="12"/>
-            <option label="13" value="13"/>
-            <option label="14" value="14"/>
-            <option label="15" value="15"/>
-            <option label="16" value="16"/>
-            <option label="17" value="17"/>
-            <option label="18" value="18"/>
-            <option label="19" value="19"/>
-            <option label="20" value="20"/>
-            <option label="21" value="21"/>
-            <option label="22" value="22"/>
-            <option label="23" value="23"/>
-            <option label="24" value="24"/>
-            <option label="25" value="25"/>
-            <option label="26" value="26"/>
-            <option label="27" value="27"/>
-            <option label="28" value="28"/>
-            <option label="29" value="29"/>
-            <option label="30" value="30"/>
-            <option label="31" value="31"/>
-        </options>
+            missing-error="error.message.required">
+        <options optionid-binding="value" value-binding="value" label-binding="label" selected-binding="selected"/>
     </field>
+
     <field formid="dob_month" label="resource.month" type="integer" mandatory="true"
            missing-error="error.message.required">
         <options>
@@ -64,72 +32,8 @@
         </options>
     </field>
     <field formid="dob_year" label="resource.year" type="integer" mandatory="true"
-           missing-error="error.message.required">
-        <options>
-            <option label="resource.year" value=""/>
-            <option label="2001" value="2001"/>
-            <option label="2000" value="2000"/>
-            <option label="1999" value="1999"/>
-            <option label="1998" value="1998"/>
-            <option label="1997" value="1997"/>
-            <option label="1996" value="1996"/>
-            <option label="1995" value="1995"/>
-            <option label="1994" value="1994"/>
-            <option label="1993" value="1993"/>
-            <option label="1992" value="1992"/>
-            <option label="1991" value="1991"/>
-            <option label="1990" value="1990"/>
-            <option label="1989" value="1989"/>
-            <option label="1988" value="1988"/>
-            <option label="1987" value="1987"/>
-            <option label="1986" value="1986"/>
-            <option label="1985" value="1985"/>
-            <option label="1984" value="1984"/>
-            <option label="1983" value="1983"/>
-            <option label="1982" value="1982"/>
-            <option label="1981" value="1981"/>
-            <option label="1980" value="1980"/>
-            <option label="1979" value="1979"/>
-            <option label="1978" value="1978"/>
-            <option label="1977" value="1977"/>
-            <option label="1976" value="1976"/>
-            <option label="1975" value="1975"/>
-            <option label="1974" value="1974"/>
-            <option label="1973" value="1973"/>
-            <option label="1972" value="1972"/>
-            <option label="1971" value="1971"/>
-            <option label="1970" value="1970"/>
-            <option label="1969" value="1969"/>
-            <option label="1968" value="1968"/>
-            <option label="1967" value="1967"/>
-            <option label="1966" value="1966"/>
-            <option label="1965" value="1965"/>
-            <option label="1964" value="1964"/>
-            <option label="1963" value="1963"/>
-            <option label="1962" value="1962"/>
-            <option label="1961" value="1961"/>
-            <option label="1960" value="1960"/>
-            <option label="1959" value="1959"/>
-            <option label="1958" value="1958"/>
-            <option label="1957" value="1957"/>
-            <option label="1956" value="1956"/>
-            <option label="1955" value="1955"/>
-            <option label="1954" value="1954"/>
-            <option label="1953" value="1953"/>
-            <option label="1952" value="1952"/>
-            <option label="1951" value="1951"/>
-            <option label="1950" value="1950"/>
-            <option label="1949" value="1949"/>
-            <option label="1948" value="1948"/>
-            <option label="1947" value="1947"/>
-            <option label="1946" value="1946"/>
-            <option label="1945" value="1945"/>
-            <option label="1944" value="1944"/>
-            <option label="1943" value="1943"/>
-            <option label="1942" value="1942"/>
-            <option label="1941" value="1941"/>
-            <option label="1940" value="1940"/>
-        </options>
+            missing-error="error.message.required">
+        <options optionid-binding="value" value-binding="value" label-binding="label" selected-binding="selected"/>
     </field>
 
 </form>

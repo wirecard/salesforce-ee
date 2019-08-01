@@ -13,10 +13,12 @@
         label="payolution.consent.label"
         type="boolean"
         missing-error="error.message.required"
-        value-error="error.message.required"/>
+        value-error="error.message.required" />
 
     <field formid="dob_day" label="resource.day" type="integer" mandatory="true"
-           missing-error="error.message.required" />
+           missing-error="error.message.required">
+           <options optionid-binding="value" value-binding="value" label-binding="label" selected-binding="selected"/>
+    </field>
     <field formid="dob_month" label="resource.month" type="integer" mandatory="true"
            missing-error="error.message.required" >
         <options>
@@ -36,6 +38,8 @@
         </options>
     </field>
     <field formid="dob_year" label="resource.year" type="integer" mandatory="true"
-           missing-error="error.message.required" />
+           missing-error="error.message.required">
+    	<options optionid-binding="value" value-binding="value" label-binding="label" selected-binding="selected"/>
+   	</field>
 
 </form>

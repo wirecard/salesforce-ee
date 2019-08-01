@@ -9,6 +9,46 @@
 </iscomment>
 <!--- TEMPLATENAME: PG_RATEPAY_INVOICE.isml --->
 <isset name="ratepayFields" value="${ pdict.CurrentForms.billing.paymentMethods.PG_RATEPAY_INVOICE }" scope="page"/>
+<isscript>
+// call this as function to avoid duplicate variable declaration in isscript 
+(function() {
+    const currentDate   = new Date();
+    const preselectYear = payolutionFields.dob_year.selectedOption || { value: null };
+    const preselectDay  = payolutionFields.dob_day.selectedOption || { value: null };
+    let optionsYear     = new (require('dw/util/ArrayList'))();
+    let optionsDay      = new (require('dw/util/ArrayList'))();
+
+    optionsYear.add1({
+        label: 'resource.year',
+        value: '',
+        selected: null === preselectYear.value
+    });
+
+    for (let year = currentDate.getFullYear() - 18; year > currentDate.getFullYear() - 118; year--) {
+        optionsYear.add1({
+            label: year.toString(),
+            value: year,
+            selected: year === preselectYear.value
+        });
+    }
+
+    optionsDay.add1({
+        label: 'resource.day',
+        value: '',
+        selected: null === preselectDay.value
+    });
+
+    for (let day = 1; 32 > day; day++) {
+        optionsDay.add1({
+            label: day.toString(),
+            value: day,
+            selected: day === preselectDay.value
+        });
+    }
+    ratepayFields.dob_year.setOptions(optionsYear.iterator());
+    ratepayFields.dob_day.setOptions(optionsDay.iterator());
+})();
+</isscript>
 
 <div class="birthday-fields form-row">
     <div class="form-label-text">

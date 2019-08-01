@@ -39,8 +39,8 @@
                 <select class="form-control custom-select" id="dob_month"
                         name="${ payolutionFields.dob_month.htmlName }" required>
                     <isloop items=${ payolutionFields.dob_month.options } var="month">
-                        <option id="${ month.id }" value="${ month.value }">
-                        ${month.label}
+                        <option id="${ month.id }" value="${ month.value }" ${month.selected ? 'selected="selected"' : ''}>
+                        ${month.label} ${month.selected}
                         </option>
                     </isloop>
                 </select>
