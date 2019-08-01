@@ -79,7 +79,7 @@
                 <description xml:lang="x-default">Payment method Guaranteed Invoice by Wirecard is only displayed if the consumer's shipping country is one of the countries selected here.</description>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
-                <default-value>CH,DE</default-value>
+                <default-value>AT,DE</default-value>
             </attribute-definition>
         </custom-attribute-definitions>
         <group-definitions>

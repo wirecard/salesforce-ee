@@ -9,6 +9,7 @@
 </iscomment>
 <!--- TEMPLATENAME: PG_PAYOLUTION_INVOICE.isml --->
 <isset name="payolutionFields" value="${ pdict.forms.billingForm.PG_PAYOLUTION_INVOICE }" scope="page"/>
+<isset name="currentDate" value="${new Date()}" scope="page"/>
 
 <fieldset class="payment-form-fields">
     <div class="row">
@@ -22,9 +23,10 @@
                 <label class="form-control-label checkout-hidden" for="dob_year"></label>
                 <select class="form-control custom-select" id="dob_year"
                         name="${ payolutionFields.dob_year.htmlName }" required>
-                    <isloop items=${ payolutionFields.dob_year.options } var="year">
-                        <option id="${ year.id }" value="${ year.value }">
-                        ${year.label}
+                    <option label="${ Resource.msg('resource.year', 'forms', null) }" value=""/>
+                    <isloop status="i" begin="${ currentDate.getFullYear() - 100 }" end="${ currentDate.getFullYear() - 18 }" >
+                        <option id="${ (i.end - i.count + 1).toString() }" value="${ (i.end - i.count + 1).toString() }">
+                            ${ (i.end - i.count + 1).toString() }
                         </option>
                     </isloop>
                 </select>
@@ -50,9 +52,10 @@
                 <label class="form-control-label checkout-hidden" for="dob_day"></label>
                 <select class="form-control custom-select" id="dob_day"
                         name="${ payolutionFields.dob_day.htmlName }" required>
-                    <isloop items=${payolutionFields.dob_day.options} var="day">
-                        <option id="${ day.id }" value="${ day.value }">
-                        ${day.label}
+                    <option label="${ Resource.msg('resource.day', 'forms', null) }" value=""/>
+                    <isloop status="j" begin="1" end="31">
+                        <option id="${ j.index }" value="${ j.index }">
+                            ${j.index}
                         </option>
                     </isloop>
                 </select>

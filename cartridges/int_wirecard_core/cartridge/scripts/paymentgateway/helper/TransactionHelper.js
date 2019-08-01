@@ -484,7 +484,7 @@ var TransactionHelper = {
             jsonResponse: { payment: {} },
             paymentMethodID: paymentMethodID,
             algorithmFactory: {
-                'HmacSHA256': function() {
+                HmacSHA256: function () {
                     const Mac = require('dw/crypto/Mac');
 
                     return new Mac(Mac.HMAC_SHA_256);
@@ -493,7 +493,7 @@ var TransactionHelper = {
             getFirstPaymentMethodId: function() {
                 const jsonResponse = this.getJsonResponse();
 
-                //if payment methods are available then the other keys must exists
+                // if payment methods are available then the other keys must exists
                 if ('payment-methods' in jsonResponse['payment']) {
                     return jsonResponse['payment']['payment-methods']['payment-method'][0]['name'];
                 }
@@ -506,11 +506,10 @@ var TransactionHelper = {
                 if ('requested-amount' in jsonResponse['payment']) {
                     return jsonResponse['payment']['requested-amount']['currency'];
                 }
-                // FIXME hardcoded default
-                return 'EUR';
+                return '';
             },
             getSecret: function() {
-                //if no payment method id was given we must use the first id
+                // if no payment method id was given we must use the first id
                 if (!paymentMethodID) {
                     paymentMethodID = responseObject.getFirstPaymentMethodId();
                 }
