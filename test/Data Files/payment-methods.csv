@@ -1,2 +1,3 @@
-username,password
+username,password,captcha,payment_password
 paypal.buyer2@wirecard.com,Wirecardbuyer
+alipaytest20091@gmail.com,111111,8888,111111

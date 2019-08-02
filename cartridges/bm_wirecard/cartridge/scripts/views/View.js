@@ -13,8 +13,8 @@
 
 var ISML = require('dw/template/ISML');
 
-var Class = require('~/cartridge/scripts/util/Class').Class;
-var object = require('~/cartridge/scripts/object');
+var Class = require('*/cartridge/scripts/util/Class').Class;
+var object = require('*/cartridge/scripts/object');
 
 /**
  * View class to pass parameters to the templates and renders the templates.

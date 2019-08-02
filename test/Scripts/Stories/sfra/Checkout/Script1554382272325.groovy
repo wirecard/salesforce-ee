@@ -19,7 +19,7 @@ WebUI.callTestCase(findTestCase('Modules/sfra/Accept consent tracking'), [:], Fa
 
 WebUI.callTestCase(findTestCase('Modules/sfra/Products/AddToCart-Product1'), [:], FailureHandling.STOP_ON_FAILURE)
 
-WebUI.callTestCase(findTestCase('Modules/sfra/Checkout/GoToCheckout'), [:], FailureHandling.STOP_ON_FAILURE)
+WebUI.callTestCase(findTestCase('Modules/sfra/Checkout/GoToCheckout'), [('paymentMethodId') : paymentMethodId], FailureHandling.STOP_ON_FAILURE)
 
 if (login == 'false') {
     WebUI.callTestCase(findTestCase('Modules/sfra/Checkout/CheckoutGuest'), [:], FailureHandling.STOP_ON_FAILURE)

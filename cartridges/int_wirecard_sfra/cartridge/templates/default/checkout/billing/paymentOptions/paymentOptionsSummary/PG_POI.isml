@@ -1,0 +1,33 @@
+<iscomment>
+/**
+ * Shop System Plugins:
+ * - Terms of Use can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/_TERMS_OF_USE
+ * - License can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
+ */
+</iscomment>
+<!--- TEMPLATENAME: checkout/billing/paymentOptions/PaymentOptionsSummary/PG_POI.isml --->
+<div class="bank-information">
+    <table>
+        <tr>
+            <td colspan="2"><span class="font-weight-bold">${ Resource.msg('transfer_notice', 'paymentgateway', null) }</span></td>
+        </tr>
+        <tr>
+            <td>${ Resource.msg('amount', 'paymentgateway', null) }</td>
+            <td>${ payment.amountFormatted }</td>
+        </tr>
+        <tr>
+            <td>${ Resource.msg('iban', 'paymentgateway', null) }</td>
+            <td><isprint value="${ payment.merchantBank.iban }"/></td>
+        </tr>
+        <tr>
+            <td>${ Resource.msg('bic', 'paymentgateway', null) }</td>
+            <td><isprint value="${ payment.merchantBank.bic }"/></td>
+        </tr>
+        <tr>
+            <td>${ Resource.msg('ptrid', 'paymentgateway', null) }</td>
+            <td><isprint value="${ payment.merchantBank.ptrid }"/></td>
+        </tr>
+    </table>
+</div>

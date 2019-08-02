@@ -20,6 +20,17 @@ var methodsWithForms = {
     PG_IDEAL: {
         paymentGatewayBIC: 'select'
     },
+    PG_PAYOLUTION_INVOICE: {
+        acceptTerms: 'text',
+        dob_day: 'text',
+        dob_month: 'text',
+        dob_year: 'text'
+    },
+    PG_RATEPAY_INVOICE: {
+        dob_day: 'text',
+        dob_month: 'text',
+        dob_year: 'text'
+    },
     PG_SEPA: {
         paymentGatewayBIC: 'text',
         paymentGatewayIBAN: 'text',
@@ -106,16 +117,44 @@ module.exports = {
     },
 
     /**
+     * Check if value from form field has to be saved with payment instrument
+     * @param {string} method - payment method id
+     * @returns {Object}
+     */
+    getFormFieldToSave: function (methodID) {
+        var fields = [];
+        if (Object.prototype.hasOwnProperty.call(methodsWithForms, methodID)) {
+            fields = [].concat(Object.keys(methodsWithForms[methodID]));
+        }
+        if (/^PG_(PAYOLUTION|RATEPAY)_INVOICE$/.test(methodID)) {
+            fields = ['paymentGatewayDateOfBirth'];
+        }
+
+        /**
+         * @param {string} fieldName - form field name
+         * @returns {boolean}
+         */
+        return function (fieldName) {
+            return fields.indexOf(fieldName) > -1;
+        }
+    },
+
+    /**
      * Retrieve image for given payment method
-     * @param {string} methodID - payment method id
+     * @param {string} method - payment method
      * @returns {string|dw.web.URL}
      */
-    getPaymentImage: function (methodID) {
-        var PaymentMgr = require('dw/order/PaymentMgr');
-        var paymentMethod = PaymentMgr.getPaymentMethod(methodID);
+    getPaymentImage: function (method) {
+        var paymentMethod;
+        if (method instanceof dw.order.PaymentMethod) {
+            paymentMethod = method;
+        } else {
+            var PaymentMgr = require('dw/order/PaymentMgr');
+            paymentMethod = PaymentMgr.getPaymentMethod(method);
+        }
 
         var image = '';
-        if (methodID === 'PG_SOFORT') {
+        if (paymentMethod.ID === 'PG_SOFORT') {
             var locale = 'en_gb'; // fallback
             if (request.locale && supportedLocalesForSofort.indexOf(request.locale.toLowerCase()) > -1) {
                 locale = request.locale.toLowerCase();
@@ -143,7 +182,7 @@ module.exports = {
                 name: paymentMethod.name,
                 active: paymentMethod.active,
                 description: paymentMethod.description,
-                image: paymentMethod.image ? paymentMethod.image.URL.toString() : null
+                image: this.getPaymentImage(paymentMethod)
             };
         }
         return result;
@@ -156,7 +195,11 @@ module.exports = {
     PAYMENT_METHOD_GIROPAY          : 'giropay',
     PAYMENT_METHOD_IDEAL            : 'ideal',
     PAYMENT_METHOD_PAYPAL           : 'paypal',
+    PAYMENT_METHOD_PAYOLUTION_INV   : 'payolution-inv',
+    PAYMENT_METHOD_POI              : 'wiretransfer',
     PAYMENT_METHOD_PIA              : 'wiretransfer',
+    PAYMENT_METHOD_RATEPAY          : 'ratepay-invoice',
     PAYMENT_METHOD_SEPA_CREDIT      : 'sepacredit',
-    PAYMENT_METHOD_SOFORT           : 'sofortbanking'
+    PAYMENT_METHOD_SOFORT           : 'sofortbanking',
+    PAYMENT_METHOD_ALIPAY           : 'alipay-xborder'
 };

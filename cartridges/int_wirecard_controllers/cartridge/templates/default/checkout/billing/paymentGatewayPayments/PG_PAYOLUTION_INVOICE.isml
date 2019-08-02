@@ -1,0 +1,69 @@
+<iscomment>
+/**
+ * Shop System Plugins:
+ * - Terms of Use can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/_TERMS_OF_USE
+ * - License can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
+ */
+</iscomment>
+<!--- TEMPLATENAME: PG_PAYOLUTION_INVOICE.isml --->
+<isset name="payolutionFields" value="${ pdict.CurrentForms.billing.paymentMethods.PG_PAYOLUTION_INVOICE }" scope="page"/>
+
+<isscript>
+    let currentDate   = new Date();
+    let preselectYear = payolutionFields.dob_year.selectedOption || { value: null };
+    let preselectDay  = payolutionFields.dob_day.selectedOption || { value: null };
+    let optionsYear     = new (require('dw/util/ArrayList'))();
+    let optionsDay      = new (require('dw/util/ArrayList'))();
+
+	optionsYear.add1({
+   		label: 'resource.year',
+   		value: '',
+   		selected: null === preselectYear.value
+   	});
+
+    for (let year = currentDate.getFullYear() - 18; year > currentDate.getFullYear() - 118; year--) {
+		optionsYear.add1({
+			label: year.toString(),
+			value: year,
+			selected: year === preselectYear.value
+		});
+    }
+
+    optionsDay.add1({
+   		label: 'resource.day',
+   		value: '',
+   		selected: null === preselectDay.value
+   	});
+
+    for (let day = 1; 32 > day; day++) {
+		optionsDay.add1({
+			label: day.toString(),
+			value: day,
+			selected: day === preselectDay.value
+		});
+    }
+    payolutionFields.dob_year.setOptions(optionsYear.iterator());
+    payolutionFields.dob_day.setOptions(optionsDay.iterator());
+</isscript>
+
+<div class="birthday-fields form-row">
+    <div class="form-label-text">
+        <span class="required-indicator">&#8226;</span>${ Resource.msg('date-of-birth', 'paymentgateway', null)}:
+    </div>
+    <isinputfield formfield="${ payolutionFields.dob_year }" type="select" rowclass="year"/>
+    <isinputfield formfield="${ payolutionFields.dob_month }" type="select" rowclass="month"/>
+    <isinputfield formfield="${ payolutionFields.dob_day }" type="select" rowclass="day"/>
+</div>
+
+<isscript>
+    var mID = require('dw/system/Site').getCurrent().getCustomPreferenceValue('paymentGatewayPayolutionInvoiceMerchantName');
+    // FIXME hardcoded link in template
+    var consentLinkUrl = 'https://payment.payolution.com/payolution-payment/infoport/dataprivacyconsent?mId=' + mID;
+    var attributes = {
+        'data-consent-url': consentLinkUrl,
+        'data-link-placeholder': Resource.msg('payolution.consent.link_placeholder', 'forms', null)
+    };
+</isscript>
+<isinputfield formfield="${ payolutionFields.acceptTerms }" required="true" type="checkbox" attributes="${ attributes }"/>

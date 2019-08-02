@@ -13,8 +13,8 @@
  */
 
 /* Script Modules */
-var app = require('~/cartridge/scripts/app');
-var guard = require('~/cartridge/scripts/guard');
+var app = require('*/cartridge/scripts/app');
+var guard = require('*/cartridge/scripts/guard');
 
 var Resource = require('dw/web/Resource');
 var StringUtils = require('dw/util/StringUtils');
@@ -172,9 +172,14 @@ exports.HttpAccessOverview = guard.ensure(['get', 'https'], function () {
         { methodName: Resource.msg('giropay', 'paymentgateway', null), methodID: 'PG_GIROPAY' },
         { methodName: Resource.msg('ideal', 'paymentgateway', null), methodID: 'PG_IDEAL' },
         { methodName: Resource.msg('paypal', 'paymentgateway', null), methodID: 'PG_PAYPAL' },
+        { methodName: Resource.msg('poi', 'paymentgateway', null), methodID: 'PG_POI' },
         { methodName: Resource.msg('pia', 'paymentgateway', null), methodID: 'PG_PIA' },
+        { methodName: Resource.msg('payolution_invoice_chf', 'paymentgateway', null), methodID: 'PG_PAYOLUTION_INVOICE_CHF' },
+        { methodName: Resource.msg('payolution_invoice_eur', 'paymentgateway', null), methodID: 'PG_PAYOLUTION_INVOICE_EUR' },
+        { methodName: Resource.msg('ratepayinvoice', 'paymentgateway', null), methodID: 'PG_RATEPAY_INVOICE' },
         { methodName: Resource.msg('sofortbanking', 'paymentgateway', null), methodID: 'PG_SOFORT' },
-        { methodName: Resource.msg('sepadd', 'paymentgateway', null), methodID: 'PG_SEPA' }
+        { methodName: Resource.msg('sepadd', 'paymentgateway', null), methodID: 'PG_SEPA' },
+        { methodName: Resource.msg('alipay', 'paymentgateway', null), methodID: 'PG_ALIPAY' }
     ].forEach(function (p) {
         preferences = preferenceHelper.getPreferenceForMethodID(p.methodID);
         if (Object.prototype.hasOwnProperty.call(preferences, 'userName')) {
@@ -232,8 +237,12 @@ exports.GetTransactionXML = guard.ensure(['post', 'https'], function () {
     var parameterMap = request.httpParameterMap;
     var transactionId = parameterMap.transactionId.value;
     var paymentMethodID = parameterMap.paymentMethodID.value;
+    var currency = parameterMap.currency.value;
 
     var preferenceHelper = require('*/cartridge/scripts/paymentgateway/PreferencesHelper');
+    if (/^PG_PAYOLUTION_INVOICE$/.test(paymentMethodID)) {
+        paymentMethodID += '_' + currency.toUpperCase();
+    }
     var preferences = preferenceHelper.getPreferenceForMethodID(paymentMethodID);
     var data = '<?xml version="1.0" encoding="UTF-8"?>'
           + '<payment xmlns="http://www.elastic-payments.com/schema/payment">'

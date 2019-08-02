@@ -15,7 +15,7 @@ import internal.GlobalVariable as GlobalVariable
 
 WebUI.delay(3)
 
-WebUI.waitForElementClickable(findTestObject('sfra/checkout/Minicart link'), 5)
+WebUI.waitForElementClickable(findTestObject('sfra/checkout/Minicart link'), 10)
 
 WebUI.click(findTestObject('sfra/checkout/Minicart link'))
 

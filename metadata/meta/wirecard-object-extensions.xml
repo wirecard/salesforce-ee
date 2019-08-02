@@ -106,8 +106,14 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
             </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayDateOfBirth">
+                <display-name xml:lang="x-default">Date of Birth</display-name>
+                <type>date</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayReferenceId">
-                <display-name xml:lang="x-default">BIC</display-name>
+                <display-name xml:lang="x-default">Reference Id</display-name>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>

@@ -15,11 +15,11 @@ import internal.GlobalVariable as GlobalVariable
 
 WebUI.setText(findTestObject('sitegenesis/homepage/Searchbox'), productId)
 
-WebUI.waitForElementClickable(findTestObject('sitegenesis/homepage/Search'), 3)
+WebUI.waitForElementClickable(findTestObject('sitegenesis/homepage/Search'), 10)
 
 WebUI.click(findTestObject('sitegenesis/homepage/Search'))
 
-WebUI.waitForElementClickable(findTestObject('sitegenesis/product page/Swatch/JJ887XX'), 3)
+WebUI.waitForElementClickable(findTestObject('sitegenesis/product page/Swatch/JJ887XX'), 20)
 
 WebUI.click(findTestObject('sitegenesis/product page/Swatch/JJ887XX'))
 

@@ -114,6 +114,38 @@
         </currencies>
     </payment-method>
 
+    <payment-method method-id="PG_PAYOLUTION_INVOICE">
+        <name xml:lang="x-default">Wirecard Guaranteed Invoice by payolution</name>
+        <image>images/payment/paymentgateway/poi.png</image>
+        <enabled-flag>false</enabled-flag>
+        <processor-id>PAYMENTGATEWAY</processor-id>
+        <countries>
+            <country country-code="AT"/>
+            <country country-code="CH"/>
+            <country country-code="DE"/>
+            <country country-code="NL"/>
+        </countries>
+        <currencies>
+            <currency>EUR</currency>
+        </currencies>
+        <ranges>
+            <range currency="EUR">
+                <min-purchase-amount>25</min-purchase-amount>
+                <max-purchase-amount>3500</max-purchase-amount>
+            </range>
+        </ranges>
+    </payment-method>
+
+    <payment-method method-id="PG_POI">
+        <name xml:lang="x-default">Wirecard Purchase On Invoice</name>
+        <image>images/payment/paymentgateway/poi.png</image>
+        <enabled-flag>false</enabled-flag>
+        <processor-id>PAYMENTGATEWAY</processor-id>
+        <currencies>
+            <currency>EUR</currency>
+        </currencies>
+    </payment-method>
+
     <payment-method method-id="PG_PIA">
         <name xml:lang="x-default">Wirecard Payment In Advance</name>
         <image>images/payment/paymentgateway/pia.png</image>
@@ -124,6 +156,26 @@
         </currencies>
     </payment-method>
 
+    <payment-method method-id="PG_RATEPAY_INVOICE">
+        <name xml:lang="x-default">Wirecard Guaranteed Invoice by Wirecard</name>
+        <image>images/payment/paymentgateway/poi.png</image>
+        <enabled-flag>false</enabled-flag>
+        <processor-id>PAYMENTGATEWAY</processor-id>
+        <countries>
+            <country country-code="AT"/>
+            <country country-code="DE"/>
+        </countries>
+        <currencies>
+            <currency>EUR</currency>
+        </currencies>
+        <ranges>
+            <range currency="EUR">
+                <min-purchase-amount>20</min-purchase-amount>
+                <max-purchase-amount>3500</max-purchase-amount>
+            </range>
+        </ranges>
+    </payment-method>
+
     <payment-method method-id="PG_SEPA">
         <name xml:lang="x-default">Wirecard SEPA Direct Debit</name>
         <image>images/payment/paymentgateway/SEPA.svg</image>
@@ -132,6 +184,13 @@
         <currencies>
             <currency>EUR</currency>
         </currencies>
+    </payment-method>
+
+    <payment-method method-id="PG_ALIPAY">
+        <name xml:lang="x-default">Wirecard Alipay</name>
+        <image>images/payment/paymentgateway/Alipay_Crossboarder_Use.png</image>
+        <enabled-flag>false</enabled-flag>
+        <processor-id>PAYMENTGATEWAY</processor-id>
     </payment-method>
 
 </payment-settings>

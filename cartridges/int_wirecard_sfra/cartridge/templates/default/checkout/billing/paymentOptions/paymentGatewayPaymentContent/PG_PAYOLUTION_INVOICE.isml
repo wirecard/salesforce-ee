@@ -1,0 +1,93 @@
+<iscomment>
+/**
+ * Shop System Plugins:
+ * - Terms of Use can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/_TERMS_OF_USE
+ * - License can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
+ */
+</iscomment>
+<!--- TEMPLATENAME: PG_PAYOLUTION_INVOICE.isml --->
+<isset name="payolutionFields" value="${ pdict.forms.billingForm.PG_PAYOLUTION_INVOICE }" scope="page"/>
+<isset name="currentDate" value="${new Date()}" scope="page"/>
+
+<fieldset class="payment-form-fields">
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group-multiple required">
+                <label class="form-control-label" for="dob_year">${ Resource.msg('date-of-birth', 'paymentgateway', null) }</label>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group required">
+                <label class="form-control-label checkout-hidden" for="dob_year"></label>
+                <select class="form-control custom-select" id="dob_year"
+                        name="${ payolutionFields.dob_year.htmlName }" required>
+                    <option label="${ Resource.msg('resource.year', 'forms', null) }" value=""/>
+                    <isloop status="i" begin="${ currentDate.getFullYear() - 100 }" end="${ currentDate.getFullYear() - 18 }" >
+                        <option id="${ (i.end - i.count + 1).toString() }" value="${ (i.end - i.count + 1).toString() }">
+                            ${ (i.end - i.count + 1).toString() }
+                        </option>
+                    </isloop>
+                </select>
+                <div class="invalid-feedback"></div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group required">
+                <label class="form-control-label checkout-hidden" for="dob_month"></label>
+                <select class="form-control custom-select" id="dob_month"
+                        name="${ payolutionFields.dob_month.htmlName }" required>
+                    <isloop items=${ payolutionFields.dob_month.options } var="month">
+                        <option id="${ month.id }" value="${ month.value }" ${month.selected ? 'selected="selected"' : ''}>
+                        ${month.label} ${month.selected}
+                        </option>
+                    </isloop>
+                </select>
+                <div class="invalid-feedback"></div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group required">
+                <label class="form-control-label checkout-hidden" for="dob_day"></label>
+                <select class="form-control custom-select" id="dob_day"
+                        name="${ payolutionFields.dob_day.htmlName }" required>
+                    <option label="${ Resource.msg('resource.day', 'forms', null) }" value=""/>
+                    <isloop status="j" begin="1" end="31">
+                        <option id="${ j.index }" value="${ j.index }">
+                            ${j.index}
+                        </option>
+                    </isloop>
+                </select>
+                <div class="invalid-feedback"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group required">
+                <input type="hidden" class="form-control"
+                       name="${ pdict.forms.billingForm.paymentMethod.htmlName }"
+                       value="PG_PAYOLUTION_INVOICE"
+                >
+
+                <isscript>
+                    var mID = require('dw/system/Site').getCurrent().getCustomPreferenceValue('paymentGatewayPayolutionInvoiceMerchantName');
+                    // FIXME hardcoded link in template
+                    var consentLinkUrl = 'https://payment.payolution.com/payolution-payment/infoport/dataprivacyconsent?mId=' + mID;
+                </isscript>
+                <label class="form-control-label" for="${ payolutionFields.acceptTerms.htmlName }">${ Resource.msg('payolution.consent.label', 'forms', 'payolution.consent.label') }</label>
+                <input type="checkbox"
+                       class="form-control"
+                       id="${ payolutionFields.acceptTerms.htmlName }"
+                       name="${ payolutionFields.acceptTerms.htmlName }"
+                       value="1"
+                       data-consent-url="${ consentLinkUrl }"
+                       data-link-placeholder="${ Resource.msg('payolution.consent.link_placeholder', 'forms', null) }"
+                />
+                <div class="invalid-feedback"></div>
+            </div>
+        </div>
+    </div>
+</fieldset>

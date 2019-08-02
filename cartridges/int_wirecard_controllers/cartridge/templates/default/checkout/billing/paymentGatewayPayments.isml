@@ -40,11 +40,27 @@
 <!--- PG_SOFORT --->
 <div id="PaymentMethod_PG_SOFORT" class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='PG_SOFORT'}">payment-method-expanded</isif>" data-method="PG_SOFORT"></div>
 
-<!--- PG_PIA --->
-<div id="PaymentMethod_PG_PIA" class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='PG_PIA'}">payment-method-expanded</isif>" data-method="PG_PIA"></div>
+<!--- PG_ALIPAY --->
+<div id="PaymentMethod_PG_ALIPAY" class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='PG_ALIPAY'}">payment-method-expanded</isif>" data-method="PG_ALIPAY"></div>
 
 <!--- PG_PAYPAL --->
 <div id="PaymentMethod_PG_PAYPAL" class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='PG_PAYPAL'}">payment-method-expanded</isif>" data-method="PG_PAYPAL"></div>
+
+<!--- PG_PAYOLUTION_INVOICE --->
+<div id="PG_PAYOLUTION_INVOICE" class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='PG_PAYOLUTION_INVOICE'}">payment-method-expanded</isif>" data-method="PG_PAYOLUTION_INVOICE">
+    <isinclude template="checkout/billing/paymentGatewayPayments/PG_PAYOLUTION_INVOICE" />
+</div>
+
+<!--- PG_RATEPAY_INVOICE --->
+<div id="PG_RATEPAY_INVOICE" class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='PG_RATEPAY_INVOICE'}">payment-method-expanded</isif>" data-method="PG_RATEPAY_INVOICE">
+    <isinclude template="checkout/billing/paymentGatewayPayments/PG_RATEPAY_INVOICE" />
+</div>
+
+<!--- PG_PIA --->
+<div id="PaymentMethod_PG_PIA" class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='PG_PIA'}">payment-method-expanded</isif>" data-method="PG_PIA"></div>
+
+<!--- PG_POI --->
+<div id="PaymentMethod_PG_POI" class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='PG_POI'}">payment-method-expanded</isif>" data-method="PG_POI"></div>
 
 <!--- PG_SEPA --->
 <div id="PaymentMethod_PG_SEPA" class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='PG_SEPA'}">payment-method-expanded</isif>" data-method="PG_SEPA">

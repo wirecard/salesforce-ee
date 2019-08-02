@@ -17,7 +17,7 @@ function getCaptureTransactionType() {
     var canPartialCapture = false;
 
     if (!self['transaction-type']) {
-        throw new Error('transaction-type missing for PayPal Transaction.');
+        throw new Error('transaction-type missing for SEPA Transaction.');
     }
     switch (self['transaction-type']) {
         case Type.AUTHORIZATION:
@@ -38,7 +38,7 @@ function getCancelTransactionType() {
     var self = this;
     var type, apiEndpoint;
     if (!self['transaction-type']) {
-        throw new Error('transaction-type missing for PayPal Transaction.');
+        throw new Error('transaction-type missing for SEPA Transaction.');
     }
     switch (self['transaction-type']) {
         case Type.PENDING_DEBIT:

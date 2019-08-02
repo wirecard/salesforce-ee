@@ -16,7 +16,7 @@ import internal.GlobalVariable as GlobalVariable
 switch (paymentMethodId) {
 	case 'PG_EPS':
 		WebUI.callTestCase(findTestCase('Modules/sfra/PaymentMethods/Eps'), [:], FailureHandling.STOP_ON_FAILURE)
-	
+
 		break
 	case 'PG_GIROPAY':
 		WebUI.callTestCase(findTestCase('Modules/sfra/PaymentMethods/Giropay'), [:], FailureHandling.STOP_ON_FAILURE)
@@ -34,6 +34,18 @@ switch (paymentMethodId) {
         WebUI.callTestCase(findTestCase('Modules/sfra/PaymentMethods/Sofort'), [:], FailureHandling.STOP_ON_FAILURE)
 
         break
+	case 'PG_PAYOLUTION_INVOICE':
+		WebUI.callTestCase(findTestCase('Modules/sfra/PaymentMethods/Payolution Invoice'), [:], FailureHandling.STOP_ON_FAILURE)
+
+		break
+	case 'PG_RATEPAY_INVOICE':
+		WebUI.callTestCase(findTestCase('Modules/sfra/PaymentMethods/Ratepay Invoice'), [:], FailureHandling.STOP_ON_FAILURE)
+
+		break
+	case 'PG_POI':
+		WebUI.callTestCase(findTestCase('Modules/sfra/PaymentMethods/Payment on invoice'), [:], FailureHandling.STOP_ON_FAILURE)
+
+		break
 	case 'PG_PIA':
 		WebUI.callTestCase(findTestCase('Modules/sfra/PaymentMethods/Payment In Advance'), [:], FailureHandling.STOP_ON_FAILURE)
 
@@ -48,13 +60,17 @@ switch (paymentMethodId) {
         WebUI.callTestCase(findTestCase('Modules/sfra/PaymentMethods/SepaDD'), [:], FailureHandling.STOP_ON_FAILURE)
 
         break
+	case 'PG_ALIPAY':
+		WebUI.callTestCase(findTestCase('Modules/sfra/PaymentMethods/Alipay'), [:], FailureHandling.STOP_ON_FAILURE)
+
+		break
     default:
         break
 }
 
 WebUI.delay(2)
 
-WebUI.waitForElementClickable(findTestObject('sfra/checkout/Link proceed to order overview'), 5)
+WebUI.waitForElementClickable(findTestObject('sfra/checkout/Link proceed to order overview'), 10)
 
 WebUI.click(findTestObject('sfra/checkout/Link proceed to order overview'))
 

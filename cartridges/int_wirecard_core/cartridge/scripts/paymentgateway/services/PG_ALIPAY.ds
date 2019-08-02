@@ -1,0 +1,47 @@
+/**
+ * Shop System Plugins:
+ * - Terms of Use can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/_TERMS_OF_USE
+ * - License can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
+ */
+/**
+ * Script includes
+ */
+var AbstractPaymentGatewayService = require('./AbstractPaymentGatewayService');
+
+var AlipayService = AbstractPaymentGatewayService.extend({
+    init: function (type) {
+        this._super(type);
+        this.paymentMethodID = require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper').PAYMENT_METHOD_ALIPAY;
+    },
+
+    /**
+     * Retrieves the base url for Alipay.
+     * @returns {String}
+     */
+    getBaseUrl: function() {
+        return this.getSitePreference('paymentGatewayAlipayBaseUrl');
+    },
+
+    /**
+     * Retrieves the http user for Alipay.
+     * @returns {String}
+     */
+    getHttpUsername: function() {
+        return this.getSitePreference('paymentGatewayAlipayHttpUser');
+    },
+
+    /**
+     * Retrieves the http password for Alipay.
+     * @returns {String}
+     */
+    getHttpPassword: function() {
+        return this.getSitePreference('paymentGatewayAlipayHttpPassword');
+    }
+});
+
+//Export the configured service singleton
+module.exports = function (type) {
+    return (new AlipayService(type)).getService();
+};

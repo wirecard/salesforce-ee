@@ -1,0 +1,17 @@
+<iscomment>
+/**
+ * Shop System Plugins:
+ * - Terms of Use can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/_TERMS_OF_USE
+ * - License can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
+ */
+</iscomment>
+<isif condition="${ pdict.errors && pdict.errors.length > 0 }">
+    <div class="error-form">
+        <isloop items="${ pdict.errors }" var="errorMessage" status="loopState">
+            <isif condition="${ !loopState.first }"><br/></isif>
+            <isprint value="${ errorMessage }" encoding="htmlcontent"/>
+        </isloop>
+    </div>
+</isif>

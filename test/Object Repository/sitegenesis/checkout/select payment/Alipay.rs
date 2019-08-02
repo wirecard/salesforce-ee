@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>Alipay</name>
+   <tag></tag>
+   <elementGuidId>a9b8f61d-0a57-4912-a597-ecacec3fed88</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//div[contains(@class,'payment-method-options')]//input[@value='PG_ALIPAY']</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//div[contains(@class,'payment-method-options')]//input[@value='PG_ALIPAY']</value>
+   </webElementProperties>
+</WebElementEntity>

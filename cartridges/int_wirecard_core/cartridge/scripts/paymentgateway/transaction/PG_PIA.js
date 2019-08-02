@@ -23,7 +23,7 @@ function getRefundTransactionType() {
     var self = this;
     var type;
     if (!self['transaction-type']) {
-        throw new Error('transaction-type missing for Purchase On Invoice Transaction.');
+        throw new Error('transaction-type missing for Purchase In Advance Transaction.');
     }
     switch (self['transaction-type']) {
         case Type.DEPOSIT:
@@ -43,7 +43,7 @@ function getCancelTransactionType() {
     var self = this;
     var type;
     if (!self['transaction-type']) {
-        throw new Error('transaction-type missing for Purchase On Invoice Transaction.');
+        throw new Error('transaction-type missing for Purchase In Advance Transaction.');
     }
     switch (self['transaction-type']) {
         case Type.AUTHORIZATION:

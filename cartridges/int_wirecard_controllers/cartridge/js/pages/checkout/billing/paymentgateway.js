@@ -27,6 +27,24 @@ function bindPlaceOrderFormSubmit() {
     });
 }
 
+/**
+ * Replace consent link for payolution
+ */
+function createPayolutionLink() {
+    var payolutionContent = $('div#=PG_PAYOLUTION_INVOICE');
+    if (payolutionContent.length === 1) {
+        var acceptTermsInput = payolutionContent.find('input[name$=acceptTerms]');
+        var acceptTermsLabel = payolutionContent.find('label[for$=acceptTerms]');
+        var link = $('<a/>', {
+            href: acceptTermsInput.data('consentUrl'),
+            target: '_blank'
+        }).text(acceptTermsInput.data('linkPlaceholder'));
+        var acceptTermsLabelHtml = acceptTermsLabel.text().replace(/%link%/, link.prop('outerHTML'));
+        acceptTermsLabel.html(acceptTermsLabelHtml);
+    }
+}
+
 exports.init = function () {
     bindPlaceOrderFormSubmit();
+    createPayolutionLink();
 };

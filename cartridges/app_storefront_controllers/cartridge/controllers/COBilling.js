@@ -155,6 +155,9 @@ function initCreditCardList(cart) {
             applicableCreditCards = profile.validateWalletPaymentInstruments(countryCode, paymentAmount.getValue()).ValidPaymentInstruments;
         }
     }
+    // check if basket contains digital goods
+    var applyDigitalGoodsFilter = require('*/cartridge/scripts/paymentgateway/util/Checkout').applyDigitalGoodsFilter;
+    applyDigitalGoodsFilter(cart.object, applicablePaymentMethods);
 
     return {
         ApplicablePaymentMethods: applicablePaymentMethods,
@@ -756,9 +759,13 @@ function validatePayment(cart) {
             }
         }).countryCode;
 
-        invalidPaymentInstruments = cart.validatePaymentInstruments(customer, countryCode, paymentAmount.value).InvalidPaymentInstruments;
+        var validationResult = cart.validatePaymentInstruments(customer, countryCode, paymentAmount.value);
 
-        if (!invalidPaymentInstruments && cart.calculatePaymentTransactionTotal()) {
+        if (!validationResult.InvalidPaymentInstruments) {
+            var validatePGInstruments = require('*/cartridge/scripts/paymentgateway/util/Checkout').validatePaymentInstruments;
+            validationResult = validatePGInstruments(cart.object, validationResult.ValidPaymentInstruments).InvalidPaymentInstruments;
+        }
+        if (!validationResult && cart.calculatePaymentTransactionTotal()) {
             result = true;
         } else {
             app.getForm('billing').object.fulfilled.value = false;

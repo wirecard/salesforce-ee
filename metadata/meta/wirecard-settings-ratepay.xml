@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Shop System Plugins:
+  - Terms of Use can be found under:
+  https://github.com/wirecard/salesforce-ee/blob/master/_TERMS_OF_USE
+  - License can be found under:
+  https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
+-->
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <type-extension type-id="SitePreferences">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="paymentGatewayRatepayInvoiceMerchantAccountID">
+                <display-name xml:lang="x-default">Merchant Account ID (MAID)</display-name>
+                <description xml:lang="x-default">Unique identifier assigned to your merchant account.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>7d7edecb-b008-4f05-9103-308c81cf2ea2</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayRatepayInvoiceBaseUrl">
+                <display-name xml:lang="x-default">Wirecard Server Address (URL)</display-name>
+                <description xml:lang="x-default">Wirecard Server Address (URL) (e.g. https://api.wirecard.com).</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>https://api-test.wirecard.com</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayRatepayInvoiceHttpUser">
+                <display-name xml:lang="x-default">Username</display-name>
+                <description xml:lang="x-default">Username as provided in your Wirecard contract.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>16390-testing</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayRatepayInvoiceHttpPassword">
+                <display-name xml:lang="x-default">Password</display-name>
+                <description xml:lang="x-default">Password as provided in your Wirecard contract.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>3!3013=D3fD8X7</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayRatepayInvoiceSendAdditionalData">
+                <display-name xml:lang="x-default">Send Additional Information</display-name>
+                <description xml:lang="x-default">Additional data will be sent for the purpose of fraud protection. This additional data includes billing/shipping address, shopping basket and descriptor.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayRatepayInvoiceSecret">
+                <display-name xml:lang="x-default">Secret Key</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>dbc5a498-9a66-43b9-bf1d-a618dd399684</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayRatepayInvoiceAddDescriptorToRequest">
+                <display-name xml:lang="x-default">Descriptor</display-name>
+                <description xml:lang="x-default">Send text which is displayed on the bank statement issued to your consumer by the financial service provider.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayRatepayInvoiceBillingSameAsShipping">
+                <display-name xml:lang="x-default">Billing and shipping address must be identical</display-name>
+                <description xml:lang="x-default">If activated, payment method Guaranteed Invoice by Wirecard is only displayed if billing/shipping address are identical.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentGatewayRatepayInvoiceAllowedShippingCountries">
+                <display-name xml:lang="x-default">Allowed shipping countries</display-name>
+                <description xml:lang="x-default">Payment method Guaranteed Invoice by Wirecard is only displayed if the consumer's shipping country is one of the countries selected here.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <default-value>AT,DE</default-value>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="PAYMENTGATEWAY_RATEPAY_INVOICE">
+                <display-name xml:lang="x-default">Wirecard Payment Gateway settings for Guaranteed Invoice by Wirecard</display-name>
+                <attribute attribute-id="paymentGatewayRatepayInvoiceMerchantAccountID"/>
+                <attribute attribute-id="paymentGatewayRatepayInvoiceSecret"/>
+                <attribute attribute-id="paymentGatewayRatepayInvoiceHttpUser"/>
+                <attribute attribute-id="paymentGatewayRatepayInvoiceHttpPassword"/>
+                <attribute attribute-id="paymentGatewayRatepayInvoiceBaseUrl"/>
+                <attribute attribute-id="paymentGatewayRatepayInvoiceAddDescriptorToRequest"/>
+                <attribute attribute-id="paymentGatewayRatepayInvoiceSendAdditionalData"/>
+                <attribute attribute-id="paymentGatewayRatepayInvoiceBillingSameAsShipping"/>
+                <attribute attribute-id="paymentGatewayRatepayInvoiceAllowedShippingCountries"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+</metadata>

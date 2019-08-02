@@ -15,6 +15,7 @@ var Transaction = require('dw/system/Transaction');
 var pgLogger = require('dw/system/Logger').getLogger('paymentgateway');
 
 var Cart = require(controllerCartridge + '/cartridge/scripts/models/CartModel');
+var validatePayment = require('*/cartridge/scripts/paymentgateway/util/Checkout').validatePayment;
 
 /**
  * Creates PaymentInstrument and returns 'success'.
@@ -34,6 +35,14 @@ function Handle(args) {
     if (['PG_EPS', 'PG_GIROPAY', 'PG_IDEAL', 'PG_SEPA'].indexOf(paymentMethodId) > -1 && !paymentForm[paymentMethodId].valid) {
         return { error: true };
     }
+    // validate payolution date-of-birth / accept consent
+    var isValidPayment = validatePayment(paymentMethodId, args.Basket);
+    var paymentGatewayErrors = isValidPayment.errors;
+    var dateOfBirth = isValidPayment.dateOfBirth;
+
+    if (paymentGatewayErrors.length > 0) {
+        return { error: true };
+    }
 
     // save form data with dw.order.OrderPaymentInstrument
     if (['PG_EPS', 'PG_GIROPAY'].indexOf(paymentMethodId) > -1) {
@@ -46,7 +55,11 @@ function Handle(args) {
             paymentInstrument.custom.paymentGatewayIBAN = paymentForm[paymentMethodId].paymentGatewayIBAN.value;
             paymentInstrument.custom.paymentGatewaySEPADebtorName = paymentForm[paymentMethodId].paymentGatewaySEPADebtorName.value;
         });
-    } else if (paymentMethodId === 'PG_IDEAL') {
+    } else if (/^PG_(PAYOLUTION|RATEPAY)_INVOICE$/.test(paymentMethodId)) {
+        Transaction.wrap(function () {
+            paymentInstrument.custom.paymentGatewayDateOfBirth = dateOfBirth;
+        });
+    } else if (/^PG_IDEAL$/.test(paymentMethodId)) {
         Transaction.wrap(function () {
             paymentInstrument.custom.paymentGatewayBIC = paymentForm.PG_IDEAL.paymentGatewayBIC.value;
         });

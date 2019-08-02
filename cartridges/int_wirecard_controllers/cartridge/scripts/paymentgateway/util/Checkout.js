@@ -8,8 +8,12 @@
 'use strict';
 
 /* API includes */
+var HookMgr = require('dw/system/HookMgr');
+var Resource = require('dw/web/Resource');
+var Site = require('dw/system/Site').current;
 var Transaction = require('dw/system/Transaction');
 var PaymentInstrument = require('dw/order/PaymentInstrument');
+var PaymentMgr = require('dw/order/PaymentMgr');
 
 /* Script includes */
 var packageJson = require('int_wirecard_controllers/package.json');
@@ -20,9 +24,11 @@ var app = require(controllerCartridge + '/cartridge/scripts/app');
  * holds form ids for payment methods to reset if not selected
  */
 var resetPaymentForms = {
-    PG_GIROPAY: 'PG_GIROPAY',
-    PG_IDEAL  : 'PG_IDEAL',
-    PG_SEPA   : 'PG_SEPA'
+    PG_GIROPAY           : 'PG_GIROPAY',
+    PG_IDEAL             : 'PG_IDEAL',
+    PG_SEPA              : 'PG_SEPA',
+    PG_PAYOLUTION_INVOICE: 'PG_PAYOLUTION_INVOICE',
+    PG_RATEPAY_INVOICE   : 'PG_RATEPAY_INVOICE'
 };
 
 // default payment methods
@@ -65,4 +71,141 @@ function removePaymentInstrumentsFromBasket() {
     return status;
 }
 
+/**
+ * Checks if all requirements for selected payment method are met for current basket/order
+ * @param {string} paymentMethodId - payment gateway payment method id
+ * @param {dw.order.LineItemContainer} lineItemCtnr - current basket / order
+ * @return {Object} Contains (empty) list with errors caused by unmet required conditions and date of birth.
+ */
+function validatePayment(paymentMethodId, lineItemCtnr) {
+    var httpParameterMap = request.httpParameterMap;
+    var paymentForm = session.forms.billing.paymentMethods;
+
+    var paymentGatewayErrors = [];
+    var dateOfBirth;
+
+    if (/^PG_PAYOLUTION_INVOICE$/.test(paymentMethodId)) {
+        var acceptConsentField = paymentForm[paymentMethodId].acceptTerms;
+        if (!(Object.prototype.hasOwnProperty.call(httpParameterMap, acceptConsentField.htmlName))) {
+            paymentGatewayErrors.push(Resource.msg('error.message.required', 'forms', null));
+        }
+    }
+    if (/^PG_(PAYOLUTION|RATEPAY)_INVOICE$/.test(paymentMethodId)) {
+        // min-age check
+        var dobYearField = paymentForm[paymentMethodId].dob_year;
+        var dobMonthField = paymentForm[paymentMethodId].dob_month;
+        var dobDayField = paymentForm[paymentMethodId].dob_day;
+        var normalizedMonth = dobMonthField.value - 1;
+        var dob = new Date(dobYearField.value, normalizedMonth, dobDayField.value);
+        if (dob.getDate() !== dobDayField.value
+            || dob.getMonth() !== normalizedMonth
+            || dob.getFullYear() !== dobYearField.value
+        ) {
+            paymentGatewayErrors.push(Resource.msg('error.date.invalid', 'forms', null));
+        } else {
+            var min18Date = new Date();
+            var currentYear = min18Date.getFullYear();
+            if (min18Date.setFullYear(currentYear - 18) < dob.getTime()) {
+                paymentGatewayErrors.push(Resource.msg('text_min_age_notice', 'paymentgateway', null));
+            } else {
+                dateOfBirth = dob;
+            }
+        }
+        // compare shipping / billing address
+        var sitePrefBillingSameAsShipping;
+        if (/^PG_PAYOLUTION_INVOICE$/.test(paymentMethodId)) {
+            sitePrefBillingSameAsShipping = Site.getCustomPreferenceValue('paymentGatewayPayolutionInvoiceBillingSameAsShipping');
+        } else {
+            sitePrefBillingSameAsShipping = Site.getCustomPreferenceValue('paymentGatewayRatepayInvoiceBillingSameAsShipping');
+        }
+        if (sitePrefBillingSameAsShipping) {
+            var orderHelper = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper');
+            var billingAddressHash = orderHelper.getAddressHash(lineItemCtnr.billingAddress);
+            var shippingAddressHash = orderHelper.getAddressHash(lineItemCtnr.defaultShipment.shippingAddress);
+            if (billingAddressHash !== shippingAddressHash) {
+                paymentGatewayErrors.push(Resource.msg('text_need_same_address_notice', 'paymentgateway', null));
+            }
+        }
+        // dis-allow if basket contains digital goods
+        var hasDigitalProducts = HookMgr.callHook('int.wirecard.order', 'hasDigitalProducts', lineItemCtnr);
+        if (hasDigitalProducts) {
+            var paymentMethod = require('dw/order/PaymentMgr').getPaymentMethod(paymentMethodId);
+            paymentGatewayErrors.push(Resource.msgf('basket.digital.error', 'paymentgateway', null, paymentMethod.name));
+        }
+    }
+    if (paymentGatewayErrors.length > 0) {
+        // error message(s) will be shown in billing step
+        session.privacy.paymentGatewayErrors = JSON.stringify(paymentGatewayErrors);
+    }
+
+    return {
+        errors     : paymentGatewayErrors,
+        dateOfBirth: dateOfBirth
+    };
+}
+
+/**
+ * Filter applicable payment methods if line item container contains digital goods
+ * @param {dw.order.LineItemContainer} lineItemCtnr - current line item container
+ * @param {dw.util.List} applicablePaymentMethods - list with applicable payment methods for current line item container
+ * @returns {boolean}
+ */
+function filterPaymentMethodsForDigitalGoods(lineItemCtnr, applicablePaymentMethods) {
+    var hasDigitalProducts = HookMgr.callHook('int.wirecard.order', 'hasDigitalProducts', lineItemCtnr);
+
+    var payolutionMethod = PaymentMgr.getPaymentMethod('PG_PAYOLUTION_INVOICE');
+    var payolutionMethodIndex = payolutionMethod ? applicablePaymentMethods.lastIndexOf(payolutionMethod) : -1;
+    if (payolutionMethodIndex > -1 && hasDigitalProducts) {
+        applicablePaymentMethods.removeAt(payolutionMethodIndex);
+    }
+    var ratepayMethod = PaymentMgr.getPaymentMethod('PG_RATEPAY_INVOICE');
+    var ratepayMethodIndex = ratepayMethod ? applicablePaymentMethods.lastIndexOf(ratepayMethod) : -1;
+    if (ratepayMethodIndex > -1 && hasDigitalProducts) {
+        applicablePaymentMethods.removeAt(ratepayMethodIndex);
+    }
+}
+
+/**
+ * Validates payment instruments in COBilling-validatePayment.
+ * @param {dw.order.LineItemContainer} lineItemCtnr - current basket / order
+ * @param {dw.util.ArrayList} paymentInstruments - list with current basket's payment instruments
+ * @return {dw.util.ArrayList} Returns an array with the valid PaymentInstruments.
+ */
+function validatePaymentInstruments(currentBasket, paymentInstruments) {
+    var ArrayList = require('dw/util/ArrayList');
+
+    // Collects all invalid payment instruments.
+    var validPaymentInstruments = new ArrayList(paymentInstruments);
+    var invalidPaymentInstruments = new ArrayList();
+
+    for (var i = 0; i < paymentInstruments.length; i++) {
+        var paymentInstrument = paymentInstruments[i];
+        if (/^PG_(PAYOLUTION|RATEPAY)_INVOICE$/.test(paymentInstrument.paymentMethod)) {
+            var isValid = validatePayment(paymentInstrument.paymentMethod, currentBasket);
+            if (isValid.errors.length === 0) {
+                continue; // eslint-disable-line no-continue
+            }
+        } else {
+            // Continues if method is applicable.
+            continue; // eslint-disable-line no-continue
+        }
+        // Collects invalid payment instruments.
+        invalidPaymentInstruments.add(paymentInstrument);
+        validPaymentInstruments.remove(paymentInstrument);
+    }
+
+    if (invalidPaymentInstruments.size()) {
+        return {
+            InvalidPaymentInstruments: invalidPaymentInstruments,
+            ValidPaymentInstruments  : validPaymentInstruments
+        };
+    }
+    return {
+        ValidPaymentInstruments: validPaymentInstruments
+    };
+}
+
+exports.applyDigitalGoodsFilter = filterPaymentMethodsForDigitalGoods;
 exports.removePaymentInstrumentsFromBasket = removePaymentInstrumentsFromBasket;
+exports.validatePaymentInstruments = validatePaymentInstruments;
+exports.validatePayment = validatePayment;

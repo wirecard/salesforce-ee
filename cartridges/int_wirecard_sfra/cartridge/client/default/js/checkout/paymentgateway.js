@@ -5,7 +5,7 @@
  * - License can be found under:
  * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
  */
-/* globals WirecardPaymentPage, paymentGatewayConfig */
+/* globals WirecardPaymentPage */
 'use strict';
 
 /**
@@ -27,8 +27,9 @@ function handleError(err, cb) {
  * Calls PaymentgatewayCredit-RequestData for retrieving request data to render seamless form
  */
 function getCreditCardRequestData() {
+    var url = $('#pg-creditcard-form').data('requestDataUrl');
     $.ajax({
-        url: paymentGatewayConfig.getRequestDataUrl,
+        url: url,
         method: 'get',
         complete: function (msg) {
             WirecardPaymentPage.seamlessRenderForm({
@@ -41,6 +42,23 @@ function getCreditCardRequestData() {
             });
         }
     });
+}
+
+/**
+ * Replace consent link for payolution
+ */
+function createPayolutionLink() {
+    var payolutionContent = $('div[id=PG_PAYOLUTION_INVOICE-content');
+    if (payolutionContent.length === 1) {
+        var acceptTermsInput = payolutionContent.find('input[name$=acceptTerms]');
+        var acceptTermsLabel = payolutionContent.find('label[for$=acceptTerms]');
+        var link = $('<a/>', {
+            href: acceptTermsInput.data('consentUrl'),
+            target: '_blank'
+        }).text(acceptTermsInput.data('linkPlaceholder'));
+        var acceptTermsLabelHtml = acceptTermsLabel.text().replace(/%link%/, link.prop('outerHTML'));
+        acceptTermsLabel.html(acceptTermsLabelHtml);
+    }
 }
 
 /**
@@ -98,6 +116,7 @@ function submitSeamlessForm(saveTransactionUrl, restoreBasketUrl, cbSuccess, cbE
 }
 
 module.exports = {
+    createPayolutionLink: createPayolutionLink,
     getCreditCardRequestData: getCreditCardRequestData,
     submitSeamlessForm: submitSeamlessForm
 };

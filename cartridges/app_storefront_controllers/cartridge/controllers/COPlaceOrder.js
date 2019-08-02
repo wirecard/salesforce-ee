@@ -117,12 +117,10 @@ function start() {
 
     var COBilling = app.getController('COBilling');
 
-    Transaction.wrap(function () {
-        if (!COBilling.ValidatePayment(cart)) {
-            COBilling.Start();
-            return {};
-        }
-    });
+    if (!COBilling.ValidatePayment(cart)) {
+        COBilling.Start();
+        return {};
+    }
 
     // Recalculate the payments. If there is only gift certificates, make sure it covers the order total, if not
     // back to billing page.

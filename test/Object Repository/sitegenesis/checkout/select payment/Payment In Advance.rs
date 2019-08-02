@@ -3,7 +3,7 @@
    <description></description>
    <name>Payment In Advance</name>
    <tag></tag>
-   <elementGuidId>9b1ebaaa-b635-4e00-93a3-ba627ba881d5</elementGuidId>
+   <elementGuidId>ab175a1e-cb44-433e-9c2e-50e1bf30e530</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>

@@ -7,7 +7,7 @@
  */
 'use strict';
 
-module.exports = {
+var EppResponse = {
     /**
      * Parse base64 encoded response - extracts status message
      * @param {string} data - base64 encoded xml message
@@ -15,10 +15,20 @@ module.exports = {
      * @returns {Object} - with error code & message
      */
     parseBase64: function (data, generalErrorMsg) {
+        var xmlMessage = require('dw/util/StringUtils').decodeBase64(data);
+        return this.parseXML(xmlMessage, generalErrorMsg);
+    },
+
+    /**
+     * Parse xml response - extracts status message
+     * @param {string} xmlMessage - xml message
+     * @param {string} generalErrorMsg - error message to display as fallback
+     * @returns {Object} - with error code & message
+     */
+    parseXML: function (xmlMessage, generalErrorMsg) {
         var result = {};
 
         try {
-            var xmlMessage = require('dw/util/StringUtils').decodeBase64(data);
             var XMLStreamConstants = require('dw/io/XMLStreamConstants');
             var reader = new (require('dw/io/Reader'))(xmlMessage);
             var xmlStream = new (require('dw/io/XMLStreamReader'))(reader);
@@ -34,14 +44,17 @@ module.exports = {
                         if (!(Object.prototype.hasOwnProperty.call(result, 'status'))) {
                             xmlObj = xmlStream.readXMLObject();
                             result.status = {
-                                severity: xmlObj.attribute('severity'),
-                                message: xmlObj.attribute('description'),
-                                code: xmlObj.attribute('code')
+                                severity: xmlObj.attribute('severity').toString(),
+                                message: xmlObj.attribute('description').toString(),
+                                code: xmlObj.attribute('code').toString()
                             };
                         }
                     }
                 }
             }
+            xmlStream.close();
+            reader.close();
+
             if (!(Object.prototype.hasOwnProperty.call(result, 'status'))
                 || !(Object.prototype.hasOwnProperty.call(result.status, 'message'))
             ) {
@@ -51,10 +64,12 @@ module.exports = {
             result.status = {
                 code: '999.999',
                 severity: 'error',
-                message: generalErrorMsg
+                message: generalErrorMsg || err.message
             };
         }
 
         return result;
     }
 };
+
+module.exports = EppResponse;

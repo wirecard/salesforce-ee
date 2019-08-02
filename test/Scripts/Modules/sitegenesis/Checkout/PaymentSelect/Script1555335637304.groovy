@@ -14,9 +14,13 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
 switch (paymentMethodId) {
+	case 'PG_ALIPAY':
+		WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentMethods/Alipay'), [:], FailureHandling.STOP_ON_FAILURE)
+
+		break
 	case 'PG_EPS':
 		WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentMethods/Eps'), [:], FailureHandling.STOP_ON_FAILURE)
-	
+
 		break
 	case 'PG_GIROPAY':
 		WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentMethods/Giropay'), [:], FailureHandling.STOP_ON_FAILURE)
@@ -38,6 +42,18 @@ switch (paymentMethodId) {
 		WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentMethods/Payment In Advance'), [:], FailureHandling.STOP_ON_FAILURE)
 
 		break
+	case 'PG_POI':
+		WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentMethods/Payment on Invoice'), [:], FailureHandling.STOP_ON_FAILURE)
+
+		break
+	case 'PG_PAYOLUTION_INVOICE':
+		WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentMethods/Payolution Invoice'), [:], FailureHandling.STOP_ON_FAILURE)
+
+		break
+	case 'PG_RATEPAY_INVOICE':
+		WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentMethods/Ratepay Invoice'), [:], FailureHandling.STOP_ON_FAILURE)
+
+		break
     case 'PG_CREDITCARD':
         WebUI.callTestCase(findTestCase('Modules/sitegenesis/Checkout/PaymentMethods/Creditcard'), [:], FailureHandling.STOP_ON_FAILURE)
 
@@ -50,7 +66,7 @@ switch (paymentMethodId) {
         break
 }
 
-WebUI.waitForElementClickable(findTestObject('sitegenesis/checkout/link proceed to order overview'), 5)
+WebUI.waitForElementClickable(findTestObject('sitegenesis/checkout/link proceed to order overview'), 10)
 
 WebUI.click(findTestObject('sitegenesis/checkout/link proceed to order overview'))
 

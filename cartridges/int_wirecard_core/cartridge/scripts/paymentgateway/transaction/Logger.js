@@ -61,6 +61,16 @@ function maskFields(data) {
 }
 
 /**
+ * Create log message for service communication log
+ * @param {Object} data - request / response data object
+ * @returns {string} - stringified json
+ */
+function createLogMessage(data) {
+    var result = maskFields(data);
+    return JSON.stringify(result, null, 2);
+}
+
+/**
  * Log request / response data to paymentgateway log.
  * @param {Object} data - request / response data
  * @param {string} dataType - defaults to "request"
@@ -72,13 +82,11 @@ function log(data, dataType) {
         if (!dataType) {
             dataType = 'request';
         }
-        var result = maskFields(data);
-
-        var logMsg = dataType.toUpperCase() + ':'
-            + '\n'
-            + JSON.stringify(result, null, 2);
+        var StringUtils = require('dw/util/StringUtils');
+        var logMsg = StringUtils.format('{0}: \n {1}', dataType.toUpperCase(), createLogMessage(data));
         pgLogger.info(logMsg);
     }
 }
 
+exports.createLogMessage = createLogMessage;
 exports.log = log;

@@ -61,6 +61,34 @@ var PreferencesMapping = {
         sendBasketData        : 'paymentGatewayPayPalSendBasketData',
         initialTransactionType: 'paymentGatewayPayPalInitialTransactionType'
     },
+    PG_PAYOLUTION_INVOICE_EUR: {
+        userName          : 'paymentGatewayPayolutionInvoiceHttpUser',
+        password          : 'paymentGatewayPayolutionInvoiceHttpPassword',
+        baseUrl           : 'paymentGatewayPayolutionInvoiceBaseUrl',
+        merchantAccountID : 'paymentGatewayPayolutionInvoiceMerchantAccountID',
+        sendAdditionalData: 'paymentGatewayPayolutionInvoiceSendAdditionalData'
+    },
+    PG_PAYOLUTION_INVOICE_CHF: {
+        userName          : 'paymentGatewayPayolutionInvoiceHttpUserCHF',
+        password          : 'paymentGatewayPayolutionInvoiceHttpPasswordCHF',
+        baseUrl           : 'paymentGatewayPayolutionInvoiceBaseUrl',
+        merchantAccountID : 'paymentGatewayPayolutionInvoiceMerchantAccountIDCHF',
+        sendAdditionalData: 'paymentGatewayPayolutionInvoiceSendAdditionalData'
+    },
+    PG_RATEPAY_INVOICE: {
+        userName          : 'paymentGatewayRatepayInvoiceHttpUser',
+        password          : 'paymentGatewayRatepayInvoiceHttpPassword',
+        baseUrl           : 'paymentGatewayRatepayInvoiceBaseUrl',
+        merchantAccountID : 'paymentGatewayRatepayInvoiceMerchantAccountID',
+        sendAdditionalData: 'paymentGatewayRatepayInvoiceSendAdditionalData'
+    },
+    PG_POI: {
+        userName          : 'paymentGatewayPoiHttpUser',
+        password          : 'paymentGatewayPoiHttpPassword',
+        baseUrl           : 'paymentGatewayPoiBaseUrl',
+        merchantAccountID : 'paymentGatewayPoiMerchantAccountID',
+        sendAdditionalData: 'paymentGatewayPoiSendAdditionalData'
+    },
     PG_PIA: {
         userName          : 'paymentGatewayPiaHttpUser',
         password          : 'paymentGatewayPiaHttpPassword',
@@ -87,12 +115,21 @@ var PreferencesMapping = {
         baseUrl           : 'paymentGatewaySEPADebitBaseUrl',
         merchantAccountID : 'paymentGatewaySEPADebitMerchantAccountID',
         sendAdditionalData: 'paymentGatewaySEPASendAdditionalData'
+    },
+    PG_ALIPAY: {
+        userName          : 'paymentGatewayAlipayHttpUser',
+        password          : 'paymentGatewayAlipayHttpPassword',
+        baseUrl           : 'paymentGatewayAlipayBaseUrl',
+        merchantAccountID : 'paymentGatewayAlipayMerchantAccountID',
+        sendAdditionalData: 'paymentGatewayAlipaySendAdditionalData'
     }
 };
 
 var sensitiveFields = [
     'password',
-    'secret'
+    'passwordCHF',
+    'secret',
+    'secretCHF'
 ];
 
 /**
