@@ -22,18 +22,18 @@ var methodsWithForms = {
     },
     PG_PAYOLUTION_INVOICE: {
         acceptTerms: 'text',
-        dob_day: 'text',
-        dob_month: 'text',
-        dob_year: 'text'
+        dob_day    : 'text',
+        dob_month  : 'text',
+        dob_year   : 'text'
     },
     PG_RATEPAY_INVOICE: {
-        dob_day: 'text',
+        dob_day  : 'text',
         dob_month: 'text',
-        dob_year: 'text'
+        dob_year : 'text'
     },
     PG_SEPA: {
-        paymentGatewayBIC: 'text',
-        paymentGatewayIBAN: 'text',
+        paymentGatewayBIC           : 'text',
+        paymentGatewayIBAN          : 'text',
         paymentGatewaySEPADebtorName: 'text'
     }
 };
@@ -71,7 +71,7 @@ module.exports = {
         PG_SEPA: {
             'bank-account'  : { iban: 'paymentGatewayIBAN', bic: 'paymentGatewayBIC' },
             'account-holder': {
-                'last-name' : 'paymentGatewaySEPADebtorName'
+                'last-name': 'paymentGatewaySEPADebtorName'
             }
         }
     },
@@ -136,7 +136,7 @@ module.exports = {
          */
         return function (fieldName) {
             return fields.indexOf(fieldName) > -1;
-        }
+        };
     },
 
     /**

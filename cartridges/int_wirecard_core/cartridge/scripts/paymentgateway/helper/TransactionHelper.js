@@ -495,12 +495,12 @@ var TransactionHelper = {
                 }
                 return '';
             },
-            getCurrencyCode: function() {
+            getCurrencyCode: function () {
                 var jsonResponse = this.getJsonResponse();
 
                 // fetch currency code
-                if ('requested-amount' in jsonResponse['payment']) {
-                    return jsonResponse['payment']['requested-amount']['currency'];
+                if ('requested-amount' in jsonResponse.payment) {
+                    return jsonResponse.payment['requested-amount'].currency;
                 }
                 return '';
             },

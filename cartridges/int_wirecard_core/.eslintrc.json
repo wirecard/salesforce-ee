@@ -106,7 +106,6 @@
         "detectObjects": false
       }
     ],
-    "no-multi-spaces": "error",
     "no-multi-str": "error",
     "no-new": 0,
     "no-new-func": "error",
