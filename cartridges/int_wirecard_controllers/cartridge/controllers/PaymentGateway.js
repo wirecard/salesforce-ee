@@ -9,8 +9,8 @@
 
 var URLUtils = require('dw/web/URLUtils');
 
-var packageJson = require('int_wirecard_controllers/package.json');
-var controllerCartridge = packageJson.controllerCartridge;
+var Site = require('dw/system/Site').getCurrent();
+var controllerCartridge = Site.getCustomPreferenceValue('paymentGatewayControllerCartridgeName');
 
 /* Script Modules */
 var app = require(controllerCartridge + '/cartridge/scripts/app');

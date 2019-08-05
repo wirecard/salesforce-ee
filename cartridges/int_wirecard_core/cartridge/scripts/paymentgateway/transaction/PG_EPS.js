@@ -45,7 +45,7 @@ Eps.prototype = Object.create(Transaction.prototype);
  * Add bank-account data saved from payment form with orderPaymentInstrument
  */
 Eps.prototype.getCustomPayload = function () {
-    var paymentHelper = require('int_wirecard_core/cartridge/scripts/paymentgateway/helper/PaymentHelper.js');
+    var paymentHelper = require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper.js');
     var instruments = this.order.getPaymentInstruments('PG_EPS');
     var result = {};
 

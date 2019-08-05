@@ -9,7 +9,7 @@
 <metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
     <type-extension type-id="SitePreferences">
         <custom-attribute-definitions>
-            <attribute-definition attribute-id="controllerCartridgeName">
+            <attribute-definition attribute-id="paymentGatewayControllerCartridgeName">
                 <display-name xml:lang="x-default">Controller Cartridge</display-name>
                 <description xml:lang="x-default">Name of the controller cartridge for extend standard</description>
                 <type>string</type>
@@ -66,7 +66,7 @@
                 <attribute attribute-id="paymentGatewayNotificationEmail"/>
                 <attribute attribute-id="paymentGatewayDebugMode"/>
                 <attribute attribute-id="paymentGatewayShopName"/>
-                <attribute attribute-id="controllerCartridgeName"/>
+                <attribute attribute-id="paymentGatewayControllerCartridgeName"/>
             </attribute-group>
         </group-definitions>
     </type-extension>

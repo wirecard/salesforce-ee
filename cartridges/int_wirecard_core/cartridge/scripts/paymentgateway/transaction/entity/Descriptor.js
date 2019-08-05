@@ -7,7 +7,7 @@
  */
 'use strict';
 
-var paymentHelper = require('int_wirecard_core/cartridge/scripts/paymentgateway/helper/PaymentHelper.js');
+var paymentHelper = require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper.js');
 
 /**
  * Create descriptor data object

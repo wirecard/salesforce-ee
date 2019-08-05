@@ -16,8 +16,8 @@ var PaymentInstrument = require('dw/order/PaymentInstrument');
 var PaymentMgr = require('dw/order/PaymentMgr');
 
 /* Script includes */
-var packageJson = require('int_wirecard_controllers/package.json');
-var controllerCartridge = packageJson.controllerCartridge;
+var Site = require('dw/system/Site').getCurrent();
+var controllerCartridge = Site.getCustomPreferenceValue('paymentGatewayControllerCartridgeName');
 var app = require(controllerCartridge + '/cartridge/scripts/app');
 
 /**

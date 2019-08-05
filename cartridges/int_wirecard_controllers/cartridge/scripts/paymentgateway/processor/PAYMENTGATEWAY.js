@@ -7,8 +7,8 @@
  */
 'use strict';
 
-var packageJson = require('int_wirecard_controllers/package.json');
-var controllerCartridge = packageJson.controllerCartridge;
+var Site = require('dw/system/Site').getCurrent();
+var controllerCartridge = Site.getCustomPreferenceValue('paymentGatewayControllerCartridgeName');
 
 /* API Includes */
 var Transaction = require('dw/system/Transaction');

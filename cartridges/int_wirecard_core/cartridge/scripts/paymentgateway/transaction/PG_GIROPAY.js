@@ -44,7 +44,7 @@ Giropay.prototype = Object.create(Transaction.prototype);
  * Add bank-account data saved from payment form with orderPaymentInstrument
  */
 Giropay.prototype.getCustomPayload = function () {
-    var paymentHelper = require('int_wirecard_core/cartridge/scripts/paymentgateway/helper/PaymentHelper.js');
+    var paymentHelper = require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper.js');
     var instruments = this.order.getPaymentInstruments('PG_GIROPAY');
     var result = {};
 
