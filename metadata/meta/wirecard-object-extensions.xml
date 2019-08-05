@@ -9,6 +9,13 @@
 <metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
     <type-extension type-id="SitePreferences">
         <custom-attribute-definitions>
+            <attribute-definition attribute-id="controllerCartridgeName">
+                <display-name xml:lang="x-default">Controller Cartridge</display-name>
+                <description xml:lang="x-default">Name of the controller cartridge for extend standard</description>
+                <type>string</type>
+                <mandatory-flag>true</mandatory-flag>
+                <default-value>app_storefront_controllers</default-value>
+            </attribute-definition>
             <attribute-definition attribute-id="paymentGatewayDebugMode">
                 <display-name xml:lang="x-default">Debug mode</display-name>
                 <description xml:lang="x-default">Write request / response / notification data (json) to debug log (works only with sandboxes / development)</description>
@@ -59,6 +66,7 @@
                 <attribute attribute-id="paymentGatewayNotificationEmail"/>
                 <attribute attribute-id="paymentGatewayDebugMode"/>
                 <attribute attribute-id="paymentGatewayShopName"/>
+                <attribute attribute-id="controllerCartridgeName"/>
             </attribute-group>
         </group-definitions>
     </type-extension>
