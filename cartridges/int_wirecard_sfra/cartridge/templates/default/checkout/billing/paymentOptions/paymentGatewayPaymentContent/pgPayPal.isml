@@ -1,0 +1,16 @@
+<iscomment>
+/**
+ * Shop System Plugins:
+ * - Terms of Use can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/_TERMS_OF_USE
+ * - License can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
+ */
+</iscomment>
+<!--- TEMPLATENAME: checkout/billing/paymentOptions/paymentGatewayPaymentContent/pgPayPal.isml --->
+<fieldset class="payment-form-fields">
+    <input type="hidden" class="form-control"
+           name="${pdict.forms.billingForm.paymentMethod.htmlName}"
+           value="PG_PAYPAL"
+    >
+</fieldset>
