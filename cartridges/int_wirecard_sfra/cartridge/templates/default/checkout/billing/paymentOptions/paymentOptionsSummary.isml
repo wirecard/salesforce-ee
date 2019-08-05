@@ -16,15 +16,17 @@
                 var paymentHelper = require('int_wirecard_core/cartridge/scripts/paymentgateway/helper/PaymentHelper');
                 var pgData = paymentHelper.getPaymentMethodData(payment.paymentMethod);
             </isscript>
-            <isif condition="${ Object.prototype.hasOwnProperty.call(pgData, 'image')  && pgData.image }">
+            <isif condition="${ Object.prototype.hasOwnProperty.call(pgData, 'image') && pgData.image }">
                 <img class="pg-logo" src="${ pgData.image }"/>
             </isif>
             <isprint value="${ pgData.name }"/>
 
-            <isif condition="${ payment.paymentMethod === 'PG_SEPA' && !pdict.order.orderNumber }">
-                <isinclude template="checkout/billing/paymentOptions/paymentOptionsSummary/PG_SEPA"/>
-            <iselseif condition="${ /^PG_(POI|PIA)$/.test(payment.paymentMethod) && pdict.order.orderNumber }"/>
-                <isinclude template="${ 'checkout/billing/paymentOptions/paymentOptionsSummary/' + payment.paymentMethod }"/>
+            <isif condition="${payment.paymentMethod === 'PG_SEPA' && !pdict.order.orderNumber }">
+                <isinclude template="checkout/billing/paymentOptions/paymentOptionsSummary/pgSepa" />
+            <iselseif condition="${ /^PG_POI$/.test(payment.paymentMethod) && pdict.order.orderNumber }"/>
+                <isinclude template="${ 'checkout/billing/paymentOptions/paymentOptionsSummary/pgPoi' }"/>
+            <iselseif condition="${ /^PG_PIA$/.test(payment.paymentMethod) && pdict.order.orderNumber }"/>
+                <isinclude template="${ 'checkout/billing/paymentOptions/paymentOptionsSummary/pgPia' }"/>
             </isif>
         </isif>
     </isloop>

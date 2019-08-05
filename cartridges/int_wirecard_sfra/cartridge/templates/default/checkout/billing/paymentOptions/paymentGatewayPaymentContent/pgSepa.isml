@@ -7,7 +7,7 @@
  * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
  */
 </iscomment>
-<!--- TEMPLATENAME: PG_SEPA.isml --->
+<!--- TEMPLATENAME: checkout/billing/paymentOptions/paymentGatewayPaymentContent/pgSepa.isml --->
 <isset name="sepaFields" value="${ pdict.forms.billingForm.PG_SEPA }" scope="page"/>
 <isscript>
     var address = pdict.order.billing.billingAddress.address;

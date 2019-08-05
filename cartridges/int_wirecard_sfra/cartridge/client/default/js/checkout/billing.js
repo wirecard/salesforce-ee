@@ -154,7 +154,7 @@ base.paymentTabs = function () {
                 paymentgateway.getCreditCardRequestData();
             }
         }
-        const form   = $('form[name=dwfrm_billing]');
+        const form = $('form[name=dwfrm_billing]');
         const pgSepa = $('input[id=debtorName]', form);
 
         if (pgSepa.length) {

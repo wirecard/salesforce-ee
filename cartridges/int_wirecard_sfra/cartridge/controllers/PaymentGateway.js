@@ -66,7 +66,7 @@ server.get(
 
         if (order && order.orderToken === orderToken) {
             Transaction.wrap(function () {
-                OrderMgr.failOrder(order);
+                OrderMgr.failOrder(order, true);
             });
 
             req.session.privacyCache.set(
@@ -103,7 +103,7 @@ server.use(
                 Resource.msg('error.technical', 'checkout', null)
             );
             Transaction.wrap(function () {
-                OrderMgr.failOrder(order);
+                OrderMgr.failOrder(order, true);
             });
 
             req.session.privacyCache.set(

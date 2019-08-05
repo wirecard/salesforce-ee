@@ -10,7 +10,7 @@
 
 <isscript>
     importPackage(dw.system);
-    var transactionHelper = require('int_wirecard_core/cartridge/scripts/paymentgateway/helper/TransactionHelper');
+    var transactionHelper = require('*/cartridge/scripts/paymentgateway/helper/TransactionHelper');
     var parameterMap = request.httpParameterMap;
     var offset = parameterMap.start || 0;
 </isscript>

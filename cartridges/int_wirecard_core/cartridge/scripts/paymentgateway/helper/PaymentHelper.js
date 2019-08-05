@@ -69,24 +69,24 @@ module.exports = {
             'bank-account': { bic: 'paymentGatewayBIC' }
         },
         PG_SEPA: {
-            'bank-account'  : {iban: 'paymentGatewayIBAN', bic: 'paymentGatewayBIC'},
+            'bank-account'  : { iban: 'paymentGatewayIBAN', bic: 'paymentGatewayBIC' },
             'account-holder': {
                 'last-name' : 'paymentGatewaySEPADebtorName'
             }
         }
     },
 
-    getDataForRequest: function(form, methodName) {
+    getDataForRequest: function (form, methodName) {
         if (!this.methodRequestKey[methodName]) {
             return {};
         }
         return this.recursiveObjectCreator(this.methodRequestKey[methodName], form);
     },
 
-    recursiveObjectCreator: function(obj, data) {
-        let response = {};
+    recursiveObjectCreator: function (obj, data) {
+        var response = {};
 
-        Object.keys(obj).forEach(function(key) {
+        Object.keys(obj).forEach(function (key) {
             if ('object' === typeof obj[key]) {
                 response[key] = this.recursiveObjectCreator(obj[key], data);
             } else if ('undefined' !== typeof data[obj[key]]) {
@@ -178,11 +178,11 @@ module.exports = {
 
         if (paymentMethod) {
             result = {
-                ID: paymentMethod.ID,
-                name: paymentMethod.name,
-                active: paymentMethod.active,
+                ID         : paymentMethod.ID,
+                name       : paymentMethod.name,
+                active     : paymentMethod.active,
                 description: paymentMethod.description,
-                image: this.getPaymentImage(paymentMethod)
+                image      : this.getPaymentImage(paymentMethod)
             };
         }
         return result;

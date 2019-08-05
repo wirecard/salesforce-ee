@@ -422,7 +422,7 @@ server.replace(
 
         var fraudDetectionStatus = hooksHelper('app.fraud.detection', 'fraudDetection', currentBasket, require('*/cartridge/scripts/hooks/fraudDetection').fraudDetection);
         if (fraudDetectionStatus.status === 'fail') {
-            Transaction.wrap(function () { OrderMgr.failOrder(order); });
+            Transaction.wrap(function () { OrderMgr.failOrder(order, true); });
 
             // fraud detection failed
             req.session.privacyCache.set('fraudDetectionStatus', true);

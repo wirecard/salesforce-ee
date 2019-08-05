@@ -36,7 +36,8 @@ function getCaptureTransactionType() {
  */
 function getCancelTransactionType() {
     var self = this;
-    var type, apiEndpoint;
+    var type;
+    var apiEndpoint;
     if (!self['transaction-type']) {
         throw new Error('transaction-type missing for SEPA Transaction.');
     }
@@ -90,7 +91,7 @@ function SEPA(order, args) {
             params[k] = args[k];
         });
     }
-    //call the parent constructor
+    // call the parent constructor
     Transaction.call(this, order, params);
 
     this.preferenceMapping = preferenceMapping;
@@ -99,33 +100,33 @@ function SEPA(order, args) {
 }
 SEPA.prototype = Object.create(Transaction.prototype);
 
-SEPA.prototype.getCustomPayload = function() {
-    const PaymentHelper = require('int_wirecard_core/cartridge/scripts/paymentgateway/helper/PaymentHelper.js');
-    const StringUtils   = require('dw/util/StringUtils');
-    const Calendar      = new (require('dw/util/Calendar'))();
-    const instruments   = this.order.getPaymentInstruments('PG_SEPA');
-    let customPayload   = {};
+SEPA.prototype.getCustomPayload = function () {
+    var PaymentHelper = require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper.js');
+    var StringUtils   = require('dw/util/StringUtils');
+    var Calendar      = new (require('dw/util/Calendar'))();
+    var instruments   = this.order.getPaymentInstruments('PG_SEPA');
+    var customPayload = {};
 
     if (!instruments.empty) {
-        let customPaymentData = {};
+        var customPaymentData = {};
 
-        Object.keys(instruments[0].custom).forEach(function(key) {
-        	customPaymentData[key] = instruments[0].custom[key];
+        Object.keys(instruments[0].custom).forEach(function (key) {
+            customPaymentData[key] = instruments[0].custom[key];
         });
         customPaymentData.email   = this.order.customerEmail;
         customPaymentData.country = this.order.billingAddress.countryCode.value;
         customPayload             = PaymentHelper.getDataForRequest(customPaymentData, 'PG_SEPA');
     }
     customPayload['creditor-id'] = this.getSitePreference('paymentGatewaySEPAMandateCreditorID');
-    customPayload['mandate']     = {
-        'mandate-id' : this.order.orderNo + '-' + Calendar.getTime().getTime(),
+    customPayload.mandate        = {
+        'mandate-id': this.order.orderNo + '-' + Calendar.getTime().getTime(),
         'signed-date': StringUtils.formatCalendar(Calendar, 'yyyy-MM-dd')
     };
     return customPayload;
 };
 
-SEPA.prototype.getApiEndpointFromTransactionType = function() {
-    switch(this['transaction-type']) {
+SEPA.prototype.getApiEndpointFromTransactionType = function () {
+    switch (this['transaction-type']) {
         case Type.PENDING_DEBIT :
         case Type.VOID_PENDING_DEBIT :
         case Type.DEBIT :

@@ -59,7 +59,7 @@
                 originalPaymentMethod  : methodName
             }
         );
-        let apiEndpoint = transaction.getApiEndpointFromTransactionType();
+        var apiEndpoint = transaction.getApiEndpointFromTransactionType();
 
         if (!apiEndpoint) {
             apiEndpoint = mappedTransactionData.type;

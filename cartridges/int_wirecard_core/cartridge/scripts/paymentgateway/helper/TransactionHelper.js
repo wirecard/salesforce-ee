@@ -42,16 +42,16 @@ var TransactionHelper = {
             var refundedAmount = order.custom.paymentGatewayRefundedAmount || 0;
 
             transactionData.push({
-                transactionId: transaction.transactionId,
+                transactionId      : transaction.transactionId,
                 parentTransactionId: transaction.parentTransactionId,
-                transactionState: transaction.transactionState,
-                transactionType: transaction.transactionType,
-                merchantAccountId: transaction.merchantAccountId,
-                paymentMethodID: paymentData.paymentMethodID,
-                amount: new Money(requestedAmount.value, requestedAmount.currency),
-                capturedAmount: new Money(capturedAmount, requestedAmount.currency),
-                refundedAmount: new Money(refundedAmount, requestedAmount.currency),
-                createdAt: createdAt
+                transactionState   : transaction.transactionState,
+                transactionType    : transaction.transactionType,
+                merchantAccountId  : transaction.merchantAccountId,
+                paymentMethodID    : paymentData.paymentMethodID,
+                amount             : new Money(requestedAmount.value, requestedAmount.currency),
+                capturedAmount     : new Money(capturedAmount, requestedAmount.currency),
+                refundedAmount     : new Money(refundedAmount, requestedAmount.currency),
+                createdAt          : createdAt
             });
         }
 
@@ -107,7 +107,7 @@ var TransactionHelper = {
             {
                 'requested-amount': transactionData.amount.value,
                 'transaction-type': transactionData.transactionType,
-                'refunded-amount': refundedAmount
+                'refunded-amount' : refundedAmount
             }
         );
         transactionData.allowedOperations = transaction.getBackendOperations(canCancel);
@@ -177,10 +177,10 @@ var TransactionHelper = {
      */
     mapTransactionType: function (methodName, transactionType) {
         var result = {
-            type: 'payments',
+            type      : 'payments',
             methodName: methodName
         };
-        const mappedMethodNames = [
+        var mappedMethodNames = [
             'PG_PAYOLUTION_INVOICE',
             'PG_IDEAL',
             'PG_SOFORT',
@@ -190,8 +190,8 @@ var TransactionHelper = {
             var preferenceHelper = require('*/cartridge/scripts/paymentgateway/PreferencesHelper');
             var sepaPreferences = preferenceHelper.getPreferenceForMethodID('PG_SEPACREDIT');
             result = {
-                type: 'paymentmethods',
-                methodName: 'PG_SEPACREDIT',
+                type             : 'paymentmethods',
+                methodName       : 'PG_SEPACREDIT',
                 merchantAccountId: sepaPreferences.merchantAccountID
             };
         }
@@ -343,9 +343,9 @@ var TransactionHelper = {
                         && Object.prototype.hasOwnProperty.call(transactionData, 'status_severity_1')
                     ) {
                         result.status = {
-                            code: transactionData.status_code_1,
+                            code       : transactionData.status_code_1,
                             description: transactionData.status_description_1,
-                            severity: transactionData.status_severity_1
+                            severity   : transactionData.status_severity_1
                         };
                     }
                 } else if (key === 'completion_time_stamp') {
@@ -362,7 +362,7 @@ var TransactionHelper = {
                     result[resultKey] = date.getTime();
                 } else if (key === 'requested_amount') {
                     result[resultKey] = {
-                        value: transactionData[key],
+                        value   : transactionData[key],
                         currency: transactionData.requested_amount_currency
                     };
                 } else {
@@ -382,12 +382,12 @@ var TransactionHelper = {
      * @returns {Object} - status with {code: ..., description: ... }
      */
     parseTransactionResponse: function (apiResponse, paymentMethodID, responseType) {
-        var result       = {};
+        var result = {};
         var resultObject = {};
 
         try {
             if (responseType === this.RESPONSE_TYPE_NOTIFY) {
-                const apiResponseWrapper = this.getJsonSignedResponseWrapper(apiResponse, paymentMethodID);
+                var apiResponseWrapper = this.getJsonSignedResponseWrapper(apiResponse, paymentMethodID);
 
                 if (!apiResponseWrapper.validateSignature()) {
                     throw new Error('Failed Signature validation');
@@ -396,7 +396,7 @@ var TransactionHelper = {
                 resultObject = apiResponseWrapper.getJsonResponse();
 
                 if ('error' in resultObject) {
-                    throw new Error(resultObject['error']);
+                    throw new Error(resultObject.error);
                 }
             } else {
                 resultObject = JSON.parse(apiResponse);
@@ -473,32 +473,30 @@ var TransactionHelper = {
      * @param {string} paymentMethodID
      * @returns {{validateSignature: (function(): boolean), getJsonResponse: (function(): object), jsonResponse: {payment: {}}, isValid: (function(): boolean), algorithmMapper: {"rsa-sha256": string}, validateFallbackHash: (function(): boolean)}}
      */
-    getJsonSignedResponseWrapper: function(apiResponse, paymentMethodID) {
-
+    getJsonSignedResponseWrapper: function (apiResponse, paymentMethodID) {
         if (this.getJsonSignedResponseWrapper.prototype.singleton) {
             return this.getJsonSignedResponseWrapper.prototype.singleton;
         }
-        let responseObject = {
-            jsonResponse: { payment: {} },
-            paymentMethodID: paymentMethodID,
+        var responseObject = {
+            jsonResponse    : { payment: {} },
+            paymentMethodID : paymentMethodID,
             algorithmFactory: {
                 HmacSHA256: function () {
-                    const Mac = require('dw/crypto/Mac');
-
+                    var Mac = require('dw/crypto/Mac');
                     return new Mac(Mac.HMAC_SHA_256);
                 }
             },
-            getFirstPaymentMethodId: function() {
-                const jsonResponse = this.getJsonResponse();
+            getFirstPaymentMethodId: function () {
+                var jsonResponse = this.getJsonResponse();
 
                 // if payment methods are available then the other keys must exists
-                if ('payment-methods' in jsonResponse['payment']) {
-                    return jsonResponse['payment']['payment-methods']['payment-method'][0]['name'];
+                if ('payment-methods' in jsonResponse.payment) {
+                    return jsonResponse.payment['payment-methods']['payment-method'][0].name;
                 }
                 return '';
             },
             getCurrencyCode: function() {
-                const jsonResponse = this.getJsonResponse();
+                var jsonResponse = this.getJsonResponse();
 
                 // fetch currency code
                 if ('requested-amount' in jsonResponse['payment']) {
@@ -506,47 +504,48 @@ var TransactionHelper = {
                 }
                 return '';
             },
-            getSecret: function() {
+            getSecret: function () {
                 // if no payment method id was given we must use the first id
                 if (!paymentMethodID) {
                     paymentMethodID = responseObject.getFirstPaymentMethodId();
                 }
                 return this.getSecretCustomPreferenceFromPaymentMethodId(paymentMethodID, responseObject.getCurrencyCode());
             }.bind(this),
-            validateSignature: function() {
+            validateSignature: function () {
                 if (!this.isValid()) {
                     throw new Error('invalid api response');
                 }
-                let factoryClass = this.algorithmFactory[this['response-signature-algorithm']];
+                var factoryClass = this.algorithmFactory[this['response-signature-algorithm']];
 
                 if ('function' !== typeof factoryClass) {
                     throw new Error('invalid response signature algorithm');
                 }
-                const Encoding = require('dw/crypto/Encoding');
+                var Encoding = require('dw/crypto/Encoding');
 
                 return Encoding.toBase64(factoryClass().digest(this['response-base64'], this.getSecret()))
                     === this['response-signature-base64'];
             },
-            getJsonResponse: function() {
+            getJsonResponse: function () {
                 if (!this.isValid() || this.jsonResponse.payment.length || 'error' in this.jsonResponse) {
                     return this.jsonResponse;
                 }
                 try {
                     this.jsonResponse = JSON.parse(require('dw/util/StringUtils').decodeBase64(this['response-base64']));
                 } catch (jsonParseSyntaxError) {
-                    this.jsonResponse['error'] = jsonParseSyntaxError;
+                    this.jsonResponse.error = jsonParseSyntaxError;
                 }
                 return this.jsonResponse;
             },
-            isValid: function() {
+            isValid: function () {
                 return 'response-signature-base64' in this
                     && 'response-signature-algorithm' in this
-                    && 'response-base64' in this
+                    && 'response-base64' in this;
             }
         };
 
-        apiResponse.split('&').forEach(function(keyValueString) {
-            const [key] = keyValueString.split('=', 1);
+        var key;
+        apiResponse.split('&').forEach(function (keyValueString) {
+            key = keyValueString.split('=', 1);
             responseObject[key] = keyValueString.replace(key + '=', '');
         });
         this.getJsonSignedResponseWrapper.prototype.singleton = responseObject;
@@ -560,8 +559,8 @@ var TransactionHelper = {
      * @param {string} currencyCode - used currency
      * @returns {string} - payment method's secret
      */
-    getSecretCustomPreferenceFromPaymentMethodId : function(paymentMethodId, currencyCode) {
-        const Site = require('dw/system/Site').getCurrent();
+    getSecretCustomPreferenceFromPaymentMethodId: function (paymentMethodId, currencyCode) {
+        var Site = require('dw/system/Site').getCurrent();
         var paymentHelper = require('*/cartridge/scripts/paymentgateway/helper/PaymentHelper');
         var secret;
 

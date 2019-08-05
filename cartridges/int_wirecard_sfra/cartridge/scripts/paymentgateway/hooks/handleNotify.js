@@ -31,7 +31,7 @@ exports.process = function (notification) {
             var placeOrderResult = COHelpers.placeOrder(order, {});
             if (placeOrderResult.error) {
                 Transaction.wrap(function () {
-                    OrderMgr.failOrder(order);
+                    OrderMgr.failOrder(order, false);
                 });
             }
             // send order confirmation email

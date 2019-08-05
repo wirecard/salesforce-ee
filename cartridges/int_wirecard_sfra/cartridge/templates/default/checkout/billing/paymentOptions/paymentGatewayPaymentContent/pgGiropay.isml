@@ -1,13 +1,13 @@
 <isscript>
-    /**
-    * Shop System Plugins:
-    * - Terms of Use can be found under:
-    * https://github.com/wirecard/salesforce-ee/blob/master/_TERMS_OF_USE
-    * - License can be found under:
-    * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
-    */
+/**
+ * Shop System Plugins:
+ * - Terms of Use can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/_TERMS_OF_USE
+ * - License can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
+ */
 </isscript>
-<!--- TEMPLATENAME: PG_GIROPAY.isml --->
+<!--- TEMPLATENAME: checkout/billing/paymentOptions/paymentGatewayPaymentContent/pgGiropay.isml --->
 <isset name="giropayFields" value="${ pdict.forms.billingForm.PG_GIROPAY }" scope="page"/>
 
 <fieldset class="payment-form-fields">

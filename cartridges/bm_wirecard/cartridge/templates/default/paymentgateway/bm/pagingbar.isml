@@ -9,7 +9,7 @@
 </iscomment>
 
 <isscript>
-    var StringHelper = require('int_wirecard_core/cartridge/scripts/paymentgateway/util/StringHelper');
+    var StringHelper = require('*/cartridge/scripts/paymentgateway/util/StringHelper');
 </isscript>
 <iscontent type="text/html" charset="UTF-8" compact="true"/>
 

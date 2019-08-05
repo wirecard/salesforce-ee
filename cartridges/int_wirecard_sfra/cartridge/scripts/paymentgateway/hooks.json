@@ -6,15 +6,15 @@
     },
     {
       "name": "app.payment.form.processor.paymentgateway",
-      "script": "./hooks/paymentgateway_form_processor"
+      "script": "./hooks/paymentgatewayFormProcessor"
     },
     {
       "name": "app.payment.form.processor.paymentgateway_creditcard",
-      "script": "./hooks/paymentgateway_cc_form_processor"
+      "script": "./hooks/paymentgatewayCcFormProcessor"
     },
     {
       "name": "app.payment.processor.paymentgateway_creditcard",
-      "script": "./hooks/paymentgateway_cc_processor"
+      "script": "./hooks/paymentgatewayCcProcessor"
     },
     {
       "name": "int.wirecard.handlenotify",

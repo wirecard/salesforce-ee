@@ -22,27 +22,7 @@
  * // allow only GET requests via HTTPS for logged in users
  * exports.Show = require('~/guard').ensure(['get','https','loggedIn'],show);
  */
-var browsing = require('*/cartridge/scripts/util/Browsing');
 var LOGGER   = dw.system.Logger.getLogger('guard');
-
-/**
- * This method contains the login to handle a not logged in customer
- *
- * @param {Object} params Parameters passed along by by ensure
- */
-function requireLogin(params) {
-    if (customer.authenticated) {
-        return true;
-    }
-    var redirectUrl = require('int_emp/cartridge/scripts/util/URLUtils').https('Login-Show','original', browsing.lastUrl());
-
-    if (params && params.scope) {
-        redirectUrl.append('scope', params.scope);
-    }
-
-    response.redirect(redirectUrl);
-    return false;
-}
 
 /**
  * Performs a protocol switch for the URL of the current request to HTTPS. Responds with a redirect to the client.
@@ -113,8 +93,6 @@ function ensure (filters, action, params) {
                 errors.push(filters[i]);
                 if (filters[i] === 'https') {
                     error = switchToHttps;
-                } else if (filters[i] === 'loggedIn') {
-                    error = requireLogin;
                 }
                 break;
             }

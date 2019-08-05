@@ -154,7 +154,7 @@ server.get(
 
         if (order) {
             Transaction.wrap(function () {
-                OrderMgr.failOrder(order);
+                OrderMgr.failOrder(order, true);
             });
 
             req.session.privacyCache.set(
@@ -216,7 +216,7 @@ server.use(
         var orderHelper = require('*/cartridge/scripts/paymentgateway/helper/OrderHelper');
         if (order && fp === orderHelper.getOrderFingerprint(order, null, getSitePreference('paymentGatewayCreditCardSecret'))) {
             Transaction.wrap(function () {
-                OrderMgr.failOrder(order);
+                OrderMgr.failOrder(order, true);
             });
 
             req.session.privacyCache.set(
@@ -311,7 +311,7 @@ server.post(
             if (order) {
                 var Transaction = require('dw/system/Transaction');
                 Transaction.wrap(function () {
-                    OrderMgr.failOrder(order);
+                    OrderMgr.failOrder(order, true);
                 });
                 var BasketMgr = require('dw/order/BasketMgr');
                 var currentBasket = BasketMgr.getCurrentBasket();

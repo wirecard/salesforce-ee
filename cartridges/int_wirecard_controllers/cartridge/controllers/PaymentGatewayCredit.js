@@ -121,7 +121,7 @@ exports.RequestData = guard.ensure(['get', 'https'], function () {
         var handlePaymentsResult = handlePayments(order);
         if (handlePaymentsResult.error) {
             Transaction.wrap(function () {
-                OrderMgr.failOrder(order);
+                OrderMgr.failOrder(order, true);
             });
             throw new Error('Error while processing payment!');
         }
@@ -160,7 +160,7 @@ exports.Fail = guard.ensure(['https'], function () {
 
     if (order && order.orderToken == orderToken) {
         require('dw/system/Transaction').wrap(function () {
-            OrderMgr.failOrder(order);
+            OrderMgr.failOrder(order, true);
         });
 
         var errorObject;
@@ -202,7 +202,7 @@ exports.Cancel = guard.ensure(['https'], function () {
 
     if (order && order.orderToken == orderToken) {
         require('dw/system/Transaction').wrap(function () {
-            OrderMgr.failOrder(order);
+            OrderMgr.failOrder(order, true);
         });
 
         var Resource = require('dw/web/Resource');

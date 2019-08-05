@@ -123,7 +123,7 @@ function handlePayments(order, orderNumber) {
         var paymentInstruments = order.paymentInstruments;
 
         if (paymentInstruments.length === 0) {
-            Transaction.wrap(function () { OrderMgr.failOrder(order); });
+            Transaction.wrap(function () { OrderMgr.failOrder(order, true); });
             result.error = true;
         }
 

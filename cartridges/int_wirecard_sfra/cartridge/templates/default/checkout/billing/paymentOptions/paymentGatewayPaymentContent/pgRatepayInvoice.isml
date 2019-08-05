@@ -1,13 +1,13 @@
 <iscomment>
-    /**
-    * Shop System Plugins:
-    * - Terms of Use can be found under:
-    * https://github.com/wirecard/salesforce-ee/blob/master/_TERMS_OF_USE
-    * - License can be found under:
-    * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
-    */
+/**
+ * Shop System Plugins:
+ * - Terms of Use can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/_TERMS_OF_USE
+ * - License can be found under:
+ * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
+ */
 </iscomment>
-<!--- TEMPLATENAME: PG_RATEPAY_INVOICE.isml --->
+<!--- TEMPLATENAME: checkout/billing/paymentOptions/paymentGatewayPaymentContent/pgRatepayInvoice.isml --->
 <isset name="ratepayFields" value="${ pdict.forms.billingForm.PG_RATEPAY_INVOICE }" scope="page"/>
 <isset name="currentDate" value="${new Date()}" scope="page"/>
 

@@ -1,4 +1,4 @@
-<iscomment>
+<isscript>
 /**
  * Shop System Plugins:
  * - Terms of Use can be found under:
@@ -6,13 +6,11 @@
  * - License can be found under:
  * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
  */
-</iscomment>
-<!--- TEMPLATENAME: PG_CREDITCARD.isml --->
-<div id="pg-creditcard-form" data-request-data-url="${ URLUtils.https('PaymentGatewayCredit-RequestData').toString() }"></div>
-
+</isscript>
+<!--- TEMPLATENAME: checkout/billing/paymentOptions/paymentGatewayPaymentContent/pgPoi.isml --->
 <fieldset class="payment-form-fields">
     <input type="hidden" class="form-control"
-        name="${pdict.forms.billingForm.paymentMethod.htmlName}"
-        value="PG_CREDITCARD"
+           name="${pdict.forms.billingForm.paymentMethod.htmlName}"
+           value="PG_POI"
     >
 </fieldset>

@@ -42,7 +42,7 @@ exports.process = function (notification) {
                 Transaction.begin();
                 var placeOrderStatus = OrderMgr.placeOrder(order);
                 if (placeOrderStatus === Status.ERROR) {
-                    OrderMgr.failOrder(order);
+                    OrderMgr.failOrder(order, false);
                     throw new Error('Failed to place order.');
                 }
                 order.setConfirmationStatus(Order.CONFIRMATION_STATUS_CONFIRMED);

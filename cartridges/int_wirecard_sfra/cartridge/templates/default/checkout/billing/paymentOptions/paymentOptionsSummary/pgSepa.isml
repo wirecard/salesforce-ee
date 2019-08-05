@@ -7,7 +7,7 @@
  * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
  */
 </iscomment>
-<!--- TEMPLATENAME: PG_SEPA.isml --->
+<!--- TEMPLATENAME: pgSepa.isml --->
 <iscontent compact="true" />
 <isscript>
     var currentSite = require('dw/system/Site').getCurrent();

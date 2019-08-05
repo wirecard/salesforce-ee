@@ -1,0 +1,8 @@
+{
+  "rules": {
+    "key-spacing": [ "error", {
+      "align": "colon"
+    }],
+    "yoda": "off"
+  }
+}

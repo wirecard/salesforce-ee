@@ -7,7 +7,7 @@
  * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
  */
 </iscomment>
-<!--- TEMPLATENAME: PG_PAYOLUTION_INVOICE.isml --->
+<!--- TEMPLATENAME: checkout/billing/paymentOptions/paymentGatewayPaymentContent/pgPayolutionInvoice.isml --->
 <isset name="payolutionFields" value="${ pdict.forms.billingForm.PG_PAYOLUTION_INVOICE }" scope="page"/>
 <isset name="currentDate" value="${new Date()}" scope="page"/>
 
@@ -40,7 +40,7 @@
                         name="${ payolutionFields.dob_month.htmlName }" required>
                     <isloop items=${ payolutionFields.dob_month.options } var="month">
                         <option id="${ month.id }" value="${ month.value }" ${month.selected ? 'selected="selected"' : ''}>
-                        ${month.label} ${month.selected}
+                        ${ month.label }
                         </option>
                     </isloop>
                 </select>
@@ -55,7 +55,7 @@
                     <option label="${ Resource.msg('resource.day', 'forms', null) }" value=""/>
                     <isloop status="j" begin="1" end="31">
                         <option id="${ j.index }" value="${ j.index }">
-                            ${j.index}
+                            ${ j.index }
                         </option>
                     </isloop>
                 </select>

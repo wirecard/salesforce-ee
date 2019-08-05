@@ -7,7 +7,7 @@
  * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
  */
 </iscomment>
-<!--- TEMPLATENAME: checkout/billing/paymentOptions/PaymentOptionsSummary/PG_PIA.isml --->
+<!--- TEMPLATENAME: checkout/billing/paymentOptions/PaymentOptionsSummary/pgPia.isml --->
 <div class="bank-information">
     <table>
         <tr>

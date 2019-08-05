@@ -7,7 +7,7 @@
  * https://github.com/wirecard/salesforce-ee/blob/master/LICENSE
  */
 </iscomment>
-<!--- TEMPLATENAME: PG_PAYPAL.isml --->
+<!--- TEMPLATENAME: checkout/billing/paymentOptions/paymentGatewayPaymentContent/pgPaypal.isml --->
 <fieldset class="payment-form-fields">
     <input type="hidden" class="form-control"
            name="${pdict.forms.billingForm.paymentMethod.htmlName}"

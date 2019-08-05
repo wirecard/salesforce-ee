@@ -54,7 +54,7 @@ exports.Cancel = guard.ensure(['https'], function () {
 
     if (order && order.orderToken == orderToken) {
         require('dw/system/Transaction').wrap(function () {
-            OrderMgr.failOrder(order);
+            OrderMgr.failOrder(order, true);
         });
 
         var Resource = require('dw/web/Resource');
@@ -87,7 +87,7 @@ exports.Fail = guard.ensure(['https'], function () {
         );
 
         require('dw/system/Transaction').wrap(function () {
-            OrderMgr.failOrder(order);
+            OrderMgr.failOrder(order, true);
         });
 
         app.getController('COSummary').Start({
@@ -115,9 +115,9 @@ exports.Notify = guard.ensure(['post', 'https'], function () {
 
     if (order && order.orderToken === orderToken) {
         // parse response
-        var requestBody       = parameterMap.getRequestBodyAsString();
+        var requestBody = parameterMap.getRequestBodyAsString();
         var transactionHelper = require('*/cartridge/scripts/paymentgateway/helper/TransactionHelper');
-        var notifyData        = transactionHelper.parseTransactionResponse(
+        var notifyData = transactionHelper.parseTransactionResponse(
             requestBody, null, transactionHelper.RESPONSE_TYPE_NOTIFY
         );
         var rawResponeJson = transactionHelper.getJsonSignedResponseWrapper(requestBody).getJsonResponse();
@@ -190,10 +190,10 @@ exports.Debug = guard.ensure(['get', 'https'], function () {
 });
 
 exports.GetPGSummary = guard.ensure(['get', 'https'], function () {
-    const payment = require('dw/order/BasketMgr').getCurrentBasket().getPaymentInstruments('PG_SEPA');
+    var payment = require('dw/order/BasketMgr').getCurrentBasket().getPaymentInstruments('PG_SEPA');
 
     if (!payment.empty) {
-        response.render('checkout/billing/paymentOptions/paymentOptionsSummary/PG_SEPA', { payment:  payment[0]});
+        response.render('checkout/billing/paymentOptions/paymentOptionsSummary/PG_SEPA', { payment: payment[0] });
     }
 });
 
@@ -203,6 +203,6 @@ exports.GetPGSummary = guard.ensure(['get', 'https'], function () {
 exports.GetCheckoutErrors = guard.ensure(['include'], function () {
     var paymentGatewayErrors = JSON.parse(session.privacy.paymentGatewayErrors);
     delete session.privacy.paymentGatewayErrors;
-    var ISML = require('dw/template/ISML');
-    ISML.renderTemplate('checkout/paymentGatewayError', { errors: paymentGatewayErrors });
+    app.getView({ errors: paymentGatewayErrors }).render('checkout/paymentGatewayError');
+    return;
 });

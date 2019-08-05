@@ -57,7 +57,6 @@ exports.getAddressHash = function (address) {
  */
 exports.getOrderFingerprint = function (order, orderNo, secret) {
     var Mac = require('dw/crypto/Mac');
-    var Site = require('dw/system/Site').getCurrent();
     var hashParams = [];
 
     if (orderNo) {
@@ -88,15 +87,15 @@ exports.getOrderFingerprint = function (order, orderNo, secret) {
     return require('dw/crypto/Encoding').toHex(digest);
 };
 
-exports.getPaymentGatewayOrderStateFromTransactionType = function(order, transaction) {
-    const Type         = require('*/cartridge/scripts/paymentgateway/transaction/Type');
-    const SystemObjMgr = require('dw/object/SystemObjectMgr');
-    const orderStates  = SystemObjMgr
+exports.getPaymentGatewayOrderStateFromTransactionType = function (order, transaction) {
+    var Type         = require('*/cartridge/scripts/paymentgateway/transaction/Type');
+    var SystemObjMgr = require('dw/object/SystemObjectMgr');
+    var orderStates  = SystemObjMgr
         .describe('Order')
-        .getCustomAttributeDefinition("paymentGatewayOrderState")
+        .getCustomAttributeDefinition('paymentGatewayOrderState')
         .getValues()
         .toArray();
-    const filterOrderStates = function(orderState) {
+    var filterOrderStates = function (orderState) {
         return orderState.value === this.toString();
     };
     switch (transaction.transactionType) {
@@ -115,9 +114,9 @@ exports.getPaymentGatewayOrderStateFromTransactionType = function(order, transac
                 return orderStates.filter(filterOrderStates, 'paid').shift().value;
             }
             if (Type.Refund.indexOf(transaction.transactionType) > -1) {
-                const OrderEntity    = require('*/cartridge/scripts/paymentgateway/transaction/entity/Order');
-                const orderAmount    = OrderEntity.getFixedContainerTotalAmount(order);
-                const refundedAmount = order.custom.paymentGatewayRefundedAmount;
+                var OrderEntity    = require('*/cartridge/scripts/paymentgateway/transaction/entity/Order');
+                var orderAmount    = OrderEntity.getFixedContainerTotalAmount(order);
+                var refundedAmount = order.custom.paymentGatewayRefundedAmount;
 
                 return 0 < refundedAmount && refundedAmount < orderAmount
                     ? orderStates.filter(filterOrderStates, 'partiallyRefunded').shift().value
@@ -125,5 +124,4 @@ exports.getPaymentGatewayOrderStateFromTransactionType = function(order, transac
             }
             throw new Error('Invalid transaction type');
     }
-
 };

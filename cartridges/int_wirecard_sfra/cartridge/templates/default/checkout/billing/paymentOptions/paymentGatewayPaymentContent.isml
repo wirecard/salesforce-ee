@@ -16,11 +16,58 @@
 <!--- paymentHelper included in checkout/billing/paymentOptions/paymentOptionsTabs --->
 <isif condition="${ paymentOption.ID.indexOf('PG_') > -1 }">
     <isscript>
-        var templateName = "checkout/billing/paymentOptions/paymentGatewayPaymentContent/" + paymentOption.ID;
+        var templateName, templatePath;
+
+        switch (paymentOption.ID) {
+            case 'PG_ALIPAY':
+                templateName = 'pgAlipay';
+                break;
+            case 'PG_CREDITCARD':
+                templateName = 'pgCreditCard';
+                break;
+            case 'PG_EPS':
+                templateName = 'pgEps';
+                break;
+            case 'PG_GIROPAY':
+                templateName = 'pgGiropay';
+                break;
+            case 'PG_IDEAL':
+                templateName = 'pgIdeal';
+                break;
+            case 'PG_PAYPAL':
+                templateName = 'pgPayPal';
+                break;
+            case 'PG_PIA':
+                templateName = 'pgPia';
+                break;
+            case 'PG_POI':
+                templateName = 'pgPoi';
+                break;
+            case 'PG_PAYOLUTION_INVOICE':
+                templateName = 'pgPayolutionInvoice';
+                break;
+            case 'PG_RATEPAY_INVOICE':
+                templateName = 'pgRatepayInvoice';
+                break;
+            case 'PG_SEPA':
+                templateName = 'pgSepa';
+                break;
+            case 'PG_SOFORT':
+                templateName = 'pgSofort';
+                break;
+            default:
+                break;
+        }
+        if (null !== templateName) {
+            templatePath = 'checkout/billing/paymentOptions/paymentGatewayPaymentContent/' + templateName;
+        }
     </isscript>
-    <div class="tab-pane <isif condition="${ isActive }">active </isif>${ paymentOption.ID }-content" id="${ paymentOption.ID }-content" role="tabpanel">
 
-        <isinclude template="${ templateName }" />
+    <isif condition="${ templatePath }" >
 
-    </div>
+        <div class="tab-pane <isif condition="${ isActive }">active </isif>${ paymentOption.ID }-content" id="${ paymentOption.ID }-content" role="tabpanel">
+            <isinclude template="${ templatePath }" />
+        </div>
+
+    </isif>
 </isif>
