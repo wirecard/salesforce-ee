@@ -235,9 +235,17 @@ server.get(
             }
         });
 
-        if (paymentInstrument) {
+        var summaryTemplate;
+        switch (paymentMethod) {
+            case 'PG_SEPA':
+                summaryTemplate = 'pgSepa';
+                break;
+            default:
+                break;
+        }
+        if (paymentInstrument && summaryTemplate) {
             res.render(
-                'checkout/billing/paymentOptions/paymentOptionsSummary/' + paymentMethod,
+                'checkout/billing/paymentOptions/paymentOptionsSummary/' + summaryTemplate,
                 {
                     payment: paymentInstrument,
                     forms: { billingForm: server.forms.getForm('billing') }
